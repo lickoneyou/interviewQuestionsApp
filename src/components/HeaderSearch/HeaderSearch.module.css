@@ -8,6 +8,8 @@
   padding-right: var(--mantine-spacing-md);
   padding-top: 20px;
   padding-bottom: 20px;
+
+  justify-content: space-between;
 }
 
 .inner {
