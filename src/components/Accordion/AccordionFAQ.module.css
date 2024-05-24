@@ -1,0 +1,36 @@
+.wrapper {
+  padding-top: calc(var(--mantine-spacing-xl) * 2);
+  padding-bottom: calc(var(--mantine-spacing-xl) * 2);
+  min-height: rem(650px);
+}
+
+.title {
+  margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+}
+
+.item {
+  border-radius: var(--mantine-radius-md);
+  margin-bottom: var(--mantine-spacing-lg);
+  background-color: transparent !important;
+  border: 1px solid azure;
+  color: azure;
+}
+
+.item span {
+  color: azure;
+  font-weight: 700;
+}
+
+.accordionPanelValue {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.accordionPanelValue a {
+  color: azure;
+}
+
+.accordionPanelValue a:hover {
+  color: rgba(240, 255, 255, 0.581);
+}
