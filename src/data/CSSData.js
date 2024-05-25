@@ -80,6 +80,22 @@ const CSS = {
     },
     'CSS препроцессор': {
       id: '44',
+      jsx: (
+        <div>
+          <ul>
+            Препроцессоры CSS:
+            <li>
+              <b>SASS / SCSS</b>
+            </li>
+            <li>
+              <b>LESS</b>
+            </li>
+            <li>
+              <b>Stalus</b>
+            </li>
+          </ul>
+        </div>
+      ),
     },
   },
 }
