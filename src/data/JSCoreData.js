@@ -246,6 +246,15 @@ const JSCORE = {
     },
     'Именованное функциональное выражение(Named Function Expression)': {
       id: '517',
+      jsx: (
+        <div>
+          <p>
+            <b>Named Function Expression</b> — расширение функциональных
+            выражений в JavaScript, позволяющее именовать функцию, созданную как
+            часть выражения (FunctionExpression).
+          </p>
+        </div>
+      ),
     },
     Прототипы: {
       id: '518',
