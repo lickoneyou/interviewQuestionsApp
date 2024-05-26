@@ -365,6 +365,66 @@ const JSCORE = {
     },
     Функции: {
       id: '59',
+      jsx: (
+        <div>
+          <p>
+            Функции нужны для того, чтобы не повторять один и тот же код
+            несколько раз.
+          </p>
+          <p>
+            Синтаксис <b>function declaration</b>:
+          </p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+            </div>
+            <code>
+              <code>
+                function <b>fn</b>(<b>a</b>) {'{'}
+              </code>
+              <code>
+                {'  '}return <b>a</b>
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            Синтаксис <b>function expression</b>:
+          </p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+            </div>
+            <code>
+              <code>
+                const <b>fn</b> = function(<b>a</b>) {'{'}
+              </code>
+              <code>
+                {'  '}return <b>a</b>
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            Синтаксис <b>arrow function</b>:
+          </p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+            </div>
+            <code>
+              <code>
+                const <b>fn</b> = (<b>a</b>, <b>b</b>) {'=>'} <b>a</b> +{' '}
+                <b>b</b>
+              </code>
+            </code>
+          </pre>
+        </div>
+      ),
     },
     'try…catch': {
       id: '510',
