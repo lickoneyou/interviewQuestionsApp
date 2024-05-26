@@ -2,3 +2,23 @@ body {
   background-color: rgb(35, 37, 41) !important;
   color: azure !important;
 }
+
+.numbers,
+pre > code {
+  display: flex;
+  flex-direction: column;
+}
+
+pre {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgb(244, 244, 244, 0.05);
+  padding: 15px;
+}
+
+.codeNumber {
+  display: flex;
+  justify-content: center;
+}
