@@ -430,6 +430,69 @@ const JSCORE = {
     },
     'try…catch': {
       id: '510',
+      jsx: (
+        <div>
+          <p>
+            Конструкция <b>try..catch</b> позволяет обрабатывать ошибки во время
+            исполнения кода. Она позволяет запустить код и перехватить ошибки,
+            которые могут в нем возникнуть.
+          </p>
+          <p>Синтаксис:</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+              <code className="codeNumber">7</code>
+              <code className="codeNumber">8</code>
+            </div>
+            <code>
+              <code>
+                <b>try</b> {'{'}
+              </code>
+              <code className="comment">{'  '}// исполняем код</code>
+              <code>
+                {'}'} <b>catch</b>(<b>err</b>) {'{'}
+              </code>
+              <code className="comment">{'  '}// если ошибка случается</code>
+              <code>
+                {'}'} <b>finally</b> {'{'}
+              </code>
+              <code className="comment">{'  '}// выполняется всегда</code>
+              <code className="comment">
+                {'  '}// после <b className="comment">try..catch</b>
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            Секций <b>catch</b> или <b>finally</b> может не быть, то есть
+            короткие конструкции <b>try..catch</b> или <b>try..finally</b> также
+            корректны.
+          </p>
+          <ul>
+            Объекты ошибок содержат следующие свойства:
+            <li>
+              <b>message</b> - сообщение
+            </li>
+            <li>
+              <b>name</b> - имя ошибки
+            </li>
+            <li>
+              <b>stack</b> - стек на момент ошибки
+            </li>
+          </ul>
+          <p>
+            Мы можем также генерировать собственные ошибки, используя оператор{' '}
+            <b>throw</b>. Аргументом <b>throw</b> может быть что угодно, но
+            обычно это объект ошибки, наследуемый от встроенного класса{' '}
+            <b>Error</b>.
+          </p>
+        </div>
+      ),
     },
     'Строгий режим': {
       id: '511',
