@@ -340,6 +340,7 @@ const JSCORE = {
               <code className="codeNumber">8</code>
               <code className="codeNumber">9</code>
               <code className="codeNumber">10</code>
+              <code className="codeNumber">11</code>
             </div>
             <code>
               <code>
@@ -358,6 +359,7 @@ const JSCORE = {
               <code>{'  '}default</code>
               <code>{'  '}...</code>
               <code>{'    '}break</code>
+              <code>{'}'}</code>
             </code>
           </pre>
         </div>
