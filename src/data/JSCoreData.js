@@ -707,6 +707,68 @@ const JSCORE = {
     },
     Классы: {
       id: '519',
+      jsx: (
+        <div>
+          <p>Синтаксис:</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+              <code className="codeNumber">7</code>
+            </div>
+            <code>
+              <code>
+                class <b>Class</b> {'{'}
+              </code>
+              <code>
+                {'  '}constructor(<b>...</b>) {'{'}
+              </code>
+              <code className="comment">{'    '}//...</code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>
+                {'  '}
+                <b>method1</b>(<b>...</b>) {'{}'}
+              </code>
+              <code>
+                {'  '}
+                <b>method2</b>(<b>...</b>) {'{}'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Class</b> технически является функцией (той, которую мы
+            определяем как <b>constructor</b>) в то время как методы - геттеры и
+            сеттеры записываются <b>Class.prototype</b>.
+          </p>
+          <p>
+            Основой ООП являются <b>класс</b> и <b>конструктор</b>. Конструктор
+            - это функция, которая служит шаблоном для построения объекта. Это
+            функция, которая вызывается с ключевым словом <b>New</b>, в
+            результате этого создается пустой объект, к которому привязывается{' '}
+            <b>this</b>.
+          </p>
+          <ul>
+            Неявно просходит:
+            <li>Создается новый объект</li>
+            <li>
+              На этот объект устанавливается <b>this</b>
+            </li>
+            <li>Функция возвращает этот объект</li>
+          </ul>
+          <p>
+            Оператор <b>instanceof</b> позволяет проверить, принадлежит ли
+            объект указанному классу, с учетом наследования.
+          </p>
+        </div>
+      ),
     },
     'Асинхронный JavaScript': {
       id: '520',
