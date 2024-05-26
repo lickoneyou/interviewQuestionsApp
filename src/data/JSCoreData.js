@@ -349,15 +349,15 @@ const JSCORE = {
               <code>
                 {'  '}case '<b>value1</b>':
               </code>
-              <code className="comment">{'  '}...</code>
+              <code className="comment">{'  '}//...</code>
               <code>{'    '}break</code>
               <code>
                 {'  '}case '<b>value2</b>'
               </code>
-              <code className="comment">{'  '}...</code>
+              <code className="comment">{'  '}//...</code>
               <code>{'    '}break</code>
               <code>{'  '}default</code>
-              <code className="comment">{'  '}...</code>
+              <code className="comment">{'  '}//...</code>
               <code>{'    '}break</code>
               <code>{'}'}</code>
             </code>
