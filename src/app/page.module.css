@@ -47,3 +47,19 @@
 .answerWrapper ul > li {
   margin-top: 15px;
 }
+
+.answerWrapper th {
+  width: 50%;
+}
+
+.answerWrapper table {
+  width: 100%;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.answerWrapper th,
+.answerWrapper td {
+  padding: 5px;
+  border: 1px solid azure;
+}
