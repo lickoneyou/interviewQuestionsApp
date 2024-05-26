@@ -23,3 +23,7 @@ pre {
   display: flex;
   justify-content: center;
 }
+
+.comment {
+  color: forestgreen !important;
+}
