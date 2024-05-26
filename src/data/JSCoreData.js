@@ -309,8 +309,7 @@ const JSCORE = {
           </p>
           <p>
             Для перебора всех свойст объекта используется цикл <b>for..in</b> .
-            Синтаксис:{' '}
-            <span>for(let key in object)</span>.
+            Синтаксис: <span>for(let key in object)</span>.
           </p>
           <p>
             Цикл для перебора массивов <b>for..of</b> не предоставляет доступ к
@@ -322,6 +321,47 @@ const JSCORE = {
     },
     'Конструкция "switch"': {
       id: '58',
+      jsx: (
+        <div>
+          <p>
+            Конструкция <b>switch</b> имеет один или более блоков <b>case</b> и
+            необязательный блок <b>default</b>.
+          </p>
+          <p>Синтаксис:</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+              <code className="codeNumber">7</code>
+              <code className="codeNumber">8</code>
+              <code className="codeNumber">9</code>
+              <code className="codeNumber">10</code>
+            </div>
+            <code>
+              <code>
+                switch(<b>x</b>){'{'}
+              </code>
+              <code>
+                {'  '}case '<b>value1</b>':
+              </code>
+              <code>{'  '}...</code>
+              <code>{'    '}break</code>
+              <code>
+                {'  '}case '<b>value2</b>'
+              </code>
+              <code>{'  '}...</code>
+              <code>{'    '}break</code>
+              <code>{'  '}default</code>
+              <code>{'  '}...</code>
+              <code>{'    '}break</code>
+            </code>
+          </pre>
+        </div>
+      ),
     },
     Функции: {
       id: '59',
