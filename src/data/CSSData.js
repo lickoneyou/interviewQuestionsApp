@@ -2,6 +2,7 @@ const CSS = {
   CSS: {
     'Основы CSS': {
       id: '41',
+      title: 'Основы CSS',
       jsx: (
         <div>
           <p>
@@ -25,6 +26,7 @@ const CSS = {
     },
     Псевдоклассы: {
       id: '42',
+      title: 'Псевдоклассы',
       jsx: (
         <div>
           <ul>
@@ -56,6 +58,7 @@ const CSS = {
     },
     Псевдоэлементы: {
       id: '43',
+      title: 'Псевдоэлементы',
       jsx: (
         <div>
           <ul>
@@ -80,6 +83,7 @@ const CSS = {
     },
     'CSS препроцессор': {
       id: '44',
+      title: 'CSS препроцессор',
       jsx: (
         <div>
           <ul>
