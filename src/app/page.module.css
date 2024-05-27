@@ -4,7 +4,7 @@
 }
 
 .answerWrapper {
-  padding: 70px 250px;
+  padding: 70px 250px 25px 250px;
 }
 
 .answerWrapper h1 {
@@ -62,4 +62,10 @@
 .answerWrapper td {
   padding: 5px;
   border: 1px solid azure;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 250px 25px 250px;
 }
