@@ -1235,6 +1235,25 @@ const JSCORE = {
         </div>
       ),
     },
+    Ошибки: {
+      id: '529',
+      title: 'Ошибки',
+      jsx: (
+        <div>
+          <ul>
+            <li>
+              <b>SyntaxError</b> - опечатки
+            </li>
+            <li>
+              <b>ReferenceError</b> - обращения к несуществующей переменной
+            </li>
+            <li>
+              <b>TypeError</b> - обращения к несуществующим свойствам
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 }
 
