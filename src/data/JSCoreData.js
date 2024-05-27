@@ -911,6 +911,34 @@ const JSCORE = {
     Генераторы: {
       id: '521',
       title: 'Генераторы',
+      jsx: (
+        <div>
+          <p>
+            <b>Генераторы</b> создаются при помощи функций генераторов.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+            </div>
+            <code>
+              <code>
+                function<b>*</b> fn() {'{'}
+              </code>
+              <code className="comment">//...</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            Внутри генераторов существует оператор <b>yield</b>.
+          </p>
+          <p>
+            Внешний код и <b>генератор</b> обмениваются промежуточными данными
+            посредством вызовом <b>next / yield</b>.
+          </p>
+        </div>
+      ),
     },
     'Модули Иморт Экспорт': {
       id: '522',
