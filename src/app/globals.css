@@ -27,3 +27,11 @@ pre {
 .comment {
   color: forestgreen !important;
 }
+
+.mantine-ScrollArea-viewport {
+  color: black;
+}
+
+.mantine-Autocomplete-option:hover {
+  background: rgb(0, 0, 0, 0.05) !important;
+}
