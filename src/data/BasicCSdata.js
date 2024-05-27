@@ -2,6 +2,7 @@ const BasicCS = {
   'Basic CS principles': {
     'Система контроля версий': {
       id: '11',
+      title: 'Система контроля версий',
       jsx: (
         <div>
           <p>
@@ -39,6 +40,7 @@ const BasicCS = {
     },
     'Bash: Основы командной строки': {
       id: '12',
+      title: 'Bash: Основы командной строки',
       jsx: (
         <div>
           <p>
@@ -112,6 +114,7 @@ const BasicCS = {
     },
     'Основные принципы ООП': {
       id: '13',
+      title: 'Основные принципы ООП',
       jsx: (
         <div>
           <p>
@@ -149,6 +152,7 @@ const BasicCS = {
     },
     SOLID: {
       id: '14',
+      title: 'SOLID',
       jsx: (
         <div>
           <ul>
