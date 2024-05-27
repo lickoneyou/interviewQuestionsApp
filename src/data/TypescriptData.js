@@ -2,6 +2,7 @@ const Typescript = {
   Typescript: {
     Типы: {
       id: '71',
+      title: 'Типы',
       jsx: (
         <div>
           <table>
@@ -91,6 +92,7 @@ const Typescript = {
     },
     Дженерики: {
       id: '72',
+      title: 'Дженерики',
       jsx: (
         <div>
           <p>
@@ -102,6 +104,7 @@ const Typescript = {
     },
     Классы: {
       id: '73',
+      title: 'Классы',
       jsx: (
         <div>
           <p>
@@ -127,6 +130,7 @@ const Typescript = {
     },
     'Типы Утилит(Utility Types)': {
       id: '74',
+      title: 'Типы Утилит(Utility Types)',
       jsx: (
         <div>
           <p>
