@@ -943,6 +943,121 @@ const JSCORE = {
     'Модули Иморт Экспорт': {
       id: '522',
       title: 'Модули Иморт Экспорт',
+      jsx: (
+        <div>
+          <p>
+            Для того, чтобы браузер понимал, что мы экспортируем модули,
+            необходимо в тег <b>script</b>, где имеется модуль, добавить атрибут{' '}
+            <b>type="module"</b>. Но обычно используется <b>webpack</b> и
+            добавлять ничего не нужно.
+          </p>
+          <p>
+            <b>Export</b> можно использовать в момент объявления функции,
+            переменной или класса.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+              <code>6</code>
+              <code>7</code>
+              <code>8</code>
+              <code>9</code>
+            </div>
+            <code>
+              <code>
+                <b>export</b> function <b>fn</b>() {'{'}
+              </code>
+              <code className="comment">{'  '}//...</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>
+                <b>export</b> const <b>num</b> = 4
+              </code>
+              <code>{'  '}</code>
+              <code>
+                <b>export</b> class <b>User</b>() {'{'}
+              </code>
+              <code className="comment">{'  '}//...</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            Для больших модулей удобнее использовать группированный экспорт.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+            </div>
+            <code>
+              <code>
+                <b>export</b> {'{'} <b>fn</b>, <b>num</b>, <b>User</b> {'}'}
+              </code>
+            </code>
+          </pre>
+          <p>
+            В случае, когда из файла экспортируется только одна сущность,
+            удобнее использовать <span>экспорт по умолчанию</span>.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+            </div>
+            <code>
+              <code>
+                function <b>fn</b> () {'{'}
+              </code>
+              <code className="comment">{'  '}//...</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>
+                <b>export</b> default <b>fn</b>
+              </code>
+            </code>
+          </pre>
+          <p>
+            Чтобы импортировать какой-либо метод, необходимо воспользоваться
+            инструкцией <b>import</b>, указав интересующие части модуля и путь
+            до него.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+            </div>
+            <code>
+              <code>
+                <b>import</b> {'{'} <b>fn</b>, <b>num</b> {'}'} <b>from</b>{' '}
+                './путь'
+              </code>
+            </code>
+          </pre>
+          <p>
+            Для изменения метода в момент <b>импорта / экспорта</b> существует
+            инструкция <b>as</b>.
+          </p>
+          <p>
+            Можно импортировать все содержимое модуля в переменную и обращаться
+            к частям модумя как с свойствам переменной.
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+            </div>
+            <code>
+              <code>
+                <b>import</b> * <b>as el</b> from './путь'
+              </code>
+            </code>
+          </pre>
+        </div>
+      ),
     },
     'FetchAPI - Интерфейсывеб API, XMLHttpRequest': {
       id: '523',
