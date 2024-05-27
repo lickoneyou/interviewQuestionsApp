@@ -2,6 +2,7 @@ const HTML = {
   HTML: {
     'Основы HTML': {
       id: '31',
+      title: 'Основы HTML',
       jsx: (
         <div>
           <p>
@@ -54,6 +55,7 @@ const HTML = {
     },
     'Мета-теги': {
       id: '32',
+      title: 'Мета-теги',
       jsx: (
         <div>
           <p>
@@ -105,6 +107,7 @@ const HTML = {
     },
     'Семантическая верстка': {
       id: '33',
+      title: 'Семантическая верстка',
       jsx: (
         <div>
           <p>
