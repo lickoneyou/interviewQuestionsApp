@@ -926,7 +926,7 @@ const JSCORE = {
               <code>
                 function<b>*</b> fn() {'{'}
               </code>
-              <code className="comment">//...</code>
+              <code className="comment">{'  '}//...</code>
               <code>{'}'}</code>
             </code>
           </pre>
