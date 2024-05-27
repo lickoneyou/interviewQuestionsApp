@@ -704,6 +704,9 @@ const JSCORE = {
             выражений в JavaScript, позволяющее именовать функцию, созданную как
             часть выражения (FunctionExpression).
           </p>
+          <p>
+            <b>NFE ошибка</b> - ReferenceError
+          </p>
         </div>
       ),
     },
