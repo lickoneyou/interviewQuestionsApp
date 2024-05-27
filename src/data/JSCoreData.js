@@ -2,6 +2,7 @@ const JSCORE = {
   'JS CORE': {
     'Типы данных JavaScript и структуры данных': {
       id: '51',
+      title: 'Типы данных JavaScript и структуры данных',
       jsx: (
         <div>
           <ul>
@@ -80,6 +81,7 @@ const JSCORE = {
     },
     'Var, let или const? Проблемы областей видимости переменных': {
       id: '52',
+      title: 'Var, let или const? Проблемы областей видимости переменных',
       jsx: (
         <div>
           <p>
@@ -91,6 +93,7 @@ const JSCORE = {
     },
     'Преобразование типов для примитивов': {
       id: '53',
+      title: 'Преобразование типов для примитивов',
       jsx: (
         <div>
           <ul>
@@ -185,6 +188,7 @@ const JSCORE = {
     },
     'Операторы Сравнения': {
       id: '54',
+      title: 'Операторы Сравнения',
       jsx: (
         <div>
           <table>
@@ -226,6 +230,7 @@ const JSCORE = {
     },
     'Логические операторы': {
       id: '55',
+      title: 'Логические операторы',
       jsx: (
         <div>
           <p>
@@ -260,6 +265,7 @@ const JSCORE = {
     },
     'Условное Ветвление: if ?': {
       id: '56',
+      title: 'Условное Ветвление: if ?',
       jsx: (
         <div>
           <p>
@@ -283,6 +289,7 @@ const JSCORE = {
     },
     'Циклы while и for': {
       id: '57',
+      title: 'Циклы while и for',
       jsx: (
         <div>
           <p>
@@ -321,6 +328,7 @@ const JSCORE = {
     },
     'Конструкция "switch"': {
       id: '58',
+      title: 'Конструкция "switch"',
       jsx: (
         <div>
           <p>
@@ -367,6 +375,7 @@ const JSCORE = {
     },
     Функции: {
       id: '59',
+      title: 'Функции',
       jsx: (
         <div>
           <p>
@@ -430,6 +439,7 @@ const JSCORE = {
     },
     'try…catch': {
       id: '510',
+      title: 'try…catch',
       jsx: (
         <div>
           <p>
@@ -496,6 +506,7 @@ const JSCORE = {
     },
     'Строгий режим': {
       id: '511',
+      title: 'Строгий режим',
       jsx: (
         <div>
           <ul>
@@ -514,6 +525,7 @@ const JSCORE = {
     },
     Массивы: {
       id: '512',
+      title: 'Массивы',
       jsx: (
         <div>
           <p>
@@ -606,6 +618,7 @@ const JSCORE = {
     },
     Объекты: {
       id: '513',
+      title: 'Объекты',
       jsx: (
         <div>
           <p>
@@ -639,6 +652,7 @@ const JSCORE = {
     },
     'Сборка Мусора': {
       id: '514',
+      title: 'Сборка Мусора',
       jsx: (
         <div>
           <p>
@@ -653,6 +667,7 @@ const JSCORE = {
     },
     This: {
       id: '515',
+      title: 'This',
       jsx: (
         <div>
           <p>
@@ -668,6 +683,7 @@ const JSCORE = {
     },
     'Оператор new': {
       id: '516',
+      title: 'Оператор new',
       jsx: (
         <div>
           <p>
@@ -680,6 +696,7 @@ const JSCORE = {
     },
     'Именованное функциональное выражение(Named Function Expression)': {
       id: '517',
+      title: 'Именованное функциональное выражение(Named Function Expression)',
       jsx: (
         <div>
           <p>
@@ -692,6 +709,7 @@ const JSCORE = {
     },
     Прототипы: {
       id: '518',
+      title: 'Прототипы',
       jsx: (
         <div>
           <p>
@@ -707,6 +725,7 @@ const JSCORE = {
     },
     Классы: {
       id: '519',
+      title: 'Классы',
       jsx: (
         <div>
           <p>Синтаксис:</p>
@@ -772,6 +791,7 @@ const JSCORE = {
     },
     'Асинхронный JavaScript': {
       id: '520',
+      title: 'Асинхронный JavaScript',
       jsx: (
         <div>
           <p>
@@ -890,15 +910,19 @@ const JSCORE = {
     },
     Генераторы: {
       id: '521',
+      title: 'Генераторы',
     },
     'Модули Иморт Экспорт': {
       id: '522',
+      title: 'Модули Иморт Экспорт',
     },
     'FetchAPI - Интерфейсывеб API, XMLHttpRequest': {
       id: '523',
+      title: 'FetchAPI - Интерфейсывеб API, XMLHttpRequest',
     },
     Замыкания: {
       id: '524',
+      title: 'Замыкания',
       jsx: (
         <div>
           <b>Замыкание</b> - это способность функции в JavaScript{' '}
@@ -909,6 +933,7 @@ const JSCORE = {
     },
     Рекурсия: {
       id: '525',
+      title: 'Рекурсия',
       jsx: (
         <div>
           <p>
@@ -919,6 +944,7 @@ const JSCORE = {
     },
     'Map, Set, WeekMap, WeekSet': {
       id: '526',
+      title: 'Map, Set, WeekMap, WeekSet',
       jsx: (
         <div>
           <p>
