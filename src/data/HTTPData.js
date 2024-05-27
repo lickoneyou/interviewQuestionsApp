@@ -2,6 +2,7 @@ const HTTP = {
   HTTP: {
     'HTTP basics': {
       id: '21',
+      title: 'HTTP basics',
       jsx: (
         <div>
           <p>
@@ -40,6 +41,7 @@ const HTTP = {
     },
     'Методы HTTP запроса': {
       id: '22',
+      title: 'Методы HTTP запроса',
       jsx: (
         <div>
           <ul>
@@ -65,6 +67,7 @@ const HTTP = {
     },
     'Коды ответа': {
       id: '23',
+      title: 'Коды ответа',
       jsx: (
         <div>
           <ul>
@@ -90,6 +93,7 @@ const HTTP = {
     },
     'HTTP-кеширование': {
       id: '24',
+      title: 'HTTP-кеширование',
       jsx: (
         <div>
           <p>
@@ -165,6 +169,7 @@ const HTTP = {
     },
     HTTPS: {
       id: '25',
+      title: 'HTTPS',
       jsx: (
         <div>
           <p>
@@ -213,6 +218,7 @@ const HTTP = {
     },
     CORS: {
       id: '26',
+      title: 'CORS',
       jsx: (
         <div>
           <p>
@@ -235,6 +241,7 @@ const HTTP = {
     },
     WebSocket: {
       id: '27',
+      title: 'WebSocket',
       jsx: (
         <div>
           <p>
@@ -248,6 +255,7 @@ const HTTP = {
     },
     'HTTP-куки': {
       id: '28',
+      title: 'HTTP-куки',
       jsx: (
         <div>
           <p>
