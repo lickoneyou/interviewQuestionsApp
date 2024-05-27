@@ -1,5 +1,6 @@
 'use client'
 
+import getAutoCompletedData from '@/handlers/getAutoCompletedData'
 import { Autocomplete, Button, rem } from '@mantine/core'
 import { IconSearch } from '@tabler/icons-react'
 import { useRouter } from 'next/navigation'
@@ -33,8 +34,7 @@ export function HeaderSearch({ isQuestion = false }) {
               stroke={1.5}
             />
           }
-          // todo add autoCompleted at data
-          data={[]}
+          data={getAutoCompletedData()}
           visibleFrom="xs"
         />
       </div>
