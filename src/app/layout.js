@@ -3,6 +3,8 @@ import './reset.css'
 import './globals.css'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/notifications/styles.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +17,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider>
+          <Notifications zIndex={1000} position="top-center" />
+          {children}
+        </MantineProvider>
       </body>
     </html>
   )
