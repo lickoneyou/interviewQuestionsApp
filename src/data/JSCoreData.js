@@ -1179,7 +1179,7 @@ const JSCORE = {
             </li>
             <li>
               <b>set.delete(value)</b> – удаляет значение, возвращает{' '}
-              <b>true</b>, если
+              <b>true</b>, если{' '}
               <b>value</b> было в множестве на момент вызова, иначе <b>false</b>
             </li>
             <li>
