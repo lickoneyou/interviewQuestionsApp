@@ -69,3 +69,13 @@
   justify-content: space-around;
   padding: 0 250px 25px 250px;
 }
+
+@media screen and (max-width: 1440px) {
+  .answerWrapper {
+    padding: 70px 5px 25px 5px;
+  }
+
+  .btnWrapper {
+    padding: 0 5px 25px 5px;
+  }
+}

@@ -30,3 +30,9 @@
 .inner button:hover {
   background-color: rgb(244, 244, 244, 0.05);
 }
+
+@media screen and (max-width: 600px) {
+  .inner {
+    display: none !important;
+  }
+}
