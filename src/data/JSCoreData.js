@@ -170,12 +170,12 @@ const JSCORE = {
                   <b>0, null, undefined, NaN, ""</b>
                 </td>
                 <td>
-                  <b>любое другое значение</b>
+                  <b>false</b>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>false</b>
+                  <b>любое другое значение</b>
                 </td>
                 <td>
                   <b>true</b>
