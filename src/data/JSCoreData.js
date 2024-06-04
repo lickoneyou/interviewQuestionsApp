@@ -1062,9 +1062,9 @@ const JSCORE = {
         </div>
       ),
     },
-    'FetchAPI - Интерфейсывеб API, XMLHttpRequest': {
+    'FetchAPI - Интерфейсы веб API, XMLHttpRequest': {
       id: '523',
-      title: 'FetchAPI - Интерфейсывеб API, XMLHttpRequest',
+      title: 'FetchAPI - Интерфейсы веб API, XMLHttpRequest',
       jsx: (
         <div>
           <p>
@@ -1079,7 +1079,7 @@ const JSCORE = {
           </p>
           <p>
             <b>XMLHttpRequest</b> - это встроенный в браузер объект, который
-            дает возможность делать HTTP запросы к серверу без перезагружки
+            дает возможность делать HTTP запросы к серверу без перезагрузки
             страницы.
           </p>
           <p>
