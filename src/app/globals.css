@@ -13,6 +13,7 @@ pre {
   display: grid;
   grid-template-columns: 2fr 10fr;
   width: 50%;
+  min-width: 250px;
   margin: 0 auto;
   background-color: rgb(244, 244, 244, 0.05);
   padding: 15px;
@@ -34,4 +35,11 @@ pre {
 
 .mantine-Autocomplete-option:hover {
   background: rgb(0, 0, 0, 0.05) !important;
+}
+
+@media screen and (max-width: 1440px) {
+  pre {
+    margin-left: 15px;
+    margin-right: 0;
+  }
 }
