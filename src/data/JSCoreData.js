@@ -831,7 +831,7 @@ const JSCORE = {
             <code>
               <code>
                 const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{' '}
-                <b>rej</b>) {'=>'}) {'{'}
+                <b>rej</b>) {'=>'} {'{'}
               </code>
               <code className="comment">{'  '}{'//...'}</code>
               <code>
