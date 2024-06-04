@@ -357,15 +357,15 @@ const JSCORE = {
               <code>
                 {'  '}case '<b>value1</b>':
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'    '}break</code>
               <code>
                 {'  '}case '<b>value2</b>'
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'    '}break</code>
               <code>{'  '}default</code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'    '}break</code>
               <code>{'}'}</code>
             </code>
@@ -463,17 +463,17 @@ const JSCORE = {
               <code>
                 <b>try</b> {'{'}
               </code>
-              <code className="comment">{'  '}// исполняем код</code>
+              <code className="comment">{'  '}{'// исполняем код'}</code>
               <code>
                 {'}'} <b>catch</b>(<b>err</b>) {'{'}
               </code>
-              <code className="comment">{'  '}// если ошибка случается</code>
+              <code className="comment">{'  '}{'// если ошибка случается'}</code>
               <code>
                 {'}'} <b>finally</b> {'{'}
               </code>
-              <code className="comment">{'  '}// выполняется всегда</code>
+              <code className="comment">{'  '}{'// выполняется всегда'}</code>
               <code className="comment">
-                {'  '}// после <b className="comment">try..catch</b>
+                {'  '}{'// после'} <b className="comment">try..catch</b>
               </code>
               <code>{'}'}</code>
             </code>
@@ -749,7 +749,7 @@ const JSCORE = {
               <code>
                 {'  '}constructor(<b>...</b>) {'{'}
               </code>
-              <code className="comment">{'    '}//...</code>
+              <code className="comment">{'    '}{'//...'}</code>
               <code>
                 {'  '}
                 {'}'}
@@ -833,7 +833,7 @@ const JSCORE = {
                 const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{' '}
                 <b>rej</b>) {'=>'}) {'{'}
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>
                 {'}'}
                 {')'}
@@ -929,7 +929,7 @@ const JSCORE = {
               <code>
                 function<b>*</b> fn() {'{'}
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'}'}</code>
             </code>
           </pre>
@@ -974,7 +974,7 @@ const JSCORE = {
               <code>
                 <b>export</b> function <b>fn</b>() {'{'}
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'}'}</code>
               <code>{'  '}</code>
               <code>
@@ -984,7 +984,7 @@ const JSCORE = {
               <code>
                 <b>export</b> class <b>User</b>() {'{'}
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'}'}</code>
             </code>
           </pre>
@@ -1017,7 +1017,7 @@ const JSCORE = {
               <code>
                 function <b>fn</b> () {'{'}
               </code>
-              <code className="comment">{'  '}//...</code>
+              <code className="comment">{'  '}{'//...'}</code>
               <code>{'}'}</code>
               <code>{'  '}</code>
               <code>
