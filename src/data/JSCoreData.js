@@ -669,7 +669,8 @@ const JSCORE = {
           <p>
             Клонировать объект можно с помощью: <b>Object.assign</b>,{' '}
             <b>рекурсии</b>, <b>_.cloneDeep(obj)</b> (из библиотеки JavaScript
-            lodash), <b>structuredClone()</b>
+            lodash), <b>structuredClone()</b>,{' '}
+            <b>JSON.parse(JSON.stringify(obj))</b>
           </p>
         </div>
       ),
