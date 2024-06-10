@@ -357,15 +357,24 @@ const JSCORE = {
               <code>
                 {'  '}case '<b>value1</b>':
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'    '}break</code>
               <code>
                 {'  '}case '<b>value2</b>'
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'    '}break</code>
               <code>{'  '}default</code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'    '}break</code>
               <code>{'}'}</code>
             </code>
@@ -463,17 +472,27 @@ const JSCORE = {
               <code>
                 <b>try</b> {'{'}
               </code>
-              <code className="comment">{'  '}{'// исполняем код'}</code>
+              <code className="comment">
+                {'  '}
+                {'// исполняем код'}
+              </code>
               <code>
                 {'}'} <b>catch</b>(<b>err</b>) {'{'}
               </code>
-              <code className="comment">{'  '}{'// если ошибка случается'}</code>
+              <code className="comment">
+                {'  '}
+                {'// если ошибка случается'}
+              </code>
               <code>
                 {'}'} <b>finally</b> {'{'}
               </code>
-              <code className="comment">{'  '}{'// выполняется всегда'}</code>
               <code className="comment">
-                {'  '}{'// после'} <b className="comment">try..catch</b>
+                {'  '}
+                {'// выполняется всегда'}
+              </code>
+              <code className="comment">
+                {'  '}
+                {'// после'} <b className="comment">try..catch</b>
               </code>
               <code>{'}'}</code>
             </code>
@@ -647,6 +666,11 @@ const JSCORE = {
           <p>
             Перебрать свойства <b>for(let key in object)</b>.
           </p>
+          <p>
+            Клонировать объект можно с помощью: <b>Object.assign</b>,{' '}
+            <b>рекурсии</b>, <b>_.cloneDeep(obj)</b> (из библиотеки JavaScript
+            lodash), <b>structuredClone()</b>
+          </p>
         </div>
       ),
     },
@@ -749,7 +773,10 @@ const JSCORE = {
               <code>
                 {'  '}constructor(<b>...</b>) {'{'}
               </code>
-              <code className="comment">{'    '}{'//...'}</code>
+              <code className="comment">
+                {'    '}
+                {'//...'}
+              </code>
               <code>
                 {'  '}
                 {'}'}
@@ -833,7 +860,10 @@ const JSCORE = {
                 const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{' '}
                 <b>rej</b>) {'=>'} {'{'}
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>
                 {'}'}
                 {')'}
@@ -845,9 +875,9 @@ const JSCORE = {
             возвращает массив их результатов.
           </p>
           <p>
-            <b>Promise.race()</b> - этот метод принимает массив промисов и возвращает
-            один новый промис, который будет выполненным или отклоненным, если
-            отклоненный промис встретится раньше.
+            <b>Promise.race()</b> - этот метод принимает массив промисов и
+            возвращает один новый промис, который будет выполненным или
+            отклоненным, если отклоненный промис встретится раньше.
           </p>
           <ul>
             Ключевое слово <b>async</b> перед объявлением функции:
@@ -929,7 +959,10 @@ const JSCORE = {
               <code>
                 function<b>*</b> fn() {'{'}
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'}'}</code>
             </code>
           </pre>
@@ -974,7 +1007,10 @@ const JSCORE = {
               <code>
                 <b>export</b> function <b>fn</b>() {'{'}
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'}'}</code>
               <code>{'  '}</code>
               <code>
@@ -984,7 +1020,10 @@ const JSCORE = {
               <code>
                 <b>export</b> class <b>User</b>() {'{'}
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'}'}</code>
             </code>
           </pre>
@@ -1017,7 +1056,10 @@ const JSCORE = {
               <code>
                 function <b>fn</b> () {'{'}
               </code>
-              <code className="comment">{'  '}{'//...'}</code>
+              <code className="comment">
+                {'  '}
+                {'//...'}
+              </code>
               <code>{'}'}</code>
               <code>{'  '}</code>
               <code>
@@ -1179,8 +1221,8 @@ const JSCORE = {
             </li>
             <li>
               <b>set.delete(value)</b> – удаляет значение, возвращает{' '}
-              <b>true</b>, если{' '}
-              <b>value</b> было в множестве на момент вызова, иначе <b>false</b>
+              <b>true</b>, если <b>value</b> было в множестве на момент вызова,
+              иначе <b>false</b>
             </li>
             <li>
               <b>set.has(value)</b> – возвращает <b>true</b>, если значение
