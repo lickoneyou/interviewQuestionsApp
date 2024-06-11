@@ -1388,6 +1388,55 @@ const JSCORE = {
         </div>
       ),
     },
+    IIFE: {
+      id: '532',
+      title: 'IIFE',
+      jsx: (
+        <div>
+          <p>
+            <b>IIFE</b> это функция, которая выполняется сразу же после того,
+            как она была определена.
+          </p>
+          <p>
+            Способы создания <b>IIFE</b>:
+          </p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+              <code>6</code>
+              <code>7</code>
+              <code>8</code>
+              <code>9</code>
+              <code>10</code>
+              <code>11</code>
+            </div>
+            <code>
+              <code>
+                (<b>function</b>() {'{'}
+              </code>
+              <code>{'  '}console.log(1)</code>
+              <code>{'}'})();</code>
+              <code>{'  '}</code>
+              <code>
+                !<b>function</b>() {'{'}
+              </code>
+              <code>{'  '}console.log(2)</code>
+              <code>{'}'}();</code>
+              <code>{'  '}</code>
+              <code>
+                +<b>function</b>() {'{'}
+              </code>
+              <code>{'  '}console.log(3)</code>
+              <code>{'}'}();</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 }
 
