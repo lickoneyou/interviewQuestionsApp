@@ -1437,6 +1437,127 @@ const JSCORE = {
         </div>
       ),
     },
+    'Apply, call, bind, декоратор': {
+      title: 'Apply, call, bind, декоратор',
+      id: '533',
+      jsx: (
+        <div>
+          <p>Call:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+            </div>
+            <code>
+              <code>
+                func.<b>call</b>(context, arg1, arg2, ...)
+              </code>
+            </code>
+          </pre>
+          <p>Apply:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+            </div>
+            <code>
+              <code>
+                func.<b>apply</b>(context, [arg1, arg2, ...])
+              </code>
+            </code>
+          </pre>
+          <p>Bind:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+            </div>
+            <code>
+              <code>
+                let <b>fn</b> = func.<b>apply</b>(context, arg1, arg2, ...)
+              </code>
+              <code>{'  '}</code>
+              <code>
+                <b>fn</b>()
+              </code>
+            </code>
+          </pre>
+          <p>Декоратор:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+              <code>6</code>
+              <code>7</code>
+              <code>8</code>
+              <code>9</code>
+              <code>10</code>
+              <code>11</code>
+              <code>12</code>
+              <code>13</code>
+              <code>14</code>
+              <code>15</code>
+              <code>16</code>
+              <code>17</code>
+              <code>18</code>
+              <code>19</code>
+            </div>
+            <code>
+              <code>
+                let <b>fn</b> = (x) {'=>'} {'{'}
+              </code>
+              <code>
+                {'  '}
+                <b>return</b> x
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>
+                const <b>decorator</b> = (fn) {'=>'} {'{'}
+              </code>
+              <code>
+                {'  '}const <b>map</b> = <b>new</b> Map()
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}return (x) {'=>'} {'{'}
+              </code>
+              <code>
+                {'    '}if(map.<b>has</b>(x)){'{'}
+              </code>
+              <code>
+                {'      '}return map.<b>get</b>(x)
+              </code>
+              <code>
+                {'    '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}const <b>res</b> = <b>fn</b>(x)
+              </code>
+              <code>
+                {'    '}map.<b>set</b>(x, res)
+              </code>
+              <code>
+                {'    '}return <b>res</b>
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>
+                fn = <b>decorator</b>(fn)
+              </code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 }
 
