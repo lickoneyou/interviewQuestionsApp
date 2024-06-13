@@ -27,6 +27,11 @@ pre {
   margin-right: 5px;
 }
 
+.numbers code {
+  user-select: none;
+  margin-right: 5px;
+}
+
 .comment {
   color: forestgreen !important;
 }
