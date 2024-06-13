@@ -1585,6 +1585,84 @@ const JSCORE = {
         </div>
       ),
     },
+    'new Proxy()': {
+      title: 'new Proxy()',
+      id: '534',
+      jsx: (
+        <div>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+              <code>6</code>
+              <code>7</code>
+              <code>8</code>
+              <code>9</code>
+              <code>10</code>
+              <code>11</code>
+              <code>12</code>
+              <code>13</code>
+              <code>14</code>
+              <code>15</code>
+              <code>16</code>
+              <code>17</code>
+              <code>18</code>
+              <code>19</code>
+            </div>
+            <code>
+              <code>
+                const <b>obj</b> = {'{'} <b>value</b>: 4 {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                const <b>proxy</b> = <b>new</b> Proxy(obj, {'{'}
+              </code>
+              <code>
+                {'  '}
+                <b>get</b>(target, prop) {'{'}
+              </code>
+              <code>
+                {'    '}
+                <b>if</b>(prop === 'value') {'{'}
+              </code>
+              <code>{'      '}console.log('get value check')</code>
+              <code>{'      '}return target[prop]</code>
+              <code>
+                {'    '}
+                {'}'}
+              </code>
+              <code>
+                {'    '} return <b>Reflect</b>.get(...arguments)
+              </code>
+              <code>{'  },'}</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                <b>set</b>(target, prop, value) {'{'}
+              </code>
+              <code>
+                {'    '}
+                <b>if</b>(prop === 'value') {'{'}
+              </code>
+              <code>{'      '}console.log('set value check')</code>
+              <code>{'      '}target[prop] = value</code>
+              <code>
+                {'    '}
+                {'}'}
+              </code>
+              <code>
+                {'    '} return <b>Reflect</b>.set(...arguments)
+              </code>
+              <code>{'  }'}</code>
+              <code>{'})'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 }
 
