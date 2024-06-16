@@ -21,7 +21,20 @@ const Question = () => {
   const router = useRouter()
 
   return (
-    <div className={styles.App}>
+    <div
+      className={styles.App}
+      tabIndex="-1"
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowLeft') {
+          if (getQuestionIndex(questionID) > 0)
+            router.push(allQuestions[getQuestionIndex(questionID) - 1].id)
+        }
+        if (e.key === 'ArrowRight') {
+          if (router.push(allQuestions[getQuestionIndex(questionID) + 1].id))
+            router.push(allQuestions[getQuestionIndex(questionID) + 1].id)
+        }
+      }}
+    >
       <HeaderSearch isQuestion={true} />
       <div className={styles.answerWrapper}>
         <h1>{title}</h1>
