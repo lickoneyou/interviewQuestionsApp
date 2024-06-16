@@ -1544,7 +1544,7 @@ const JSCORE = {
                 const <b>decorator</b> = (fn) {'=>'} {'{'}
               </code>
               <code>
-                {'  '}const <b>map</b> = <b>new</b> Map()
+                {'  '}const <b>cache</b> = <b>new</b> Map()
               </code>
               <code>{'  '}</code>
               <code>
