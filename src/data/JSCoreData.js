@@ -1505,7 +1505,7 @@ const JSCORE = {
             </div>
             <code>
               <code>
-                let <b>fn</b> = func.<b>apply</b>(context, arg1, arg2, ...)
+                let <b>fn</b> = func.<b>bind</b>(context, arg1, arg2, ...)
               </code>
               <code>{'  '}</code>
               <code>
