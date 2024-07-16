@@ -5,6 +5,7 @@ import CSSData from './CSSData'
 import JSCoreData from './JSCoreData'
 import ReactData from './ReactData'
 import TypescriptData from './TypescriptData'
+import QI from './QIData'
 
 const data = {
   ...BasicCS,
@@ -14,6 +15,7 @@ const data = {
   ...JSCoreData,
   ...ReactData,
   ...TypescriptData,
+  ...QI,
 }
 
 export default data
