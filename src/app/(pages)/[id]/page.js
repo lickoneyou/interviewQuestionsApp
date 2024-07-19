@@ -19,7 +19,8 @@ const Question = () => {
   const iconRight = <IconCircleArrowRight stroke={2} />
   const allQuestions = getAllQuestions()
   const router = useRouter()
-
+  router.push(allQuestions[getQuestionIndex(questionID)].id)
+  
   return (
     <div
       className={styles.App}
@@ -30,7 +31,7 @@ const Question = () => {
             router.push(allQuestions[getQuestionIndex(questionID) - 1].id)
         }
         if (e.key === 'ArrowRight') {
-          if (router.push(allQuestions[getQuestionIndex(questionID) + 1].id))
+          if (allQuestions[getQuestionIndex(questionID) + 1])
             router.push(allQuestions[getQuestionIndex(questionID) + 1].id)
         }
       }}
