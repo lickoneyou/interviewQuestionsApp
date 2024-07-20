@@ -838,6 +838,122 @@ const QI = {
         </div>
       ),
     },
+    'Тестирование SQL': {
+      id: '89',
+      title: 'Тестирование SQL',
+      jsx: (
+        <div>
+          <p>Поиск:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+            </div>
+            <code>
+              <code>
+                <b>SELECT</b> *
+              </code>
+              <code>
+                <b>FROM</b> Products
+              </code>
+              <code className="comment">// Название базы данных</code>
+              <code>
+                <b>WHERE</b> {'{...}'}
+              </code>
+              <code className="comment">// Условие</code>
+            </code>
+          </pre>
+          <p>Добавить:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+              <code>6</code>
+            </div>
+            <code>
+              <code>
+                <b>INCERT INTO</b> Products
+              </code>
+              <code className="comment">// Название базы данных</code>
+              <code>(title, price, ...)</code>
+              <code className="comment">// Название полей</code>
+              <code>
+                <b>VALUES</b>
+              </code>
+              <code>(product1, 100, ...)</code>
+            </code>
+          </pre>
+          <p>Обновить:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+              <code>5</code>
+            </div>
+            <code>
+              <code>
+                <b>UPDATE</b> Products
+              </code>
+              <code className="comment">// Название базы данных</code>
+              <code>
+                <b>SET</b> price = 200
+              </code>
+              <code className="comment">// Меняем поле price</code>
+              <code>
+                <b>WHERE</b> {'{условие}'}
+              </code>
+            </code>
+          </pre>
+          <p>Удалить:</p>
+          <pre>
+            <div className="numbers">
+              <code>1</code>
+              <code>2</code>
+              <code>3</code>
+              <code>4</code>
+            </div>
+            <code>
+              <code>
+                <b>DELETE</b>
+              </code>
+              <code>
+                <b>FROM</b> Products
+              </code>
+              <code className="comment">// Название базы данных</code>
+              <code>
+                <b>WHERE</b> {'{условие}'}
+              </code>
+            </code>
+          </pre>
+          <p>
+            Ограничение значений - <b>LIMIT</b>
+          </p>
+          <p>
+            Поиск по содержимому - <b>LIKE '%{'{...}'}%'</b>
+          </p>
+          <p>
+            Логические операторы <b>OR</b>, <b>AND</b>
+          </p>
+          <p>
+            Cортировка <b>ORDER BY {'{...}'} (DESK ASC)</b>
+          </p>
+          <p>
+            Диапазон - <b>WHERE price BETWEEN 50 - 150</b>
+          </p>
+          <p>
+            Уникальные значения - <b>DISTINCT</b>
+          </p>
+        </div>
+      ),
+    },
   },
 }
 
