@@ -432,6 +432,94 @@ const Typescript = {
           </pre>
         </div>
       )
+    },
+    'Assertion Function with Type Guard': {
+      id: '711',
+      title: 'Assertion Function with Type Guard',
+      jsx: (
+        <div>
+          <ul>
+            Assertion Function with Type Guard (утверждающая функция с защитником типа) — это специальная функция, которая:
+            <li>Выполняет проверку типа во время выполнения</li>
+            <li><b>Гарантирует</b>, что после её успешного выполнения аргумент будет иметь определённый тип</li>
+            <li>Если проверка не проходит — выбрасывает исключение</li>
+          </ul>
+          <pre>
+          <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+              <code className="codeNumber">7</code>
+              <code className="codeNumber">8</code>
+              <code className="codeNumber">9</code>
+              <code className="codeNumber">10</code>
+              <code className="codeNumber">11</code>
+              <code className="codeNumber">12</code>
+              <code className="codeNumber">13</code>
+              <code className="codeNumber">14</code>
+              <code className="codeNumber">15</code>
+              <code className="codeNumber">16</code>
+              <code className="codeNumber">17</code>
+              <code className="codeNumber">18</code>
+              <code className="codeNumber">19</code>
+              <code className="codeNumber">20</code>
+              <code className="codeNumber">21</code>
+            </div>
+            <code>
+              <code>
+                <b>interface</b> User {'{'}
+              </code>
+              <code>
+              {'  '}id: <b>string</b>;
+              </code>
+              <code>
+              {'  '}name: <b>string</b>;
+              </code>
+              <code>
+              {'  '}displayName: <b>string</b>;
+              </code>
+              <code>{'  '}</code>
+              <code>
+                <b>function</b> assertDisplayName(user: <b>User</b>): <b>asserts</b> user <b>is</b> User <b>&</b> {'{'} displayName: <b>string</b> {'}'} {'{'}
+              </code>
+              <code>
+              {'  '}<b>if</b> (<b>!</b>('displayName' <b>in</b> user)) {'{'}
+              </code>
+              <code>{'    '}<b>throw new</b> Error('User has no displayName property');
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code><b>function</b> logUserDisplayName(user: <b>User</b>) {'{'}
+              </code>
+              <code>
+                {'  '}<b>assertDisplayName</b>(user);
+              </code>
+              <code>{'  '}</code>
+              <code>
+              {'  '}<b>console.log</b>(user.displayName.<b>toUpperCase()</b>);
+              </code>
+              <code>
+              {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code><b>const</b> user1: User = {'{'} id: '1', name: 'Alice', displayName: 'Alice123' {'}'};
+              </code>
+              <code>
+                <b>logUserDisplayName</b>(user1); // Работает
+              </code>
+              <code>{'  '}</code>
+              <code>
+              <b>const</b> user2: User = {'{'} id: '2', name: 'Bob' {'}'};
+              </code>
+              <code><b>logUserDisplayName</b>(user2); // Выбросит ошибку: User has no displayName property
+              </code>
+            </code>
+          </pre>
+        </div>
+      )
     }
   },
 }
