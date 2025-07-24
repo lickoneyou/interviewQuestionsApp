@@ -354,6 +354,32 @@ const Typescript = {
           <p><b>Сабдтип</b> - это тип, который наследуется от другого типа.</p>
         </div>
       )
+    },
+    'Литералы': {
+      id: '79',
+      title: 'Литералы',
+      jsx: (
+        <div>
+          <p><b>Литералы</b> - позволяют указать конкретное значение, а не просто тип данных, как это делают обычные типы.</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+            </div>
+            <code>
+              <code>let <b>myString</b>: "hello" = "hello";</code>
+            </code>
+          </pre>
+          <p><b>Шаблонные литеральные типы</b>- позволяют создавать строковые литералы на основе других типов или значений.</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+            </div>
+            <code>
+              <code><b>type</b> Size = "small" | "medium" | "large";</code>
+            </code>
+          </pre>
+        </div>
+      )
     }
   },
 }
