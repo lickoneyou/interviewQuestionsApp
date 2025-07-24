@@ -85,6 +85,12 @@ const Typescript = {
                 </td>
                 <td>для создания пользовательского типа</td>
               </tr>
+              <tr>
+                <td>
+                  <b>unknown</b>
+                </td>
+                <td>как <b>any</b> только требует проверок <b>typeof</b></td>
+              </tr>
             </tbody>
           </table>
         </div>
