@@ -276,6 +276,69 @@ const Typescript = {
         </div>
       ),
     },
+    'Intersection type': {
+      id: '77',
+      title: 'Intersection type',
+      jsx: (
+        <div>
+          <p><b>Intersection type</b> - тип, который создается путем объединения нескольких типов с использованием оператора <b>"&"</b></p>
+           <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+              <code className="codeNumber">7</code>
+              <code className="codeNumber">8</code>
+              <code className="codeNumber">9</code>
+              <code className="codeNumber">10</code>
+              <code className="codeNumber">11</code>
+              <code className="codeNumber">12</code>
+              <code className="codeNumber">13</code>
+              <code className="codeNumber">14</code>
+            </div>
+            <code>
+              <code>
+                <b>interface</b> Named {'{'}
+              </code>
+              <code>
+                {'  '}name: <b>string</b>;
+              </code>
+              <code>
+                {'}'}
+              </code>
+              <code>
+                {'  '}
+              </code>
+              <code>
+                <b>interface</b> Aged {'{'}
+              </code>
+              <code>
+                {'  '}name: <b>number</b>;
+              </code>
+              <code>
+                {'}'}
+              </code>
+              <code>
+                {'  '}
+              </code>
+              <code><b>type</b> Person = Named & Aged;</code>
+              <code>
+                {'  '}
+              </code>
+              <code>
+                <b>let</b> person: Person = {'{'}
+              </code>
+              <code>{'  '} name: "Name",</code>
+              <code>{'  '} age: 30,</code>
+              <code>{'}'}</code>
+            </code>
+           </pre>
+        </div>
+      )
+    }
   },
 }
 
