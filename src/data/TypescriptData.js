@@ -380,6 +380,58 @@ const Typescript = {
           </pre>
         </div>
       )
+    },
+    'keyof/typeof': {
+      id: '710',
+      title: 'keyof/typeof',
+      jsx: (
+        <div>
+          <p><b>typeof</b> - позволяет получить тип значения во время компиляции</p>
+          <pre>
+           <div className="numbers">
+            <code className="codeNumber">1</code>
+            <code className="codeNumber">2</code>
+           </div>
+           <code>
+            <code>
+              <b>let</b> str = "hello";
+            </code>
+            <code>
+              <b>let</b> num: <b>typeof</b> str = "world"; // num будет иметь тип string
+            </code>
+           </code>
+          </pre>
+          <p><b>keyof</b> - возвращает объединение строковых литералов, представляющих ключи объекта</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+            </div>
+            <code>
+              <code>
+                <b>interface</b> Person {'{'}
+              </code>
+              <code>
+                {'  '}name: <b>string</b>;
+              </code>
+              <code>
+                {'  '}age: <b>number</b>;
+              </code>
+              <code>
+                {'}'}
+              </code>
+              <code>
+                {'  '}
+              </code>
+              <code><b>type</b> PersonKeys = <b>keyof</b> Person; // PersonKeys будет типом "name" | "age"</code>
+            </code>
+          </pre>
+        </div>
+      )
     }
   },
 }
