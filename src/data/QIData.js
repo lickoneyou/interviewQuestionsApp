@@ -859,11 +859,11 @@ const QI = {
               <code>
                 <b>FROM</b> Products
               </code>
-              <code className="comment">// Название базы данных</code>
+              <code className="comment">{'// Название базы данных'}</code>
               <code>
                 <b>WHERE</b> {'{...}'}
               </code>
-              <code className="comment">// Условие</code>
+              <code className="comment">{'// Условие'}</code>
             </code>
           </pre>
           <p>Добавить:</p>
@@ -880,9 +880,9 @@ const QI = {
               <code>
                 <b>INCERT INTO</b> Products
               </code>
-              <code className="comment">// Название базы данных</code>
+              <code className="comment">{'// Название базы данных'}</code>
               <code>(title, price, ...)</code>
-              <code className="comment">// Название полей</code>
+              <code className="comment">{'// Название полей'}</code>
               <code>
                 <b>VALUES</b>
               </code>
@@ -902,11 +902,11 @@ const QI = {
               <code>
                 <b>UPDATE</b> Products
               </code>
-              <code className="comment">// Название базы данных</code>
+              <code className="comment">{'// Название базы данных'}</code>
               <code>
                 <b>SET</b> price = 200
               </code>
-              <code className="comment">// Меняем поле price</code>
+              <code className="comment">{'// Меняем поле price'}</code>
               <code>
                 <b>WHERE</b> {'{условие}'}
               </code>
@@ -927,7 +927,7 @@ const QI = {
               <code>
                 <b>FROM</b> Products
               </code>
-              <code className="comment">// Название базы данных</code>
+              <code className="comment">{'// Название базы данных'}</code>
               <code>
                 <b>WHERE</b> {'{условие}'}
               </code>

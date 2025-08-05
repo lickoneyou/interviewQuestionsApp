@@ -520,6 +520,40 @@ const Typescript = {
           </pre>
         </div>
       )
+    },
+    'Перегрузка функций': {
+      id: '712',
+      title: 'Перегрузка функций',
+      jsx: (
+        <div>
+        <p><b>Перегрузка функций</b> - позволяет создавать несколько версий одной функции, каждая из которых принимает разные типы или количество аргументов, обеспечивая большую гибкость и удобство использования.</p>
+        <pre>
+          <div className="numbers">
+            <code className="codeNumber">1</code>
+            <code className="codeNumber">2</code>
+            <code className="codeNumber">3</code>
+            <code className="codeNumber">4</code>
+            <code className="codeNumber">5</code>
+            <code className="codeNumber">6</code>
+            <code className="codeNumber">7</code>
+            <code className="codeNumber">8</code>
+          </div>
+          <code>
+            <code><b>function</b> add(a: <b>number</b>, b: <b>number</b>): <b>number</b>;
+            </code>
+            <code><b>function</b> add(a: <b>string</b>, b: <b>string</b>): <b>string</b>;
+            </code>
+            <code><b>function</b> add(a: <b>any</b>, b: <b>any</b>): <b>any</b> {'{'}
+            </code>
+            <code>{'  '} <b>return</b> a + b;</code>
+            <code>{'}'}</code>
+            <code>{'  '}</code>
+            <code><b>let</b> result1 = add(1, 2); {'// 3'}</code>
+            <code><b>let</b> result2 = add("Hello, ", "world!"); {'// "Hello, world!"'}</code>
+          </code>
+        </pre>
+        </div>
+      )
     }
   },
 }
