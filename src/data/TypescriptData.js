@@ -607,6 +607,49 @@ const Typescript = {
         </pre>
         </div>
       )
+    },
+    'Рекурсивные типы': {
+      id: '715',
+      title: 'Рекурсивные типы',
+      jsx: (
+        <div>
+          <p><b>Рекурсивные типы</b> позволяют описывать типы, которые ссылаются на самих себя в своем определении, это достигается путем использования типа внутри его собственного определения, что позволяет TypeScript обрабатывать сложные вложенные структуры</p>
+          <pre>
+            <div className="numbers">
+              <code className="codeNumber">1</code>
+                <code className="codeNumber">2</code>
+                <code className="codeNumber">3</code>
+                <code className="codeNumber">4</code>
+                <code className="codeNumber">5</code>
+                <code className="codeNumber">6</code>
+                <code className="codeNumber">7</code>
+                <code className="codeNumber">8</code>
+                <code className="codeNumber">9</code>
+                <code className="codeNumber">10</code>
+                <code className="codeNumber">11</code>
+                <code className="codeNumber">12</code>
+                <code className="codeNumber">13</code>
+              <code className="codeNumber">14</code>
+            </div>
+            <code>
+              <code><b>type</b> NestedValue = {'{'}</code>
+              <code>{'  '}value: <b>string</b>;</code>
+              <code>{'  '}next?: NestedValue;</code>
+              <code>{'}'};</code>
+              <code>{'  '}</code>
+              <code><b>const</b> list: NestedValue = {'{'}</code>
+              <code>{'  '}value: <b>'a'</b>,</code>
+              <code>{'  '}next: {'{'}</code>
+              <code>{'    '}value: <b>'b'</b>,</code>
+              <code>{'    '}next: {'{'}</code>
+              <code>{'      '}value: <b>'c'</b></code>
+              <code>{'    '}{'}'}</code>
+              <code>{'  '}{'}'}</code>
+              <code>{'}'};</code>
+            </code>
+          </pre>
+        </div>
+      )
     }
   },
 }
