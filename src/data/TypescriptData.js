@@ -579,6 +579,34 @@ const Typescript = {
            </ul>
         </div>
       )
+    },
+    'infer': {
+      id: '714',
+      title: 'infer',
+      jsx: (
+        <div>
+        <p><b>infer</b> работает в связке с условными типами, которые позволяют создавать типы, зависящие от других типов.</p>
+        <p>Когда вы используете <b>infer</b> в условном типе, TypeScript пытается вывести конкретный тип из заданного типа. Например, если вы работаете с массивом, <b>infer</b> может вывести тип элементов массива.</p>
+        <pre>
+          <div className="numbers">
+             <code className="codeNumber">1</code>
+              <code className="codeNumber">2</code>
+              <code className="codeNumber">3</code>
+              <code className="codeNumber">4</code>
+              <code className="codeNumber">5</code>
+              <code className="codeNumber">6</code>
+          </div>
+          <code>
+            <code><b>type</b> ElementType{'<T>'} = T <b>extends</b> (<b>infer</b> U)[] ? U : T;</code>
+            <code>{'  '}</code>
+            <code><b>type</b> Arr = <b>numbe</b>[];</code>
+            <code><b>type</b> Num = ElementType{'<Arr>'}; <span className="comment">{'//  Num будет number'}</span></code>
+            <code>{'  '}</code>
+            <code><b>type</b> Str = ElementType{'<string>'}; <span className="comment">{'// Str будет string'}</span></code>
+          </code>
+        </pre>
+        </div>
+      )
     }
   },
 }
