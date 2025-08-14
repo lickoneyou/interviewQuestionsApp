@@ -9,6 +9,7 @@ import { IconCircleArrowLeft } from '@tabler/icons-react'
 import { IconCircleArrowRight } from '@tabler/icons-react'
 import getQuestionIndex from '@/handlers/getQuestionIndex'
 import getAllQuestions from '@/handlers/getAllQuestions'
+import { useEffect } from 'react'
 
 const Question = () => {
   const questionID = usePathname().replace('/', '')
@@ -19,7 +20,10 @@ const Question = () => {
   const iconRight = <IconCircleArrowRight stroke={2} />
   const allQuestions = getAllQuestions()
   const router = useRouter()
-  router.push(allQuestions[getQuestionIndex(questionID)].id)
+
+  useEffect(() => {
+    router.push(allQuestions[getQuestionIndex(questionID)].id);
+  }, []);
   
   return (
     <div

@@ -16,10 +16,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <MantineProvider>
           <Notifications zIndex={1000} position="top-center" />
-          {children}
+          <main className={inter.className}>
+            {children}
+          </main>
         </MantineProvider>
       </body>
     </html>
