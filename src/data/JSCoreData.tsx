@@ -1708,7 +1708,7 @@ const JSCORE = {
                 <p className="comment">✅ Здесь TDZ заканчивается</p>
               </code>
               <code>{'  '}</code>
-              <code className="comment">// После этой строки переменная доступна</code>
+              <code className="comment">{'//'} После этой строки переменная доступна</code>
               <code style={{ display: "flex" }}>console.log(x); <p className="comment">// 10</p></code>
             </code>
           </pre>
