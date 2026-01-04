@@ -585,6 +585,100 @@ const Vue = {
         </div>
       ),
     },
+    Emits: {
+      id: '98',
+      title: 'Emits',
+      jsx: (
+        <div>
+          <p>
+            <b>Emits</b> — это способ, с помощью которого дочерний компонент
+            отправляет события родительскому компоненту.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+              <code className='codeNumber'>17</code>
+            </div>
+            <code>
+              <code className='comment'>// App.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>{"import Comp from './Comp.vue'"}</code>
+              <code>{'  '}</code>
+              <code>const count = ref(0)</code>
+              <code>{'  '}</code>
+              <code>{'function updateCount(newCount) {'}</code>
+              <code>
+                {'  '}
+                {'count.value = newCount'}
+              </code>
+              <code>{'}'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p>count: {{count}}</p>'}
+              </code>
+              <code>
+                {'  '}
+                {"<Comp @update-count='updateCount'/>"}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+            </div>
+            <code>
+              <code className='comment'>// Comp.vue</code>
+              <code>{'<script setup lang="ts">'}</code>
+              <code>const emit = defineEmits(['updateCount'])</code>
+              <code>{'  '}</code>
+              <code>{'function handleClick() {'}</code>
+              <code>{'  '}emit('updateCount', 12)</code>
+              <code>{'}'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {"<button @click='handleClick'>Add</button>"}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
