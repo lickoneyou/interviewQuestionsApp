@@ -490,18 +490,98 @@ const Vue = {
               <code>{'  '}count?: number</code>
               <code>{'}'}</code>
               <code>{'  '}</code>
-              <code>{'const props = withDefaults(defineProps<Props>(), {'}</code>
+              <code>
+                {'const props = withDefaults(defineProps<Props>(), {'}
+              </code>
               <code>{'  '}title: 'title',</code>
               <code>{'  '}count: 15</code>
               <code>{'})'}</code>
               <code>{'</script>'}</code>
               <code>{'  '}</code>
               <code>{'<template>'}</code>
-              <code>{'  '}{'<h1>{{props.title}}</h1>'}</code>
-              <code>{'  '}{'<p>count: {{props.count}}</p>'}</code>
+              <code>
+                {'  '}
+                {'<h1>{{props.title}}</h1>'}
+              </code>
+              <code>
+                {'  '}
+                {'<p>count: {{props.count}}</p>'}
+              </code>
               <code>{'</template>'}</code>
             </code>
           </pre>
+        </div>
+      ),
+    },
+    Event: {
+      id: '97',
+      title: 'Event',
+      jsx: (
+        <div>
+          <p>
+            <b>Event</b> - это механизм для обработки взаимодействия
+            пользователя с элементами интерфейса (клики, ввод текста и т.д.) и
+            коммуникации между компонентами.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>const count = ref(0)</code>
+              <code>{'  '}</code>
+              <code>{'function countUp() {'}</code>
+              <code>{'  '}++count.value</code>
+              <code>{'}'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p>count: {{count}}</p>'}
+              </code>
+              <code>
+                {'  '}
+                {"<button @click='countUp'>Add</button>"}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <ul>
+            Vue предоставляет модификаторы для частых операций:
+            <li>
+              <b>@click.stop</b> Остановка всплытия (stopPropagation)
+            </li>
+            <li>
+              <b>@submit.prevent</b> Предотвращение действия по умолчанию
+              (preventDefault)
+            </li>
+            <li>
+              <b>@click.stop.prevent</b> Модификатор по цепочке
+            </li>
+            <li>
+              <b>@click.once</b> Только один раз
+            </li>
+            <li>
+              <b>@keyup.enter</b> Модификаторы клавиш
+            </li>
+          </ul>
         </div>
       ),
     },
