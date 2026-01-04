@@ -315,7 +315,7 @@ const Vue = {
               <code className='codeNumber'>11</code>
             </div>
             <code>
-              <code className='comment'>//App.vue</code>
+              <code className='comment'>{'//'}App.vue</code>
               <code>{'<script setup>'}</code>
               <code>import Comp from './Comp.vue'</code>
               <code>{'</script>'}</code>
@@ -353,7 +353,7 @@ const Vue = {
               <code className='codeNumber'>9</code>
             </div>
             <code>
-              <code className='comment'>//Comp.vue</code>
+              <code className='comment'>{'//'}Comp.vue</code>
               <code>{'<template>'}</code>
               <code>
                 {'  '}
@@ -406,7 +406,7 @@ const Vue = {
               <code className='codeNumber'>8</code>
             </div>
             <code>
-              <code className='comment'>// App.vue</code>
+              <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
               <code>import Comp from './Comp.vue'</code>
               <code>{'</script>'}</code>
@@ -437,7 +437,7 @@ const Vue = {
               <code className='codeNumber'>14</code>
             </div>
             <code>
-              <code className='comment'>// Comp.vue</code>
+              <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{'interface Props {'}</code>
               <code>{'  '}title: string,</code>
@@ -615,7 +615,7 @@ const Vue = {
               <code className='codeNumber'>17</code>
             </div>
             <code>
-              <code className='comment'>// App.vue</code>
+              <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
               <code>{'  '}</code>
@@ -659,7 +659,7 @@ const Vue = {
               <code className='codeNumber'>12</code>
             </div>
             <code>
-              <code className='comment'>// Comp.vue</code>
+              <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
               <code>const emit = defineEmits(['updateCount'])</code>
               <code>{'  '}</code>

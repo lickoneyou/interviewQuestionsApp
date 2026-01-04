@@ -1693,7 +1693,7 @@ const JSCORE = {
             </div>
             <code>
               <code className="comment">
-                // ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'
+                {'//'} ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'
               </code>
               <code>{"  "}</code>
               <code style={{ display: "flex" }}>
