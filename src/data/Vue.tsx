@@ -218,6 +218,42 @@ const Vue = {
         </div>
       ),
     },
+    Интерполяция: {
+      id: '93',
+      title: 'Интерполяция',
+      jsx: (
+        <div>
+          <p>
+            <b>Интерполяция</b> — это синтаксис для отображения данных из
+            JavaScript в HTML-шаблонах с помощью двойных фигурных скобок{' '}
+            <b>{'{{ }}'}</b>.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>const count = 0</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<h1>{{ 0 }}</h1>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
