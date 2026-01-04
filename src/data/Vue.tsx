@@ -280,7 +280,105 @@ const Vue = {
               <code>{'</script>'}</code>
               <code>{'  '}</code>
               <code>{'<template>'}</code>
-              <code>{'  '}{'<h1 :class="color">Title</h1>'}</code>
+              <code>
+                {'  '}
+                {'<h1 :class="color">Title</h1>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    Slot: {
+      id: '95',
+      title: 'Slot',
+      jsx: (
+        <div>
+          <p>
+            <b>Slot</b> — это механизм, позволяющий передавать и вставлять
+            контент (HTML, компоненты, текст) в определённые места внутри
+            компонента.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+            </div>
+            <code>
+              <code className='comment'>//App.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>import Comp from './Comp.vue'</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<Comp>'}
+              </code>
+              <code>
+                {'    '}
+                {'<template #default>default</template>'}
+              </code>
+              <code>
+                {'    '}
+                {'<template #header>header</template>'}
+              </code>
+              <code>
+                {'  '}
+                {'</Comp>'}
+              </code>
+              <code>{'<template>'}</code>
+            </code>
+          </pre>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+            </div>
+            <code>
+              <code className='comment'>//Comp.vue</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<div>'}
+              </code>
+              <code>
+                {'    '}
+                {'<slot name="header"/>'}
+              </code>
+              <code>
+                {'    '}
+                {'<div>'}
+              </code>
+              <code>
+                {'      '}
+                {'<slot />'}
+              </code>
+              <code>
+                {'    '}
+                {'</div>'}
+              </code>
+              <code>
+                {'  '}
+                {'</div>'}
+              </code>
               <code>{'</template>'}</code>
             </code>
           </pre>
