@@ -254,6 +254,39 @@ const Vue = {
         </div>
       ),
     },
+    'v-bind': {
+      id: '94',
+      title: 'v-bind',
+      jsx: (
+        <div>
+          <p>
+            <b>v-bind</b> - cвязывает атрибут HTML (например, href, src, class,
+            style) или входной параметр компонента с выражением JavaScript из
+            данных Vue.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>const color = 'red'</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>{'  '}{'<h1 :class="color">Title</h1>'}</code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
