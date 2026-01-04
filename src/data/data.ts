@@ -1,11 +1,12 @@
-import BasicCS        from './BasicCSdata';
-import CSSData        from './CSSData';
-import HTTPData       from './HTTPData';
-import HTMLData       from './HTMLData';
-import JSCoreData     from './JSCoreData';
-import QI             from './QIData';
-import ReactData      from './ReactData';
+import BasicCS from './BasicCSdata';
+import CSSData from './CSSData';
+import HTTPData from './HTTPData';
+import HTMLData from './HTMLData';
+import JSCoreData from './JSCoreData';
+import QI from './QIData';
+import ReactData from './ReactData';
 import TypescriptData from './TypescriptData';
+import Vue from './Vue';
 
 const data = {
   ...BasicCS,
@@ -14,6 +15,7 @@ const data = {
   ...CSSData,
   ...JSCoreData,
   ...ReactData,
+  ...Vue,
   ...TypescriptData,
   ...QI,
 };
