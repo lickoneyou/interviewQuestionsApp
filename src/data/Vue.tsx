@@ -385,9 +385,9 @@ const Vue = {
         </div>
       ),
     },
-    defineprops: {
+    'defineProps и withDefaults': {
       id: '96',
-      title: 'defineprops',
+      title: 'defineProps и withDefaults',
       jsx: (
         <div>
           <p>
@@ -456,6 +456,49 @@ const Vue = {
                 {'  '}
                 {'<p>count: {{count}}</p>'}
               </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>withDefaults</b> — это утилита TypeScript в Composition API Vue
+            3, которая позволяет задавать значения по умолчанию для props в
+            компонентах с использованием <b>{'<script setup>'}</b>
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+            </div>
+            <code>
+              <code>{'<script setup lang="ts">'}</code>
+              <code>{'interface Props {'}</code>
+              <code>{'  '}title?: string,</code>
+              <code>{'  '}count?: number</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{'const props = withDefaults(defineProps<Props>(), {'}</code>
+              <code>{'  '}title: 'title',</code>
+              <code>{'  '}count: 15</code>
+              <code>{'})'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>{'  '}{'<h1>{{props.title}}</h1>'}</code>
+              <code>{'  '}{'<p>count: {{props.count}}</p>'}</code>
               <code>{'</template>'}</code>
             </code>
           </pre>
