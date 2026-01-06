@@ -866,6 +866,64 @@ const Vue = {
         </div>
       ),
     },
+    'v-if v-else': {
+      id: '912',
+      title: 'v-if v-else',
+      jsx: (
+        <div>
+          <p>
+            <b>v-if</b> и <b>v-else</b> — это{' '}
+            <span>директивы условного рендеринга</span> во Vue.js, которые
+            позволяют показывать или скрывать элементы в зависимости от условий.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>const isVisible = ref(true)</code>
+              <code>{'  '}</code>
+              <code>{'function fn() {'}</code>
+              <code>{'  '}isVisible.value = !isVisible.value</code>
+              <code>{'}'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p v-if="isVisible">true</p>'}
+              </code>
+              <code>
+                {'  '}
+                {'<p v-else>false</p>'}
+              </code>
+              <code>
+                {'  '}
+                {'<button @click="fn">Кнопка</button>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
