@@ -784,6 +784,88 @@ const Vue = {
         </div>
       ),
     },
+    computed: {
+      id: '911',
+      title: 'computed',
+      jsx: (
+        <div>
+          <p>
+            <b>computed</b> это реактивные <span>вычисляемые свойства</span>,
+            которые автоматически обновляются при изменении зависимых реактивных
+            данных.
+          </p>
+          <p>Основные принципы:</p>
+          <ul>
+            <li>
+              <b>Кэширование</b> — результат вычисляется только при изменении
+              зависимостей
+            </li>
+            <li>
+              <b>Реактивность</b> — автоматически отслеживает зависимости
+            </li>
+            <li>
+              <b>Оптимизация</b> — предотвращает лишние перерасчеты
+            </li>
+          </ul>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+              <code className='codeNumber'>17</code>
+              <code className='codeNumber'>18</code>
+              <code className='codeNumber'>19</code>
+              <code className='codeNumber'>20</code>
+              <code className='codeNumber'>21</code>
+              <code className='codeNumber'>22</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref, computed } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>const msg = ref(1)</code>
+              <code>const num = ref(1)</code>
+              <code>{'  '}</code>
+              <code>{'const value = computed(() => {'}</code>
+              <code>{'  '}return msg.value + 1</code>
+              <code>{'})'}</code>
+              <code>{'  '}</code>
+              <code>{'function fn() {'}</code>
+              <code>{'  '}msg.value = msg.value - num.value</code>
+              <code>{'  '}num.value += 1</code>
+              <code>{'}'}</code>
+              <code className='comment'>{'//'} первый клик value = 1</code>
+              <code className='comment'>{'//'} второй клик value = -1</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p>{{value}}</p>'}
+              </code>
+              <code>
+                {'  '}
+                {'<button @click="fn">Кнопка</button>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
