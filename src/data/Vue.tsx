@@ -1027,6 +1027,90 @@ const Vue = {
         </div>
       ),
     },
+    'v-model и defineModel()': {
+      id: '915',
+      title: 'v-model и defineModel()',
+      jsx: (
+        <div>
+          <p>
+            <b>v-model</b> - Двусторонняя привязка данных
+          </p>
+          <p>
+            <b>defineModel()</b> - Упрощает создание пользовательских
+            компонентов с поддержкой v-model в Composition API.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} App.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>{"import Comp from './Comp.vue'"}</code>
+              <code>{'  '}</code>
+              <code>const value = ref('')</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p>{{value}}</p>'}
+              </code>
+              <code>
+                {'  '}
+                {'<Comp v-model="value" />'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} Comp.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { defineModel } from 'vue';"}</code>
+              <code>{'  '}</code>
+              <code>{'const model = defineModel()'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {
+                  '<input :value="model" @input="model = $event.target.value" />'
+                }
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
