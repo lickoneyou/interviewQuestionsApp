@@ -720,6 +720,70 @@ const Vue = {
         </div>
       ),
     },
+    'nextTick()': {
+      id: '910',
+      title: 'nextTick()',
+      jsx: (
+        <div>
+          <p>
+            <b>nextTick()</b> — это метод Vue, который позволяет отложить
+            выполнение кода до следующего цикла обновления DOM. Это полезно,
+            когда нужно работать с DOM после того, как Vue обновил его в ответ
+            на изменение данных.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+              <code className='codeNumber'>17</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref, nextTick } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>const msg = ref(1)</code>
+              <code>{'  '}</code>
+              <code>{'async function fn() {'}</code>
+              <code>{'  '}msg.value = 2</code>
+              <code>{'  '}await nextTick()</code>
+              <code>
+                {'  '}const value = document.getElementById('msg').innerHTML
+              </code>
+              <code>
+                {'  '}console.log(value) {'//'} без nextTick выведет '1' c '2'
+              </code>
+              <code>{'}'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<p id="msg">{{msg}}</p>'}
+              </code>
+              <code>
+                {'  '}
+                {'<button @click="fn">Кнопка</button>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
