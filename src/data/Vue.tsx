@@ -1111,6 +1111,34 @@ const Vue = {
         </div>
       ),
     },
+    'Хуки жизненного цикла': {
+      id: '916',
+      title: 'Хуки жизненного цикла',
+      jsx: (
+        <div>
+          <ul>
+            <li>
+              <b>onBeforeMount()</b> - До монтирования
+            </li>
+            <li>
+              <b>onMounted()</b> - После монтирования
+            </li>
+            <li>
+              <b>onBeforeUpdate()</b> - До обновления
+            </li>
+            <li>
+              <b>onUpdated()</b> - После обновления
+            </li>
+            <li>
+              <b>onBeforeUnmount()</b> - До размонтирования
+            </li>
+            <li>
+              <b>onUnmounted()</b> - После размонтирования
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
