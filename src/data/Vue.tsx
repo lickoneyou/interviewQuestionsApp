@@ -981,6 +981,52 @@ const Vue = {
         </div>
       ),
     },
+    'v-for': {
+      id: '914',
+      title: 'v-for',
+      jsx: (
+        <div>
+          <p>
+            <b>v-for</b> — это директива во Vue.js, используемая для{' '}
+            <span>рендеринга списков</span> данных. Она позволяет отображать
+            элементы массива или объекта, создавая шаблон для каждого элемента.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>const arr = [1,2,3,4,5]</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<ul>'}
+              </code>
+              <code>
+                {'    '}
+                {'<li v-for="element in arr" :key="element">{{element}}</li>'}
+              </code>
+              <code>
+                {'  '}
+                {'</ul>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
