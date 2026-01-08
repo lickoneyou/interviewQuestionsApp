@@ -1259,6 +1259,53 @@ const Vue = {
         </div>
       ),
     },
+    useTemplateRef: {
+      id: '919',
+      title: 'useTemplateRef',
+      jsx: (
+        <div>
+          <p>
+            <b>useTemplateRef</b> — это функция, возвращающая мутирующую
+            (mutable) ref-ссылку на элемент шаблона.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { useTemplateRef, onMounted } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>const elem = useTemplateRef('elem')</code>
+              <code>{'  '}</code>
+              <code>{'onMounted(() => {'}</code>
+              <code>{'  '}elem.value.innerHTML = '1'</code>
+              <code>{'})'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<div ref="elem">100</div>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
