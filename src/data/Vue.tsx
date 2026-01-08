@@ -1139,6 +1139,53 @@ const Vue = {
         </div>
       ),
     },
+    watch: {
+      id: '917',
+      title: 'watch',
+      jsx: (
+        <div>
+          <p>
+            <b>watch</b> — это реактивная функция, которая отслеживает изменения
+            одного или нескольких реактивных источников и выполняет колбэк при
+            их изменении.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+            </div>
+            <code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref, watch } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>let count = ref(0)</code>
+              <code>let secondCount = ref(1)</code>
+              <code>{'  '}</code>
+              <code>{'watch([count, secondCount], () => {'}</code>
+              <code>{'  '}console.log(count.value, 'count')</code>
+              <code className='comment'>
+                {'//'} выведет в консоль 0 при изменении secondCount
+              </code>
+              <code>{'})'}</code>
+              <code>{'  '}</code>
+              <code>{'secondCount.value = 2'}</code>
+              <code>{'</script>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
