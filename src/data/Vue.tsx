@@ -1186,6 +1186,79 @@ const Vue = {
         </div>
       ),
     },
+    'Provide Inject': {
+      id: '918',
+      title: 'Provide Inject',
+      jsx: (
+        <div>
+          <p>
+            <b>provide</b> и <b>inject</b> — это механизм в Vue для передачи
+            данных от родительского компонента к глубоко вложенным дочерним
+            компонентам, минуя промежуточные компоненты (пропуская{' '}
+            <span>"props drilling"</span>).
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} App.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { ref, provide } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>{"import Comp from './Comp.vue'"}</code>
+              <code>{'  '}</code>
+              <code>let count = ref(10)</code>
+              <code>{'  '}</code>
+              <code>provide('count', count)</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<Comp />'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} Comp.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { inject } from 'vue';"}</code>
+              <code>{'  '}</code>
+              <code>const count = inject('count')</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>{{count}}</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
