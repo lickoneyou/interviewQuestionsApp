@@ -1306,6 +1306,105 @@ const Vue = {
         </div>
       ),
     },
+    Teleport: {
+      id: '920',
+      title: 'Teleport',
+      jsx: (
+        <div>
+          <p>
+            <b>Teleport</b> — это встроенный компонент Vue 3, который позволяет
+            «телепортировать» часть HTML-разметки в другое место в DOM, за
+            пределами текущей иерархии компонента. Это особенно полезно для
+            элементов вроде модальных окон, которые должны отображаться поверх
+            всего контента, без ограничений CSS от родительских элементов.
+          </p>
+          <p>
+            Атрибут <b>defer</b> заставляет Teleport ждать, пока цель появится в{' '}
+            <span>DOM</span>.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} App.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import Comp  from './Comp.vue';"}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<div class="wrapper">'}
+              </code>
+              <code>
+                {'    '}
+                {'<div>'}
+              </code>
+              <code>
+                {'      '}
+                {'<Comp />'}
+              </code>
+              <code>
+                {'    '}
+                {'/div>'}
+              </code>
+              <code>
+                {'  '}
+                {'</div>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+            </div>
+            <code>
+              <code className='comment'>{'//'} Comp.vue</code>
+              <code>{'<script setup>'}</code>
+              <code>{"import { Teleport } from 'vue';"}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<Teleport defer to=".wrapper">'}
+              </code>
+              <code>
+                {'    '}
+                {'<div class="comp">component</div>'}
+              </code>
+              <code>
+                {'  '}
+                {'</Teleport>'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
