@@ -1581,6 +1581,164 @@ const Vue = {
         </div>
       ),
     },
+    Router: {
+      id: '923',
+      title: 'Router',
+      jsx: (
+        <div>
+          <p>Подключение:</p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+            </div>
+            <code>
+              <code>{"import { createApp } from 'vue'"}</code>
+              <code>{"import router from './router'"}</code>
+              <code>{'  '}</code>
+              <code>{"import App from './App.vue'"}</code>
+              <code>{'  '}</code>
+              <code>const app = createApp(App)</code>
+              <code>{'  '}</code>
+              <code>app.use(router)</code>
+              <code>{'  '}</code>
+              <code>{"app.mount('#app')"}</code>
+            </code>
+          </pre>
+          <p>Роуты:</p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+            </div>
+            <code>
+              <code>
+                {"import { createRouter, createWebHistory } from 'vue-router'"}
+              </code>
+              <code>{'  '}</code>
+              <code>{"import Main from '@/pages/Main.vue'"}</code>
+              <code>{"import Card from '@/pages/Card.vue'"}</code>
+              <code>{"import Product from '@/pages/Product.vue'"}</code>
+              <code>{'  '}</code>
+              <code>{'const router = createRouter({'}</code>
+              <code>
+                {'  '}history: createWebHistory(import.meta.env.BASE_URL),
+              </code>
+              <code>
+                {'  '}
+                {'routes: ['}
+              </code>
+              <code>
+                {'    '}
+                {"{ path: '/', component: Main },"}
+              </code>
+              <code>
+                {'    '}
+                {"{ path: '/card', component: Card },"}
+              </code>
+              <code>
+                {'    '}
+                {"{ path: '/product/:id', component: Product },"}
+              </code>
+              <code>
+                {'  '}
+                {'],'}
+              </code>
+              <code>{'})'}</code>
+              <code>{'  '}</code>
+              <code>export default router</code>
+            </code>
+          </pre>
+          <p>Подключение в App.vue:</p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+            </div>
+            <code>
+              <code>{'<script setup lang="ts">'}</code>
+              <code>{"import { RouterView } from 'vue-router'"}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<RouterView />'}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+          <p>
+            Для роутов используется <b>RouterLink</b>
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+            </div>
+            <code>
+              <code>{'<RouterLink to="/">Go to Home</RouterLink>'}</code>
+            </code>
+          </pre>
+          <p>
+            или <b>router.push</b>
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+            </div>
+            <code>
+              <code>{'<script setup lang="ts">'}</code>
+              <code>{"import { useRouter } from 'vue-router'"}</code>
+              <code>{'  '}</code>
+              <code>{'const router = useRouter()'}</code>
+              <code>{'</script>'}</code>
+              <code>{'  '}</code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {`<Button @click="router.push('/')" label="Go to Home" />`}
+              </code>
+              <code>{'</template>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
