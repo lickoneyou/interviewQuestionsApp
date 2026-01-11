@@ -1405,6 +1405,102 @@ const Vue = {
         </div>
       ),
     },
+    Transition: {
+      id: '921',
+      title: 'Transition',
+      jsx: (
+        <div>
+          <p>
+            <b>Transition</b> - это встроенный компонент для плавного
+            анимирования появления.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+              <code className='codeNumber'>17</code>
+              <code className='codeNumber'>18</code>
+              <code className='codeNumber'>19</code>
+              <code className='codeNumber'>20</code>
+              <code className='codeNumber'>21</code>
+            </div>
+            <code>
+              <code>{'<template>'}</code>
+              <code>
+                {'  '}
+                {'<Transition>'}
+              </code>
+              <code>
+                {'    '}
+                {'<Teleport to="body">'}
+              </code>
+              <code>
+                {'      '}
+                {'<div class="modal_overlay">'}
+              </code>
+              <code>
+                {'        '}
+                {'<div class="modal"></div>'}
+              </code>
+              <code>
+                {'      '}
+                {'</div>'}
+              </code>
+              <code>
+                {'    '}
+                {'</Teleport>'}
+              </code>
+              <code>
+                {'  '}
+                {'</Transition>'}
+              </code>
+              <code>{'</template>'}</code>
+              <code>{'  '}</code>
+              <code>{'<style lang="scss" scoped>'}</code>
+              <code>
+                {'  '}
+                {'.v-enter-active,'}
+              </code>
+              <code>
+                {'  '}
+                {'.v-leave-active {'}
+              </code>
+              <code>{'    '}transition: opacity 0.5s ease;</code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>{'  '}.v-enter-from,</code>
+              <code>
+                {'  '}
+                {'.v-leave-to {'}
+              </code>
+              <code>{'    '}opacity: 0;</code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'</style>'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
