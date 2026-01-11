@@ -1501,6 +1501,86 @@ const Vue = {
         </div>
       ),
     },
+    Pinia: {
+      id: '922',
+      title: 'Pinia',
+      jsx: (
+        <div>
+          <p>Подключение:</p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+            </div>
+            <code>
+              <code>{"import { createApp } from 'vue'"}</code>
+              <code>{"import { createPinia } from 'pinia'"}</code>
+              <code>{'  '}</code>
+              <code>{"import App from './App.vue'"}</code>
+              <code>{'  '}</code>
+              <code>const app = createApp(App)</code>
+              <code>{'  '}</code>
+              <code>app.use(createPinia())</code>
+              <code>{'  '}</code>
+              <code>{"app.mount('#app')"}</code>
+            </code>
+          </pre>
+          <p>Создание стора:</p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+            </div>
+            <code>
+              <code>{"import { defineStore } from 'pinia'"}</code>
+              <code>{"import { ref } from 'vue'"}</code>
+              <code>{'  '}</code>
+              <code>
+                {"export const useStore = defineStore('store', () => {"}
+              </code>
+              <code>
+                {'  '}
+                {'const value = ref([])'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'const fn = () => {'}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {'//'}...
+              </code>
+              <code>{'  }'}</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'return { value, fn }'}
+              </code>
+              <code>{'})'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
