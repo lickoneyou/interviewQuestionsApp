@@ -64,6 +64,100 @@ const Nest = {
         </div>
       ),
     },
+    Entity: {
+      id: '102',
+      title: 'Entity',
+      jsx: (
+        <div>
+          <p>
+            <b>Entity</b> - это класс, который отображает структуру таблицы базы
+            данных.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+              <code className='codeNumber'>16</code>
+              <code className='codeNumber'>17</code>
+              <code className='codeNumber'>18</code>
+              <code className='codeNumber'>19</code>
+              <code className='codeNumber'>20</code>
+            </div>
+            <code>
+              <code>{'// user.entity.ts'}</code>
+              <code>{`import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';`}</code>
+              <code>{'  '}</code>
+              <code>{'@Entity()'}</code>
+              <code>
+                {'  '}
+                {`export class User {`}
+              </code>
+              <code>
+                {'    '}
+                {'@PrimaryGeneratedColumn()'}
+              </code>
+              <code>
+                {'    '}
+                {'id: number;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {'@Column()'}
+              </code>
+              <code>
+                {'    '}
+                {'name: string;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {'@Column({ unique: true })'}
+              </code>
+              <code>
+                {'    '}
+                {'email: string;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {'@Column()'}
+              </code>
+              <code>
+                {'    '}
+                {'age: number;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {'@Column({ default: true })'}
+              </code>
+              <code>
+                {'    '}
+                {'isActive: boolean;'}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
