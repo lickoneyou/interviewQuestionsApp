@@ -158,6 +158,79 @@ const Nest = {
         </div>
       ),
     },
+    DTO: {
+      id: '103',
+      title: 'DTO',
+      jsx: (
+        <div>
+          <p>
+            <b>DTO</b> - это объект, который определяет как данные будут
+            передаваться по сети. Он не содержит бизнес-логику, только правила
+            валидации и типизации.
+          </p>
+          <pre>
+            <div className='numbers'>
+              <code className='codeNumber'>1</code>
+              <code className='codeNumber'>2</code>
+              <code className='codeNumber'>3</code>
+              <code className='codeNumber'>4</code>
+              <code className='codeNumber'>5</code>
+              <code className='codeNumber'>6</code>
+              <code className='codeNumber'>7</code>
+              <code className='codeNumber'>8</code>
+              <code className='codeNumber'>9</code>
+              <code className='codeNumber'>10</code>
+              <code className='codeNumber'>11</code>
+              <code className='codeNumber'>12</code>
+              <code className='codeNumber'>13</code>
+              <code className='codeNumber'>14</code>
+              <code className='codeNumber'>15</code>
+            </div>
+            <code>
+              <code className='comment'>{'// create-user.dto.ts'}</code>
+              <code>{`import { IsEmail, IsInt, IsString, Min, Max } from 'class-validator';`}</code>
+              <code>{'  '}</code>
+              <code>{'export class CreateUserDto {'}</code>
+              <code>
+                {'  '}
+                {'@IsString()'}
+              </code>
+              <code>
+                {'  '}
+                {'name: string;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'@IsEmail()'}
+              </code>
+              <code>
+                {'  '}
+                {'email: string;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'@IsInt()'}
+              </code>
+              <code>
+                {'  '}
+                {'@Min(18)'}
+              </code>
+              <code>
+                {'  '}
+                {'@Max(100)'}
+              </code>
+              <code>
+                {'  '}
+                {'age: number;'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
