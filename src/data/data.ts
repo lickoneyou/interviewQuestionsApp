@@ -7,6 +7,7 @@ import QI from './QIData';
 import ReactData from './ReactData';
 import TypescriptData from './TypescriptData';
 import Vue from './Vue';
+import Nest from './NestData';
 
 const data = {
   ...BasicCS,
@@ -17,6 +18,7 @@ const data = {
   ...ReactData,
   ...Vue,
   ...TypescriptData,
+  ...Nest,
   ...QI,
 };
 
