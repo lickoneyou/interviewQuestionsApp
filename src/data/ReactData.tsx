@@ -1,3 +1,5 @@
+import CodeNumber from "../components/Basic/CodeNumbers";
+
 const React = {
   React: {
     "Виртуальный DOM": {
@@ -352,21 +354,7 @@ const React = {
             требуется для рендеринга.
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-              <code className="codeNumber">4</code>
-              <code className="codeNumber">5</code>
-              <code className="codeNumber">6</code>
-              <code className="codeNumber">7</code>
-              <code className="codeNumber">8</code>
-              <code className="codeNumber">9</code>
-              <code className="codeNumber">10</code>
-              <code className="codeNumber">11</code>
-              <code className="codeNumber">12</code>
-              <code className="codeNumber">13</code>
-            </div>
+            <CodeNumber length={13}/>
             <code>
               <code>
                 import React, {"{"} Suspense {"}"} from 'react';

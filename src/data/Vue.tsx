@@ -1,3 +1,5 @@
+import CodeNumber from "../components/Basic/CodeNumbers"
+
 const Vue = {
   Vue: {
     'Особенности Vue': {
@@ -79,21 +81,7 @@ const Vue = {
         <div>
           <p>Options API (классический подход):</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-            </div>
+            <CodeNumber length={13}/>
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -125,17 +113,7 @@ const Vue = {
           </pre>
           <p>Composition API (новый подход)</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-            </div>
+            <CodeNumber length={9}/>
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -229,15 +207,7 @@ const Vue = {
             <b>{'{{ }}'}</b>.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-            </div>
+            <CodeNumber length={7}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>const count = 0</code>
@@ -265,15 +235,7 @@ const Vue = {
             данных Vue.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-            </div>
+            <CodeNumber length={7}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>const color = 'red'</code>
@@ -301,19 +263,7 @@ const Vue = {
             компонента.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-            </div>
+            <CodeNumber length={11}/>
             <code>
               <code className='comment'>{'//'}App.vue</code>
               <code>{'<script setup>'}</code>
@@ -341,17 +291,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-            </div>
+            <CodeNumber length={9}/>
             <code>
               <code className='comment'>{'//'}Comp.vue</code>
               <code>{'<template>'}</code>
@@ -395,16 +335,7 @@ const Vue = {
             компонента к дочернему.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-            </div>
+            <CodeNumber length={8}/>
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -420,22 +351,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-            </div>
+            <CodeNumber length={14}/>
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
@@ -465,24 +381,7 @@ const Vue = {
             компонентах с использованием <b>{'<script setup>'}</b>
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-            </div>
+            <CodeNumber  length={16}/>
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{'interface Props {'}</code>
@@ -524,22 +423,7 @@ const Vue = {
             коммуникации между компонентами.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-            </div>
+            <CodeNumber length={14}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -595,25 +479,7 @@ const Vue = {
             отправляет события родительскому компоненту.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-            </div>
+            <CodeNumber length={17}/>
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -644,20 +510,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-            </div>
+            <CodeNumber length={12}/>
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
@@ -732,25 +585,7 @@ const Vue = {
             на изменение данных.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-            </div>
+            <CodeNumber length={17}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, nextTick } from 'vue'"}</code>
@@ -808,30 +643,7 @@ const Vue = {
             </li>
           </ul>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-              <code className='codeNumber'>18</code>
-              <code className='codeNumber'>19</code>
-              <code className='codeNumber'>20</code>
-              <code className='codeNumber'>21</code>
-              <code className='codeNumber'>22</code>
-            </div>
+            <CodeNumber length={22}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, computed } from 'vue'"}</code>
@@ -877,23 +689,7 @@ const Vue = {
             позволяют показывать или скрывать элементы в зависимости от условий.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-            </div>
+            <CodeNumber length={15}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -934,23 +730,7 @@ const Vue = {
             которая работает через CSS-свойство <b>display.</b>
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-            </div>
+            <CodeNumber length={15}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -992,17 +772,7 @@ const Vue = {
             элементы массива или объекта, создавая шаблон для каждого элемента.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-            </div>
+            <CodeNumber length={9}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>const arr = [1,2,3,4,5]</code>
@@ -1040,21 +810,7 @@ const Vue = {
             компонентов с поддержкой v-model в Composition API.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-            </div>
+            <CodeNumber length={13}/>
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -1078,18 +834,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-            </div>
+            <CodeNumber length={10}/>
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -1150,21 +895,7 @@ const Vue = {
             их изменении.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-            </div>
+            <CodeNumber length={13}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, watch } from 'vue'"}</code>
@@ -1198,22 +929,7 @@ const Vue = {
             <span>"props drilling"</span>).
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-            </div>
+            <CodeNumber length={14}/>
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -1235,16 +951,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-            </div>
+            <CodeNumber length={8}/>
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -1269,21 +976,7 @@ const Vue = {
             (mutable) ref-ссылку на элемент шаблона.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-            </div>
+            <CodeNumber length={13}/>
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { useTemplateRef, onMounted } from 'vue'"}</code>
@@ -1323,20 +1016,7 @@ const Vue = {
             <span>DOM</span>.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-            </div>
+            <CodeNumber length={12}/>
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -1368,18 +1048,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-            </div>
+            <CodeNumber length={10}/>
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -1415,29 +1084,7 @@ const Vue = {
             анимирования появления.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-              <code className='codeNumber'>18</code>
-              <code className='codeNumber'>19</code>
-              <code className='codeNumber'>20</code>
-              <code className='codeNumber'>21</code>
-            </div>
+            <CodeNumber length={21}/>
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -1508,18 +1155,7 @@ const Vue = {
         <div>
           <p>Подключение:</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-            </div>
+            <CodeNumber length={10}/>
             <code>
               <code>{"import { createApp } from 'vue'"}</code>
               <code>{"import { createPinia } from 'pinia'"}</code>
@@ -1535,20 +1171,7 @@ const Vue = {
           </pre>
           <p>Создание стора:</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-            </div>
+            <CodeNumber length={12}/>
             <code>
               <code>{"import { defineStore } from 'pinia'"}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -1588,18 +1211,7 @@ const Vue = {
         <div>
           <p>Подключение:</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-            </div>
+            <CodeNumber length={10}/>
             <code>
               <code>{"import { createApp } from 'vue'"}</code>
               <code>{"import router from './router'"}</code>
@@ -1615,24 +1227,7 @@ const Vue = {
           </pre>
           <p>Роуты:</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-            </div>
+            <CodeNumber length={16}/>
             <code>
               <code>
                 {"import { createRouter, createWebHistory } from 'vue-router'"}
@@ -1673,15 +1268,7 @@ const Vue = {
           </pre>
           <p>Подключение в App.vue:</p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-            </div>
+            <CodeNumber length={7}/>
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{"import { RouterView } from 'vue-router'"}</code>
@@ -1699,9 +1286,7 @@ const Vue = {
             Для роутов используется <b>RouterLink</b>
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>{'<RouterLink to="/">Go to Home</RouterLink>'}</code>
             </code>
@@ -1710,17 +1295,7 @@ const Vue = {
             или <b>router.push</b>
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-            </div>
+            <CodeNumber length={9}/>
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{"import { useRouter } from 'vue-router'"}</code>

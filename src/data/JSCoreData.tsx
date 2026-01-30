@@ -1,3 +1,5 @@
+import CodeNumber from "../components/Basic/CodeNumbers";
+
 const JSCORE = {
   "JS CORE": {
     "Типы данных JavaScript и структуры данных": {
@@ -337,19 +339,7 @@ const JSCORE = {
           </p>
           <p>Синтаксис:</p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-              <code className="codeNumber">4</code>
-              <code className="codeNumber">5</code>
-              <code className="codeNumber">6</code>
-              <code className="codeNumber">7</code>
-              <code className="codeNumber">8</code>
-              <code className="codeNumber">9</code>
-              <code className="codeNumber">10</code>
-              <code className="codeNumber">11</code>
-            </div>
+            <CodeNumber length={11}/>
             <code>
               <code>
                 switch(<b>x</b>){"{"}
@@ -395,11 +385,7 @@ const JSCORE = {
             Синтаксис <b>function declaration</b>:
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-            </div>
+            <CodeNumber length={3}/>
             <code>
               <code>
                 function <b>fn</b>(<b>a</b>) {"{"}
@@ -414,11 +400,7 @@ const JSCORE = {
             Синтаксис <b>function expression</b>:
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-            </div>
+            <CodeNumber length={3}/>
             <code>
               <code>
                 const <b>fn</b> = function(<b>a</b>) {"{"}
@@ -433,9 +415,7 @@ const JSCORE = {
             Синтаксис <b>arrow function</b>:
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 const <b>fn</b> = (<b>a</b>, <b>b</b>) {"=>"} <b>a</b> +{" "}
@@ -463,16 +443,7 @@ const JSCORE = {
           </p>
           <p>Синтаксис:</p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-              <code className="codeNumber">4</code>
-              <code className="codeNumber">5</code>
-              <code className="codeNumber">6</code>
-              <code className="codeNumber">7</code>
-              <code className="codeNumber">8</code>
-            </div>
+            <CodeNumber length={8}/>
             <code>
               <code>
                 <b>try</b> {"{"}
@@ -763,15 +734,7 @@ const JSCORE = {
         <div>
           <p>Синтаксис:</p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-              <code className="codeNumber">4</code>
-              <code className="codeNumber">5</code>
-              <code className="codeNumber">6</code>
-              <code className="codeNumber">7</code>
-            </div>
+            <CodeNumber length={7}/>
             <code>
               <code>
                 class <b>Class</b> {"{"}
@@ -856,11 +819,7 @@ const JSCORE = {
           </ul>
           <p>Синтаксис:</p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-            </div>
+            <CodeNumber length={3}/>
             <code>
               <code>
                 const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{" "}
@@ -984,11 +943,7 @@ const JSCORE = {
             <b>Генераторы</b> создаются при помощи функций генераторов.
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-            </div>
+            <CodeNumber length={3}/>
             <code>
               <code>
                 function<b>*</b> fn() {"{"}
@@ -1030,17 +985,7 @@ const JSCORE = {
             переменной или класса.
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-              <code>6</code>
-              <code>7</code>
-              <code>8</code>
-              <code>9</code>
-            </div>
+            <CodeNumber length={8}/>
             <code>
               <code>
                 <b>export</b> function <b>fn</b>() {"{"}
@@ -1069,9 +1014,7 @@ const JSCORE = {
             Для больших модулей удобнее использовать группированный экспорт.
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 <b>export</b> {"{"} <b>fn</b>, <b>num</b>, <b>User</b> {"}"}
@@ -1083,13 +1026,7 @@ const JSCORE = {
             удобнее использовать <span>экспорт по умолчанию</span>.
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-            </div>
+            <CodeNumber length={5}/>
             <code>
               <code>
                 function <b>fn</b> () {"{"}
@@ -1111,9 +1048,7 @@ const JSCORE = {
             до него.
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 <b>import</b> {"{"} <b>fn</b>, <b>num</b> {"}"} <b>from</b>{" "}
@@ -1130,9 +1065,7 @@ const JSCORE = {
             к частям модуля как с свойствам переменной.
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 <b>import</b> * <b>as el</b> from './путь'
@@ -1433,19 +1366,7 @@ const JSCORE = {
             Способы создания <b>IIFE</b>:
           </p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-              <code>6</code>
-              <code>7</code>
-              <code>8</code>
-              <code>9</code>
-              <code>10</code>
-              <code>11</code>
-            </div>
+            <CodeNumber length={11}/>
             <code>
               <code>
                 (<b>function</b>() {"{"}
@@ -1476,9 +1397,7 @@ const JSCORE = {
         <div>
           <p>Call:</p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 func.<b>call</b>(context, arg1, arg2, ...)
@@ -1487,9 +1406,7 @@ const JSCORE = {
           </pre>
           <p>Apply:</p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-            </div>
+            <CodeNumber length={1}/>
             <code>
               <code>
                 func.<b>apply</b>(context, [arg1, arg2, ...])
@@ -1498,11 +1415,7 @@ const JSCORE = {
           </pre>
           <p>Bind:</p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-            </div>
+            <CodeNumber length={3}/>
             <code>
               <code>
                 let <b>fn</b> = func.<b>bind</b>(context, arg1, arg2, ...)
@@ -1515,27 +1428,7 @@ const JSCORE = {
           </pre>
           <p>Декоратор:</p>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-              <code>6</code>
-              <code>7</code>
-              <code>8</code>
-              <code>9</code>
-              <code>10</code>
-              <code>11</code>
-              <code>12</code>
-              <code>13</code>
-              <code>14</code>
-              <code>15</code>
-              <code>16</code>
-              <code>17</code>
-              <code>18</code>
-              <code>19</code>
-            </div>
+            <CodeNumber length={19}/>
             <code>
               <code>
                 let <b>fn</b> = (x) {"=>"} {"{"}
@@ -1596,27 +1489,7 @@ const JSCORE = {
       jsx: (
         <div>
           <pre>
-            <div className="numbers">
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-              <code>6</code>
-              <code>7</code>
-              <code>8</code>
-              <code>9</code>
-              <code>10</code>
-              <code>11</code>
-              <code>12</code>
-              <code>13</code>
-              <code>14</code>
-              <code>15</code>
-              <code>16</code>
-              <code>17</code>
-              <code>18</code>
-              <code>19</code>
-            </div>
+            <CodeNumber length={19}/>
             <code>
               <code>
                 const <b>obj</b> = {"{"} <b>value</b>: 4 {"}"}
@@ -1680,17 +1553,7 @@ const JSCORE = {
             переменной, в течение которого к переменной нельзя обратиться.
           </p>
           <pre>
-            <div className="numbers">
-              <code className="codeNumber">1</code>
-              <code className="codeNumber">2</code>
-              <code className="codeNumber">3</code>
-              <code className="codeNumber">4</code>
-              <code className="codeNumber">5</code>
-              <code className="codeNumber">6</code>
-              <code className="codeNumber">7</code>
-              <code className="codeNumber">8</code>
-              <code className="codeNumber">9</code>
-            </div>
+            <CodeNumber length={9}/>
             <code>
               <code className="comment">
                 {'//'} ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'

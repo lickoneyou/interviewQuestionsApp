@@ -1,3 +1,5 @@
+import CodeNumber from "../components/Basic/CodeNumbers";
+
 const Nest = {
   NestJs: {
     'NestJS что это, как подключить': {
@@ -74,28 +76,7 @@ const Nest = {
             данных.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-              <code className='codeNumber'>18</code>
-              <code className='codeNumber'>19</code>
-              <code className='codeNumber'>20</code>
-            </div>
+            <CodeNumber length={20}/>
             <code>
               <code>{'// user.entity.ts'}</code>
               <code>{`import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';`}</code>
@@ -169,23 +150,7 @@ const Nest = {
             валидации и типизации.
           </p>
           <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-            </div>
+            <CodeNumber length={15}/>
             <code>
               <code className='comment'>{'// create-user.dto.ts'}</code>
               <code>{`import { IsEmail, IsInt, IsString, Min, Max } from 'class-validator';`}</code>
@@ -225,6 +190,45 @@ const Nest = {
                 {'  '}
                 {'age: number;'}
               </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    Service: {
+      id: '104',
+      title: 'Service',
+      jsx: (
+        <div>
+          <p>
+            <b>Service</b> - это класс, содержащий бизнес-логику приложения. Он
+            не зависит от HTTP-контекста и может использоваться в разных частях
+            приложения.
+          </p>
+          <pre>
+            <CodeNumber length={21} />
+            <code>
+              <code className="comment">{'// users.service.ts'}</code>
+              <code>{`import { Injectable } from '@nestjs/common';`}</code>
+              <code>{`import { InjectRepository } from '@nestjs/typeorm';`}</code>
+              <code>{`import { Repository } from 'typeorm';`}</code>
+              <code>{`import { User } from './user.entity';`}</code>
+              <code>{`import { CreateUserDto } from './dto/create-user.dto';`}</code>
+              <code>{`import { UpdateUserDto } from './dto/update-user.dto';`}</code>
+              <code>{'  '}</code>
+              <code>{'@Injectable()'}</code>
+              <code>{'export class UsersService {'}</code>
+              <code>{'  '}{'constructor('}</code>
+              <code>{'    '}{'@InjectRepository(User)'}</code>
+              <code>{'    '}{'private usersRepository: Repository<User>,'}</code>
+              <code>{'  '}{') {}'}</code>
+              <code>{'  '}</code>
+              <code>{'  '}{'async create(createUserDto: CreateUserDto): Promise<User> {}'}</code>
+              <code>{'  '}</code>
+              <code>{'  '}{'async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {}'}</code>
+              <code>{'  '}</code>
+              <code>{'  '}{'async remove(id: number): Promise<void> {'}</code>
               <code>{'}'}</code>
             </code>
           </pre>
