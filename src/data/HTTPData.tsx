@@ -443,6 +443,21 @@ const HTTP = {
                </div>
              ),
     },
+    CRUD: {
+      id: '212',
+      title: 'CRUD',
+      jsx: (
+        <div>
+          <p><b>CRUD</b> - это акроним, который описывает четыре базовые операции:</p>
+          <ul>
+            <li>C — Create</li>
+            <li>R — Read</li>
+            <li>U — Update</li>
+            <li>D — Delete</li>
+          </ul>
+        </div>
+      )
+    }
   },
 };
 
