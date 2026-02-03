@@ -600,6 +600,76 @@ const Nest = {
         </div>
       ),
     },
+    'Настройка CORS': {
+      id: '109',
+      title: 'Настройка CORS',
+      jsx: (
+        <div>
+          <p>Подключение:</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code>{`import { NestFactory } from '@nestjs/core';`}</code>
+              <code>{`import { AppModule } from './app.module';`}</code>
+              <code>{'  '}</code>
+              <code>{'async function bootstrap() {'}</code>
+              <code>
+                {'  '}const app = await NestFactory.create(AppModule);
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'app.enableCors({'}
+              </code>
+              <code>
+                {'    '}
+                {`origin: 'http://localhost:5173',`}
+              </code>
+              <code>
+                {'    '}
+                {`methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',`}
+              </code>
+              <code>
+                {'    '}
+                {`credentials: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`allowedHeaders: 'Content-Type, Accept, Authorization',`}
+              </code>
+              <code>
+                {'  '}
+                {'});'}
+              </code>
+              <code>{'  '}</code>
+              <code>{'  '}await app.listen(process.env.PORT ?? 3000);</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>bootstrap();</code>
+            </code>
+          </pre>
+          <p>Параметры:</p>
+          <ul>
+            <li>
+              origin: 'http://localhost:5173' - Разрешает доступ для домена.
+              Можно указать массив для нескольких доменов:{' '}
+              <b>
+                ['http://localhost:5173', 'http://example.com']</b>. Можно
+                использовать <b>'*'</b> для разрешения всем доменам
+            </li>
+            <li>
+              methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' - Разрешенные
+              HTTP-методы
+            </li>
+            <li>
+              credentials: true - Разрешает отправку учетных данных (cookies,
+              авторизационные заголовки)
+            </li>
+            <li>allowedHeaders: 'Content-Type, Accept, Authorization' - Разрешенные HTTP-заголовки</li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
