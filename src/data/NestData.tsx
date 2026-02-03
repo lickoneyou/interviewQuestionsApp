@@ -1,4 +1,4 @@
-import CodeNumber from "../components/Basic/CodeNumbers";
+import CodeNumber from '../components/Basic/CodeNumbers';
 
 const Nest = {
   NestJs: {
@@ -76,7 +76,7 @@ const Nest = {
             данных.
           </p>
           <pre>
-            <CodeNumber length={20}/>
+            <CodeNumber length={20} />
             <code>
               <code>{'// user.entity.ts'}</code>
               <code>{`import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';`}</code>
@@ -150,7 +150,7 @@ const Nest = {
             валидации и типизации.
           </p>
           <pre>
-            <CodeNumber length={15}/>
+            <CodeNumber length={15} />
             <code>
               <code className='comment'>{'// create-user.dto.ts'}</code>
               <code>{`import { IsEmail, IsInt, IsString, Min, Max } from 'class-validator';`}</code>
@@ -209,7 +209,7 @@ const Nest = {
           <pre>
             <CodeNumber length={21} />
             <code>
-              <code className="comment">{'// users.service.ts'}</code>
+              <code className='comment'>{'// users.service.ts'}</code>
               <code>{`import { Injectable } from '@nestjs/common';`}</code>
               <code>{`import { InjectRepository } from '@nestjs/typeorm';`}</code>
               <code>{`import { Repository } from 'typeorm';`}</code>
@@ -219,19 +219,92 @@ const Nest = {
               <code>{'  '}</code>
               <code>{'@Injectable()'}</code>
               <code>{'export class UsersService {'}</code>
-              <code>{'  '}{'constructor('}</code>
-              <code>{'    '}{'@InjectRepository(User)'}</code>
-              <code>{'    '}{'private usersRepository: Repository<User>,'}</code>
-              <code>{'  '}{') {}'}</code>
+              <code>
+                {'  '}
+                {'constructor('}
+              </code>
+              <code>
+                {'    '}
+                {'@InjectRepository(User)'}
+              </code>
+              <code>
+                {'    '}
+                {'private usersRepository: Repository<User>,'}
+              </code>
+              <code>
+                {'  '}
+                {') {}'}
+              </code>
               <code>{'  '}</code>
-              <code>{'  '}{'async create(createUserDto: CreateUserDto): Promise<User> {}'}</code>
+              <code>
+                {'  '}
+                {'async create(createUserDto: CreateUserDto): Promise<User> {}'}
+              </code>
               <code>{'  '}</code>
-              <code>{'  '}{'async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {}'}</code>
+              <code>
+                {'  '}
+                {
+                  'async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {}'
+                }
+              </code>
               <code>{'  '}</code>
-              <code>{'  '}{'async remove(id: number): Promise<void> {'}</code>
+              <code>
+                {'  '}
+                {'async remove(id: number): Promise<void> {'}
+              </code>
               <code>{'}'}</code>
             </code>
           </pre>
+        </div>
+      ),
+    },
+    ORM: {
+      id: '105',
+      title: 'ORM',
+      jsx: (
+        <div>
+          <p>
+            <b>ORM</b> позволяет работать с объектами и классами в вашем коде, в
+            то время как система сама заботится о том, как эти объекты
+            превращаются в строки и колонки в базе данных.
+          </p>
+          <p>Преимущества:</p>
+          <ul>
+            <li>
+              Ускорение разработки: Снижает количество кода и автоматизирует
+              рутинные CRUD-запросы
+            </li>
+            <li>
+              Абстракция от cистемs управления базами данных (СУБД): Легко
+              сменить базу данных (PostgreSQL, MySQL), изменив только настройки
+            </li>
+            <li>
+              Безопасность: Автоматическое экранирование данных защищает от
+              SQL-инъекций
+            </li>
+            <li>
+              Удобство работы: Встроенные функции для связей, транзакций,
+              миграций и кэширования
+            </li>
+          </ul>
+          <p>Недостатки:</p>
+          <ul>
+            <li>
+              Накладные расходы: Сложные запросы могут работать медленнее
+              ручного SQL
+            </li>
+            <li>
+              Кривая обучения: Требует времени на освоение специфики фреймворка
+            </li>
+            <li>
+              «Магия» под капотом: Бывает сложно понять, какой SQL сгенерируется
+              и как его оптимизировать
+            </li>
+            <li>
+              Проблема N+1: При неверной настройке ORM может выполнить множество
+              лишних запросов
+            </li>
+          </ul>
         </div>
       ),
     },
