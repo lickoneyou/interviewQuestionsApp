@@ -443,6 +443,73 @@ const Nest = {
         </div>
       ),
     },
+    'class-validator и class-transformer': {
+      id: '107',
+      title: 'class-validator и class-transformer',
+      jsx: (
+        <div>
+          <p>
+            <b>class-validator</b> и <b>class-transformer</b> используются
+            вместе для валидации и преобразования входящих данных (например,
+            тела запроса, параметров) в удобные для работы объекты DTO (Data
+            Transfer Object). Этот подход обеспечивает безопасность и
+            целостность данных на уровне контроллера.
+          </p>
+          <p>class-validator</p>
+          <ul>
+            <li>
+              <b>Основная задача</b>: Проверка данных (валидация). Декораторы
+              накладывают правила на поля DTO.
+            </li>
+            <li>
+              <b>Пример</b>: @IsString(), @IsNumber(), @IsEmail(), @MinLength(8)
+            </li>
+          </ul>
+          <p>class-transformer</p>
+          <ul>
+            <li>
+              <b>Основная задача</b>: Преобразование данных. Превращает сырые
+              данные из запроса в экземпляр класса DTO. Также преобразует типы
+              (строку в число, массив строк в массив объектов и т.д.).
+            </li>
+            <li>
+              <b>Пример</b>:{' '}
+              {'@Type(() => Number), @Transform(({ value }) => value.trim())'}
+            </li>
+          </ul>
+          <p>ValidationPipe</p>
+          <ul>
+            <li>
+              <b>Основная задача</b>: Связующее звено. Активирует работу обеих
+              библиотек. Используется глобально или на уровне контроллера.
+            </li>
+            <li>
+              <b>Пример</b>:{' '}
+              {'app.useGlobalPipes(new ValidationPipe({ transform: true }))'}
+            </li>
+          </ul>
+          <pre>
+            <CodeNumber length={14}/>
+            <code>
+              <code>{`import { IsString, IsEmail, IsInt, Min, Length } from 'class-validator';`}</code>
+              <code>{`import { Type, Transform } from 'class-transformer';`}</code>
+              <code>{'  '}</code>
+              <code>{'export class CreateUserDto {'}</code>
+              <code>{'  '}@IsString()</code>
+              <code>{'  '}@Length(2, 30)</code>
+              <code>{'  '}{`@Transform(({ value }) => value.trim()) // Убираем пробелы в начале и конце`}</code>
+              <code>{'  '}name: string;</code>
+              <code>{'  '}</code>
+              <code>{'  '}@IsEmail()</code>
+              <code>{'  '}@Min(18)</code>
+              <code>{'  '}{`@Type(() => Number) // Явно преобразуем строку из запроса в число`}</code>
+              <code>{'  '}age: number;</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
