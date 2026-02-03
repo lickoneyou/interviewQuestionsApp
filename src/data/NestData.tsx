@@ -489,7 +489,7 @@ const Nest = {
             </li>
           </ul>
           <pre>
-            <CodeNumber length={14}/>
+            <CodeNumber length={14} />
             <code>
               <code>{`import { IsString, IsEmail, IsInt, Min, Length } from 'class-validator';`}</code>
               <code>{`import { Type, Transform } from 'class-transformer';`}</code>
@@ -497,14 +497,104 @@ const Nest = {
               <code>{'export class CreateUserDto {'}</code>
               <code>{'  '}@IsString()</code>
               <code>{'  '}@Length(2, 30)</code>
-              <code>{'  '}{`@Transform(({ value }) => value.trim()) // Убираем пробелы в начале и конце`}</code>
+              <code>
+                {'  '}
+                {`@Transform(({ value }) => value.trim()) // Убираем пробелы в начале и конце`}
+              </code>
               <code>{'  '}name: string;</code>
               <code>{'  '}</code>
               <code>{'  '}@IsEmail()</code>
               <code>{'  '}@Min(18)</code>
-              <code>{'  '}{`@Type(() => Number) // Явно преобразуем строку из запроса в число`}</code>
+              <code>
+                {'  '}
+                {`@Type(() => Number) // Явно преобразуем строку из запроса в число`}
+              </code>
               <code>{'  '}age: number;</code>
               <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    'PostgreSQL установка и подключение': {
+      id: '108',
+      title: 'PostgreSQL установка и подключение',
+      jsx: (
+        <div>
+          <p>
+            <b>Установка</b>: brew install postgresql@17
+          </p>
+          <p>
+            <b>Запуск</b>: brew services start postgresql@17
+          </p>
+          <p>
+            <b>Остановка</b>: brew services stop postgresql@17
+          </p>
+          <p>
+            <b>Проверка статуса</b>: brew services list | grep postgresql
+          </p>
+          <p>Подключени:</p>
+          <pre>
+            <CodeNumber length={22} />
+            <code>
+              <code>{`import { Module } from '@nestjs/common';`}</code>
+              <code>{`import { AppController } from './app.controller';`}</code>
+              <code>{`import { AppService } from './app.service';`}</code>
+              <code>{'  '}</code>
+              <code>{'@Module({'}</code>
+              <code>
+                {'  '}
+                {'imports: ['}
+              </code>
+              <code>
+                {'    '}
+                {'TypeOrmModule.forRoot({'}
+              </code>
+              <code>
+                {'      '}
+                {`type: 'postgres',`}
+              </code>
+              <code>
+                {'      '}
+                {`host: 'localhost',`}
+              </code>
+              <code>
+                {'      '}
+                {`port: 5432,`}
+              </code>
+              <code>
+                {'      '}
+                {`username: 'kirill',`}
+              </code>
+              <code>
+                {'      '}
+                {`password: 'root',`}
+              </code>
+              <code>
+                {'      '}
+                {`database: 'online_store',`}
+              </code>
+              <code>
+                {'      '}
+                {`autoLoadEntities: true,`}
+              </code>
+              <code>
+                {'      '}
+                {`synchronize: true,`}
+              </code>
+              <code>
+                {'    '}
+                {'}),'}
+              </code>
+              <code>
+                {'  '}
+                {'],'}
+              </code>
+              <code>{'  '}controllers: [AppController],</code>
+              <code>{'  '}providers: [AppService],</code>
+              <code>{'})'}</code>
+              <code>{'  '}</code>
+              <code>{'export class AppModule {}'}</code>
             </code>
           </pre>
         </div>
