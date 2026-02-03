@@ -308,6 +308,141 @@ const Nest = {
         </div>
       ),
     },
+    TypeORM: {
+      id: '106',
+      title: 'TypeORM',
+      jsx: (
+        <div>
+          <p>
+            <b>TypeORM</b> - это одна из ведущих ORM для TypeScript и Node.js
+          </p>
+          <p>Особенности</p>
+          <ul>
+            <li>
+              Поддержка TypeScript: Типы сущностей (Entity) и репозиториев
+              (Repository) тесно интегрированы, что даёт лучшую
+              автодополняемость и безопасность типов
+            </li>
+            <li>
+              Два паттерна: Поддерживает как Data Mapper (работа через
+              репозиторий), так и Active Record (методы прямо в сущности)
+            </li>
+            <li>
+              Декларативный стиль: Структура таблиц описывается через декораторы
+              (@Entity(), @Column()), что делает код очень читаемым
+            </li>
+          </ul>
+          <p>Реализация:</p>
+          <pre>
+            <CodeNumber length={14} />
+            <code>
+              <code className='comment'>{'// user.entity.ts'}</code>
+              <code>{`import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';`}</code>
+              <code>{'  '}</code>
+              <code>{'@Entity() // Указывает, что это модель таблицы'}</code>
+              <code>{'export class User {'}</code>
+              <code>{'  '}@PrimaryGeneratedColumn()</code>
+              <code>{'  '}id: number;</code>
+              <code>{'  '}</code>
+              <code>{'  '}@Column()</code>
+              <code>{'  '}name: string;</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'@Column({ unique: true })'}
+              </code>
+              <code>{'  '}email: string;</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={11} />
+            <code>
+              <code className='comment'>{'// users.module.ts'}</code>
+              <code>{`import { Module } from '@nestjs/common';`}</code>
+              <code>{`import { TypeOrmModule } from '@nestjs/typeorm';`}</code>
+              <code>{`import { User } from './user.entity';`}</code>
+              <code>{`import { UsersService } from './users.service';`}</code>
+              <code>{'  '}</code>
+              <code>{'@Module({'}</code>
+              <code>
+                {'  '}
+                {
+                  'imports: [TypeOrmModule.forFeature([User])], // Регистрируем сущность'
+                }
+              </code>
+              <code>{'  '}providers: [UsersService],</code>
+              <code>{'})'}</code>
+              <code>export class UsersModule {}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={22} />
+            <code>
+              <code className='comment'>{'// users.service.ts'}</code>
+              <code>{`import { Injectable } from '@nestjs/common';`}</code>
+              <code>{`import { InjectRepository } from '@nestjs/typeorm';`}</code>
+              <code>{`import { Repository } from 'typeorm';`}</code>
+              <code>{`import { User } from './user.entity';`}</code>
+              <code>{'  '}</code>
+              <code>@Injectable()</code>
+              <code>{'export class UsersService {'}</code>
+              <code>
+                {'  '}
+                {'constructor('}
+              </code>
+              <code>
+                {'    '}
+                {'@InjectRepository(User) // Внедряем репозиторий для User'}
+              </code>
+              <code>
+                {'    '}
+                {'private usersRepository: Repository<User>,'}
+              </code>
+              <code>
+                {'  '}
+                {') {}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'async create(userData: Partial<User>): Promise<User> {'}
+              </code>
+              <code>
+                {'    '}
+                {'const newUser = this.usersRepository.create(userData);'}
+              </code>
+              <code>
+                {'    '}
+                {
+                  'return this.usersRepository.save(newUser); // Автоматический INSERT'
+                }
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'async findAll(): Promise<User[]> {'}
+              </code>
+              <code>
+                {'    '}
+                {
+                  'return this.usersRepository.find(); // Автоматический SELECT *'
+                }
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 

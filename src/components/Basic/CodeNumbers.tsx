@@ -10,7 +10,7 @@ const CodeNumber: React.FC<Props> = (props) => {
   return (
     <div className='number'>
       {array.map((_: any, index: number) => (
-        <div className='codeNumber'>{index + 1}</div>
+        <div className='codeNumber' key={index}>{index + 1}</div>
       ))}
     </div>
   );
