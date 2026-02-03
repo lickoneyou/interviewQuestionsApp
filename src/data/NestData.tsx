@@ -653,9 +653,8 @@ const Nest = {
             <li>
               origin: 'http://localhost:5173' - Разрешает доступ для домена.
               Можно указать массив для нескольких доменов:{' '}
-              <b>
-                ['http://localhost:5173', 'http://example.com']</b>. Можно
-                использовать <b>'*'</b> для разрешения всем доменам
+              <b>['http://localhost:5173', 'http://example.com']</b>. Можно
+              использовать <b>'*'</b> для разрешения всем доменам
             </li>
             <li>
               methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' - Разрешенные
@@ -665,8 +664,187 @@ const Nest = {
               credentials: true - Разрешает отправку учетных данных (cookies,
               авторизационные заголовки)
             </li>
-            <li>allowedHeaders: 'Content-Type, Accept, Authorization' - Разрешенные HTTP-заголовки</li>
+            <li>
+              allowedHeaders: 'Content-Type, Accept, Authorization' -
+              Разрешенные HTTP-заголовки
+            </li>
           </ul>
+        </div>
+      ),
+    },
+    Swagger: {
+      id: '1010',
+      title: 'Swagger',
+      jsx: (
+        <div>
+          <p>
+            <b>Swagger</b> — это набор инструментов и спецификация для описания,
+            разработки и тестирования RESTful API.
+          </p>
+          <p>Подключение:</p>
+          <pre>
+            <CodeNumber length={22} />
+            <code>
+              <code className='comment'>{'// main.ts'}</code>
+              <code>{`import { NestFactory } from "@nestjs/core";`}</code>
+              <code>{`import { AppModule } from "./app.module";`}</code>
+              <code>{`import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";`}</code>
+              <code>{'  '}</code>
+              <code>{'async function bootstrap() {'}</code>
+              <code>
+                {'  '}
+                {'const app = await NestFactory.create(AppModule);'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'const config = new DocumentBuilder()'}
+              </code>
+              <code>
+                {'    '}
+                {'.setTitle("Online Store")'}
+              </code>
+              <code>
+                {'    '}
+                {'.setDescription("Online Store Documentation")'}
+              </code>
+              <code>
+                {'    '}
+                {'.setVersion("1.0.0")'}
+              </code>
+              <code>
+                {'    '}
+                {'.addTag("online-store")'}
+              </code>
+              <code>
+                {'    '}
+                {'.build();'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'const document = SwaggerModule.createDocument(app, config);'}
+              </code>
+              <code>
+                {'  '}
+                {'SwaggerModule.setup("/docs", app, document);'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'await app.listen(process.env.PORT ?? 3000);'}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{'bootstrap();'}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={32} />
+            <code>
+              <code className='comment'>{'// create-user.dto.ts'}</code>
+              <code>{`import { ApiProperty } from '@nestjs/swagger';`}</code>
+              <code>{`import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';`}</code>
+              <code>{'  '}</code>
+              <code>{'export class CreateUserDto {'}</code>
+              <code>
+                {'  '}
+                {'@ApiProperty({'}
+              </code>
+              <code>
+                {'    '}
+                {`example: 'user@gmail.ru',`}
+              </code>
+              <code>
+                {'    '}
+                {`description: 'Email',`}
+              </code>
+              <code>
+                {'  '}
+                {'})'}
+              </code>
+              <code>
+                {'  '}
+                {'@IsEmail('}
+              </code>
+              <code>
+                {'    '}
+                {'{},'}
+              </code>
+              <code>
+                {'    '}
+                {'{'}
+              </code>
+              <code>
+                {'      '}
+                {`message: 'Wrong email',`}
+              </code>
+              <code>
+                {'    '}
+                {'},'}
+              </code>
+              <code>
+                {'  '}
+                {')'}
+              </code>
+              <code>{'  '}readonly email: string;</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'@ApiProperty({'}
+              </code>
+              <code>
+                {'    '}
+                {`example: '123456',`}
+              </code>
+              <code>
+                {'    '}
+                {`description: 'Password',`}
+              </code>
+              <code>
+                {'  '}
+                {'})'}
+              </code>
+              <code>
+                {'  '}
+                {'@IsString({'}
+              </code>
+              <code>
+                {'    '}
+                {`message: 'Must be string',`}
+              </code>
+              <code>
+                {'  '}
+                {'})'}
+              </code>
+              <code>
+                {'  '}
+                {'@MinLength(6, {'}
+              </code>
+              <code>
+                {'    '}
+                {`message: 'Min length must be more or equl 6',`}
+              </code>
+              <code>
+                {'  '}
+                {'})'}
+              </code>
+              <code>
+                {'  '}
+                {'@MaxLength(12, {'}
+              </code>
+              <code>
+                {'    '}
+                {`message: 'Max length must be less 12',`}
+              </code>
+              <code>
+                {'  '}
+                {'})'}
+              </code>
+              <code>{'  '}readonly password: string;</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
         </div>
       ),
     },
