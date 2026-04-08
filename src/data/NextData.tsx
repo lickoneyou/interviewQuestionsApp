@@ -505,6 +505,46 @@ const Next = {
         </div>
       ),
     },
+    'Streaming, Suspense и dynamic': {
+      id: 'next-4',
+      title: `Streaming, Suspense и dynamic`,
+      jsx: (
+        <div>
+          <p><b>Streaming</b> — это процесс отправки HTML по частям.</p>
+          <p><b>Suspense</b> - Показывает fallback пока грузятся данные</p>
+          <pre>
+            <CodeNumber length={9}/>
+            <code>
+              <code className='comment'>{`// ✅ Данные из БД долгие`}</code>
+              <code>{`<Suspense fallback={<Spinner />}>`}</code>
+              <code>{'  '}{'<SlowDataComponent />  {/* async component */}'}</code>
+              <code>{`</Suspense>`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Медленный API запрос`}</code>
+              <code>{`<Suspense fallback={<div>Загрузка...</div>}>`}</code>
+              <code>{'  '}{`<UserProfile userId={id} />`}</code>
+              <code>{`</Suspense>`}</code>
+            </code>
+          </pre>
+          <p><b>dynamic()</b> - Загружает код компонента лениво</p>
+          <pre>
+            <CodeNumber length={10}/>
+            <code>
+              <code className='comment'>{`// ✅ Тяжелая библиотека`}</code>
+              <code>{`const Editor = dynamic(() => import('@monaco-editor/react'))`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Модалка (не нужна сразу)`}</code>
+              <code>{`const Modal = dynamic(() => import('./Modal'), { ssr: false })`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Тяжелый график (внизу страницы)`}</code>
+              <code>{`const Chart = dynamic(() => import('./HeavyChart'), {`}</code>
+              <code>{'  '}{`loading: () => <div>Загрузка графика...</div>`}</code>
+              <code>{`})`}</code>
+            </code>
+          </pre>
+        </div>
+      )
+    }
   },
 };
 
