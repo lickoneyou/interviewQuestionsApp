@@ -571,17 +571,66 @@ const Next = {
             из компонентов страницы.
           </p>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code>{`import { Metadata } from 'next';`}</code>
               <code>{'  '}</code>
               <code>{`export const metadata: Metadata = {`}</code>
-              <code>{'  '}{`title: 'О нас | Мой сайт',`}</code>
-              <code>{'  '}{`description: 'Узнайте больше о нашей компании',`}</code>
+              <code>
+                {'  '}
+                {`title: 'О нас | Мой сайт',`}
+              </code>
+              <code>
+                {'  '}
+                {`description: 'Узнайте больше о нашей компании',`}
+              </code>
               <code>{'};'}</code>
               <code>{'  '}</code>
               <code>{'export default function About() {'}</code>
-              <code>{'  '}{'return <h1>О нас</h1>;'}</code>
+              <code>
+                {'  '}
+                {'return <h1>О нас</h1>;'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    'next/image': {
+      id: 'next-6',
+      title: 'next/image',
+      jsx: (
+        <div>
+          <p>
+            <b>next/image</b> — это компонент, который автоматически
+            оптимизирует изображения: сжимает, меняет формат, делает lazy
+            loading и многое другое.
+          </p>
+          <p>Плюсы</p>
+          <ul>
+            <li>✅ Lazy loading по умолчанию</li>
+            <li>✅ Автоматическая оптимизация</li>
+            <li>✅ Автоматическое определение размеров</li>
+            <li>✅ Автоматический WebP/AVIF</li>
+            <li>✅ Блокирует место под изображение</li>
+            <li>✅ Автоматическая адаптация под экран</li>
+          </ul>
+          <p>Базовое использование</p>
+          <pre>
+            <CodeNumber length={12}/>
+            <code>
+              <code>{`import Image from 'next/image';`}</code>
+              <code>{'  '}</code>
+              <code>{'export default function Avatar() {'}</code>
+              <code>{'  '}{'return ('}</code>
+              <code>{'    '}{'<Image'}</code>
+              <code>{'      '}{`src="/avatar.jpg"           // Путь к изображению`}</code>
+              <code>{'      '}{`alt="Аватар пользователя"   // Alt текст (обязателен!)`}</code>
+              <code>{'      '}{`width={100}                 // Ширина в пикселях`}</code>
+              <code>{'      '}{`height={100}                // Высота в пикселях`}</code>
+              <code>{'    '}{'/>'}</code>
+              <code>{'  '}{');'}</code>
               <code>{'}'}</code>
             </code>
           </pre>
