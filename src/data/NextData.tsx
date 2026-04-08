@@ -618,22 +618,192 @@ const Next = {
           </ul>
           <p>Базовое использование</p>
           <pre>
-            <CodeNumber length={12}/>
+            <CodeNumber length={12} />
             <code>
               <code>{`import Image from 'next/image';`}</code>
               <code>{'  '}</code>
               <code>{'export default function Avatar() {'}</code>
-              <code>{'  '}{'return ('}</code>
-              <code>{'    '}{'<Image'}</code>
-              <code>{'      '}{`src="/avatar.jpg"           // Путь к изображению`}</code>
-              <code>{'      '}{`alt="Аватар пользователя"   // Alt текст (обязателен!)`}</code>
-              <code>{'      '}{`width={100}                 // Ширина в пикселях`}</code>
-              <code>{'      '}{`height={100}                // Высота в пикселях`}</code>
-              <code>{'    '}{'/>'}</code>
-              <code>{'  '}{');'}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {'<Image'}
+              </code>
+              <code>
+                {'      '}
+                {`src="/avatar.jpg"           // Путь к изображению`}
+              </code>
+              <code>
+                {'      '}
+                {`alt="Аватар пользователя"   // Alt текст (обязателен!)`}
+              </code>
+              <code>
+                {'      '}
+                {`width={100}                 // Ширина в пикселях`}
+              </code>
+              <code>
+                {'      '}
+                {`height={100}                // Высота в пикселях`}
+              </code>
+              <code>
+                {'    '}
+                {'/>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
               <code>{'}'}</code>
             </code>
           </pre>
+        </div>
+      ),
+    },
+    Middleware: {
+      id: 'next-7',
+      title: 'Middleware',
+      jsx: (
+        <div>
+          <p>
+            <b>Middleware</b> — функция, которая выполняется <span>между</span>{' '}
+            запросом пользователя и ответом сервера.
+          </p>
+          <pre>
+            <CodeNumber length={5} />
+            <code>
+              <code className='comment'>{`// middleware.ts (в корне проекта)`}</code>
+              <code>
+                {'export function middleware(request: NextRequest) {'}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {`// Делаем что-то с запросом`}
+              </code>
+              <code>
+                {'  '}
+                {`return NextResponse.next(); // Пропускаем дальше`}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>🛠️ ДЛЯ ЧЕГО НУЖНО?</p>
+          <ul>
+            <li>
+              <b>Защита страниц</b> - Проверяет авторизацию до показа страницы
+            </li>
+            <li>
+              <b>Редиректы</b> - Перенаправляет пользователя
+            </li>
+            <li>
+              <b>Проксирование API</b> - Скрывает реальные API за своим URL
+            </li>
+            <li>
+              <b>Добавление заголовков</b> - Добавляет X-Custom-Header
+            </li>
+            <li>
+              <b>Логирование</b> - Записывает все запросы
+            </li>
+            <li>
+              <b>Гео-таргетинг</b> - Определяет страну и редиректит
+            </li>
+          </ul>
+          <p>📍 ЧАСТЫЕ КЕЙСЫ</p>
+          <ul>
+            <li>
+              Защита админки
+              <pre>
+                <CodeNumber length={4} />
+                <code>
+                  <code>{`const token = request.cookies.get('token');`}</code>
+                  <code>{`if (pathname.startsWith('/admin') && !token) {`}</code>
+                  <code>
+                    {'  '}
+                    {`return NextResponse.redirect(new URL('/login', request.url));`}
+                  </code>
+                  <code>{'}'}</code>
+                </code>
+              </pre>
+            </li>
+            <li>
+              Редирект со старых URL
+              <pre>
+                <CodeNumber length={3} />
+                <code>
+                  <code>{`if (pathname === '/old-blog') {`}</code>
+                  <code>
+                    {'  '}
+                    {`return NextResponse.redirect(new URL('/blog', request.url));`}
+                  </code>
+                  <code>{'}'}</code>
+                </code>
+              </pre>
+            </li>
+            <li>
+              Проксирование API (скрываем реальный URL)
+              <pre>
+                <CodeNumber length={4} />
+                <code>
+                  <code>{`if (pathname === '/api/weather') {`}</code>
+                  <code>
+                    {'  '}
+                    {
+                      'const data = await fetch(`https://api.weatherapi.com/...`);'
+                    }
+                  </code>
+                  <code>
+                    {'  '}
+                    {`return NextResponse.json(data);`}
+                  </code>
+                  <code>{'}'}</code>
+                </code>
+              </pre>
+            </li>
+            <li>
+              Добавление заголовков
+              <pre>
+                <CodeNumber length={3} />
+                <code>
+                  <code>{`const response = NextResponse.next();`}</code>
+                  <code>{`response.headers.set('X-Request-ID', crypto.randomUUID());`}</code>
+                  <code>{`return response;`}</code>
+                </code>
+              </pre>
+            </li>
+            <li>
+              A/B тестирование
+              <pre>
+                <CodeNumber length={2} />
+                <code>
+                  <code>{`const variant = Math.random() < 0.5 ? 'A' : 'B';`}</code>
+                  <code>
+                    {
+                      'return NextResponse.rewrite(new URL(`/ab/${variant}${pathname}`, request.url));'
+                    }
+                  </code>
+                </code>
+              </pre>
+            </li>
+          </ul>
+          <p>Действия</p>
+          <ul>
+            <li>
+              <b>return NextResponse.next()</b> - Пропустить
+            </li>
+            <li>
+              <b>return NextResponse.redirect(url)</b> - Редирект
+            </li>
+            <li>
+              <b>return NextResponse.rewrite(url)</b> - Подменить
+            </li>
+            <li>
+              <b>return NextResponse.json({})</b> - Ответить JSON
+            </li>
+            <li>
+              <b>response.headers.set('key', 'value')</b> - Добавить заголовок
+            </li>
+          </ul>
         </div>
       ),
     },
