@@ -895,6 +895,74 @@ const Nest = {
         </div>
       ),
     },
+    Миграция: {
+      id: '1012',
+      title: 'Миграция',
+      jsx: (
+        <div>
+          <p>
+            <b>data-source.ts</b> - файл нужен для TypeORM CLI, чтобы он знал,
+            как подключаться к базе и где искать entity.
+          </p>
+          <pre>
+            <CodeNumber length={18}/>
+            <code>
+              <code className='comment'>{'// src/data-source.ts'}</code>
+              <code>{`import { DataSource } from "typeorm";`}</code>
+              <code>{'import { config } from "dotenv";'}</code>
+              <code>{'  '}</code>
+              <code>{'config();'}</code>
+              <code>{'  '}</code>
+              <code>{'export default new DataSource({'}</code>
+              <code>{'  '}type: "postgres",</code>
+              <code>{'  '}host: process.env.DB_HOST,</code>
+              <code>{'  '}port: parseInt(process.env.DB_PORT || "5432")</code>
+              <code>{'  '}username: process.env.DB_USERNAME,</code>
+              <code>{'  '}password: process.env.DB_PASSWORD || "",</code>
+              <code>{'  '}database: process.env.DB_NAME,</code>
+              <code>{'  '}entities: ["src/**/*.entity.ts"],</code>
+              <code>{'  '}migrations: ["src/migrations/*.ts"],</code>
+              <code>{'  '}synchronize: false,</code>
+              <code>{'  '}logging: true,</code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>Важно:</p>
+          <ul>
+            <li><b>entities: ["src/**/*.entity.ts"]</b> - подхватит все entity автоматически</li>
+            <li><b>synchronize: false</b> - в проде должно быть false всегда!</li>
+          </ul>
+          <p>synchronize: true vs false</p>
+          <ul>
+            <li><b>synchronize: true</b> - Автоматом обновляет базу при изменении entity</li>
+            <li><b>synchronize: false</b> - Ты сам контролируешь изменения через миграции</li>
+          </ul>
+          <p>Команды для миграций</p>
+          <pre>
+            <CodeNumber length={10}/>
+            <code>
+              <code>{'{'}</code>
+              <code>{'  '}{'"scripts": {'}</code>
+              <code>{'    '}{'"typeorm": "ts-node ./node_modules/typeorm/cli.js",'}</code>
+              <code>{'    '}{'"migration:show": "npm run typeorm -- migration:show -d src/data-source.ts",'}</code>
+              <code>{'    '}{'"migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",'}</code>
+              <code>{'    '}{'"migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",'}</code>
+              <code>{'    '}{'"migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts",'}</code>
+              <code>{'    '}{'"migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"'}</code>
+              <code>{'  '}{'}'}</code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <ul>
+            <li><b>npm run migration:show</b> - Показывает статус всех миграций</li>
+            <li><b>npm run migration:generate -- src/migrations/Name</b> - Авто-генерация миграции (сравнивает entity с БД)</li>
+            <li><b>npm run migration:create -- src/migrations/Name</b> - Создать пустую миграцию (писать руками)</li>
+            <li><b>npm run migration:run</b> - Применить все невыполненные миграции</li>
+            <li><b>npm run migration:revert</b> - Откатить последнюю миграцию</li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
