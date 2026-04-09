@@ -287,6 +287,80 @@ const ReactNative = {
         </div>
       ),
     },
+    StyleSheet: {
+      id: 'react-native-2',
+      title: 'StyleSheet',
+      jsx: (
+        <div>
+          <p>Создание стилей</p>
+          <pre>
+            <CodeNumber length={19} />
+            <code>
+              <code>{`import { StyleSheet } from 'react-native';`}</code>
+              <code>{'  '}</code>
+              <code>{'const styles = StyleSheet.create({'}</code>
+              <code>
+                {'  '}
+                {`container: {`}
+              </code>
+              <code>
+                {'    '}
+                {`flex: 1,`}
+              </code>
+              <code>
+                {'    '}
+                {`padding: 20,`}
+              </code>
+              <code>
+                {'    '}
+                {`backgroundColor: '#fff',`}
+              </code>
+              <code>
+                {'  '}
+                {'},'}
+              </code>
+              <code>
+                {'  '}
+                {`title: {`}
+              </code>
+              <code>
+                {'    '}
+                {`fontSize: 24,`}
+              </code>
+              <code>
+                {'    '}
+                {`fontWeight: 'bold',`}
+              </code>
+              <code>
+                {'    '}
+                {`color: '#333',`}
+              </code>
+              <code>
+                {'  '}
+                {'},'}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Использование`}</code>
+              <code>{'<View style={styles.container}>'}</code>
+              <code>
+                {'  '}
+                {'<Text style={styles.title}>Заголовок</Text>'}
+              </code>
+              <code>{'</View>'}</code>
+            </code>
+          </pre>
+          <p>Зачем StyleSheet?</p>
+          <ul>
+            <li>Оптимизация — стили отправляются в нативный слой один раз</li>
+            <li>
+              Валидация на этапе компиляции (неправильное свойство = ошибка)
+            </li>
+            <li>Лучшая производительность, чем инлайн-объекты</li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
