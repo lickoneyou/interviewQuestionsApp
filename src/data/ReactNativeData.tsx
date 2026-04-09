@@ -609,6 +609,150 @@ const ReactNative = {
         </div>
       ),
     },
+    Навигация: {
+      id: 'react-native-4',
+      title: 'Навигация',
+      jsx: (
+        <div>
+          <p>
+            <b>Stack Navigator</b> - Вы открываете новый экран — он ложится
+            сверху. Нажимаете "Назад" — верхний лист убирается
+          </p>
+          <pre>
+            <CodeNumber length={12} />
+            <code>
+              <code>{`import { createNativeStackNavigator } from '@react-navigation/native-stack';`}</code>
+              <code>{'  '}</code>
+              <code>{'const Stack = createNativeStackNavigator();'}</code>
+              <code>{'  '}</code>
+              <code>{'function MyStack() {'}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {'<Stack.Navigator initialRouteName="Home">'}
+              </code>
+              <code>
+                {'    '}
+                {'<Stack.Screen name="Home" component={HomeScreen} />'}
+              </code>
+              <code>
+                {'    '}
+                {'<Stack.Screen name="Profile" component={ProfileScreen} />'}
+              </code>
+              <code>
+                {'    '}
+                {'</Stack.Navigator>'}
+              </code>
+              <code>
+                {'  '}
+                {' );'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Tab Navigator</b> - Панель вкладок в браузере. Вы всегда видите
+            главные разделы и можете переключаться между ними мгновенно, не
+            теряя контекст
+          </p>
+          <pre>
+            <CodeNumber length={12} />
+            <code>
+              <code>{`import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';`}</code>
+              <code>{'  '}</code>
+              <code>{'const Tab = createBottomTabNavigator();'}</code>
+              <code>{'  '}</code>
+              <code>{'function MyTabs() {'}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {'<Tab.Navigator>'}
+              </code>
+              <code>
+                {'      '}
+                {'<Tab.Screen name="Feed" component={FeedScreen} />'}
+              </code>
+              <code>
+                {'      '}
+                {'<Tab.Screen name="Search" component={SearchScreen} />'}
+              </code>
+              <code>
+                {'    '}
+                {'</Tab.Navigator>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Drawer Navigator</b> - Основные вкладки на виду, а настройки,
+            выход висят сбоку и появляются только когда свайпнешь или нажмешь
+            иконку гамбургера
+          </p>
+          <pre>
+            <CodeNumber length={12} />
+            <code>
+              <code>{`import { createDrawerNavigator } from '@react-navigation/drawer';`}</code>
+              <code>{'  '}</code>
+              <code>{'const Drawer = createDrawerNavigator();'}</code>
+              <code>{'  '}</code>
+              <code>{'function MyDrawer() {'}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {'<Drawer.Navigator>'}
+              </code>
+              <code>
+                {'      '}
+                {
+                  '<Drawer.Screen name="Main" component={MyTabs} /> {/* Можно вкладывать табы! */}'
+                }
+              </code>
+              <code>
+                {'      '}
+                {'<Drawer.Screen name="Settings" component={SettingsScreen} />'}
+              </code>
+              <code>
+                {'    '}
+                {'</Drawer.Navigator>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>Хуки</p>
+          <ul>
+            <li>
+              <b>useNavigation</b> - для навигации (кнопка "Назад", переход на
+              другой экран).
+            </li>
+            <li>
+              <b>useRoute</b> - чтобы получить параметры, переданные на текущий
+              экран.
+            </li>
+            <li>
+              <b>useNavigationState</b> - чтобы узнать текущий роут (например,
+              выделить активную иконку).
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
