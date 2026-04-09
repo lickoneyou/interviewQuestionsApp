@@ -9,6 +9,7 @@ import TypescriptData from './TypescriptData';
 import Vue from './Vue';
 import Nest from './NestData';
 import Next from './NextData';
+import ReactNative from './ReactNativeData';
 
 const data = {
   ...BasicCS,
@@ -18,6 +19,7 @@ const data = {
   ...JSCoreData,
   ...ReactData,
   ...Next,
+  ...ReactNative,
   ...Vue,
   ...TypescriptData,
   ...Nest,
