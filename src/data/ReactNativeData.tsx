@@ -361,6 +361,254 @@ const ReactNative = {
         </div>
       ),
     },
+    'Специфичные хуки': {
+      id: 'react-native-3',
+      title: 'Специфичные хуки',
+      jsx: (
+        <div>
+          <p>
+            <b>useWindowDimensions</b> - Возвращает актуальные размеры окна и
+            обновляется при повороте экрана или изменении размеров окна. Хук,
+            подписывается на изменения (при повороте экрана компонент
+            перерендерится).
+          </p>
+          <pre>
+            <CodeNumber length={20} />
+            <code>
+              <code>{`import { useWindowDimensions, View, Text } from 'react-native';`}</code>
+              <code>{'  '}</code>
+              <code>{'function ResponsiveComponent() {'}</code>
+              <code>
+                {'  '}
+                {`const { width, height, scale, fontScale } = useWindowDimensions();`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Адаптивная верстка`}
+              </code>
+              <code>
+                {'  '}
+                {'const isLandscape = width > height;'}
+              </code>
+              <code>
+                {'  '}
+                {'const isTablet = width > 768;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`return (`}
+              </code>
+              <code>
+                {'    '}
+                {`<View style={{`}
+              </code>
+              <code>
+                {'      '}
+                {`width: width * 0.9,           // 90% ширины экрана`}
+              </code>
+              <code>
+                {'      '}
+                {`padding: width > 500 ? 24 : 16,`}
+              </code>
+              <code>
+                {'      '}
+                {`flexDirection: isLandscape ? 'row' : 'column',`}
+              </code>
+              <code>
+                {'    '}
+                {'}}>'}
+              </code>
+              <code>
+                {'      '}
+                {`<Text>Ширина: {width}, Высота: {height}</Text>`}
+              </code>
+              <code>
+                {'      '}
+                {`<Text>Масштаб: {scale}, Масштаб шрифта: {fontScale}</Text>`}
+              </code>
+              <code>
+                {'    '}
+                {'</View>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>useColorScheme</b> - Возвращает текущую цветовую схему
+            устройства, установленную пользователем в настройках ОС
+          </p>
+          <pre>
+            <CodeNumber length={22} />
+            <code>
+              <code>{`mport { useColorScheme, View, Text, StyleSheet } from 'react-native';`}</code>
+              <code>{'  '}</code>
+              <code>{'function ThemedComponent() {'}</code>
+              <code>
+                {'  '}
+                {`const colorScheme = useColorScheme(); // 'light' | 'dark' | null`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const styles = StyleSheet.create({`}
+              </code>
+              <code>
+                {'    '}
+                {`container: {`}
+              </code>
+              <code>
+                {'      '}
+                {`backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',`}
+              </code>
+              <code>
+                {'    '}
+                {'},'}
+              </code>
+              <code>
+                {'    '}
+                {'text: {'}
+              </code>
+              <code>
+                {'      '}
+                {`color: colorScheme === 'dark' ? '#fff' : '#333',`}
+              </code>
+              <code>
+                {'    '}
+                {'},'}
+              </code>
+              <code>
+                {'  '}
+                {'});'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {`<View style={styles.container}>`}
+              </code>
+              <code>
+                {'      '}
+                {`<Text style={styles.text}>`}
+              </code>
+              <code>
+                {'        '}
+                {`Текущая тема: {colorScheme === 'dark' ? '🌙 Темная' : '☀️ Светлая'}`}
+              </code>
+              <code>
+                {'      '}
+                {'</Text>'}
+              </code>
+              <code>
+                {'    '}
+                {'</View>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>useAccessibilityInfo</b> - Позволяет узнать, включены ли на
+            устройстве специальные возможности: экранный диктор
+            (VoiceOver/TalkBack), уменьшенное движение, высокая контрастность и
+            т.д.
+          </p>
+          <pre>
+            <CodeNumber length={23} />
+            <code>
+              <code>{`import { useAccessibilityInfo, Text } from 'react-native';`}</code>
+              <code>{'  '}</code>
+              <code>{'function AccessibleComponent() {'}</code>
+              <code>
+                {'  '}
+                {'const {'}
+              </code>
+              <code>
+                {'    '}
+                {`isScreenReaderEnabled,      // VoiceOver/TalkBack включен?`}
+              </code>
+              <code>
+                {'    '}
+                {`isReduceMotionEnabled,      // уменьшенное движение?`}
+              </code>
+              <code>
+                {'    '}
+                {`isAccessibilityServiceEnabled, // Android: сервис доступности включен?`}
+              </code>
+              <code>
+                {'    '}
+                {`isBoldTextEnabled,          // iOS: жирный текст?`}
+              </code>
+              <code>
+                {'    '}
+                {`isGrayscaleEnabled,         // iOS: оттенки серого?`}
+              </code>
+              <code>
+                {'    '}
+                {`isInvertColorsEnabled,      // iOS: инверсия цветов?`}
+              </code>
+              <code>
+                {'  '}
+                {'} = useAccessibilityInfo();'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'return ('}
+              </code>
+              <code>
+                {'    '}
+                {'<View>'}
+              </code>
+              <code>
+                {'      '}
+                {'<Text>'}
+              </code>
+              <code>
+                {'        '}
+                {`{isScreenReaderEnabled && '🔊 Экранный диктор активен'}`}
+              </code>
+              <code>
+                {'      '}
+                {'</Text>'}
+              </code>
+              <code>
+                {'      '}
+                {`{isReduceMotionEnabled && (`}
+              </code>
+              <code>
+                {'        '}
+                {`<Text>♿️ Анимации отключены (используем fade вместо slide)</Text>`}
+              </code>
+              <code>
+                {'      '}
+                {')}'}
+              </code>
+              <code>
+                {'    '}
+                {'</View>'}
+              </code>
+              <code>
+                {'  '}
+                {');'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
