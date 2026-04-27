@@ -60,7 +60,7 @@ const Nest = {
               Создание модуля - <b>nest g mo users</b>
             </li>
             <li>
-              Создание всего сразу(ресурса) - <b>nest g mo users</b>
+              Создание всего сразу(ресурса) - <b>nest g resource users</b>
             </li>
           </ul>
         </div>
