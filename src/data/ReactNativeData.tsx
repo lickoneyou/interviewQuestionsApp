@@ -754,7 +754,7 @@ const ReactNative = {
       ),
     },
     AsyncStorage: {
-      id: 'react-native-4',
+      id: 'react-native-5',
       title: 'AsyncStorage',
       jsx: (
         <div>
