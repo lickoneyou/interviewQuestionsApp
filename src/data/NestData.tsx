@@ -287,13 +287,25 @@ const Nest = {
             </li>
           </ul>
           <pre>
-            <CodeNumber length={7}/>
+            <CodeNumber length={7} />
             <code>
               <code>{`@Module({`}</code>
-              <code>{'  '}{'imports: [DatabaseModule],'}</code>
-              <code>{'  '}{'controllers: [UserController],'}</code>
-              <code>{'  '}{'providers: [UserService],'}</code>
-              <code>{'  '}{'exports: [UserService]'}</code>
+              <code>
+                {'  '}
+                {'imports: [DatabaseModule],'}
+              </code>
+              <code>
+                {'  '}
+                {'controllers: [UserController],'}
+              </code>
+              <code>
+                {'  '}
+                {'providers: [UserService],'}
+              </code>
+              <code>
+                {'  '}
+                {'exports: [UserService]'}
+              </code>
               <code>{'})'}</code>
               <code>{'export class UserModule {}'}</code>
             </code>
@@ -301,8 +313,113 @@ const Nest = {
         </div>
       ),
     },
-    ORM: {
+    Controller: {
       id: '106',
+      title: 'Controller',
+      jsx: (
+        <div>
+          <p>
+            <b>Controller</b> - это класс, декорированный{' '}
+            <span>@Controller()</span>, который отвечает за приём HTTP-запросов
+            и возврат ответов. Он работает как «маршрутизатор» в приложении.
+          </p>
+          <p>Основные элементы:</p>
+          <ul>
+            <li>
+              <b>Декораторы маршрутов</b>: <span>@Get()</span>,{' '}
+              <span>@Post()</span>, <span>@Put()</span>, <span>@Delete()</span>{' '}
+              и т.д. — связывают метод с HTTP-методом и путём.
+            </li>
+            <li>
+              <b>Декораторы параметров</b>: <span>@Body()</span>,{' '}
+              <span>@Param()</span>, <span>@Query()</span>, <span>@Req()</span>,
+              <span>@Res()</span> — извлекают данные из запроса.
+            </li>
+            <li>
+              <b>Возврат ответа</b>: можно вернуть Promise, Observable или
+              просто объект/строку (Nest сам сериализует в JSON).
+            </li>
+          </ul>
+          <p>Зачем нужен:</p>
+          <ul>
+            <li>
+              Обрабатывать входящие запросы по определённым маршрутам (например,
+              GET /users).
+            </li>
+            <li>
+              Валидировать входные данные (обычно через DTO + ValidationPipe).
+            </li>
+            <li>
+              Передавать управление сервисам (бизнес-логика вынесена в
+              провайдеры).
+            </li>
+            <li>Формировать HTTP-ответ (статус, тело, заголовки).</li>
+          </ul>
+          <pre>
+            <CodeNumber length={19} />
+            <code>
+              <code>{`import { Controller, Get, Post, Body, Param } from '@nestjs/common';`}</code>
+              <code>{'  '}</code>
+              <code>{`@Controller('users')         // базовый путь /users`}</code>
+              <code>{'export class UserController {'}</code>
+              <code>
+                {'  '}
+                {`@Get()                    // GET /users`}
+              </code>
+              <code>
+                {'  '}
+                {'findAll() {'}
+              </code>
+              <code>
+                {'    '}
+                {`return ['user1', 'user2'];`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`@Get(':id')               // GET /users/123`}
+              </code>
+              <code>
+                {'  '}
+                {`findOne(@Param('id') id: string) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return { id, name: 'John' };`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`@Post()                   // POST /users`}
+              </code>
+              <code>
+                {'  '}
+                {'create(@Body() createUserDto: CreateUserDto) {'}
+              </code>
+              <code>
+                {'    '}
+                {`return { message: 'User created', data: createUserDto };`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    ORM: {
+      id: '107',
       title: 'ORM',
       jsx: (
         <div>
@@ -352,7 +469,7 @@ const Nest = {
       ),
     },
     TypeORM: {
-      id: '107',
+      id: '108',
       title: 'TypeORM',
       jsx: (
         <div>
@@ -487,7 +604,7 @@ const Nest = {
       ),
     },
     'class-validator и class-transformer': {
-      id: '108',
+      id: '109',
       title: 'class-validator и class-transformer',
       jsx: (
         <div>
@@ -560,7 +677,7 @@ const Nest = {
       ),
     },
     'PostgreSQL установка и подключение': {
-      id: '109',
+      id: '1010',
       title: 'PostgreSQL установка и подключение',
       jsx: (
         <div>
@@ -644,7 +761,7 @@ const Nest = {
       ),
     },
     'Настройка CORS': {
-      id: '1010',
+      id: '1011',
       title: 'Настройка CORS',
       jsx: (
         <div>
@@ -716,7 +833,7 @@ const Nest = {
       ),
     },
     Swagger: {
-      id: '1011',
+      id: '1012',
       title: 'Swagger',
       jsx: (
         <div>
@@ -892,7 +1009,7 @@ const Nest = {
       ),
     },
     JWT: {
-      id: '1012',
+      id: '1013',
       title: `JWT`,
       jsx: (
         <div>
@@ -939,7 +1056,7 @@ const Nest = {
       ),
     },
     Миграция: {
-      id: '1013',
+      id: '1014',
       title: 'Миграция',
       jsx: (
         <div>
