@@ -258,8 +258,51 @@ const Nest = {
         </div>
       ),
     },
-    ORM: {
+    Module: {
       id: '105',
+      title: 'Module',
+      jsx: (
+        <div>
+          <p>
+            <b>Module</b> - это класс, декорированный <span>@Module()</span>,
+            который организует код в приложении NestJS. Он служит контейнером
+            для связанных компонентов (контроллеров, провайдеров).
+          </p>
+          <p>Из чего состоит:</p>
+          <ul>
+            <li>
+              <b>controllers</b> — классы, обрабатывающие HTTP-запросы.
+            </li>
+            <li>
+              <b>providers</b> — сервисы, репозитории, фабрики (внедряются через
+              DI).
+            </li>
+            <li>
+              <b>imports</b> — список других модулей, чьи провайдеры нужны
+              текущему.
+            </li>
+            <li>
+              <b>exports</b> — какие провайдеры текущего модуля доступны для
+              других модулей.
+            </li>
+          </ul>
+          <pre>
+            <CodeNumber length={7}/>
+            <code>
+              <code>{`@Module({`}</code>
+              <code>{'  '}{'imports: [DatabaseModule],'}</code>
+              <code>{'  '}{'controllers: [UserController],'}</code>
+              <code>{'  '}{'providers: [UserService],'}</code>
+              <code>{'  '}{'exports: [UserService]'}</code>
+              <code>{'})'}</code>
+              <code>{'export class UserModule {}'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
+    ORM: {
+      id: '106',
       title: 'ORM',
       jsx: (
         <div>
@@ -309,7 +352,7 @@ const Nest = {
       ),
     },
     TypeORM: {
-      id: '106',
+      id: '107',
       title: 'TypeORM',
       jsx: (
         <div>
@@ -444,7 +487,7 @@ const Nest = {
       ),
     },
     'class-validator и class-transformer': {
-      id: '107',
+      id: '108',
       title: 'class-validator и class-transformer',
       jsx: (
         <div>
@@ -517,7 +560,7 @@ const Nest = {
       ),
     },
     'PostgreSQL установка и подключение': {
-      id: '108',
+      id: '109',
       title: 'PostgreSQL установка и подключение',
       jsx: (
         <div>
@@ -601,7 +644,7 @@ const Nest = {
       ),
     },
     'Настройка CORS': {
-      id: '109',
+      id: '1010',
       title: 'Настройка CORS',
       jsx: (
         <div>
@@ -673,7 +716,7 @@ const Nest = {
       ),
     },
     Swagger: {
-      id: '1010',
+      id: '1011',
       title: 'Swagger',
       jsx: (
         <div>
@@ -849,7 +892,7 @@ const Nest = {
       ),
     },
     JWT: {
-      id: '1011',
+      id: '1012',
       title: `JWT`,
       jsx: (
         <div>
@@ -896,7 +939,7 @@ const Nest = {
       ),
     },
     Миграция: {
-      id: '1012',
+      id: '1013',
       title: 'Миграция',
       jsx: (
         <div>
@@ -905,7 +948,7 @@ const Nest = {
             как подключаться к базе и где искать entity.
           </p>
           <pre>
-            <CodeNumber length={18}/>
+            <CodeNumber length={18} />
             <code>
               <code className='comment'>{'// src/data-source.ts'}</code>
               <code>{`import { DataSource } from "typeorm";`}</code>
@@ -929,36 +972,94 @@ const Nest = {
           </pre>
           <p>Важно:</p>
           <ul>
-            <li><b>entities: ["src/**/*.entity.ts"]</b> - подхватит все entity автоматически</li>
-            <li><b>synchronize: false</b> - в проде должно быть false всегда!</li>
+            <li>
+              <b>entities: ["src/**/*.entity.ts"]</b> - подхватит все entity
+              автоматически
+            </li>
+            <li>
+              <b>synchronize: false</b> - в проде должно быть false всегда!
+            </li>
           </ul>
           <p>synchronize: true vs false</p>
           <ul>
-            <li><b>synchronize: true</b> - Автоматом обновляет базу при изменении entity</li>
-            <li><b>synchronize: false</b> - Ты сам контролируешь изменения через миграции</li>
+            <li>
+              <b>synchronize: true</b> - Автоматом обновляет базу при изменении
+              entity
+            </li>
+            <li>
+              <b>synchronize: false</b> - Ты сам контролируешь изменения через
+              миграции
+            </li>
           </ul>
           <p>Команды для миграций</p>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code>{'{'}</code>
-              <code>{'  '}{'"scripts": {'}</code>
-              <code>{'    '}{'"typeorm": "ts-node ./node_modules/typeorm/cli.js",'}</code>
-              <code>{'    '}{'"migration:show": "npm run typeorm -- migration:show -d src/data-source.ts",'}</code>
-              <code>{'    '}{'"migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",'}</code>
-              <code>{'    '}{'"migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",'}</code>
-              <code>{'    '}{'"migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts",'}</code>
-              <code>{'    '}{'"migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"'}</code>
-              <code>{'  '}{'}'}</code>
+              <code>
+                {'  '}
+                {'"scripts": {'}
+              </code>
+              <code>
+                {'    '}
+                {'"typeorm": "ts-node ./node_modules/typeorm/cli.js",'}
+              </code>
+              <code>
+                {'    '}
+                {
+                  '"migration:show": "npm run typeorm -- migration:show -d src/data-source.ts",'
+                }
+              </code>
+              <code>
+                {'    '}
+                {
+                  '"migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",'
+                }
+              </code>
+              <code>
+                {'    '}
+                {
+                  '"migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",'
+                }
+              </code>
+              <code>
+                {'    '}
+                {
+                  '"migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts",'
+                }
+              </code>
+              <code>
+                {'    '}
+                {
+                  '"migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"'
+                }
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
               <code>{'}'}</code>
             </code>
           </pre>
           <ul>
-            <li><b>npm run migration:show</b> - Показывает статус всех миграций</li>
-            <li><b>npm run migration:generate -- src/migrations/Name</b> - Авто-генерация миграции (сравнивает entity с БД)</li>
-            <li><b>npm run migration:create -- src/migrations/Name</b> - Создать пустую миграцию (писать руками)</li>
-            <li><b>npm run migration:run</b> - Применить все невыполненные миграции</li>
-            <li><b>npm run migration:revert</b> - Откатить последнюю миграцию</li>
+            <li>
+              <b>npm run migration:show</b> - Показывает статус всех миграций
+            </li>
+            <li>
+              <b>npm run migration:generate -- src/migrations/Name</b> -
+              Авто-генерация миграции (сравнивает entity с БД)
+            </li>
+            <li>
+              <b>npm run migration:create -- src/migrations/Name</b> - Создать
+              пустую миграцию (писать руками)
+            </li>
+            <li>
+              <b>npm run migration:run</b> - Применить все невыполненные
+              миграции
+            </li>
+            <li>
+              <b>npm run migration:revert</b> - Откатить последнюю миграцию
+            </li>
           </ul>
         </div>
       ),
