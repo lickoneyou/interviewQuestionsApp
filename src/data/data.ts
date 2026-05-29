@@ -10,6 +10,7 @@ import Vue from './Vue';
 import Nest from './NestData';
 import Next from './NextData';
 import ReactNative from './ReactNativeData';
+import Nodejs from './Nodejs';
 
 const data = {
   ...BasicCS,
@@ -22,6 +23,7 @@ const data = {
   ...ReactNative,
   ...Vue,
   ...TypescriptData,
+  ...Nodejs,
   ...Nest,
   ...QI,
 };
