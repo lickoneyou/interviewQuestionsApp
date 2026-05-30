@@ -304,6 +304,77 @@ const Nodejs = {
         </div>
       ),
     },
+    Buffer: {
+      id: 'node-5',
+      title: 'Buffer',
+      jsx: (
+        <div>
+          <p>
+            <b>Buffer</b> — для работы с сырыми данными (массивами байтов).
+            Файлы, сеть, криптография.
+          </p>
+          <p>Когда нужен Buffer?</p>
+          <ul>
+            <li>
+              <span>Бинарные файлы (изображения, видео, PDF)</span> - Не
+              являются текстом
+            </li>
+            <li>
+              <span>Сетевое взаимодействие (TCP, HTTP)</span> - Данные идут
+              байтами
+            </li>
+            <li>
+              <span>Криптография (crypto module)</span> - Работает с байтами
+            </li>
+            <li>
+              <span>Стримы</span> - Передают чанками байтов
+            </li>
+            <li>
+              <span>Эффективность</span> - Копирование больших данных
+            </li>
+          </ul>
+          <p>Создание буфера</p>
+          <pre>
+            <CodeNumber length={10} />
+            <code>
+              <code className='comment'>{'// Из строки'}</code>
+              <code>{`const buf1 = Buffer.from('Hello');`}</code>
+              <code>{`const buf2 = Buffer.from('Привет', 'utf8');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Пустой буфер заданного размера`}</code>
+              <code>{`const buf3 = Buffer.alloc(10);        // заполнен нулями (безопасно)`}</code>
+              <code>{`const buf4 = Buffer.allocUnsafe(10);  // быстрее, но может содержать "мусор"`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Из массива байтов`}</code>
+              <code>{`const buf5 = Buffer.from([72, 101, 108, 108, 111]); // 'Hello'`}</code>
+            </code>
+          </pre>
+          <p>{'Основные операции'}</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code>{`const buf = Buffer.from('Hello Node');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Длина (в байтах)`}</code>
+              <code>{`console.log(buf.length);  // 10`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Чтение байта`}</code>
+              <code>{`console.log(buf[0]);      // 72 (код 'H')`}</code>
+              <code>{`console.log(buf[1]);      // 101 (код 'e')`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Запись байта`}</code>
+              <code>{`buf[0] = 104;             // 'h'`}</code>
+              <code>{`console.log(buf.toString()); // 'hello Node'`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Преобразование в строку`}</code>
+              <code>{`buf.toString();           // 'hello Node'`}</code>
+              <code>{`buf.toString('utf8');     // то же самое`}</code>
+              <code>{`buf.toString('hex');      // 68656c6c6f204e6f6465`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
