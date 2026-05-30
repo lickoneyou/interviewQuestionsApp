@@ -220,6 +220,90 @@ const Nodejs = {
         </div>
       ),
     },
+    'Пути (path)': {
+      id: 'node-4',
+      title: 'Пути (path)',
+      jsx: (
+        <div>
+          <p>Модуль path</p>
+          <pre>
+            <CodeNumber length={32} />
+            <code>
+              <code>{`const path = require('path');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// path.join() - Склеивает части пути (с учетом OS)'}
+              </code>
+              <code>{`path.join('folder', 'file.txt') // folder/file.txt`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// path.resolve() - Строит абсолютный путь'}
+              </code>
+              <code>{`path.resolve('index.js')  // /full/path/index.js`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// path.basename() - Имя файла (с расширением)'}
+              </code>
+              <code>{`path.basename('/a/b/c.js')  // c.js`}</code>
+              <code className='comment'>
+                {'// path.dirname() - Путь без имени файла'}
+              </code>
+              <code>{`path.dirname('/a/b/c.js') // /a/b`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// path.extname() - Расширение файла'}
+              </code>
+              <code>{`path.extname('/a/b/c.js') //  .js`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// path.parse() - Разбирает путь на части, возвращает объект`}</code>
+              <code>{`console.log(path.parse('/home/user/dir/file.txt'))`}</code>
+              <code className='comment'>{'//  {'}</code>
+              <code className='comment'>
+                {'//  '}
+                {'"root": "/",'}
+              </code>
+              <code className='comment'>
+                {'//  '}
+                {'"dir": "/home/user/dir",'}
+              </code>
+              <code className='comment'>
+                {'//  '}
+                {'"base": "file.txt",'}
+              </code>
+              <code className='comment'>
+                {'//  '}
+                {'"ext": ".txt",'}
+              </code>
+              <code className='comment'>
+                {'//  '}
+                {'"name": "file"'}
+              </code>
+              <code className='comment'>{'//  }'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {
+                  '// path.format() - Собирает путь из частей, обратный к parse()'
+                }
+              </code>
+              <code>{`const fullPath = path.format({`}</code>
+              <code>
+                {'  '}
+                {`dir: '/home/user',`}
+              </code>
+              <code>
+                {'  '}
+                {`name: 'file',`}
+              </code>
+              <code>
+                {'  '}
+                {`ext: '.txt'`}
+              </code>
+              <code>{`}); // '/home/user/file.txt'`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
