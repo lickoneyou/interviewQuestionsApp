@@ -110,6 +110,116 @@ const Nodejs = {
         </div>
       ),
     },
+    'Файловая система': {
+      id: 'node-3',
+      title: 'Файловая система',
+      jsx: (
+        <div>
+          <p>Подключение</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{`const fsPromises = require('fs').promises;  // современный вариант`}</code>
+            </code>
+          </pre>
+          <p>Чтение файла (readFile)</p>
+          <pre>
+            <CodeNumber length={11} />
+            <code>
+              <code className='comment'>{'// Синхронно'}</code>
+              <code>{`const data = fs.readFileSync('./file.txt', 'utf8');`}</code>
+              <code>{`console.log(data);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{'// Асинхронно (Promises)'}</code>
+              <code>{`const fs = require('fs').promises;`}</code>
+              <code>{'  '}</code>
+              <code>{`async function read() {`}</code>
+              <code>
+                {'  '}
+                {`const data = await fs.readFile('./file.txt', 'utf8');`}
+              </code>
+              <code>
+                {'  '}
+                {`console.log(data);`}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>Запись файла (writeFile)</p>
+          <pre>
+            <CodeNumber length={4} />
+            <code>
+              <code>{`fs.writeFileSync('./output.txt', 'Hello World');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Или асинхронно`}</code>
+              <code>{`await fs.writeFile('./output.txt', 'Hello World');`}</code>
+            </code>
+          </pre>
+          <p>Добавление в файл (appendFile)</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code>{`fs.appendFileSync('./log.txt', 'Новая строка');`}</code>
+              <code>{`await fs.appendFile('./log.txt', 'Еще строка');`}</code>
+            </code>
+          </pre>
+          <p>Создание папки (mkdir)</p>
+          <pre>
+            <CodeNumber length={5} />
+            <code>
+              <code>{`fs.mkdirSync('./my-folder');`}</code>
+              <code>{`await fs.mkdir('./my-folder');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// С вложенными папками (рекурсивно)'}
+              </code>
+              <code>{`await fs.mkdir('./a/b/c', { recursive: true });`}</code>
+            </code>
+          </pre>
+          <p>Удаление папки (rmdir / rm)</p>
+          <pre>
+            <CodeNumber length={6} />
+            <code>
+              <code className='comment'>
+                {'// Старый способ (только пустые папки)'}
+              </code>
+              <code>{`fs.rmdirSync('./empty-folder');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Новый способ (рекурсивно с содержимым)`}</code>
+              <code>{`fs.rmSync('./folder', { recursive: true, force: true });`}</code>
+              <code>{`await fs.rm('./folder', { recursive: true, force: true });`}</code>
+            </code>
+          </pre>
+          <p>Удаление файла (unlink)</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code>{`fs.unlinkSync('./file.txt');`}</code>
+              <code>{`await fs.unlink('./file.txt');`}</code>
+            </code>
+          </pre>
+          <p>Полезные методы</p>
+          <ul>
+            <li>
+              <b>fs.readdir()</b> - Чтение содержимого папки
+            </li>
+            <li>
+              <b>fs.stat()</b> - Информация о файле/папке (размер, дата)
+            </li>
+            <li>
+              <b>fs.existsSync()</b> - Проверка существования (только синхронно)
+            </li>
+            <li>
+              <b>fs.copyFile()</b> - Копирование файла
+            </li>
+            <li>
+              <b>fs.rename()</b> - Переименование/перемещение
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
