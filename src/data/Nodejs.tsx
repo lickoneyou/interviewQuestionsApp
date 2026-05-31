@@ -1173,6 +1173,65 @@ const Nodejs = {
         </div>
       ),
     },
+    EventEmitter: {
+      id: 'node-7',
+      title: `EventEmitter`,
+      jsx: (
+        <div>
+          <p>
+            <b>EventEmitter</b> - Встроенный модуль для создания
+            событийно-ориентированной архитектуры. Многие объекты Node.js
+            наследуют EventEmitter (streams, http.Server, process).
+          </p>
+          <pre>
+            <CodeNumber length={11} />
+            <code>
+              <code>{`const EventEmitter = require('events');`}</code>
+              <code>{'  '}</code>
+              <code>{`const emitter = new EventEmitter();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Подписка на событие (слушатель)`}</code>
+              <code>{`emitter.on('greet', (name) => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Hello, ${name}!`);'}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Генерация события`}</code>
+              <code>{`emitter.emit('greet', 'Alice');  // Hello, Alice!`}</code>
+            </code>
+          </pre>
+          <p>Методы</p>
+          <ul>
+            <li>
+              <b>on(event, listener)</b> - Добавить слушатель
+            </li>
+            <li>
+              <b>once(event, listener)</b> - Слушатель сработает один раз
+            </li>
+            <li>
+              <b>emit(event, ...args)</b> - Вызвать событие
+            </li>
+            <li>
+              <b>off(event, listener)</b> - Удалить слушатель
+            </li>
+            <li>
+              <b>removeListener(event, listener)</b> - То же что off
+            </li>
+            <li>
+              <b>removeAllListeners(event)</b> - Удалить всех слушателей
+            </li>
+            <li>
+              <b>listeners(event)</b> - Получить массив слушателей
+            </li>
+            <li>
+              <b>eventNames()</b> - Список активных событий
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
