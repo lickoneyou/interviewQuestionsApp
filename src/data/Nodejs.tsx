@@ -748,6 +748,431 @@ const Nodejs = {
         </div>
       ),
     },
+    Streams: {
+      id: 'node-7',
+      title: 'Streams',
+      jsx: (
+        <div>
+          <p>
+            <b>Стримы</b> — это потоковая обработка данных по частям{' '}
+            <span>(чанкам)</span>, без загрузки всего файла в память.
+          </p>
+          <p>Проблема без стримов:</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code className='comment'>{`// ❌ Весь файл (10 ГБ) загрузится в память`}</code>
+              <code>{`const data = await fs.readFile('./huge-file.mp4');`}</code>
+            </code>
+          </pre>
+          <p>Решение со стримами:</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code className='comment'>{`// ✅ Читаем и обрабатываем по кусочкам`}</code>
+              <code>{`const stream = fs.createReadStream('./huge-file.mp4');`}</code>
+            </code>
+          </pre>
+          <p>Типы стримов</p>
+          <ul>
+            <li>
+              <b>Readable</b> - Чтение данных (
+              <span>{`fs.createReadStream()`}</span>)
+            </li>
+            <li>
+              <b>Writable</b> - Запись данных (
+              <span>{`fs.createWriteStream()`}</span>)
+            </li>
+            <li>
+              <b>Duplex</b> - Чтение + запись (<span>{`сетевые сокеты`}</span>)
+            </li>
+            <li>
+              <b>Transform</b> - Изменяет данные на лету (
+              <span>{`zlib.createGzip()`}</span>)
+            </li>
+          </ul>
+          <p>Readable Stream</p>
+          <pre>
+            <CodeNumber length={19} />
+            <code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{`const readable = fs.createReadStream('./input.txt', {`}</code>
+              <code>
+                {'  '}
+                {`encoding: 'utf8',`}
+              </code>
+              <code>
+                {'  '}
+                {`highWaterMark: 64 * 1024  // чанк по 64KB (по умолчанию)`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// События`}</code>
+              <code>{`readable.on('data', (chunk) => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Получен чанк размером: ${chunk.length} байт`);'}
+              </code>
+              <code>
+                {'  '}
+                {`console.log(chunk);`}
+              </code>
+              <code>{'});'}</code>
+              <code>{`readable.on('end', () => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Файл прочитан полностью');`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`readable.on('error', (err) => {`}</code>
+              <code>
+                {'  '}
+                {`console.error('Ошибка:', err);`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>Writable Stream</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Запись данных`}</code>
+              <code>{`writable.write('Первая строка');`}</code>
+              <code>{`writable.write('Вторая строка\n');`}</code>
+              <code>{`writable.end('Последняя строка\n');  // end() завершает поток`}</code>
+              <code>{'  '}</code>
+              <code>{`writable.on('finish', () => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Запись завершена');`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`writable.on('error', (err) => {`}</code>
+              <code>
+                {'  '}
+                {`console.error('Ошибка:', err);`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>
+            <b>pipe()</b> - соединяет <span>Readable</span> →{' '}
+            <span>Writable</span>, автоматически управляя потоком
+            (backpressure).
+          </p>
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Копирование файла (эффективно!)`}</code>
+              <code>{`const readable = fs.createReadStream('./source.mp4');`}</code>
+              <code>{`const writable = fs.createWriteStream('./destination.mp4');`}</code>
+              <code>{'  '}</code>
+              <code>{`readable.pipe(writable);`}</code>
+              <code>{'  '}</code>
+              <code>{`readable.on('end', () => console.log('Копирование завершено'));`}</code>
+            </code>
+          </pre>
+          <p>Короткая запись:</p>
+          <pre>
+            <CodeNumber length={1} />
+            <code>
+              <code>{`fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}</code>
+            </code>
+          </pre>
+          <p>pipe vs ручное копирование</p>
+          <pre>
+            <CodeNumber length={6} />
+            <code>
+              <code className='comment'>{`// ❌ Плохо (весь файл в память)`}</code>
+              <code>{`const data = fs.readFileSync('./source.mp4');`}</code>
+              <code>{`fs.writeFileSync('./dest.mp4', data);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Хорошо (по чанкам)`}</code>
+              <code>{`fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}</code>
+            </code>
+          </pre>
+          <p>Transform Stream</p>
+          <pre>
+            <CodeNumber length={15} />
+            <code>
+              <code>{`const { Transform } = require('stream');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Создаем трансформер (например, в верхний регистр)`}</code>
+              <code>{`const upperCaseTransform = new Transform({`}</code>
+              <code>
+                {'  '}
+                {`transform(chunk, encoding, callback) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = chunk.toString().toUpperCase();`}
+              </code>
+              <code>
+                {'    '}
+                {`this.push(result);`}
+              </code>
+              <code>
+                {'    '}
+                {`callback();`}
+              </code>
+              <code>{'  }'}</code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Использование`}</code>
+              <code>{`fs.createReadStream('./input.txt')`}</code>
+              <code>
+                {'  '}
+                {`.pipe(upperCaseTransform)`}
+              </code>
+              <code>
+                {'  '}
+                {`.pipe(fs.createWriteStream('./output.txt'));`}
+              </code>
+            </code>
+          </pre>
+          <p>Готовые трансформеры</p>
+          <pre>
+            <CodeNumber length={12} />
+            <code>
+              <code>{`const zlib = require('zlib');`}</code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Сжатие файла`}</code>
+              <code>{`fs.createReadStream('./big-file.txt')`}</code>
+              <code>
+                {'  '}
+                {`.pipe(zlib.createGzip())`}
+              </code>
+              <code>
+                {'  '}
+                {`.pipe(fs.createWriteStream('./big-file.txt.gz'));`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Распаковка`}</code>
+              <code>{`fs.createReadStream('./big-file.txt.gz')`}</code>
+              <code>
+                {'  '}
+                {`.pipe(zlib.createGunzip())`}
+              </code>
+              <code>
+                {'  '}
+                {`.pipe(fs.createWriteStream('./big-file-restored.txt'));`}
+              </code>
+            </code>
+          </pre>
+          <p>HTTP-сервер со стримами </p>
+          <pre>
+            <CodeNumber length={18} />
+            <code>
+              <code>{`const http = require('http');`}</code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{`const path = require('path');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// ❌ Плохо: читаем весь файл в память`}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {`// const data = fs.readFileSync('./big-video.mp4');`}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {`// res.end(data);`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// ✅ Хорошо: стримим клиенту`}
+              </code>
+              <code>
+                {'  '}
+                {`const stream = fs.createReadStream('./big-video.mp4');`}
+              </code>
+              <code>
+                {'  '}
+                {`stream.pipe(res);  // res — это Writable Stream!`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`stream.on('error', (err) => {`}
+              </code>
+              <code>
+                {'  '}
+                {`res.statusCode = 404;`}
+              </code>
+              <code>
+                {'  '}
+                {`res.end('File not found');`}
+              </code>
+              <code>{`  });`}</code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>❌ Без стримов</p>
+          <ul>
+            <li>Файл загружается в RAM</li>
+            <li>При 1 ГБ файле → 1 ГБ RAM</li>
+            <li>Медленный старт ответа</li>
+          </ul>
+          <p>✅ Со стримами</p>
+          <ul>
+            <li>Файл читается по частям</li>
+            <li>При 1 ГБ файле → ~64KB RAM</li>
+            <li>Мгновенный старт (TTFB)</li>
+          </ul>
+          <p>
+            Остановка потока (<span>unpipe</span>, <span>destroy</span>)
+          </p>
+          <pre>
+            <CodeNumber length={13} />
+            <code>
+              <code>{`const readable = fs.createReadStream('./file.txt');`}</code>
+              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
+              <code>{'  '}</code>
+              <code>{`readable.pipe(writable);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Отключить поток`}</code>
+              <code>{`setTimeout(() => {`}</code>
+              <code>
+                {'  '}
+                {`readable.unpipe(writable);`}
+              </code>
+              <code>
+                {'  '}
+                {`console.log('Поток остановлен');`}
+              </code>
+              <code>{`}, 1000);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Уничтожить поток`}</code>
+              <code>{`readable.destroy();`}</code>
+            </code>
+          </pre>
+          <p>
+            <b>pipeline()</b> — правильный способ (с обработкой ошибок)
+          </p>
+          <pre>
+            <CodeNumber length={28} />
+            <code>
+              <code>{`const { pipeline } = require('stream');`}</code>
+              <code>{`const fs = require('fs');`}</code>
+              <code>{`const zlib = require('zlib');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// pipe() не всегда правильно пробрасывает ошибки`}</code>
+              <code className='comment'>{`// pipeline() — современная альтернатива`}</code>
+              <code>{'  '}</code>
+              <code>{`pipeline(`}</code>
+              <code>
+                {'  '}
+                {`fs.createReadStream('./input.txt'),`}
+              </code>
+              <code>
+                {'  '}
+                {`zlib.createGzip(),`}
+              </code>
+              <code>
+                {'  '}
+                {`fs.createWriteStream('./input.txt.gz'),`}
+              </code>
+              <code>
+                {'  '}
+                {`(err) => {`}
+              </code>
+              <code>
+                {'    '}
+                {`if (err) {`}
+              </code>
+              <code>
+                {'      '}
+                {`console.error('Ошибка:', err);`}
+              </code>
+              <code>
+                {'    '}
+                {`} else {`}
+              </code>
+              <code>
+                {'      '}
+                {`console.log('Готово!');`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// С версией promises (Node.js 15+)`}</code>
+              <code>{`const { pipeline } = require('stream/promises');`}</code>
+              <code>{'  '}</code>
+              <code>{`await pipeline(`}</code>
+              <code>
+                {'  '}
+                {`fs.createReadStream('./input.txt'),`}
+              </code>
+              <code>
+                {'  '}
+                {`zlib.createGzip(),`}
+              </code>
+              <code>
+                {'  '}
+                {`fs.createWriteStream('./input.txt.gz')`}
+              </code>
+              <code>{`);`}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Backpressure</b> - когда Writable медленнее Readable →
+            накапливается буфер.
+          </p>
+          <pre>
+            <CodeNumber length={14} />
+            <code>
+              <code>{`const readable = fs.createReadStream('./huge.txt');`}</code>
+              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// pipe() автоматически управляет backpressure`}</code>
+              <code>{`readable.pipe(writable);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Ручная реализация`}</code>
+              <code>{`readable.on('data', (chunk) => {`}</code>
+              <code>
+                {'  '}
+                {`const canWrite = writable.write(chunk);`}
+              </code>
+              <code>
+                {'  '}
+                {`if (!canWrite) {`}
+              </code>
+              <code>
+                {'    '}
+                {`readable.pause();  // приостановить чтение`}
+              </code>
+              <code>
+                {'    '}
+                {`writable.once('drain', () => readable.resume());  // возобновить`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
