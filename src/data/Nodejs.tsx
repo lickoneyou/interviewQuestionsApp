@@ -1174,7 +1174,7 @@ const Nodejs = {
       ),
     },
     EventEmitter: {
-      id: 'node-7',
+      id: 'node-8',
       title: `EventEmitter`,
       jsx: (
         <div>
