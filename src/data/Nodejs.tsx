@@ -375,6 +375,379 @@ const Nodejs = {
         </div>
       ),
     },
+    'HTTP-сервер': {
+      id: 'node-6',
+      title: 'HTTP-сервер',
+      jsx: (
+        <div>
+          <p>Создание сервера</p>
+          <pre>
+            <CodeNumber length={6} />
+            <code>
+              <code>{`const http = require('http');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code className='comment'>{`// req — входящий запрос (IncomingMessage)`}</code>
+              <code className='comment'>{`// res — исходящий ответ (ServerResponse)`}</code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>Объект req</p>
+          <ul>
+            <li>
+              <b>req.url</b> - Путь запроса (<span>{`/users?id=1`}</span>)
+            </li>
+            <li>
+              <b>req.method</b> - HTTP метод (
+              <span>GET, POST, PUT, DELETE</span>)
+            </li>
+            <li>
+              <b>req.headers</b> - Заголовки (объект) (
+              <span>{`{ 'user-agent': '...' }`}</span>)
+            </li>
+          </ul>
+          <p>Объект res</p>
+          <ul>
+            <li>
+              <b>res.writeHead(code, headers)</b> - Установить статус и
+              заголовки
+            </li>
+            <li>
+              <b>res.setHeader(name, value)</b> - Установить заголовок
+            </li>
+            <li>
+              <b>res.write(data)</b> - Отправить часть данных (chunk)
+            </li>
+            <li>
+              <b>res.end(data)</b> - Завершить ответ (обязательно!)
+            </li>
+          </ul>
+          <p>Простейший сервер</p>
+          <pre>
+            <CodeNumber length={10} />
+            <code>
+              <code>{`const http = require('http');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.writeHead(200, { 'Content-Type': 'text/plain' });`}
+              </code>
+              <code>
+                {'  '}
+                {`res.end('Hello World!');`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`server.listen(3000, () => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Сервер запущен на http://localhost:3000');`}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>Обработка маршрутов</p>
+          <pre>
+            <CodeNumber length={25} />
+            <code>
+              <code>{`const http = require('http');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const { url, method } = req;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (url === '/' && method === 'GET') {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(200, { 'Content-Type': 'text/html' });`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end('<h1>Главная</h1>');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} else if (url === '/about' && method === 'GET') {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(200, { 'Content-Type': 'text/html' });`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end('<h1>О нас</h1>');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} else if (url === '/api/users' && method === 'GET') {`}
+              </code>
+              <code>
+                {'    '}
+                {`const users = [{ id: 1, name: 'Alice' }];`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end(JSON.stringify(users));`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} else {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(404, { 'Content-Type': 'text/plain' });`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end('404 Not Found');`}
+              </code>
+              <code>{'  }'}</code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`server.listen(3000);`}</code>
+            </code>
+          </pre>
+          <p>Чтение тела запроса (POST)</p>
+          <pre>
+            <CodeNumber length={28} />
+            <code>
+              <code>{`const http = require('http');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`if (req.method === 'POST' && req.url === '/submit') {`}
+              </code>
+              <code>
+                {'    '}
+                {`let body = '';`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`req.on('data', chunk => {`}
+              </code>
+              <code>
+                {'      '}
+                {`body += chunk.toString();`}
+              </code>
+              <code>
+                {'    '}
+                {`});`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`eq.on('end', () => {`}
+              </code>
+              <code>
+                {'      '}
+                {`console.log('Получены данные:', body);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'      '}
+                {'try {'}
+              </code>
+              <code>
+                {'        '}
+                {`const data = JSON.parse(body);`}
+              </code>
+              <code>
+                {'        '}
+                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
+              </code>
+              <code>
+                {'        '}
+                {`res.end(JSON.stringify({ received: true, data }));`}
+              </code>
+              <code>
+                {'      '}
+                {'} catch (err) {'}
+              </code>
+              <code>
+                {'        '}
+                {`res.writeHead(400, { 'Content-Type': 'application/json' });`}
+              </code>
+              <code>
+                {'        '}
+                {`res.end(JSON.stringify({ error: 'Invalid JSON' }));`}
+              </code>
+              <code>
+                {'      '}
+                {'}'}
+              </code>
+              <code>
+                {'    '}
+                {'});'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} else {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(404);`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end();`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>Параметры запроса</p>
+          <pre>
+            <CodeNumber length={11} />
+            <code>
+              <code className='comment'>{`// GET /users?name=Alice&age=25`}</code>
+              <code>{`const url = require('url');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const parsedUrl = url.parse(req.url, true); // true = парсить query`}
+              </code>
+              <code>
+                {'  '}
+                {`console.log(parsedUrl.pathname);   // '/users'`}
+              </code>
+              <code>
+                {'  '}
+                {`console.log(parsedUrl.query);      // { name: 'Alice', age: '25' }`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
+              </code>
+              <code>
+                {'  '}
+                {`res.end(JSON.stringify({ query: parsedUrl.query }));`}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>Динамические маршруты</p>
+          <pre>
+            <CodeNumber length={13} />
+            <code>
+              <code className='comment'>{`// GET /users/123`}</code>
+              <code>{`const server = http.createServer((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const match = req.url.match(/^\/users\/(\d+)$/);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (match) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const userId = match[1];`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
+              </code>
+              <code>
+                {'    '}
+                {
+                  'res.end(JSON.stringify({ userId, message: `Пользователь ${userId}` }));'
+                }
+              </code>
+              <code>
+                {'  '}
+                {`} else {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(404);`}
+              </code>
+              <code>
+                {'    '}
+                {`res.end('Not found');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>Статус-коды</p>
+          <ul>
+            <li>
+              <b>200</b> - OK (<span>Всё хорошо</span>)
+            </li>
+            <li>
+              <b>201</b> - Created (<span>Ресурс создан (POST)</span>)
+            </li>
+            <li>
+              <b>204</b> - No Content (<span>Успешно, но тело пустое</span>)
+            </li>
+            <li>
+              <b>400</b> - Bad Request (<span>Ошибка в запросе клиента</span>)
+            </li>
+            <li>
+              <b>401</b> - Unauthorized (<span>Требуется авторизация</span>)
+            </li>
+            <li>
+              <b>403</b> - Forbidden (<span>Доступ запрещен</span>)
+            </li>
+            <li>
+              <b>404</b> - Not Found (<span>Ресурс не найден</span>)
+            </li>
+            <li>
+              <b>500</b> - Internal Server Error (<span>Ошибка сервера</span>)
+            </li>
+          </ul>
+          <p>Заголовки (Content-Type)</p>
+          <ul>
+            <li>
+              <b>text/plain</b> - Обычный текст
+            </li>
+            <li>
+              <b>text/html</b> - HTML страница
+            </li>
+            <li>
+              <b>text/css</b> - CSS файл
+            </li>
+            <li>
+              <b>application/json</b> - JSON данные
+            </li>
+            <li>
+              <b>application/x-www-form-urlencoded</b> - HTML формы
+            </li>
+            <li>
+              <b>image/png</b> - Изображение
+            </li>
+            <li>
+              <b>multipart/form-data</b> - Загрузка файлов
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
