@@ -1275,8 +1275,264 @@ const Nodejs = {
             <li>
               <b>dotenv</b> - переменные окружения
             </li>
-            <li><b>cross-env</b> - кросс-платформенные переменные окружения</li>
+            <li>
+              <b>cross-env</b> - кросс-платформенные переменные окружения
+            </li>
           </ul>
+        </div>
+      ),
+    },
+    'Child Process': {
+      id: 'node-10',
+      title: 'Child Process',
+      jsx: (
+        <div>
+          <p>
+            <b>Child Process</b> - модуль для запуска внешних команд, других
+            скриптов или системных программ из Node.js.
+          </p>
+          <p>Применение</p>
+          <ul>
+            <li>
+              <b>Выполнить команду ОС</b> - ls -la, dir
+            </li>
+            <li>
+              <b>Запустить Python/Shell скрипт</b> - python script.py
+            </li>
+            <li>
+              <b>Создать тяжелые вычисления</b> - Отдельный процесс для
+              CPU-нагрузки
+            </li>
+            <li>
+              <b>Многопроцессность</b> - fork() для масштабирования
+            </li>
+          </ul>
+          <p>Способы запуска</p>
+          <ul>
+            <li>
+              <b>exec()</b> - Короткие команды, небольшой вывод. Возвращает
+              буфер (весь вывод сразу)
+            </li>
+            <li>
+              <b>execFile()</b> - Запуск .exe или бинарника. Возвращает буфер
+            </li>
+            <li>
+              <b>spawn()</b> - Длительные процессы, большой вывод. Возвращает
+              Stream
+            </li>
+            <li>
+              <b>fork()</b> - Запуск другого Node.js модуля. Возвращает
+              ChildProcess с IPC
+            </li>
+          </ul>
+          <p>exec()</p>
+          <pre>
+            <CodeNumber length={19} />
+            <code>
+              <code>{`const { exec } = require('child_process');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Выполнить команду`}</code>
+              <code>{`exec('ls -la', (error, stdout, stderr) => {`}</code>
+              <code>
+                {'  '}
+                {`if (error) {`}
+              </code>
+              <code>
+                {'    '}
+                {'console.error(`Ошибка: ${error.message}`);'}
+              </code>
+              <code>
+                {'    '}
+                {`return;`}
+              </code>
+              <code>{'  }'}</code>
+              <code>
+                {'  '}
+                {`if (stderr) {`}
+              </code>
+              <code>
+                {'    '}
+                {'console.error(`Stderr: ${stderr}`);'}
+              </code>
+              <code>
+                {'  '}
+                {`return;`}
+              </code>
+              <code>{'  }'}</code>
+              <code>
+                {'  '}
+                {'console.log(`Вывод:\n${stdout}`);'}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Для Windows`}</code>
+              <code>{`exec('dir', { shell: 'cmd.exe' }, (err, stdout) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log(stdout);`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Ограничение:</b> Буфер по умолчанию <span>1MB</span> (можно
+            увеличить)
+          </p>
+          <p>execFile()</p>
+          <pre>
+            <CodeNumber length={11} />
+            <code>
+              <code>{`const { execFile } = require('child_process');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Запуск внешней программы с аргументами`}</code>
+              <code>{`execFile('node', ['--version'], (err, stdout) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Node version:', stdout);`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Запуск Python`}</code>
+              <code>{`execFile('python', ['script.py', 'arg1'], (err, stdout) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Python output:', stdout);`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>spawn()</p>
+          <pre>
+            <CodeNumber length={20} />
+            <code>
+              <code>{`const { spawn } = require('child_process');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Создаем процесс`}</code>
+              <code>{`const ls = spawn('ls', ['-la', '/usr']);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Слушаем stdout (читаем по кусочкам)`}</code>
+              <code>{`ls.stdout.on('data', (data) => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Чанк: ${data.length} байт`);'}
+              </code>
+              <code>
+                {'  '}
+                {`console.log(data.toString());`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Слушаем stderr`}</code>
+              <code>{`ls.stderr.on('data', (data) => {`}</code>
+              <code>
+                {'  '}
+                {'console.error(`Ошибка: ${data}`);'}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Ждем завершения`}</code>
+              <code>{`ls.on('close', (code) => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Процесс завершен с кодом ${code}`);'}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Преимущество spawn</b>: не ждет завершения, данные идут по
+            стримам (хорошо для больших объемов).
+          </p>
+          <p>fork()</p>
+          <pre>
+            <CodeNumber length={21} />
+            <code>
+              <code className='comment'>{`// parent.js`}</code>
+              <code>{`const { fork } = require('child_process');`}</code>
+              <code>{'  '}</code>
+              <code>{`const child = fork('./child.js');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Отправляем данные дочернему процессу`}</code>
+              <code>{`child.send({ hello: 'world' });`}</code>
+              <code>{'  '}</code>
+              <code>{`// Получаем ответ`}</code>
+              <code>{`child.on('message', (message) => {`}</code>
+              <code>
+                {`  `}
+                {`console.log('От ребенка:', message);`}
+              </code>
+              <code>
+                {'  '}
+                {`child.kill();`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// child.js`}</code>
+              <code>{`process.on('message', (message) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Родитель сказал:', message);`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Отправляем ответ`}
+              </code>
+              <code>
+                {'  '}
+                {`process.send({ reply: 'Принято!' });`}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>fork()</b> создает отдельный Node.js процесс с собственным Event
+            Loop.
+          </p>
+          <p>IPC (Inter-Process Communication)</p>
+          <pre>
+            <CodeNumber length={20} />
+            <code>
+              <code className='comment'>{`// Родитель`}</code>
+              <code>{`const child = fork('./worker.js');`}</code>
+              <code>{'  '}</code>
+              <code>{`child.send({ task: 'calculate', data: 1000 });`}</code>
+              <code>{'  '}</code>
+              <code>{`child.on('message', (result) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Результат:', result);`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code>{`child.on('exit', (code) => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Ребенок завершен с кодом ${code}`);'}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// worker.js`}</code>
+              <code>{`process.on('message', async (msg) => {`}</code>
+              <code>
+                {'  '}
+                {`if (msg.task === 'calculate') {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = heavyCalculation(msg.data);`}
+              </code>
+              <code>
+                {'    '}
+                {`process.send({ result });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
         </div>
       ),
     },
