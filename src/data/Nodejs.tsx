@@ -1327,7 +1327,7 @@ const Nodejs = {
           </ul>
           <p>exec()</p>
           <pre>
-            <CodeNumber length={19} />
+            <CodeNumber length={20} />
             <code>
               <code>{`const { exec } = require('child_process');`}</code>
               <code>{'  '}</code>
