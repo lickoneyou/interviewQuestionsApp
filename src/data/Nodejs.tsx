@@ -1232,6 +1232,54 @@ const Nodejs = {
         </div>
       ),
     },
+    'NPM и сторонние пакеты': {
+      id: 'node-9',
+      title: 'NPM и сторонние пакеты',
+      jsx: (
+        <div>
+          <p>
+            <b>Node Package Manager</b> - менеджер пакетов для Node.js
+          </p>
+          <p>Основные команды</p>
+          <ul>
+            <li>
+              <b>npm init -y</b> - Создать package.json
+            </li>
+            <li>
+              <b>{'npm install <package>'}</b> - Установить пакет
+            </li>
+            <li>
+              <b>{'npm i <package>'}</b> - То же (сокращенно)
+            </li>
+            <li>
+              <b>npm install</b> - Установить всё из package.json
+            </li>
+            <li>
+              <b>{'npm uninstall <package>'}</b> - Удалить пакет
+            </li>
+            <li>
+              <b>npm update</b> - Обновить пакеты
+            </li>
+            <li>
+              <b>npm list</b> - Показать установленные пакеты
+            </li>
+            <li>
+              <b>npm outdated</b> - Показать устаревшие пакеты
+            </li>
+          </ul>
+          <p>Важные пакеты</p>
+          <ul>
+            <li>
+              <b>nodemon</b> - авторестарт при изменениях
+            </li>
+            <li>
+              <b>dotenv</b> - переменные окружения
+            </li>
+            <li><b>cross-env</b> - кросс-платформенные переменные окружения</li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
