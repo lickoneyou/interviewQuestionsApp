@@ -1536,6 +1536,174 @@ const Nodejs = {
         </div>
       ),
     },
+    Cluster: {
+      id: 'node-11',
+      title: 'Cluster',
+      jsx: (
+        <div>
+          <p>
+            <b>Cluster</b> - Позволяет создать несколько копий приложения
+            (воркеров), работающих на разных ядрах CPU.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Проблема</th>
+                <th>Решение Cluster</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Node.js однопоточный</td>
+                <td>Не использует все ядра CPU</td>
+              </tr>
+              <tr>
+                <td>1 процесс = 1 ядро</td>
+                <td>Запускаем N воркеров = N ядер</td>
+              </tr>
+              <tr>
+                <td>При падении сервер недоступен</td>
+                <td>Другие воркеры продолжают работу</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre>
+            <CodeNumber length={29} />
+            <code>
+              <code>{`const cluster = require('cluster');`}</code>
+              <code>{`const http = require('http');`}</code>
+              <code>{`const os = require('os');`}</code>
+              <code>{'  '}</code>
+              <code>{`const numCPUs = os.cpus().length; // количество ядер`}</code>
+              <code>{'  '}</code>
+              <code>{`if (cluster.isMaster) {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Мастер процесс ${process.pid} запущен`);'}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Создаем воркеров по числу ядер`}
+              </code>
+              <code>
+                {'  '}
+                {`for (let i = 0; i < numCPUs; i++) {`}
+              </code>
+              <code>
+                {'    '}
+                {`cluster.fork();`}
+              </code>
+              <code>{'  }'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// При смерти воркера — перезапускаем`}
+              </code>
+              <code>
+                {'  '}
+                {`cluster.on('exit', (worker, code, signal) => {`}
+              </code>
+              <code>
+                {'    '}
+                {
+                  'console.log(`Воркер ${worker.process.pid} умер. Создаем нового...`);'
+                }
+              </code>
+              <code>
+                {'    '}
+                {`cluster.fork();`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'  '}</code>
+              <code>{`} else {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Воркер — обычный HTTP сервер`}
+              </code>
+              <code>
+                {'  '}
+                {`http.createServer((req, res) => {`}
+              </code>
+              <code>
+                {'    '}
+                {`res.writeHead(200);`}
+              </code>
+              <code>
+                {'    '}
+                {'res.end(`Привет от воркера ${process.pid}`);'}
+              </code>
+              <code>
+                {'  '}
+                {`}).listen(3000);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {'console.log(`Воркер ${process.pid} запущен`);'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <table>
+            <thead>
+              <tr>
+                <th>Особенность</th>
+                <th>Пояснение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Воркеры не делят память</td>
+                <td>Каждый воркер — отдельный процесс</td>
+              </tr>
+              <tr>
+                <td>Общие данные через Redis</td>
+                <td>Для кэша, сессий, счетчиков</td>
+              </tr>
+              <tr>
+                <td>Мастер не обрабатывает запросы</td>
+                <td>Только управление воркерами</td>
+              </tr>
+              <tr>
+                <td>Автоматическая балансировка</td>
+                <td>ОС распределяет соединения</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Когда использовать Cluster?</p>
+          <table>
+            <thead>
+              <tr>
+                <th>✅ Использовать</th>
+                <th>❌ Не использовать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Много независимых запросов</td>
+                <td>Один глобальный кэш в памяти</td>
+              </tr>
+              <tr>
+                <td>CPU-интенсивные задачи</td>
+                <td>Веб-сокеты с состоянием</td>
+              </tr>
+              <tr>
+                <td>Нужен высокий аптайм (перезапуск)</td>
+                <td>Синглтон/блокировки</td>
+              </tr>
+              <tr>
+                <td>Используете PM2 (вместо cluster)</td>
+                <td>Маленький проект (хватит 1 процесса)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
