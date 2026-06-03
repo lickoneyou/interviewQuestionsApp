@@ -11,6 +11,7 @@ import Nest from './NestData';
 import Next from './NextData';
 import ReactNative from './ReactNativeData';
 import Nodejs from './Nodejs';
+import ExpressJs from './ExpressData';
 
 const data = {
   ...BasicCS,
@@ -24,6 +25,7 @@ const data = {
   ...Vue,
   ...TypescriptData,
   ...Nodejs,
+  ...ExpressJs,
   ...Nest,
   ...QI,
 };
