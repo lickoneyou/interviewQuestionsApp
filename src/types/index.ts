@@ -11,3 +11,7 @@ export interface Data {
 export interface FullData {
   [title: string]: Data;
 }
+
+export interface DataItemWithStack extends DataItem {
+  stack: string,
+}

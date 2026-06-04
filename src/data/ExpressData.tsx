@@ -209,7 +209,7 @@ const ExpressJs = {
     },
     Роутинг: {
       id: 'express-2',
-      title: 'Обработка маршрутов (роутинг)',
+      title: 'Роутинг',
       jsx: (
         <div>
           <p>Базовые методы</p>
@@ -584,6 +584,13 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Middleware': {
+      id: 'express-3',
+      title: `Middleware`,
+      jsx: (
+        <div></div>
+      )
+    }
   },
 };
 
