@@ -1252,6 +1252,1526 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Работа с БД': {
+      id: 'express-6',
+      title: 'Работа с БД',
+      jsx: (
+        <div>
+          <p>Подходы к работе с БД в Express</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Подход</th>
+                <th>Пример</th>
+                <th>Когда использовать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Raw SQL</td>
+                <td>pg, mysql2</td>
+                <td>Полный контроль, сложные запросы</td>
+              </tr>
+              <tr>
+                <td>Query Builder</td>
+                <td>knex.js</td>
+                <td>Динамические запросы, средний уровень</td>
+              </tr>
+              <tr>
+                <td>ORM</td>
+                <td>Sequelize, TypeORM, Prisma</td>
+                <td>Быстрая разработка, отношения, миграции</td>
+              </tr>
+              <tr>
+                <td>ODM</td>
+                <td>Mongoose</td>
+                <td>MongoDB</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>PostgreSQL с raw SQL (pg)</p>
+          <pre>npm install pg</pre>
+          <p>Подключение и пул соединений</p>
+          <pre>
+            <CodeNumber length={15} />
+            <code>
+              <code className='comment'>{`// db/pool.js`}</code>
+              <code>{`const { Pool } = require('pg');`}</code>
+              <code>{'  '}</code>
+              <code>{`const pool = new Pool({`}</code>
+              <code>
+                {'  '}
+                {`host: process.env.DB_HOST || 'localhost',`}
+              </code>
+              <code>
+                {'  '}
+                {`port: process.env.DB_PORT || 5432,`}
+              </code>
+              <code>
+                {'  '}
+                {`database: process.env.DB_NAME || 'mydb',`}
+              </code>
+              <code>
+                {'  '}
+                {`user: process.env.DB_USER || 'postgres',`}
+              </code>
+              <code>
+                {'  '}
+                {`password: process.env.DB_PASSWORD || 'password',`}
+              </code>
+              <code>
+                {'  '}
+                {`max: 20,              // максимум соединений в пуле`}
+              </code>
+              <code>
+                {'  '}
+                {`idleTimeoutMillis: 30000,`}
+              </code>
+              <code>
+                {'  '}
+                {`connectionTimeoutMillis: 2000,`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = pool;`}</code>
+            </code>
+          </pre>
+          <p>Репозиторий (слой работы с БД)</p>
+          <pre>
+            <CodeNumber length={68} />
+            <code>
+              <code className='comment'>{`// repositories/userRepository.js`}</code>
+              <code>{`const pool = require('../db/pool');`}</code>
+              <code>{'  '}</code>
+              <code>{`class UserRepository {`}</code>
+              <code>
+                {'  '}
+                {`async findAll() {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = await pool.query('SELECT id, name, email, created_at FROM users');`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rows;`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async findById(id) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = await pool.query(`}
+              </code>
+              <code>
+                {'      '}
+                {`'SELECT id, name, email, created_at FROM users WHERE id = $1',`}
+              </code>
+              <code>
+                {'      '}
+                {`id]`}
+              </code>
+              <code>
+                {'    '}
+                {`);`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rows[0];`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async findByEmail(email) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = await pool.query(`}
+              </code>
+              <code>
+                {'      '}
+                {`'SELECT * FROM users WHERE email = $1',`}
+              </code>
+              <code>
+                {'      '}
+                {`[email]`}
+              </code>
+              <code>
+                {'    '}
+                {`);`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rows[0];`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async create(userData) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const { name, email, password_hash } = userData;`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = await pool.query(`}
+              </code>
+              <code>
+                {'      '}
+                {'`INSERT INTO users (name, email, password_hash) '}
+              </code>
+              <code>
+                {'      '}
+                {`VALUES ($1, $2, $3) `}
+              </code>
+              <code>
+                {'      '}
+                {'RETURNING id, name, email, created_at`,'}
+              </code>
+              <code>
+                {'      '}
+                {`[name, email, password_hash]`}
+              </code>
+              <code>
+                {'    '}
+                {`);`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rows[0];`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async update(id, updates) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const fields = [];`}
+              </code>
+              <code>
+                {'    '}
+                {`const values = [];`}
+              </code>
+              <code>
+                {'    '}
+                {`let index = 1;`}
+              </code>
+              <code> </code>
+              <code>
+                {'    '}
+                {`if (updates.name) {`}
+              </code>
+              <code>
+                {'      '}
+                {'fields.push(`name = $${index++}`);'}
+              </code>
+              <code>
+                {'      '}
+                {`values.push(updates.name);`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`if (updates.email) {`}
+              </code>
+              <code>
+                {'      '}
+                {'fields.push(`email = $${index++}`);'}
+              </code>
+              <code>
+                {'      '}
+                {`values.push(updates.email);`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`if (fields.length === 0) return null;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`values.push(id);`}
+              </code>
+              <code>
+                {'    '}
+                {'const query = `'}
+              </code>
+              <code>
+                {'      '}
+                {`UPDATE users `}
+              </code>
+              <code>
+                {'      '}
+                {"SET ${fields.join(', ')} "}
+              </code>
+              <code>
+                {'      '}
+                {'WHERE id = $${index}'}
+              </code>
+              <code>
+                {'      '}
+                {`RETURNING id, name, email, created_at`}
+              </code>
+              <code>
+                {'    '}
+                {'`;'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`const result = await pool.query(query, values);`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rows[0];`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async delete(id) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);`}
+              </code>
+              <code>
+                {'    '}
+                {`return result.rowCount > 0;`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = new UserRepository();`}</code>
+            </code>
+          </pre>
+          <p>Контроллер с использованием репозитория</p>
+          <pre>
+            <CodeNumber length={31} />
+            <code>
+              <code className='comment'>{`// controllers/userController.js`}</code>
+              <code>{`const userRepository = require('../repositories/userRepository');`}</code>
+              <code>{`const { ValidationError, NotFoundError } = require('../utils/errors');`}</code>
+              <code>{`const bcrypt = require('bcrypt');`}</code>
+              <code>{'  '}</code>
+              <code>{`exports.getAllUsers = async (req, res) => {`}</code>
+              <code>
+                {'    '}
+                {`const users = await userRepository.findAll();`}
+              </code>
+              <code>
+                {'    '}
+                {`res.json(users);`}
+              </code>
+              <code>
+                {'  '}
+                {`};`}
+              </code>
+              <code>{'  '}</code>
+              <code>{`exports.getUserById = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const user = await userRepository.findById(req.params.id);`}
+              </code>
+              <code>
+                {'  '}
+                {`if (!user) throw new NotFoundError('User');`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(user);`}
+              </code>
+              <code>{'};'}</code>
+              <code>{`exports.createUser = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const { name, email, password } = req.body;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!name || !email || !password) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new ValidationError('Name, email and password are required');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Проверка уникальности email`}
+              </code>
+              <code>
+                {'  '}
+                {`const existing = await userRepository.findByEmail(email);`}
+              </code>
+              <code>
+                {'  '}
+                {`if (existing) throw new ValidationError('Email already exists');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const password_hash = await bcrypt.hash(password, 10);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const user = await userRepository.create({ name, email, password_hash });`}
+              </code>
+              <code>
+                {'  '}
+                {`res.status(201).json(user);`}
+              </code>
+              <code>{'};'}</code>
+            </code>
+          </pre>
+          <p>Роуты</p>
+          <pre>
+            <CodeNumber length={10} />
+            <code>
+              <code className='comment'>{`// routes/users.js`}</code>
+              <code>{`const router = require('express').Router();`}</code>
+              <code>{`const asyncHandler = require('../utils/asyncHandler');`}</code>
+              <code>{`const userController = require('../controllers/userController');`}</code>
+              <code>{'  '}</code>
+              <code>{`router.get('/', asyncHandler(userController.getAllUsers));`}</code>
+              <code>{`router.get('/:id', asyncHandler(userController.getUserById));`}</code>
+              <code>{`router.post('/', asyncHandler(userController.createUser));`}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = router;`}</code>
+            </code>
+          </pre>
+          <p>Транзакции</p>
+          <pre>
+            <CodeNumber length={42} />
+            <code>
+              <code className='comment'>{`// services/orderService.js`}</code>
+              <code>{`const pool = require('../db/pool');`}</code>
+              <code>{'  '}</code>
+              <code>{`class OrderService {`}</code>
+              <code>
+                {'    '}
+                {`async createOrder(userId, items) {`}
+              </code>
+              <code>
+                {'      '}
+                {`const client = await pool.connect();`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`await client.query('BEGIN');`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// 1. Создаем заказ`}
+              </code>
+              <code>
+                {'    '}
+                {`const orderResult = await client.query(`}
+              </code>
+              <code>
+                {'      '}
+                {`'INSERT INTO orders (user_id, status, created_at) VALUES ($1, $2, NOW()) RETURNING id',`}
+              </code>
+              <code>
+                {'      '}
+                {`[userId, 'pending']`}
+              </code>
+              <code>
+                {'    '}
+                {`);`}
+              </code>
+              <code>
+                {'    '}
+                {`const orderId = orderResult.rows[0].id;`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// 2. Добавляем товары в заказ`}
+              </code>
+              <code>
+                {'    '}
+                {`for (const item of items) {`}
+              </code>
+              <code>
+                {'      '}
+                {`await client.query(`}
+              </code>
+              <code>
+                {'        '}
+                {`'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)'`}
+              </code>
+              <code>
+                {'        '}
+                {`[orderId, item.productId, item.quantity, item.price]`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'      '}
+                {`// 3. Обновляем остатки`}
+              </code>
+              <code>
+                {'      '}
+                {`await client.query(`}
+              </code>
+              <code>
+                {'        '}
+                {`'UPDATE products SET stock = stock - $1 WHERE id = $2',`}
+              </code>
+              <code>
+                {'        '}
+                {`[item.quantity, item.productId]`}
+              </code>
+              <code>
+                {'      '}
+                {`);`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`await client.query('COMMIT');`}
+              </code>
+              <code>
+                {'    '}
+                {`return { orderId, status: 'created' };`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'      '}
+                {`await client.query('ROLLBACK');`}
+              </code>
+              <code>
+                {'      '}
+                {`throw err;`}
+              </code>
+              <code>
+                {'    '}
+                {`} finally {`}
+              </code>
+              <code>
+                {'      '}
+                {`client.release();`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>Часть 3: MongoDB с Mongoose (ODM)</p>
+          <pre>npm install mongoose</pre>
+          <p>Подключение</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code className='comment'>{`// db/mongoose.js`}</code>
+              <code>{`const mongoose = require('mongoose');`}</code>
+              <code>{'  '}</code>
+              <code>{`const connectDB = async () => {`}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/myapp', {`}
+              </code>
+              <code>
+                {'      '}
+                {`useNewUrlParser: true,`}
+              </code>
+              <code>
+                {'      '}
+                {`useUnifiedTopology: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`});`}
+              </code>
+              <code>
+                {'    '}
+                {`console.log('MongoDB connected');`}
+              </code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`console.error('MongoDB connection error:', err);`}
+              </code>
+              <code>
+                {'  '}
+                {`process.exit(1);`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = connectDB;`}</code>
+            </code>
+          </pre>
+          <p>Схема и модель</p>
+          <pre>
+            <CodeNumber length={58} />
+            <code>
+              <code className='comment'>{`// models/User.js`}</code>
+              <code>{`const mongoose = require('mongoose');`}</code>
+              <code>{`const bcrypt = require('bcrypt');`}</code>
+              <code>{'  '}</code>
+              <code>{`const userSchema = new mongoose.Schema({`}</code>
+              <code>
+                {'  '}
+                {`name: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: String,`}
+              </code>
+              <code>
+                {'    '}
+                {`required: [true, 'Name is required'],`}
+              </code>
+              <code>
+                {'    '}
+                {`trim: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`minlength: [2, 'Name must be at least 2 characters'],`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`email: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: String,`}
+              </code>
+              <code>
+                {'    '}
+                {`required: [true, 'Email is required'],`}
+              </code>
+              <code>
+                {'    '}
+                {`unique: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`lowercase: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`trim: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`password: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: String,`}
+              </code>
+              <code>
+                {'    '}
+                {`required: [true, 'Password is required'],`}
+              </code>
+              <code>
+                {'    '}
+                {`minlength: [6, 'Password must be at least 6 characters'],`}
+              </code>
+              <code>
+                {'    '}
+                {`select: false, // не возвращать по умолчанию`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`role: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: String,`}
+              </code>
+              <code>
+                {'    '}
+                {`enum: ['user', 'admin'],`}
+              </code>
+              <code>
+                {'    '}
+                {`default: 'user',`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`createdAt: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: Date,`}
+              </code>
+              <code>
+                {'    '}
+                {`default: Date.now,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>{'}, {'}</code>
+              <code>
+                {'  '}
+                {`timestamps: true, // автоматически добавляет createdAt и updatedAt`}
+              </code>
+              <code>
+                {'  '}
+                {`toJSON: { virtuals: true },`}
+              </code>
+              <code>
+                {'  '}
+                {`toObject: { virtuals: true },`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Хеширование пароля перед сохранением`}</code>
+              <code>{"userSchema.pre('save', async function(next) {"}</code>
+              <code>
+                {'  '}
+                {`if (!this.isModified('password')) return next();`}
+              </code>
+              <code>
+                {'  '}
+                {`this.password = await bcrypt.hash(this.password, 10);`}
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Метод для сравнения пароля`}</code>
+              <code>{`userSchema.methods.comparePassword = async function(candidatePassword) {`}</code>
+              <code>
+                {'  '}
+                {`return await bcrypt.compare(candidatePassword, this.password);`}
+              </code>
+              <code>{'};'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Виртуальное поле (не хранится в БД)`}</code>
+              <code>{`userSchema.virtual('profileUrl').get(function() {`}</code>
+              <code>
+                {'  '}
+                {'return `/users/${this._id}`;'}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = mongoose.model('User', userSchema);`}</code>
+            </code>
+          </pre>
+          <p>Репозиторий/Сервис с Mongoose</p>
+          <pre>
+            <CodeNumber length={59} />
+            <code>
+              <code className='comment'>{`// services/userService.js`}</code>
+              <code>{`const User = require('../models/User');`}</code>
+              <code>{'  '}</code>
+              <code>{`class UserService {`}</code>
+              <code>
+                {'  '}
+                {`async findAll() {`}
+              </code>
+              <code>
+                {'    '}
+                {`return await User.find().select('-password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async findById(id) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return await User.findById(id).select('-password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async findByEmail(email) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return await User.findOne({ email }).select('+password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async create(userData) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const user = new User(userData);`}
+              </code>
+              <code>
+                {'    '}
+                {`await user.save();`}
+              </code>
+              <code>
+                {'    '}
+                {`user.password = undefined; // убираем из ответа`}
+              </code>
+              <code>
+                {'    '}
+                {`return user;`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async update(id, updates) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const allowed = ['name', 'email'];`}
+              </code>
+              <code>
+                {'    '}
+                {`const updateData = {};`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`for (const key of allowed) {`}
+              </code>
+              <code>
+                {'      '}
+                {`if (updates[key]) updateData[key] = updates[key];`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`return await User.findByIdAndUpdate(id, updateData, {`}
+              </code>
+              <code>
+                {'      '}
+                {`new: true, // возвращаем обновленный документ`}
+              </code>
+              <code>
+                {'      '}
+                {`runValidators: true, // запускаем валидацию`}
+              </code>
+              <code>
+                {'    '}
+                {`}).select('-password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async delete(id) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return await User.findByIdAndDelete(id);`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`async findPaginated(page = 1, limit = 10) {`}
+              </code>
+              <code>
+                {'    '}
+                {`const skip = (page - 1) * limit;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`const [users, total] = await Promise.all([`}
+              </code>
+              <code>
+                {'      '}
+                {`User.find().select('-password').skip(skip).limit(limit),`}
+              </code>
+              <code>
+                {'      '}
+                {`User.countDocuments(),`}
+              </code>
+              <code>
+                {'    '}
+                {`]);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`return {`}
+              </code>
+              <code>
+                {'      '}
+                {`data: users,`}
+              </code>
+              <code>
+                {'      '}
+                {`total,`}
+              </code>
+              <code>
+                {'      '}
+                {`page,`}
+              </code>
+              <code>
+                {'      '}
+                {`totalPages: Math.ceil(total / limit),`}
+              </code>
+              <code>
+                {'    '}
+                {`};`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = new UserService();`}</code>
+            </code>
+          </pre>
+          <p>Часть 4: Sequelize (ORM для SQL)</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code>{`npm install sequelize pg pg-hstore`}</code>
+              <code className='comment'>{`# или для MySQL: npm install sequelize mysql2`}</code>
+            </code>
+          </pre>
+          <p>Подключение</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code className='comment'>{`// db/sequelize.js`}</code>
+              <code>{`const { Sequelize } = require('sequelize');`}</code>
+              <code>{'  '}</code>
+              <code>{`const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {`}</code>
+              <code>
+                {'  '}
+                {`host: process.env.DB_HOST,`}
+              </code>
+              <code>
+                {'  '}
+                {`dialect: 'postgres', // или 'mysql', 'sqlite', 'mssql'`}
+              </code>
+              <code>
+                {'  '}
+                {`logging: process.env.NODE_ENV === 'development' ? console.log : false,`}
+              </code>
+              <code>
+                {'  '}
+                {`pool: {`}
+              </code>
+              <code>
+                {'    '}
+                {`max: 5,`}
+              </code>
+              <code>
+                {'    '}
+                {`min: 0,`}
+              </code>
+              <code>
+                {'    '}
+                {`acquire: 30000,`}
+              </code>
+              <code>
+                {'    '}
+                {`idle: 10000,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = sequelize;`}</code>
+            </code>
+          </pre>
+          <p>Модель</p>
+          <pre>
+            <CodeNumber length={45} />
+            <code>
+              <code className='comment'>{`// models/User.js`}</code>
+              <code>{`const { DataTypes } = require('sequelize');`}</code>
+              <code>{`const sequelize = require('../db/sequelize');`}</code>
+              <code>{'  '}</code>
+              <code>{`const User = sequelize.define('User', {`}</code>
+              <code>
+                {'  '}
+                {`id: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: DataTypes.INTEGER,`}
+              </code>
+              <code>
+                {'    '}
+                {`autoIncrement: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`primaryKey: true,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`name: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: DataTypes.STRING,`}
+              </code>
+              <code>
+                {'    '}
+                {`allowNull: false,`}
+              </code>
+              <code>
+                {'    '}
+                {`validate: {`}
+              </code>
+              <code>
+                {'      '}
+                {`len: [2, 100],`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`email: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: DataTypes.STRING,`}
+              </code>
+              <code>
+                {'    '}
+                {`allowNull: false,`}
+              </code>
+              <code>
+                {'    '}
+                {`unique: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`validate: {`}
+              </code>
+              <code>
+                {'      '}
+                {`isEmail: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`password: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: DataTypes.STRING,`}
+              </code>
+              <code>
+                {'    '}
+                {`allowNull: false,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`role: {`}
+              </code>
+              <code>
+                {'    '}
+                {`type: DataTypes.ENUM('user', 'admin'),`}
+              </code>
+              <code>
+                {'    '}
+                {`defaultValue: 'user',`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>{'}, {'}</code>
+              <code>
+                {'  '}
+                {`timestamps: true, // adds createdAt and updatedAt`}
+              </code>
+              <code>
+                {'  '}
+                {`paranoid: true,   // soft delete (deletedAt)`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Ассоциации (отношения)`}</code>
+              <code>{'User.associate = (models) => {'}</code>
+              <code>
+                {'  '}
+                {`User.hasMany(models.Post, { foreignKey: 'userId' });`}
+              </code>
+              <code>
+                {'  '}
+                {`User.belongsToMany(models.Role, { through: 'UserRoles' });`}
+              </code>
+              <code>{`};`}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = User;`}</code>
+            </code>
+          </pre>
+          <p>Использование в контроллере</p>
+          <pre>
+            <CodeNumber length={44} />
+            <code>
+              <code className='comment'>{`// controllers/userController.js`}</code>
+              <code>{`const User = require('../models/User');`}</code>
+              <code>{`const { ValidationError, NotFoundError } = require('../utils/errors');`}</code>
+              <code>{'  '}</code>
+              <code>{`exports.getAllUsers = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const users = await User.findAll({`}
+              </code>
+              <code>
+                {'    '}
+                {`attributes: ['id', 'name', 'email', 'createdAt'],`}
+              </code>
+              <code>
+                {'    '}
+                {`order: [['createdAt', 'DESC']],`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(users);`}
+              </code>
+              <code>{`};`}</code>
+              <code>{'  '}</code>
+              <code>{`exports.getUserById = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const user = await User.findByPk(req.params.id, {`}
+              </code>
+              <code>
+                {'    '}
+                {`attributes: ['id', 'name', 'email', 'createdAt'],`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>
+                {'  '}
+                {`if (!user) throw new NotFoundError('User');`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(user);`}
+              </code>
+              <code>{`};`}</code>
+              <code>{'  '}</code>
+              <code>{`exports.createUser = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const { name, email, password } = req.body;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const existing = await User.findOne({ where: { email } });`}
+              </code>
+              <code>
+                {'  '}
+                {`if (existing) throw new ValidationError('Email already exists');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const user = await User.create({ name, email, password });`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.status(201).json({`}
+              </code>
+              <code>
+                {'    '}
+                {`id: user.id,`}
+              </code>
+              <code>
+                {'    '}
+                {`name: user.name,`}
+              </code>
+              <code>
+                {'    '}
+                {`email: user.email,`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'};'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Сложные запросы с include`}</code>
+              <code>{`exports.getUserWithPosts = async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const user = await User.findByPk(req.params.id, {`}
+              </code>
+              <code>
+                {'    '}
+                {`include: [{`}
+              </code>
+              <code>
+                {'      '}
+                {`model: Post,`}
+              </code>
+              <code>
+                {'      '}
+                {`as: 'posts',`}
+              </code>
+              <code>
+                {'      '}
+                {`attributes: ['id', 'title', 'createdAt'],`}
+              </code>
+              <code>
+                {'    '}
+                {`}],`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(user);`}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>Миграции и настройка окружения</p>
+          <pre>
+            <CodeNumber length={16} />
+            <code>
+              <code># .env</code>
+              <code>NODE_ENV=development</code>
+              <code>PORT=3000</code>
+              <code>{'  '}</code>
+              <code># Database</code>
+              <code>DB_HOST=localhost</code>
+              <code>DB_PORT=5432</code>
+              <code>DB_NAME=mydb</code>
+              <code>DB_USER=postgres</code>
+              <code>DB_PASSWORD=secret</code>
+              <code>{'  '}</code>
+              <code># MongoDB</code>
+              <code>MONGODB_URI=mongodb://localhost:27017/myapp</code>
+              <code>{'  '}</code>
+              <code># JWT</code>
+              <code>JWT_SECRET=your-super-secret-key</code>
+            </code>
+          </pre>
+          <p>Конфигурация</p>
+          <pre>
+            <CodeNumber length={30} />
+            <code>
+              <code className='comment'>{`// config/db.js`}</code>
+              <code>{`require('dotenv').config();`}</code>
+              <code>{'  '}</code>
+              <code>{`const config = {`}</code>
+              <code>
+                {'  '}
+                {`development: {`}
+              </code>
+              <code>
+                {'    '}
+                {`host: process.env.DB_HOST,`}
+              </code>
+              <code>
+                {'    '}
+                {`port: process.env.DB_PORT,`}
+              </code>
+              <code>
+                {'    '}
+                {`database: process.env.DB_NAME,`}
+              </code>
+              <code>
+                {'    '}
+                {`username: process.env.DB_USER,`}
+              </code>
+              <code>
+                {'    '}
+                {`password: process.env.DB_PASSWORD,`}
+              </code>
+              <code>
+                {'    '}
+                {`dialect: 'postgres',`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`test: {`}
+              </code>
+              <code>
+                {'    '}
+                {`database: 'mydb_test',`}
+              </code>
+              <code>
+                {'    '}
+                {`dialect: 'postgres',`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`production: {`}
+              </code>
+              <code>
+                {'    '}
+                {`host: process.env.DB_HOST,`}
+              </code>
+              <code>
+                {'    '}
+                {`database: process.env.DB_NAME,`}
+              </code>
+              <code>
+                {'    '}
+                {`username: process.env.DB_USER,`}
+              </code>
+              <code>
+                {'    '}
+                {`password: process.env.DB_PASSWORD,`}
+              </code>
+              <code>
+                {'    '}
+                {`dialect: 'postgres',`}
+              </code>
+              <code>
+                {'    '}
+                {`ssl: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`dialectOptions: {`}
+              </code>
+              <code>
+                {'      '}
+                {`ssl: { require: true },`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>{'};'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = config[process.env.NODE_ENV || 'development'];`}</code>
+            </code>
+          </pre>
+          <p>Готовый шаблон подключения к БД</p>
+          <pre>
+            <CodeNumber length={35} />
+            <code>
+              <code className='comment'>{`// app.js (полный пример)`}</code>
+              <code>const express = require('express');</code>
+              <code>require('dotenv').config();</code>
+              <code>{'  '}</code>
+              <code>{`const connectDB = require('./db/mongoose'); // или pg, sequelize`}</code>
+              <code>{`const userRoutes = require('./routes/users');`}</code>
+              <code>{'  '}</code>
+              <code>const app = express();</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Middleware`}</code>
+              <code>{`app.use(express.json());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Подключение к БД`}</code>
+              <code>connectDB();</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Роуты`}</code>
+              <code>app.use('/api/users', userRoutes);</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Error handler`}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Обработка ошибок БД`}
+              </code>
+              <code>
+                {'  '}
+                {`if (err.code === '23505') { // PostgreSQL duplicate key`}
+              </code>
+              <code>
+                {'    '}
+                {`return res.status(409).json({ error: 'Duplicate entry' });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`if (err.name === 'ValidationError') { // Mongoose validation`}
+              </code>
+              <code>
+                {'    '}
+                {`return res.status(400).json({ error: err.message });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.status(err.status || 500).json({ error: err.message });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>const PORT = process.env.PORT || 3000;</code>
+              <code>{`app.listen(PORT, () => {`}</code>
+              <code>
+                {'  '}
+                {'console.log(`Server running on port ${PORT}`);'}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
