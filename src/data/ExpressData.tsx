@@ -1074,25 +1074,181 @@ const ExpressJs = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={11}/>
-            <code className='comment'>{`// app.js`}</code>
-            <code>{`const express = require('express');`}</code>
-            <code>{`const userRoutes = require('./routes/users');`}</code>
-            <code>{'  '}</code>
-            <code>{`const app = express();`}</code>
-            <code>{`app.use(express.json());`}</code>
-            <code>{'  '}</code>
-            <code className='comment'>{`// Подключаем роутер с префиксом /users`}</code>
-            <code>{`app.use('/users', userRoutes);`}</code>
-            <code>{'  '}</code>
-            <code>{`app.listen(3000);`}</code>
+            <CodeNumber length={11} />
+            <code>
+              <code className='comment'>{`// app.js`}</code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const userRoutes = require('./routes/users');`}</code>
+              <code>{'  '}</code>
+              <code>{`const app = express();`}</code>
+              <code>{`app.use(express.json());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Подключаем роутер с префиксом /users`}</code>
+              <code>{`app.use('/users', userRoutes);`}</code>
+              <code>{'  '}</code>
+              <code>{`app.listen(3000);`}</code>
+            </code>
           </pre>
           <p>Итог:</p>
           <ul>
-            <li><b>GET /users</b> → routes/users.js router.get('/')</li>
-            <li><b>GET /users/123</b> → router.get('/:id')</li>
-            <li><b>POST /users</b> → router.post('/')</li>
+            <li>
+              <b>GET /users</b> → routes/users.js router.get('/')
+            </li>
+            <li>
+              <b>GET /users/123</b> → router.get('/:id')
+            </li>
+            <li>
+              <b>POST /users</b> → router.post('/')
+            </li>
           </ul>
+        </div>
+      ),
+    },
+    'Обработка ошибок': {
+      id: 'express-5',
+      title: `Обработка ошибок`,
+      jsx: (
+        <div>
+          <p>
+            В Express ошибки обрабатываются <span>специальными middleware</span>{' '}
+            с 4 параметрами: (<b>err</b>, <b>req</b>, <b>res</b>, <b>next</b>)
+          </p>
+          <pre>
+            <CodeNumber length={7} />
+            <code>
+              <code className='comment'>{`// Обычный middleware (3 параметра)`}</code>
+              <code>{`app.use((req, res, next) => { ... });`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Error-handling middleware (4 параметра) — ОБЯЗАТЕЛЬНО все 4!`}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`res.status(500).json({ error: err.message });`}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>
+            <b>Важно</b>: Error-handling middleware должен быть{' '}
+            <span>последним</span> в цепочке.
+          </p>
+          <p>Способы генерации ошибок</p>
+          <pre>
+            <CodeNumber length={21} />
+            <code>
+              <code className='comment'>{`// 1. throw в синхронном коде`}</code>
+              <code>{`app.get('/sync-error', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`throw new Error('Что-то сломалось');`}
+              </code>
+              <code>{`});`}</code>
+              <code> </code>
+              <code className='comment'>{`// 2. next(err) — ручная передача ошибки`}</code>
+              <code>{`app.get('/next-error', (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`const err = new Error('Ошибка валидации');`}
+              </code>
+              <code>
+                {'  '}
+                {`err.status = 400;`}
+              </code>
+              <code>
+                {'  '}
+                {`next(err);  // отправляем в error-handler`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 3. Ошибки в асинхронном коде (промисы)`}</code>
+              <code>{`app.get('/async-error', async (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`const data = await someAsyncFunction();`}
+              </code>
+              <code>
+                {'    '}
+                {`res.json(data);`}
+              </code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`next(err);  // передаем в error-handler`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>Проблема: асинхронные ошибки не ловятся автоматически</p>
+          <pre>
+            <CodeNumber length={24} />
+            <code>
+              <code className='comment'>{`// ❌ Так НЕ РАБОТАЕТ — throw в асинхронной функции`}</code>
+              <code>{`app.get('/broken', async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`throw new Error('Эта ошибка не будет поймана Express');`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Правильно — try/catch + next`}</code>
+              <code>{`app.get('/fixed', async (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`const data = await riskyOperation();`}
+              </code>
+              <code>
+                {'    '}
+                {`res.json(data);`}
+              </code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`next(err);`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Еще лучше — обертка (wrapper)`}</code>
+              <code>{`const asyncHandler = (fn) => (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`Promise.resolve(fn(req, res, next)).catch(next);`}
+              </code>
+              <code>{`};`}</code>
+              <code>{'  '}</code>
+              <code>{`app.get('/wrapped', asyncHandler(async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const data = await riskyOperation();`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(data);`}
+              </code>
+              <code>{`}));`}</code>
+            </code>
+          </pre>
         </div>
       ),
     },
