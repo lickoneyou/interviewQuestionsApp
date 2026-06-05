@@ -982,6 +982,120 @@ const ExpressJs = {
         </div>
       ),
     },
+    'express.Router': {
+      id: 'express-4',
+      title: 'express.Router',
+      jsx: (
+        <div>
+          <b>Router</b> - мини-приложение Express, позволяющее группировать
+          маршруты в отдельные модули.
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code>const express = require('express');</code>
+              <code>const router = express.Router();</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// router работает как app, но только для своих маршрутов`}</code>
+              <code>{`router.get('/users', (req, res) => { ... });`}</code>
+              <code>{`router.post('/users', (req, res) => { ... });`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Подключаем к приложению`}</code>
+              <code>{`app.use('/api', router);  // все маршруты router будут с префиксом /api`}</code>
+            </code>
+          </pre>
+          <table>
+            <thead>
+              <tr>
+                <th>Проблема</th>
+                <th>Решение Router</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Все маршруты в одном файле</td>
+                <td>Разбивка по модулям</td>
+              </tr>
+              <tr>
+                <td>Трудно поддерживать</td>
+                <td>Каждый модуль отвечает за свою сущность</td>
+              </tr>
+              <tr>
+                <td>Middleware для конкретной группы</td>
+                <td>Можно применить только к роутеру</td>
+              </tr>
+              <tr>
+                <td>Переиспользование логики</td>
+                <td>Один роутер можно подключить несколько раз</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre>
+            <CodeNumber length={24} />
+            <code>
+              <code className='comment'>{`// routes/users.js`}</code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const router = express.Router();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Middleware только для этого роутера`}</code>
+              <code>{`router.use((req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Time:', Date.now());`}
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Маршруты`}</code>
+              <code>{`router.get('/', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.json([{ id: 1, name: 'Alice' }]);`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`router.get('/:id', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.json({ id: req.params.id, name: 'User' });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`router.post('/', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.status(201).json({ id: Date.now(), ...req.body });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = router;`}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={11}/>
+            <code className='comment'>{`// app.js`}</code>
+            <code>{`const express = require('express');`}</code>
+            <code>{`const userRoutes = require('./routes/users');`}</code>
+            <code>{'  '}</code>
+            <code>{`const app = express();`}</code>
+            <code>{`app.use(express.json());`}</code>
+            <code>{'  '}</code>
+            <code className='comment'>{`// Подключаем роутер с префиксом /users`}</code>
+            <code>{`app.use('/users', userRoutes);`}</code>
+            <code>{'  '}</code>
+            <code>{`app.listen(3000);`}</code>
+          </pre>
+          <p>Итог:</p>
+          <ul>
+            <li><b>GET /users</b> → routes/users.js router.get('/')</li>
+            <li><b>GET /users/123</b> → router.get('/:id')</li>
+            <li><b>POST /users</b> → router.post('/')</li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
