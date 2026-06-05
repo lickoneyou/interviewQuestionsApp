@@ -584,13 +584,404 @@ const ExpressJs = {
         </div>
       ),
     },
-    'Middleware': {
+    Middleware: {
       id: 'express-3',
       title: `Middleware`,
       jsx: (
-        <div></div>
-      )
-    }
+        <div>
+          <p>
+            Middleware — это функция, которая имеет доступ к <span>req</span>,{' '}
+            <span>res</span> и <span>next()</span>. Может:
+          </p>
+          <ul>
+            <li>Выполнить любой код</li>
+            <li>
+              Изменить <span>req</span> и <span>res</span>
+            </li>
+            <li>Завершить запрос-ответ</li>
+            <li>Вызвать следующий middleware в цепочке</li>
+          </ul>
+          <p>Конвейер обработки (цепочка middleware)</p>
+          <pre>
+            {`Запрос → middleware1 → middleware2 → middleware3 → route → Ответ
+           ↓              ↓              ↓
+        next()         next()         next()`}
+          </pre>
+          <pre>
+            <CodeNumber length={4} />
+            <code>
+              <code>app.use(middleware1);</code>
+              <code>app.use(middleware2);</code>
+              <code>app.use(middleware3);</code>
+              <code>app.get('/', handler);</code>
+            </code>
+          </pre>
+          <p>Сигнатура middleware</p>
+          <pre>
+            <CodeNumber length={13} />
+            <code>
+              <code>{`function myMiddleware(req, res, next) {`}</code>
+              <code className='comment'>{`// 1. Что-то делаем`}</code>
+              <code>{"console.log('1');"}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 2. Меняем req/res`}</code>
+              <code>{`req.timestamp = Date.now();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{` // 3. Либо завершаем запрос`}</code>
+              <code className='comment'>{`// if (!req.headers.token) return res.status(401).send('No token');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 4. Либо передаем дальше`}</code>
+              <code>{`next();`}</code>
+              <code>{`}`}</code>
+            </code>
+          </pre>
+          <p>Типы middleware</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Тип</th>
+                <th>Пример</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Application-level</td>
+                <td>app.use(logger)</td>
+              </tr>
+              <tr>
+                <td>Router-level</td>
+                <td>router.use(auth)</td>
+              </tr>
+              <tr>
+                <td>Error-handling</td>
+                <td>{`app.use((err, req, res, next) => {})`}</td>
+              </tr>
+              <tr>
+                <td>Built-in</td>
+                <td>express.json(), express.static()</td>
+              </tr>
+              <tr>
+                <td>Third-party</td>
+                <td>morgan, cors, helmet</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Application-level middleware (app.use)</p>
+          <pre>
+            <CodeNumber length={26} />
+            <code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const app = express();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Глобальный middleware (для всех запросов)`}</code>
+              <code>{`app.use((req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {
+                  'console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);'
+                }
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Для конкретного пути`}</code>
+              <code>{`app.use('/api', (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Только для /api/*');`}
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Несколько middleware подряд`}</code>
+              <code>{`app.use('/users', `}</code>
+              <code>
+                {'  '}
+                {`(req, res, next) => {`}
+              </code>
+              <code>
+                {'    '}
+                {`console.log('Middleware 1 для /users');`}
+              </code>
+              <code>
+                {'    '}
+                {`next();`}
+              </code>
+              <code>{'  },'}</code>
+              <code>
+                {'  '}
+                {`(req, res, next) => {`}
+              </code>
+              <code>
+                {'    '}
+                {`console.log('Middleware 2 для /users');`}
+              </code>
+              <code>
+                {'    '}
+                {`next();`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{');'}</code>
+            </code>
+          </pre>
+          <p>Router-level middleware (express.Router)</p>
+          <pre>
+            <CodeNumber length={21} />
+            <code>
+              <code>{`const express = require('express');`}</code>
+              <code>{'const router = express.Router();'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Middleware для всех роутов этого роутера`}</code>
+              <code>{`router.use((req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`console.log('Time:', Date.now());`}
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Middleware для конкретного маршрута`}</code>
+              <code>{`router.use('/protected', (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`if (!req.headers.authorization) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return res.status(401).send('Unauthorized');`}
+              </code>
+              <code>{'  }'}</code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{'});'}</code>
+              <code>{`router.get('/protected/data', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.json({ secret: 'data' });`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code>{`app.use('/api', router);`}</code>
+            </code>
+          </pre>
+          <p>Built-in middleware (встроенные)</p>
+          <pre>
+            <CodeNumber length={15} />
+            <code>
+              <code className='comment'>{`// Парсинг JSON`}</code>
+              <code>{`app.use(express.json());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Парсинг URL-encoded (form data)`}</code>
+              <code>{`app.use(express.urlencoded({ extended: true }));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Отдача статических файлов`}</code>
+              <code>{`app.use(express.static('public'));`}</code>
+              <code>{`app.use('/static', express.static('public'));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Raw body (строка/буфер)`}</code>
+              <code>{`app.use(express.raw());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Text body`}</code>
+              <code>{`app.use(express.text());`}</code>
+            </code>
+          </pre>
+          <p>Error-handling middleware</p>
+          <p>
+            <span>Особенность</span>: принимает 4 аргумента (err, req, res,
+            next)
+          </p>
+          <pre>
+            <CodeNumber length={29} />
+            <code>
+              <code className='comment'>{`// Обычный middleware, который вызывает ошибку`}</code>
+              <code>{`app.get('/error', (req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`next(new Error('Что-то пошло не так'));`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Error-handling middleware (ДОЛЖЕН быть последним)`}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`console.error(err.stack);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const status = err.status || 500;`}
+              </code>
+              <code>
+                {'  '}
+                {`const message = err.message || 'Internal Server Error';`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.status(status).json({`}
+              </code>
+              <code>
+                {'    '}
+                {`error: {`}
+              </code>
+              <code>
+                {'      '}
+                {`message,`}
+              </code>
+              <code>
+                {'      '}
+                {`status`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Можно создать несколько (например, для 404)`}</code>
+              <code>{`app.use((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.status(404).json({ error: 'Not Found' });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Затем error-handling`}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// обрабатываем ошибки`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>Third-party middleware (популярные)</p>
+          <pre>npm install morgan cors helmet compression rate-limit</pre>
+          <pre>
+            <CodeNumber length={30} />
+            <code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const morgan = require('morgan');`}</code>
+              <code>{`const cors = require('cors');`}</code>
+              <code>{`const helmet = require('helmet');`}</code>
+              <code>{`const compression = require('compression');`}</code>
+              <code>{`const rateLimit = require('express-rate-limit');`}</code>
+              <code>{'  '}</code>
+              <code>{`const app = express();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Логирование`}</code>
+              <code>{`app.use(morgan('dev'));  // 'combined', 'common', 'short', 'tiny'`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Безопасность`}</code>
+              <code>{`app.use(helmet());  // ставит безопасные заголовки`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// CORS`}</code>
+              <code>{`app.use(cors());  // разрешить все источники`}</code>
+              <code className='comment'>{`// или с опциями:`}</code>
+              <code>{`app.use(cors({ origin: 'https://myfrontend.com' }));`}</code>
+              <code>{'  '}</code>
+              <code>{`// Сжатие ответов`}</code>
+              <code>{`app.use(compression());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Rate limiting`}</code>
+              <code>{`const limiter = rateLimit({`}</code>
+              <code>
+                {'  '}
+                {`windowMs: 15 * 60 * 1000, // 15 минут`}
+              </code>
+              <code>
+                {'  '}
+                {`max: 100, // максимум 100 запросов`}
+              </code>
+              <code>
+                {'  '}
+                {`message: 'Too many requests from this IP'`}
+              </code>
+              <code>{'});'}</code>
+              <code>{`app.use('/api', limiter);`}</code>
+            </code>
+          </pre>
+          <p>Порядок middleware — критически важен!</p>
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code>{`const app = express();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ❌ Неправильно (будет 404)`}</code>
+              <code>{`app.get('/users', handler);`}</code>
+              <code>{`app.use(express.json());  // поздно, запрос уже обработан`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// ✅ Правильно`}</code>
+              <code>{`app.use(express.json());  // сначала middleware`}</code>
+              <code>{`app.get('/users', handler);`}</code>
+            </code>
+          </pre>
+          <p>Полный правильный порядок:</p>
+          <pre>
+            <CodeNumber length={29} />
+            <code>
+              <code className='comment'>{`// 1. Безопасность и логирование (самые первые)`}</code>
+              <code>{`app.use(helmet());`}</code>
+              <code>{`app.use(cors());`}</code>
+              <code>{`app.use(morgan('dev'));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 2. Парсеры тела запроса`}</code>
+              <code>{`app.use(express.json());`}</code>
+              <code>{`app.use(express.urlencoded({ extended: true }));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 3. Статика (может быть рано, если не нужна)`}</code>
+              <code>{`app.use(express.static('public'));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 4. Кастомные middleware`}</code>
+              <code>{`app.use(authMiddleware);`}</code>
+              <code>{`app.use(loggerMiddleware);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 5. Роуты`}</code>
+              <code>{`app.use('/api', apiRouter);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 6. 404 обработчик (если не найден маршрут)`}</code>
+              <code>{`app.use((req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.status(404).json({ error: 'Not Found' });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// 7. Error-handling middleware (самый последний)`}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code>
+                {'  '}
+                {`console.error(err);`}
+              </code>
+              <code>
+                {'  '}
+                {`res.status(500).json({ error: 'Internal Server Error' });`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
