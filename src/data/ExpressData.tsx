@@ -3714,6 +3714,276 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Валидация данных (express-validator, Joi, Zod)': {
+      id: 'express-8',
+      title: 'Валидация данных (express-validator, Joi, Zod)',
+      jsx: (
+        <div>
+          <p>Зачем нужна валидация</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Причина</th>
+                <th>Объяснение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Безопасность</td>
+                <td>Защита от SQL инъекций, XSS, инъекций</td>
+              </tr>
+              <tr>
+                <td>Целостность данных</td>
+                <td>Гарантия что данные соответствуют схеме</td>
+              </tr>
+              <tr>
+                <td>UX</td>
+                <td>Понятные ошибки для пользователя</td>
+              </tr>
+              <tr>
+                <td>Снижение нагрузки</td>
+                <td>Отбраковка невалидных запросов до БД</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>express-validator</p>
+          <pre>npm install express-validator</pre>
+          <p>Базовое использование</p>
+          <pre>
+            <CodeNumber length={19} />
+            <code>
+              <code>{`const { body, validationResult } = require('express-validator');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Маршрут с валидацией`}</code>
+              <code>{`app.post('/users',`}</code>
+              <code>
+                {'  '}
+                {`body('email').isEmail().normalizeEmail(),`}
+              </code>
+              <code>
+                {'  '}
+                {`body('password').isLength({ min: 6 }),`}
+              </code>
+              <code>
+                {'  '}
+                {`body('name').notEmpty().trim().isLength({ min: 2, max: 50 }),`}
+              </code>
+              <code>
+                {'  '}
+                {`body('age').optional().isInt({ min: 18, max: 120 }),`}
+              </code>
+              <code>{'  '}</code>
+              <code>{`(req, res) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Проверка результатов`}
+              </code>
+              <code>
+                {'  '}
+                {`const errors = validationResult(req);`}
+              </code>
+              <code>
+                {'  '}
+                {`if (!errors.isEmpty()) {`}
+              </code>
+              <code>
+                {'    '}
+                {`return res.status(400).json({ errors: errors.array() });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.json({ message: 'User created', data: req.body });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{');'}</code>
+            </code>
+          </pre>
+          <p>Joi</p>
+          <pre>npm install joi</pre>
+          <p>Создание схемы</p>
+          <pre>
+            <CodeNumber length={26} />
+            <code>
+              <code>{`const Joi = require('joi');`}</code>
+              <code>{'  '}</code>
+              <code>{'const userSchema = Joi.object({'}</code>
+              <code>
+                {'  '}
+                {`name: Joi.string().min(2).max(50).required(),`}
+              </code>
+              <code>
+                {'  '}
+                {`email: Joi.string().email().required(),`}
+              </code>
+              <code>
+                {'  '}
+                {`password: Joi.string().min(6).required(),`}
+              </code>
+              <code>
+                {'  '}
+                {`age: Joi.number().integer().min(18).max(120).optional(),`}
+              </code>
+              <code>
+                {'  '}
+                {`role: Joi.string().valid('user', 'admin').default('user'),`}
+              </code>
+              <code>
+                {'  '}
+                {`tags: Joi.array().items(Joi.string()).optional(),`}
+              </code>
+              <code>
+                {'  '}
+                {`address: Joi.object({`}
+              </code>
+              <code>
+                {'    '}
+                {`street: Joi.string().required(),`}
+              </code>
+              <code>
+                {'    '}
+                {`city: Joi.string().required(),`}
+              </code>
+              <code>
+                {'    '}
+                {`zip: Joi.string().pattern(/^\d{5}$/)`}
+              </code>
+              <code>
+                {'  '}
+                {`}).optional()`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Валидация`}</code>
+              <code>{`const { error, value } = userSchema.validate(req.body);`}</code>
+              <code>{'  '}</code>
+              <code>{`if (error) {`}</code>
+              <code>
+                {'  '}
+                {`return res.status(400).json({ `}
+              </code>
+              <code>
+                {'    '}
+                {`error: error.details[0].message `}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>{'res.json({ validated: value });'}</code>
+            </code>
+          </pre>
+          <p>Zod (TypeScript-first, современный)</p>
+          <pre>npm install zod</pre>
+          <p>Схемы Zod</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code>{`const z = require('zod');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Схема пользователя`}</code>
+              <code>{`const UserSchema = z.object({`}</code>
+              <code>
+                {'  '}
+                {`name: z.string().min(2).max(50),`}
+              </code>
+              <code>
+                {'  '}
+                {`email: z.string().email(),`}
+              </code>
+              <code>
+                {'  '}
+                {`password: z.string().min(6),`}
+              </code>
+              <code>
+                {'  '}
+                {`age: z.number().int().min(18).max(120).optional(),`}
+              </code>
+              <code>
+                {'  '}
+                {`role: z.enum(['user', 'admin']).default('user')`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Валидация`}</code>
+              <code>{'try {'}</code>
+              <code>
+                {'  '}
+                {`const validated = UserSchema.parse(req.body);`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(validated);`}
+              </code>
+              <code>{`} catch (error) {`}</code>
+              <code>
+                {'  '}
+                {`res.status(400).json({ errors: error.errors });`}
+              </code>
+              <code>{`}`}</code>
+            </code>
+          </pre>
+          <p>Сравнение подходов</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Характеристика</th>
+                <th>express-validator</th>
+                <th>Joi</th>
+                <th>Zod</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Простота</td>
+                <td>+++</td>
+                <td>++</td>
+                <td>++</td>
+              </tr>
+              <tr>
+                <td>TypeScript поддержка</td>
+                <td>-</td>
+                <td>+</td>
+                <td>+++</td>
+              </tr>
+              <tr>
+                <td>Кастомные валидации</td>
+                <td>++</td>
+                <td>+++</td>
+                <td>+++</td>
+              </tr>
+              <tr>
+                <td>Производительность</td>
+                <td>+++</td>
+                <td>++</td>
+                <td>+++</td>
+              </tr>
+              <tr>
+                <td>Сообщество</td>
+                <td>+++</td>
+                <td>+++</td>
+                <td>+ (растущее)</td>
+              </tr>
+              <tr>
+                <td>Интеграция с Express</td>
+                <td>встроенная</td>
+                <td>через middleware</td>
+                <td>через middleware</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
