@@ -3984,6 +3984,303 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Логирование и мониторинг': {
+      id: 'express-9',
+      title: 'Логирование и мониторинг',
+      jsx: (
+        <div>
+          <p>Зачем нужно логирование</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Цель</th>
+                <th>Что дает</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Отладка</td>
+                <td>Понимание что происходит в приложении</td>
+              </tr>
+              <tr>
+                <td>Мониторинг</td>
+                <td>Отслеживание ошибок и производительности</td>
+              </tr>
+              <tr>
+                <td>Аудит</td>
+                <td>Кто, когда и что делал</td>
+              </tr>
+              <tr>
+                <td>Аналитика</td>
+                <td>Популярные маршруты, время ответа</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Morgan (HTTP логгер)</p>
+          <pre>npm install morgan</pre>
+          <p>Базовое использование</p>
+          <pre>
+            <CodeNumber length={15} />
+            <code>
+              <code>{`const morgan = require('morgan');`}</code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const app = express();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Простой логгер`}</code>
+              <code>{`app.use(morgan('tiny'));`}</code>
+              <code className='comment'>{`// вывод: GET /users 200 12 - 3ms`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Для разработки (подробный)`}</code>
+              <code>{`app.use(morgan('dev'));`}</code>
+              <code className='comment'>{`// вывод: GET /users 200 12.345 ms - 123`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Для продакшена (комбинированный)`}</code>
+              <code>{`app.use(morgan('combined'));`}</code>
+              <code>{`// вывод: ::1 - - [08/Jun/2024:12:00:00 +0000] "GET /users HTTP/1.1" 200 123 "-" "curl/7.68.0"`}</code>
+            </code>
+          </pre>
+          <p>Форматы Morgan</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Формат</th>
+                <th>Пример вывода</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>tiny</td>
+                <td>GET /users 200 12 - 3ms</td>
+              </tr>
+              <tr>
+                <td>dev</td>
+                <td>GET /users 200 12.345 ms - 123</td>
+              </tr>
+              <tr>
+                <td>short</td>
+                <td>::1 GET /users 200 12 - 3ms</td>
+              </tr>
+              <tr>
+                <td>common</td>
+                <td>::1 - - [08/Jun/2024:12:00:00] "GET /users" 200 12</td>
+              </tr>
+              <tr>
+                <td>combined</td>
+                <td>Полный с referrer и user-agent</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Winston (полноценный логгер)</p>
+          <pre>npm install winston</pre>
+          <p>Базовая настройка</p>
+          <pre>
+            <CodeNumber length={35} />
+            <code>
+              <code className='comment'>{`// logger.js`}</code>
+              <code>{`const winston = require('winston');`}</code>
+              <code>{`const path = require('path');`}</code>
+              <code>{'  '}</code>
+              <code>{`const logger = winston.createLogger({`}</code>
+              <code>
+                {'  '}
+                {`level: process.env.LOG_LEVEL || 'info',`}
+              </code>
+              <code>
+                {'  '}
+                {`format: winston.format.combine(`}
+              </code>
+              <code>
+                {'    '}
+                {`winston.format.timestamp(),`}
+              </code>
+              <code>
+                {'    '}
+                {`winston.format.errors({ stack: true }),`}
+              </code>
+              <code>
+                {'    '}
+                {`winston.format.json()`}
+              </code>
+              <code>
+                {'  '}
+                {`),`}
+              </code>
+              <code>
+                {'  '}
+                {`transports: [`}
+              </code>
+              <code className='comment'>
+                {'    '}
+                {`// Ошибки в отдельный файл`}
+              </code>
+              <code>
+                {'    '}
+                {`new winston.transports.File({`}
+              </code>
+              <code>
+                {'      '}
+                {`filename: path.join('logs', 'error.log'),`}
+              </code>
+              <code>
+                {'      '}
+                {`level: 'error'`}
+              </code>
+              <code>
+                {'    '}
+                {`}),`}
+              </code>
+              <code className='comment'>
+                {'    '}
+                {`// Все логи в общий файл`}
+              </code>
+              <code>
+                {'    '}
+                {`new winston.transports.File({`}
+              </code>
+              <code>
+                {'      '}
+                {`filename: path.join('logs', 'combined.log')`}
+              </code>
+              <code>
+                {'    '}
+                {`})`}
+              </code>
+              <code>
+                {'  '}
+                {`]`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// В разработке еще и в консоль`}</code>
+              <code>{`if (process.env.NODE_ENV !== 'production') {`}</code>
+              <code>
+                {'  '}
+                {`logger.add(new winston.transports.Console({`}
+              </code>
+              <code>
+                {'    '}
+                {`format: winston.format.combine(`}
+              </code>
+              <code>
+                {'      '}
+                {`winston.format.colorize(),`}
+              </code>
+              <code>
+                {'      '}
+                {`winston.format.simple()`}
+              </code>
+              <code>
+                {'    '}
+                {`)`}
+              </code>
+              <code>
+                {'  '}
+                {`}));`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = logger;`}</code>
+            </code>
+          </pre>
+          <p>Структура логов</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Уровень</th>
+                <th>Значение</th>
+                <th>Когда использовать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>error</td>
+                <td>Критическая ошибка</td>
+                <td>БД недоступна, исключение</td>
+              </tr>
+              <tr>
+                <td>warn</td>
+                <td>Предупреждение</td>
+                <td>Почти лимит, deprecated API</td>
+              </tr>
+              <tr>
+                <td>info</td>
+                <td>Информация</td>
+                <td>Пользователь вошел, запрос выполнен</td>
+              </tr>
+              <tr>
+                <td>debug</td>
+                <td>Отладка</td>
+                <td>Детали запросов, значения переменных</td>
+              </tr>
+              <tr>
+                <td>verbose</td>
+                <td>Очень подробно</td>
+                <td>Трассировка вызовов</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Пример структурированного лога</p>
+          <pre>
+            <CodeNumber length={10} />
+            <code>
+              <code className='comment'>{`// Хорошо (структурированный)`}</code>
+              <code>{`logger.info('User logged in', {`}</code>
+              <code>
+                {'  '}
+                {`userId: 123,`}
+              </code>
+              <code>
+                {'  '}
+                {`email: 'user@example.com',`}
+              </code>
+              <code>
+                {'  '}
+                {`ip: '192.168.1.1',`}
+              </code>
+              <code>
+                {'  '}
+                {`timestamp: new Date().toISOString()`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Плохо (строка)`}</code>
+              <code>
+                {'logger.info(`User ${userId} logged in from ${ip}`);'}
+              </code>
+            </code>
+          </pre>
+          <p>Мониторинг (metrics)</p>
+          <p>express-status-monitor</p>
+          <pre>npm install express-status-monitor</pre>
+          <pre>
+            <CodeNumber length={4} />
+            <code>
+              <code>{`const statusMonitor = require('express-status-monitor');`}</code>
+              <code>{'  '}</code>
+              <code>{`app.use(statusMonitor());`}</code>
+              <code className='comment'>{`// Доступно на /status`}</code>
+            </code>
+          </pre>
+          <p>response-time (измерение времени ответа)</p>
+          <pre>npm install response-time</pre>
+          <pre>
+            <CodeNumber length={5} />
+            <code>
+              <code>{`const responseTime = require('response-time');`}</code>
+              <code>{'  '}</code>
+              <code>{'app.use(responseTime((req, res, time) => {'}</code>
+              <code>
+                {'  '}
+                {
+                  'logger.debug(`${req.method} ${req.url} - ${time.toFixed(2)}ms`);'
+                }
+              </code>
+              <code>{`}));`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
