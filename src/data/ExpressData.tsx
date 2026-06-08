@@ -2772,6 +2772,948 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Аутентификация и авторизация (JWT, bcrypt)': {
+      id: 'express-7',
+      title: 'Аутентификация и авторизация (JWT, bcrypt)',
+      jsx: (
+        <div>
+          <p>Установка зависимостей</p>
+          <pre>
+            <CodeNumber length={2} />
+            <code>
+              <code>npm install jsonwebtoken bcrypt express</code>
+              <code>
+                npm install --save-dev @types/jsonwebtoken @types/bcrypt # для
+                TypeScript
+              </code>
+            </code>
+          </pre>
+          <p>Хеширование паролей с bcrypt</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code className='comment'>{`// utils/password.js`}</code>
+              <code>{`const bcrypt = require('bcrypt');`}</code>
+              <code>{'  '}</code>
+              <code>{`const SALT_ROUNDS = 10;  // сложность хеширования (10-12 оптимально)`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Хеширование пароля`}</code>
+              <code>{`async function hashPassword(password) {`}</code>
+              <code>
+                {'  '}
+                {`const salt = await bcrypt.genSalt(SALT_ROUNDS);`}
+              </code>
+              <code>
+                {'  '}
+                {`return await bcrypt.hash(password, salt);`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Проверка пароля`}</code>
+              <code>{`async function verifyPassword(password, hash) {`}</code>
+              <code>
+                {'  '}
+                {`return await bcrypt.compare(password, hash);`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = { hashPassword, verifyPassword };`}</code>
+            </code>
+          </pre>
+          <p>Использование в модели пользователя</p>
+          <pre>
+            <CodeNumber length={25} />
+            <code>
+              <code className='comment'>{`// models/User.js (Mongoose)`}</code>
+              <code>{`const mongoose = require('mongoose');`}</code>
+              <code>{`const { hashPassword, verifyPassword } = require('../utils/password');`}</code>
+              <code>{'  '}</code>
+              <code>{`const userSchema = new mongoose.Schema({`}</code>
+              <code>
+                {'  '}
+                {`email: { type: String, required: true, unique: true },`}
+              </code>
+              <code>
+                {'  '}
+                {`password: { type: String, required: true, select: false }, // select false — не возвращать по умолчанию`}
+              </code>
+              <code>
+                {'  '}
+                {`name: String,`}
+              </code>
+              <code>
+                {'  '}
+                {`role: { type: String, enum: ['user', 'admin'], default: 'user' }`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Хешируем пароль перед сохранением`}</code>
+              <code>{`userSchema.pre('save', async function(next) {`}</code>
+              <code>
+                {'  '}
+                {`if (!this.isModified('password')) return next();`}
+              </code>
+              <code>
+                {'  '}
+                {`this.password = await hashPassword(this.password);`}
+              </code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Метод для проверки пароля`}</code>
+              <code>{`userSchema.methods.comparePassword = async function(candidatePassword) {`}</code>
+              <code>
+                {'  '}
+                {`return await verifyPassword(candidatePassword, this.password);`}
+              </code>
+              <code>{`};`}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = mongoose.model('User', userSchema);`}</code>
+            </code>
+          </pre>
+          <p>JWT — генерация и верификация</p>
+          <pre>
+            <CodeNumber length={44} />
+            <code>
+              <code className='comment'>{`// utils/jwt.js`}</code>
+              <code>{`const jwt = require('jsonwebtoken');`}</code>
+              <code>{'  '}</code>
+              <code>{`const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-it';`}</code>
+              <code>{`const JWT_EXPIRES_IN = '7d';  // 7 дней`}</code>
+              <code>{`const JWT_REFRESH_EXPIRES_IN = '30d';`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Генерация access токена`}</code>
+              <code>{`function generateAccessToken(payload) {`}</code>
+              <code>
+                {'  '}
+                {`return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Генерация refresh токена`}</code>
+              <code>{`function generateRefreshToken(payload) {`}</code>
+              <code>
+                {'  '}
+                {`return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_REFRESH_EXPIRES_IN });`}
+              </code>
+              <code></code>
+              <code>{`}`}</code>
+              <code className='comment'>{`// Верификация токена`}</code>
+              <code>{`function verifyToken(token) {`}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`return jwt.verify(token, JWT_SECRET);`}
+              </code>
+              <code>
+                {'  '}
+                {`} catch (error) {`}
+              </code>
+              <code>
+                {'    '}
+                {`if (error.name === 'TokenExpiredError') {`}
+              </code>
+              <code>
+                {'      '}
+                {`throw new Error('Token expired');`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`if (error.name === 'JsonWebTokenError') {`}
+              </code>
+              <code>
+                {'      '}
+                {`throw new Error('Invalid token');`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`throw error;`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Декодирование без верификации (небезопасно, только для отладки)`}</code>
+              <code>{`function decodeToken(token) {`}</code>
+              <code>
+                {'  '}
+                {`return jwt.decode(token);`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = {`}</code>
+              <code>
+                {'  '}
+                {`generateAccessToken,`}
+              </code>
+              <code>
+                {'  '}
+                {`generateRefreshToken,`}
+              </code>
+              <code>
+                {'  '}
+                {`verifyToken,`}
+              </code>
+              <code>
+                {'  '}
+                {`decodeToken`}
+              </code>
+              <code>{'};'}</code>
+            </code>
+          </pre>
+          <p>Middleware для авторизации</p>
+          <pre>
+            <CodeNumber length={69} />
+            <code>
+              <code className='comment'>{`// middleware/auth.js`}</code>
+              <code>{`const { verifyToken } = require('../utils/jwt');`}</code>
+              <code>{`const User = require('../models/User');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Проверка наличия токена`}</code>
+              <code>{`function authenticate(req, res, next) {`}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code className='comment'>
+                {'    '}
+                {`// Получаем токен из заголовка Authorization`}
+              </code>
+              <code>
+                {'      '}
+                {`const authHeader = req.headers.authorization;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'      '}
+                {`if (!authHeader || !authHeader.startsWith('Bearer ')) {`}
+              </code>
+              <code>
+                {'        '}
+                {`return res.status(401).json({ `}
+              </code>
+              <code>
+                {'          '}
+                {`error: 'No token provided or invalid format' `}
+              </code>
+              <code>
+                {'        '}
+                {`});`}
+              </code>
+              <code>
+                {'      '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`const token = authHeader.split(' ')[1];`}
+              </code>
+              <code>
+                {'    '}
+                {`const decoded = verifyToken(token);`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// Сохраняем данные пользователя в req`}
+              </code>
+              <code>
+                {'    '}
+                {`req.user = decoded;`}
+              </code>
+              <code>
+                {'    '}
+                {`next();`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`if (err.message === 'Token expired') {`}
+              </code>
+              <code>
+                {'      '}
+                {`return res.status(401).json({ error: 'Token expired' });`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`if (err.message === 'Invalid token') {`}
+              </code>
+              <code>
+                {'      '}
+                {`return res.status(401).json({ error: 'Invalid token' });`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`res.status(500).json({ error: 'Authentication error' });`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Проверка роли (после authenticate)`}</code>
+              <code>{`function authorize(...roles) {`}</code>
+              <code>
+                {'  '}
+                {`return (req, res, next) => {`}
+              </code>
+              <code>
+                {'    '}
+                {`if (!req.user) {`}
+              </code>
+              <code>
+                {'      '}
+                {`return res.status(401).json({ error: 'Not authenticated' });`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`if (!roles.includes(req.user.role)) {`}
+              </code>
+              <code>
+                {'      '}
+                {`return res.status(403).json({ `}
+              </code>
+              <code>
+                {'        '}
+                {`error: 'Access denied. Required role: ' + roles.join(' or ') `}
+              </code>
+              <code>
+                {'      '}
+                {`});`}
+              </code>
+              <code>
+                {'    '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`next();`}
+              </code>
+              <code>
+                {'  '}
+                {`};`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'// Опциональная аутентификация (не блокирует)'}
+              </code>
+              <code>{'function optionalAuth(req, res, next) {'}</code>
+              <code>
+                {'  '}
+                {`const authHeader = req.headers.authorization;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (authHeader && authHeader.startsWith('Bearer ')) {`}
+              </code>
+              <code>
+                {'    '}
+                {`try {`}
+              </code>
+              <code>
+                {'      '}
+                {`const token = authHeader.split(' ')[1];`}
+              </code>
+              <code>
+                {'      '}
+                {`const decoded = verifyToken(token);`}
+              </code>
+              <code>
+                {'      '}
+                {`req.user = decoded;`}
+              </code>
+              <code>
+                {'    '}
+                {`} catch (err) {`}
+              </code>
+              <code className='comment'>
+                {'      '}
+                {`// Игнорируем ошибки токена при опциональной аутентификации`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`next();`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = { authenticate, authorize, optionalAuth };`}</code>
+            </code>
+          </pre>
+          <p>Регистрация и логин</p>
+          <pre>
+            <CodeNumber length={144} />
+            <code>
+              <code className='comment'>{`// controllers/authController.js`}</code>
+              <code>{`const User = require('../models/User');`}</code>
+              <code>{`const { generateAccessToken, generateRefreshToken } = require('../utils/jwt');`}</code>
+              <code>{`const { ValidationError, UnauthorizedError } = require('../utils/errors');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Регистрация`}</code>
+              <code>{`async function register(req, res) {`}</code>
+              <code>
+                {'  '}
+                {`const { email, password, name } = req.body;`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Валидация`}
+              </code>
+              <code>
+                {'  '}
+                {`if (!email || !password) {`}
+              </code>
+              <code>
+                {'   '}
+                {`throw new ValidationError('Email and password are required');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (password.length < 6) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new ValidationError('Password must be at least 6 characters');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Проверка существующего пользователя`}
+              </code>
+              <code>
+                {'  '}
+                {`const existingUser = await User.findOne({ email });`}
+              </code>
+              <code>
+                {'  '}
+                {`if (existingUser) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new ValidationError('Email already registered');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Создание пользователя`}
+              </code>
+              <code>
+                {'  '}
+                {`const user = await User.create({`}
+              </code>
+              <code>
+                {'    '}
+                {`email,`}
+              </code>
+              <code>
+                {'    '}
+                {`password,  // хешируется в pre-save хуке`}
+              </code>
+              <code>
+                {'    '}
+                {`name: name || email.split('@')[0],`}
+              </code>
+              <code>
+                {'    '}
+                {`role: 'user'`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Генерация токенов`}
+              </code>
+              <code>
+                {'  '}
+                {`const payload = { id: user._id, email: user.email, role: user.role };`}
+              </code>
+              <code>
+                {'  '}
+                {`const accessToken = generateAccessToken(payload);`}
+              </code>
+              <code>
+                {'  '}
+                {`const refreshToken = generateRefreshToken(payload);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.status(201).json({`}
+              </code>
+              <code>
+                {'    '}
+                {`message: 'User registered successfully',`}
+              </code>
+              <code>
+                {'    '}
+                {`user: {`}
+              </code>
+              <code>
+                {'      '}
+                {`id: user._id,`}
+              </code>
+              <code>
+                {'      '}
+                {`email: user.email,`}
+              </code>
+              <code>
+                {'      '}
+                {`name: user.name,`}
+              </code>
+              <code>
+                {'      '}
+                {`role: user.role`}
+              </code>
+              <code>
+                {'    '}
+                {'},'}
+              </code>
+              <code>
+                {'    '}
+                {`tokens: {`}
+              </code>
+              <code>
+                {'      '}
+                {`accessToken,`}
+              </code>
+              <code>
+                {'      '}
+                {`refreshToken`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Логин`}</code>
+              <code>{'async function login(req, res) {'}</code>
+              <code>
+                {'  '}
+                {`const { email, password } = req.body;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!email || !password) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new ValidationError('Email and password are required');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Ищем пользователя с паролем (+password)`}
+              </code>
+              <code>
+                {'  '}
+                {`const user = await User.findOne({ email }).select('+password');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!user) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new UnauthorizedError('Invalid email or password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Проверяем пароль`}</code>
+              <code>
+                {'  '}
+                {`const isPasswordValid = await user.comparePassword(password);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!isPasswordValid) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new UnauthorizedError('Invalid email or password');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Генерация токенов`}
+              </code>
+              <code>
+                {'  '}
+                {`const payload = { id: user._id, email: user.email, role: user.role };`}
+              </code>
+              <code>
+                {'  '}
+                {`const accessToken = generateAccessToken(payload);`}
+              </code>
+              <code>
+                {'  '}
+                {`const refreshToken = generateRefreshToken(payload);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.json({`}
+              </code>
+              <code>
+                {'    '}
+                {`message: 'Login successful',`}
+              </code>
+              <code>
+                {'    '}
+                {`user: {`}
+              </code>
+              <code>
+                {'      '}
+                {`id: user._id,`}
+              </code>
+              <code>
+                {'      '}
+                {`email: user.email,`}
+              </code>
+              <code>
+                {'      '}
+                {`name: user.name,`}
+              </code>
+              <code>
+                {'      '}
+                {`role: user.role`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>
+                {'    '}
+                {`tokens: {`}
+              </code>
+              <code>
+                {'      '}
+                {`accessToken,`}
+              </code>
+              <code>
+                {'      '}
+                {`refreshToken`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Обновление токена (refresh)`}</code>
+              <code>{`async function refreshToken(req, res) {`}</code>
+              <code>
+                {'  '}
+                {`const { refreshToken } = req.body;`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!refreshToken) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new ValidationError('Refresh token required');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`const decoded = verifyToken(refreshToken);`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// Проверяем, что пользователь все еще существует`}
+              </code>
+              <code>
+                {'    '}
+                {`const user = await User.findById(decoded.id);`}
+              </code>
+              <code>
+                {'    '}
+                {`if (!user) {`}
+              </code>
+              <code>
+                {'      '}
+                {`throw new UnauthorizedError('User not found');`}
+              </code>
+              <code>
+                {'    '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// Генерируем новые токены`}
+              </code>
+              <code>
+                {'    '}
+                {`const payload = { id: user._id, email: user.email, role: user.role };`}
+              </code>
+              <code>
+                {'    '}
+                {`const newAccessToken = generateAccessToken(payload);`}
+              </code>
+              <code>
+                {'    '}
+                {`const newRefreshToken = generateRefreshToken(payload);`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`res.json({`}
+              </code>
+              <code>
+                {'      '}
+                {`tokens: {`}
+              </code>
+              <code>
+                {'        '}
+                {`accessToken: newAccessToken,`}
+              </code>
+              <code>
+                {'        '}
+                {`refreshToken: newRefreshToken`}
+              </code>
+              <code>
+                {'      '}
+                {`}`}
+              </code>
+              <code>
+                {'    '}
+                {`});`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new UnauthorizedError('Invalid or expired refresh token');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Получение текущего пользователя`}</code>
+              <code>{`async function getMe(req, res) {`}</code>
+              <code>
+                {'  '}
+                {`const user = await User.findById(req.user.id).select('-password');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`if (!user) {`}
+              </code>
+              <code>
+                {'    '}
+                {`throw new NotFoundError('User');`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`res.json(user);`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`module.exports = {`}</code>
+              <code>
+                {'  '}
+                {`register,`}
+              </code>
+              <code>
+                {'  '}
+                {`login,`}
+              </code>
+              <code>
+                {'  '}
+                {`refreshToken,`}
+              </code>
+              <code>{'  '}</code>
+              <code>{`};`}</code>
+            </code>
+          </pre>
+          <p>Роуты аутентификации</p>
+          <pre>
+            <CodeNumber length={20} />
+            <code>
+              <code className='comment'>{`// routes/auth.js`}</code>
+              <code>{`const router = require('express').Router();`}</code>
+              <code>{`const asyncHandler = require('../utils/asyncHandler');`}</code>
+              <code>{`const { authenticate } = require('../middleware/auth');`}</code>
+              <code>{`const authController = require('../controllers/authController');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Публичные маршруты`}</code>
+              <code>{`router.post('/register', asyncHandler(authController.register));`}</code>
+              <code>{`router.post('/login', asyncHandler(authController.login));`}</code>
+              <code>{`router.post('/refresh', asyncHandler(authController.refreshToken));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Защищенные маршруты`}</code>
+              <code>{`router.get('/me', authenticate, asyncHandler(authController.getMe));`}</code>
+              <code>{`router.post('/logout', authenticate, asyncHandler(async (req, res) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// На клиенте нужно удалить токены`}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {`// В реальном проекте можно добавить черный список токенов`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json({ message: 'Logged out successfully' });`}
+              </code>
+              <code>{'}));'}</code>
+              <code>{'  '}</code>
+              <code>module.exports = router;</code>
+            </code>
+          </pre>
+          <p>Защита маршрутов по ролям</p>
+          <pre>
+            <CodeNumber length={24} />
+            <code>
+              <code className='comment'>{`// routes/admin.js`}</code>
+              <code>{`const router = require('express').Router();`}</code>
+              <code>{`const { authenticate, authorize } = require('../middleware/auth');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Все маршруты в этом роутере требуют аутентификации`}</code>
+              <code>{`router.use(authenticate);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Только админы могут получить список всех пользователей`}</code>
+              <code>{`router.get('/users', authorize('admin'), async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const users = await User.find().select('-password');`}
+              </code>
+              <code>
+                {'  '}
+                {`res.json(users);`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Админы и менеджеры могут просматривать отчеты`}</code>
+              <code>{`router.get('/reports', authorize('admin', 'manager'), async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.json({ report: 'sales_data' });`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Обычный пользователь может просматривать свою статистику`}</code>
+              <code>{`router.get('/my-stats', authorize('user', 'admin'), async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.json({ stats: { visits: 42 } });`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code>module.exports = router;</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
