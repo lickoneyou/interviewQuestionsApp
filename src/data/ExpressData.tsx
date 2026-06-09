@@ -4281,6 +4281,933 @@ const ExpressJs = {
         </div>
       ),
     },
+    'Развертывание Express': {
+      id: 'express-10',
+      title: 'Развертывание Express',
+      jsx: (
+        <div>
+          <p>Структура env файлов</p>
+          <pre>
+            <CodeNumber length={15} />
+            <code>
+              <code># .env (не коммитим)</code>
+              <code>NODE_ENV=production</code>
+              <code>PORT=3000</code>
+              <code>{'  '}</code>
+              <code># База данных</code>
+              <code>DB_HOST=localhost</code>
+              <code>DB_NAME=myapp</code>
+              <code>DB_USER=postgres</code>
+              <code>{'DB_PASSWORD=secret'}</code>
+              <code>{'  '}</code>
+              <code># JWT</code>
+              <code>{`JWT_SECRET=very-long-secret-key`}</code>
+              <code>{'  '}</code>
+              <code>{`# Внешние сервисы`}</code>
+              <code>{`REDIS_URL=redis://localhost:6379`}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={24} />
+            <code>
+              <code className='comment'>{`// config/index.js`}</code>
+              <code>{`require('dotenv').config();`}</code>
+              <code>{'  '}</code>
+              <code>{'const config = {'}</code>
+              <code>
+                {'  '}
+                {`env: process.env.NODE_ENV || 'development',`}
+              </code>
+              <code>
+                {'  '}
+                {`port: parseInt(process.env.PORT, 10) || 3000,`}
+              </code>
+              <code>
+                {'  '}
+                {`db: {`}
+              </code>
+              <code>
+                {'    '}
+                {`host: process.env.DB_HOST,`}
+              </code>
+              <code>
+                {'    '}
+                {`name: process.env.DB_NAME,`}
+              </code>
+              <code>
+                {'    '}
+                {`user: process.env.DB_USER,`}
+              </code>
+              <code>
+                {'    '}
+                {`password: process.env.DB_PASSWORD,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`jwt: {`}
+              </code>
+              <code>
+                {'    '}
+                {`secret: process.env.JWT_SECRET,`}
+              </code>
+              <code>
+                {'    '}
+                {`expiresIn: '7d',`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`redis: {`}
+              </code>
+              <code>
+                {'    '}
+                {`url: process.env.REDIS_URL,`}
+              </code>
+              <code>
+                {'  '}
+                {`},`}
+              </code>
+              <code>
+                {'  '}
+                {`isProduction: process.env.NODE_ENV === 'production',`}
+              </code>
+              <code>
+                {'  '}
+                {`isDevelopment: process.env.NODE_ENV === 'development',`}
+              </code>
+              <code>{'};'}</code>
+              <code>{'  '}</code>
+              <code>module.exports = config;</code>
+            </code>
+          </pre>
+          <p>package.json скрипты</p>
+          <pre>
+            <CodeNumber length={10} />
+            <code>
+              <code>{`{`}</code>
+              <code>
+                {'  '}
+                {`"scripts": {`}
+              </code>
+              <code>
+                {'    '}
+                {`"start": "node app.js",`}
+              </code>
+              <code>
+                {'    '}
+                {`"start:prod": "NODE_ENV=production node app.js",`}
+              </code>
+              <code>
+                {'    '}
+                {`"dev": "nodemon app.js",`}
+              </code>
+              <code>
+                {'    '}
+                {`"pm2:start": "pm2 start ecosystem.config.js",`}
+              </code>
+              <code>
+                {'    '}
+                {`"pm2:stop": "pm2 stop ecosystem.config.js",`}
+              </code>
+              <code>
+                {'    '}
+                {`"pm2:restart": "pm2 restart ecosystem.config.js"`}
+              </code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <p>Проверка окружения при запуске</p>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code className='comment'>{`// app.js (в начале)`}</code>
+              <code>{`const config = require('./config');`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Проверка обязательных переменных`}</code>
+              <code>{`const requiredEnv = ['JWT_SECRET'];`}</code>
+              <code>{`if (config.isProduction) {`}</code>
+              <code>
+                {'  '}
+                {`requiredEnv.push('DB_HOST', 'DB_PASSWORD');`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`for (const env of requiredEnv) {`}</code>
+              <code>
+                {'  '}
+                {`if (!process.env[env]) {`}
+              </code>
+              <code>
+                {'    '}
+                {'console.error(`❌ Missing required env: ${env}`);'}
+              </code>
+              <code>
+                {'    '}
+                {`process.exit(1);`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>
+                {
+                  'console.log(`✅ Running in ${config.env} mode on port ${config.port}`);'
+                }
+              </code>
+            </code>
+          </pre>
+          <p>Настройка Express для продакшена</p>
+          <pre>
+            <CodeNumber length={61} />
+            <code>
+              <code className='comment'>{`// app.js`}</code>
+              <code>{`const express = require('express');`}</code>
+              <code>{`const compression = require('compression');`}</code>
+              <code>{`const helmet = require('helmet');`}</code>
+              <code>{`const cors = require('cors');`}</code>
+              <code>{`const rateLimit = require('express-rate-limit');`}</code>
+              <code>{`const config = require('./config');`}</code>
+              <code>{'  '}</code>
+              <code>{`const app = express();`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Безопасность`}</code>
+              <code>{`app.use(helmet()); // Защитные заголовки`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// CORS (ограниченный для продакшена)`}</code>
+              <code>{`const corsOptions = {`}</code>
+              <code>
+                {'  '}
+                {`origin: config.isProduction `}
+              </code>
+              <code>
+                {'    '}
+                {`? ['https://myapp.com', 'https://api.myapp.com']`}
+              </code>
+              <code>
+                {'    '}
+                {`: '*',`}
+              </code>
+              <code>
+                {'  '}
+                {`credentials: true,`}
+              </code>
+              <code>{'};'}</code>
+              <code>{`app.use(cors(corsOptions));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Сжатие ответов`}</code>
+              <code>{`app.use(compression());`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Rate limiting`}</code>
+              <code>{`const limiter = rateLimit({`}</code>
+              <code>
+                {'  '}
+                {`windowMs: 15 * 60 * 1000, // 15 минут`}
+              </code>
+              <code>
+                {'  '}
+                {`max: config.isProduction ? 100 : 10000, // лимит запросов`}
+              </code>
+              <code>
+                {'  '}
+                {`message: 'Too many requests from this IP',`}
+              </code>
+              <code>
+                {'  '}
+                {`standardHeaders: true,`}
+              </code>
+              <code>
+                {'  '}
+                {`legacyHeaders: false,`}
+              </code>
+              <code>{`});`}</code>
+              <code>{`app.use('/api', limiter);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Более строгий лимит для аутентификации`}</code>
+              <code>{`const authLimiter = rateLimit({`}</code>
+              <code>
+                {'  '}
+                {`windowMs: 15 * 60 * 1000,`}
+              </code>
+              <code>
+                {'  '}
+                {`max: 5,`}
+              </code>
+              <code>
+                {'  '}
+                {`skipSuccessfulRequests: true,`}
+              </code>
+              <code>{`});`}</code>
+              <code>{`app.use('/api/auth/login', authLimiter);`}</code>
+              <code>{`app.use('/api/auth/register', authLimiter);`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Парсинг с лимитами`}</code>
+              <code>{`app.use(express.json({ limit: '10mb' }));`}</code>
+              <code>{`app.use(express.urlencoded({ extended: true, limit: '10mb' }));`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Доверять прокси (если за Nginx/Cloudflare)`}</code>
+              <code>{`if (config.isProduction) {`}</code>
+              <code>
+                {'  '}
+                {`app.set('trust proxy', 1);`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Статика с кэшированием`}</code>
+              <code>{`app.use('/static', express.static('public', {`}</code>
+              <code>
+                {'  '}
+                {`maxAge: '1y',`}
+              </code>
+              <code>
+                {'  '}
+                {`etag: true,`}
+              </code>
+              <code>
+                {'  '}
+                {`lastModified: true,`}
+              </code>
+              <code>{`}));`}</code>
+              <code>{'  '}</code>
+              <code>module.exports = app;</code>
+            </code>
+          </pre>
+          <p>Отключение debug в продакшене</p>
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code className='comment'>{`// logger.js`}</code>
+              <code>{`const winston = require('winston');`}</code>
+              <code>{'  '}</code>
+              <code>{`const level = process.env.NODE_ENV === 'production' ? 'info' : 'debug';`}</code>
+              <code>{'  '}</code>
+              <code>{`const logger = winston.createLogger({`}</code>
+              <code>
+                {'  '}
+                {`level,`}
+              </code>
+              <code>
+                {'  '}
+                {`// ... остальная конфигурация`}
+              </code>
+              <code>{`});`}</code>
+            </code>
+          </pre>
+          <p>PM2 — менеджер процессов</p>
+          <pre>npm install -g pm2</pre>
+          <p>Запуск через PM2</p>
+          <pre>
+            <CodeNumber length={27} />
+            <code>
+              <code className='comment'>{`# Базовый запуск`}</code>
+              <code>{`pm2 start app.js --name myapp`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# С указанием окружения`}</code>
+              <code>pm2 start app.js --env production --name myapp</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# С параметрами`}</code>
+              <code>pm2 start app.js --name myapp -- --port=3001</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Просмотр списка процессов`}</code>
+              <code>pm2 list</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Логи`}</code>
+              <code>pm2 logs myapp</code>
+              <code>pm2 logs --lines 100</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Мониторинг`}</code>
+              <code>pm2 monit</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Остановка/перезапуск/удаление`}</code>
+              <code>pm2 stop myapp</code>
+              <code>pm2 restart myapp</code>
+              <code>pm2 delete myapp</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Сохранить конфигурацию (автозапуск после перезагрузки)`}</code>
+              <code>pm2 save</code>
+              <code>pm2 startup</code>
+            </code>
+          </pre>
+          <p>ecosystem.config.js</p>
+          <pre>
+            <CodeNumber length={33} />
+            <code>
+              <code className='comment'>{`// ecosystem.config.js`}</code>
+              <code>{`module.exports = {`}</code>
+              <code>
+                {'  '}
+                {`apps: [{`}
+              </code>
+              <code>
+                {'    '}
+                {`name: 'myapp',`}
+              </code>
+              <code>
+                {'    '}
+                {`script: './app.js',`}
+              </code>
+              <code>
+                {'    '}
+                {`instances: 'max',              // по числу CPU ядер`}
+              </code>
+              <code>
+                {'    '}
+                {`exec_mode: 'cluster',         // кластерный режим`}
+              </code>
+              <code>
+                {'    '}
+                {`watch: false,                  // не следить за изменениями в проде`}
+              </code>
+              <code>
+                {'    '}
+                {`max_memory_restart: '1G',     // перезапуск при 1GB памяти`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`env: {`}
+              </code>
+              <code>
+                {'      '}
+                {`NODE_ENV: 'development',`}
+              </code>
+              <code>
+                {'      '}
+                {`PORT: 3000`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>
+                {'    '}
+                {`env_production: {`}
+              </code>
+              <code>
+                {'      '}
+                {`NODE_ENV: 'production',`}
+              </code>
+              <code>
+                {'      '}
+                {`PORT: 3000`}
+              </code>
+              <code>
+                {'    '}
+                {`},`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`error_file: './logs/pm2-error.log',`}
+              </code>
+              <code>
+                {'    '}
+                {`out_file: './logs/pm2-out.log',`}
+              </code>
+              <code>
+                {'    '}
+                {`log_file: './logs/combined.log',`}
+              </code>
+              <code>
+                {'    '}
+                {`time: true,`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// Автоматический перезапуск`}
+              </code>
+              <code>
+                {'    '}
+                {`autorestart: true,`}
+              </code>
+              <code>
+                {'    '}
+                {`max_restarts: 10,`}
+              </code>
+              <code>
+                {'    '}
+                {`min_uptime: '10s',`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`// Переменные окружения из файла`}
+              </code>
+              <code>
+                {'    '}
+                {`env_file: '.env'`}
+              </code>
+              <code>
+                {'  '}
+                {`}]`}
+              </code>
+              <code>{`};`}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={4} />
+            <code>
+              <code className='comment'>{`# Запуск с ecosystem`}</code>
+              <code>pm2 start ecosystem.config.js --env production</code>
+              <code>pm2 save</code>
+              <code>pm2 startup # автозапуск при загрузке системы</code>
+            </code>
+          </pre>
+          <p>Dockerfile</p>
+          <pre>
+            <CodeNumber length={24} />
+            <code>
+              <code># Dockerfile</code>
+              <code>FROM node:20-alpine</code>
+              <code>{'  '}</code>
+              <code>WORKDIR /app</code>
+              <code>{'  '}</code>
+              <code># Копируем package files</code>
+              <code>COPY package*.json ./</code>
+              <code>{'  '}</code>
+              <code># Устанавливаем только production зависимости</code>
+              <code>
+                RUN npm ci --only=production && npm cache clean --force
+              </code>
+              <code>{'  '}</code>
+              <code># Копируем исходники</code>
+              <code>COPY . .</code>
+              <code>{'  '}</code>
+              <code># Создаем пользователя не root</code>
+              <code>RUN addgroup -g 1001 -S nodejs && \</code>
+              <code>{'  '}adduser -S nodejs -u 1001 && \</code>
+              <code>{'  '}chown -R nodejs:nodejs /app</code>
+              <code>{'  '}</code>
+              <code>USER nodejs</code>
+              <code>{'  '}</code>
+              <code>EXPOSE 3000</code>
+              <code>{'  '}</code>
+              <code>CMD ["node", "app.js"]</code>
+            </code>
+          </pre>
+          <p>docker-compose.yml</p>
+          <pre>
+            <CodeNumber length={33} />
+            <code>
+              <code>version: '3.8'</code>
+              <code>{'  '}</code>
+              <code>services:</code>
+              <code>{'  '}app:</code>
+              <code>
+                {'    '}
+                {'build: .'}
+              </code>
+              <code>{'    '}ports:</code>
+              <code>{'      '}- "3000:3000"</code>
+              <code>{'    '}environment:</code>
+              <code>{'      '}NODE_ENV: production</code>
+              <code>{'      '}PORT: 3000</code>
+              <code>{'    '}env_file:</code>
+              <code>{'      '}- .env</code>
+              <code>{'    '}depends_on:</code>
+              <code>{'      '}- db</code>
+              <code>{'      '}- redis</code>
+              <code>{'    '}restart: unless-stopped</code>
+              <code>{'  '}</code>
+              <code>{'  '}db:</code>
+              <code>{'    '}image: postgres:15-alpine</code>
+              <code>{'    '}environment:</code>
+              <code>{'      '}POSTGRES_DB: myapp</code>
+              <code>{'      '}POSTGRES_USER: postgres</code>
+              <code>
+                {'      '}
+                {'POSTGRES_PASSWORD: ${DB_PASSWORD}'}
+              </code>
+              <code>{'    '}volumes:</code>
+              <code>{'      '}- postgres_data:/var/lib/postgresql/data</code>
+              <code>{'    '}restart: unless-stopped</code>
+              <code>{'  '}</code>
+              <code>{'  '}redis:</code>
+              <code>{'    '}image: redis:7-alpine</code>
+              <code>{'    '}restart: unless-stopped</code>
+              <code>{'  '}</code>
+              <code>{'  '}volumes:</code>
+              <code>{'    '}postgres_data:</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={8} />
+            <code>
+              <code className='comment'>{`# Сборка и запуск`}</code>
+              <code>docker-compose up -d --build</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Просмотр логов`}</code>
+              <code>docker-compose logs -f app</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`# Остановка`}</code>
+              <code>docker-compose down</code>
+            </code>
+          </pre>
+          <p>Конфигурация Nginx</p>
+          <pre>
+            <CodeNumber length={51} />
+            <code>
+              <code># /etc/nginx/sites-available/myapp</code>
+              <code>{`server {`}</code>
+              <code>
+                {'  '}
+                {`listen 80;`}
+              </code>
+              <code>{'  '}server_name api.myapp.com;</code>
+              <code>{'  '}return 301 https://$server_name$request_uri;</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code>{`server {`}</code>
+              <code>{'  '}listen 443 ssl http2;</code>
+              <code>{'  '}server_name api.myapp.com;</code>
+              <code>{'  '}</code>
+              <code>{'  '}# SSL сертификаты (Let's Encrypt)</code>
+              <code>
+                {'  '}ssl_certificate
+                /etc/letsencrypt/live/api.myapp.com/fullchain.pem;
+              </code>
+              <code>
+                {'  '}ssl_certificate_key
+                /etc/letsencrypt/live/api.myapp.com/privkey.pem;
+              </code>
+              <code>{'  '}</code>
+              <code>{'  '}# Безопасность</code>
+              <code>
+                {'  '}add_header Strict-Transport-Security "max-age=31536000"
+                always;
+              </code>
+              <code>{'  '}add_header X-Frame-Options "SAMEORIGIN" always;</code>
+              <code>
+                {'  '}add_header X-Content-Type-Options "nosniff" always;
+              </code>
+              <code>{'  '}</code>
+              <code>{'  '}# Логи</code>
+              <code>{'  '}access_log /var/log/nginx/myapp-access.log;</code>
+              <code>{'  '}error_log /var/log/nginx/myapp-error.log;</code>
+              <code>{'  '}</code>
+              <code>{'  '}# Лимиты</code>
+              <code>{'  '}client_max_body_size 10M;</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`location / {`}
+              </code>
+              <code>{'    '}proxy_pass http://localhost:3000;</code>
+              <code>{'    '}proxy_http_version 1.1;</code>
+              <code>{'    '}proxy_set_header Upgrade $http_upgrade;</code>
+              <code>{'    '}proxy_set_header Connection 'upgrade';</code>
+              <code>{'    '}proxy_set_header Host $host;</code>
+              <code>{'    '}proxy_set_header X-Real-IP $remote_addr;</code>
+              <code>
+                {'    '}proxy_set_header X-Forwarded-For
+                $proxy_add_x_forwarded_for;
+              </code>
+              <code>{'    '}proxy_set_header X-Forwarded-Proto $scheme;</code>
+              <code>{'    '}proxy_cache_bypass $http_upgrade;</code>
+              <code>{'  '}</code>
+              <code>{'    '}# Таймауты</code>
+              <code>{'    '}proxy_connect_timeout 60s;</code>
+              <code>{'    '}proxy_send_timeout 60s;</code>
+              <code>{'    '}proxy_read_timeout 60s;</code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>{'  '}# Статика (если есть)</code>
+              <code>
+                {'  '}
+                {`location /static {`}
+              </code>
+              <code>{'    '}alias /var/www/myapp/static;</code>
+              <code>{'    '}expires 1y;</code>
+              <code>{'    '}add_header Cache-Control "public, immutable";</code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'}'}</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={4} />
+            <code>
+              <code># Активация сайта</code>
+              <code>
+                sudo ln -s /etc/nginx/sites-available/myapp
+                /etc/nginx/sites-enabled/
+              </code>
+              <code>sudo nginx -t</code>
+              <code>sudo systemctl restart nginx</code>
+            </code>
+          </pre>
+          <p>SSL/TLS (Let's Encrypt)</p>
+          <pre>
+            <CodeNumber length={8} />
+            <code>
+              <code># Установка certbot</code>
+              <code>sudo apt install certbot python3-certbot-nginx</code>
+              <code>{'  '}</code>
+              <code># Получение сертификата</code>
+              <code>sudo certbot --nginx -d api.myapp.com</code>
+              <code>{'  '}</code>
+              <code># Автообновление</code>
+              <code>sudo certbot renew --dry-run</code>
+            </code>
+          </pre>
+          <p>Health check endpoint</p>
+          <pre>
+            <CodeNumber length={30} />
+            <code>
+              <code className='comment'>{'// routes/health.js'}</code>
+              <code>{`const router = require('express').Router();`}</code>
+              <code>{`const db = require('../db/pool');`}</code>
+              <code>{'  '}</code>
+              <code>{`router.get('/health', async (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`const checks = {`}
+              </code>
+              <code>
+                {'    '}
+                {`uptime: process.uptime(),`}
+              </code>
+              <code>
+                {'    '}
+                {`timestamp: new Date().toISOString(),`}
+              </code>
+              <code>
+                {'    '}
+                {`status: 'healthy'`}
+              </code>
+              <code>
+                {'  '}
+                {`};`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Проверка БД`}
+              </code>
+              <code>
+                {'  '}
+                {`try {`}
+              </code>
+              <code>
+                {'    '}
+                {`await db.query('SELECT 1');`}
+              </code>
+              <code>
+                {'    '}
+                {`checks.database = 'connected';`}
+              </code>
+              <code>
+                {'  '}
+                {`} catch (err) {`}
+              </code>
+              <code>
+                {'    '}
+                {`checks.database = 'disconnected';`}
+              </code>
+              <code>
+                {'    '}
+                {`checks.status = 'unhealthy';`}
+              </code>
+              <code>
+                {'  '}
+                {`}`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`const statusCode = checks.status === 'healthy' ? 200 : 503;`}
+              </code>
+              <code>
+                {'  '}
+                {`res.status(statusCode).json(checks);`}
+              </code>
+              <code>{'});'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Более простой вариант`}</code>
+              <code>{`app.get('/ping', (req, res) => {`}</code>
+              <code>
+                {'  '}
+                {`res.status(200).send('pong');`}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code>module.exports = router;</code>
+            </code>
+          </pre>
+          <p>Sentry для отслеживания ошибок</p>
+          <pre>npm install @sentry/node</pre>
+          <pre>
+            <CodeNumber length={13} />
+            <code>
+              <code className='comment'>{`// sentry.js`}</code>
+              <code>{`const Sentry = require('@sentry/node');`}</code>
+              <code>{`const config = require('./config');`}</code>
+              <code>{'  '}</code>
+              <code>{`if (config.isProduction) {`}</code>
+              <code>
+                {'  '}
+                {`Sentry.init({`}
+              </code>
+              <code>
+                {'    '}
+                {`dsn: process.env.SENTRY_DSN,`}
+              </code>
+              <code>
+                {'    '}
+                {`environment: config.env,`}
+              </code>
+              <code>
+                {'    '}
+                {`tracesSampleRate: 0.1, // 10% запросов`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>module.exports = Sentry;</code>
+            </code>
+          </pre>
+          <pre>
+            <CodeNumber length={17} />
+            <code>
+              <code className='comment'>{`// app.js`}</code>
+              <code>{`const Sentry = require('./sentry');`}</code>
+              <code>{'  '}</code>
+              <code>{`if (config.isProduction) {`}</code>
+              <code>
+                {'  '}
+                {`app.use(Sentry.Handlers.requestHandler());`}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Роуты...`}</code>
+              <code>{'  '}</code>
+              <code>{`if (config.isProduction) {`}</code>
+              <code>
+                {'  '}
+                {`app.use(Sentry.Handlers.errorHandler());`}
+              </code>
+              <code>{`}`}</code>
+              <code>{'  '}</code>
+              <code>{`app.use((err, req, res, next) => {`}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Sentry автоматически ловит ошибки`}
+              </code>
+              <code>
+                {'  '}
+                {`res.status(500).json({ error: 'Internal Server Error' });`}
+              </code>
+              <code>{'});'}</code>
+            </code>
+          </pre>
+          <p>Graceful Shutdown</p>
+          <pre>
+            <CodeNumber length={33} />
+            <code>
+              <code className='comment'>{`// server.js`}</code>
+              <code>{`const app = require('./app');`}</code>
+              <code>{`const config = require('./config');`}</code>
+              <code>{`const logger = require('./logger');`}</code>
+              <code>{'  '}</code>
+              <code>{`const server = app.listen(config.port, () => {`}</code>
+              <code>
+                {'  '}
+                {'logger.info(`Server running on port ${config.port}`);'}
+              </code>
+              <code>{`});`}</code>
+              <code>{'  '}</code>
+              <code className='comment'>{`// Graceful shutdown`}</code>
+              <code>{`const shutdown = async (signal) => {`}</code>
+              <code>
+                {'  '}
+                {'logger.info(`${signal} received, closing server...`);'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                {`server.close(async () => {`}
+              </code>
+              <code>
+                {'    '}
+                {`logger.info('HTTP server closed');`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'    '}
+                {`// Закрыть соединения с БД`}
+              </code>
+              <code>
+                {'    '}
+                {`await db.pool.end();`}
+              </code>
+              <code>
+                {'    '}
+                {`logger.info('Database connections closed');`}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}
+                {`logger.info('Shutdown complete');`}
+              </code>
+              <code>
+                {'    '}
+                {`process.exit(0);`}
+              </code>
+              <code>
+                {'  '}
+                {`});`}
+              </code>
+              <code>{'  '}</code>
+              <code className='comment'>
+                {'  '}
+                {`// Принудительное завершение через 10 секунд`}
+              </code>
+              <code>
+                {'  '}
+                {`setTimeout(() => {`}
+              </code>
+              <code>
+                {'    '}
+                {`logger.error('Forced shutdown');`}
+              </code>
+              <code>
+                {'    '}
+                {`process.exit(1);`}
+              </code>
+              <code>
+                {'  '}
+                {`}, 10000);`}
+              </code>
+              <code>{'};'}</code>
+              <code>{'  '}</code>
+              <code>{`process.on('SIGTERM', () => shutdown('SIGTERM'));`}</code>
+              <code>{`process.on('SIGINT', () => shutdown('SIGINT'));`}</code>
+            </code>
+          </pre>
+        </div>
+      ),
+    },
   },
 };
 
