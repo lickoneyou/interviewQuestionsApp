@@ -1,3 +1,5 @@
+import CodeNumber from '../components/Basic/CodeNumbers';
+
 const SEO = {
   SEO: {
     Терминология: {
@@ -850,6 +852,158 @@ const SEO = {
               <tr>
                 <td>Редиректы (цепочки)</td>
                 <td>Убрать лишние 301, оставить только финальный URL</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
+    'robots.txt, sitemap.xml, метатеги': {
+      id: 'seo-8',
+      title: 'robots.txt, sitemap.xml, метатеги',
+      jsx: (
+        <div>
+          <p>
+            <b>robots.txt</b> - Файл в корне сайта (site.ru/robots.txt), который
+            говорит поисковым роботам,{' '}
+            <span>какие страницы сканировать можно, а какие нельзя</span>.
+          </p>
+          <p>Правила синтаксиса:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Директива</th>
+                <th>Что делает</th>
+                <th>Пример</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>User-agent</td>
+                <td>Для какого робота правило (Yandex, Googlebot, *)</td>
+                <td>User-agent: * (все роботы)</td>
+              </tr>
+              <tr>
+                <td>Disallow</td>
+                <td>Запретить сканирование</td>
+                <td>Disallow: /cgi-bin/</td>
+              </tr>
+              <tr>
+                <td>Allow</td>
+                <td>Разрешить (отменяет Disallow)</td>
+                <td>Allow: /cgi-bin/forum/</td>
+              </tr>
+              <tr>
+                <td>Sitemap</td>
+                <td>Указать путь к sitemap.xml</td>
+                <td>Sitemap: https://site.ru/sitemap.xml</td>
+              </tr>
+              <tr>
+                <td>Host (Яндекс)</td>
+                <td>Главное зеркало сайта</td>
+                <td>Host: https://site.ru</td>
+              </tr>
+              <tr>
+                <td>Crawl-delay</td>
+                <td>Пауза между запросами (сек)</td>
+                <td>Crawl-delay: 1.5</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Типовой robots.txt</p>
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code>User-agent: *</code>
+              <code>Disallow: /admin/</code>
+              <code>Disallow: /wp-admin/</code>
+              <code>Disallow: /cart/</code>
+              <code>Disallow: /checkout/</code>
+              <code>Allow: /</code>
+              <code>{'  '}</code>
+              <code>Sitemap: https://site.ru/sitemap.xml</code>
+              <code>Host: https://site.ru</code>
+            </code>
+          </pre>
+          <p>Чего нельзя делать:</p>
+          <ul>
+            <li>Закрывать robots.txt CSS/JS файлы (Google это не любит)</li>
+            <li>Закрывать весь сайт (Disallow: /) — вылет из индекса</li>
+            <li>Ссылаться на несуществующий sitemap</li>
+          </ul>
+          <p>
+            <b>Sitemap.xml</b> - XML-файл со списком всех важных страниц сайта,
+            которые должны быть в индексе.
+          </p>
+          <pre>
+            <CodeNumber length={9} />
+            <code>
+              <code>{`<?xml version="1.0" encoding="UTF-8"?>`}</code>
+              <code>{`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`}</code>
+              <code>
+                {'  '}
+                {`<url>`}
+              </code>
+              <code>
+                {'    '}
+                {`<loc>https://site.ru/category/tovar.html</loc>`}
+              </code>
+              <code>
+                {'    '}
+                {`<lastmod>2025-06-10</lastmod>`}
+              </code>
+              <code>
+                {'    '}
+                {`<changefreq>weekly</changefreq>`}
+              </code>
+              <code>
+                {'    '}
+                {`<priority>0.8</priority>`}
+              </code>
+              <code>
+                {'  '}
+                {`</url>`}
+              </code>
+              <code>{'</urlset>'}</code>
+            </code>
+          </pre>
+          <p>Что важно:</p>
+          <ul>
+            <li>Не больше 50 000 URL в одном файле</li>
+            <li>
+              Указывать только <span>нужные для индексации</span> страницы (не
+              закрытые noindex и не мусор)
+            </li>
+            <li>Обновлять, когда появляются новые страницы</li>
+          </ul>
+          <p>
+            <b>Метатеги robots</b> - Вставляются в <span>{'<head>'}</span>{' '}
+            HTML-кода страницы.
+          </p>
+          <p>Базовые директивы:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Метатег</th>
+                <th>Что делает</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{`<meta name="robots" content="index, follow">`}</td>
+                <td>По умолчанию: индексировать страницу, переходить по ссылкам</td>
+              </tr>
+              <tr>
+                <td>{`<meta name="robots" content="noindex, follow">`}</td>
+                <td>Не добавлять в индекс, но ссылки передавать вес</td>
+              </tr>
+              <tr>
+                <td>{`<meta name="robots" content="index, nofollow">`}</td>
+                <td>{'Индексировать, но не переходить по ссылкам'}</td>
+              </tr>
+              <tr>
+                <td>{`<meta name="robots" content="noindex, nofollow">`}</td>
+                <td>Полностью закрыть страницу от роботов</td>
               </tr>
             </tbody>
           </table>
