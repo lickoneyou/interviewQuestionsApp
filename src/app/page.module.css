@@ -39,10 +39,16 @@
   font-weight: 700;
 }
 
-.answerWrapper li::before {
+.answerWrapper ul > li::before {
   content: '•';
   font-size: 20px;
   margin-right: 10px;
+}
+
+.answerWrapper tr li {
+  font-size: 16px;
+  margin-right: 10px;
+  text-align: left;
 }
 
 .answerWrapper ul > li {
