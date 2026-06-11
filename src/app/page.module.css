@@ -24,6 +24,10 @@
   text-indent: 15px;
 }
 
+.answerWrapper li p {
+  text-indent: 0;
+}
+
 .answerWrapper b {
   font-weight: 700;
   color: rgba(255, 0, 0, 0.606);
@@ -63,6 +67,7 @@
   width: 100%;
   text-align: center;
   margin: 15px 0;
+  border-collapse: collapse;
 }
 
 .answerWrapper th,
