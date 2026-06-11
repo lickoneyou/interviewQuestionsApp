@@ -12,6 +12,7 @@ import Next from './NextData';
 import ReactNative from './ReactNativeData';
 import Nodejs from './Nodejs';
 import ExpressJs from './ExpressData';
+import SEO from './SEOData';
 
 const data = {
   ...BasicCS,
@@ -28,6 +29,7 @@ const data = {
   ...ExpressJs,
   ...Nest,
   ...QI,
+  ...SEO,
 };
 
 export default data;
