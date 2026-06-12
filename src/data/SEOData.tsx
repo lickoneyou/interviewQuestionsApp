@@ -1698,6 +1698,212 @@ const SEO = {
         </div>
       ),
     },
+    'Структура URL (человеко-понятные адреса)': {
+      id: 'seo-14',
+      title: `Структура URL (человеко-понятные адреса)`,
+      jsx: (
+        <div>
+          <p>
+            <b>ЧПУ</b> - URL, которые читает и понимает человек без расшифровки.
+          </p>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <b>Пример плохого URL</b>
+                </td>
+                <td>site.ru/?p=123&id=456&cat=2</td>
+              </tr>
+              <tr>
+                <td className='comment'>Пример хорошего URL</td>
+                <td>site.ru/katalog/noutbuki/igrovoy-noutbuk-asus</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Почему ЧПУ важны для SEO</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Причина</th>
+                <th>Объяснение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ключевые слова в URL</td>
+                <td>
+                  Поисковики учитывают слова в URL как фактор ранжирования
+                  (небольшой, но весомый)
+                </td>
+              </tr>
+              <tr>
+                <td>Кликабельность в выдаче</td>
+                <td>Пользователь видит понятный URL → выше доверие и CTR</td>
+              </tr>
+              <tr>
+                <td>Понимание структуры</td>
+                <td>
+                  Робот и человек видят иерархию: категория → подкатегория →
+                  товар
+                </td>
+              </tr>
+              <tr>
+                <td>Анкор для внешних ссылок</td>
+                <td>
+                  Когда кто-то ссылается на ваш URL голой ссылкой, слова в URL
+                  становятся анкором
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Основные правила хорошего URL</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Правило</th>
+                <th>Хорошо</th>
+                <th>Плохо</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Использовать латиницу</td>
+                <td className='comment'>/telefony</td>
+                <td>
+                  <b>
+                    /telefoni (транслит спорный), /телефоны (кириллица — плохо,
+                    кодируется в %D1%82)
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>Слова через дефис</td>
+                <td className='comment'>/igrovoy-noutbuk</td>
+                <td>
+                  <b>
+                    /igrovoy_noutbuk (подчёркивание не разделяет слова для
+                    поисковика)
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>Нижний регистр</td>
+                <td className='comment'>/noutbuki</td>
+                <td>
+                  <b>/Noutbuki (разный регистр = разные URL — риск дублей)</b>
+                </td>
+              </tr>
+              <tr>
+                <td>Коротко и информативно</td>
+                <td className='comment'>/noutbuki/apple</td>
+                <td>
+                  <b>
+                    /katalog/kompyutery-i-noutbuki/noutbuki/proizvoditel-apple
+                    (слишком много уровней)
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>Без стоп-слов</td>
+                <td className='comment'>/remont-iphone</td>
+                <td>
+                  <b>
+                    /remont-iphone-v-moskve-deshevo (исключение — если
+                    стоп-слово несёт смысл)
+                  </b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Чего следует избегать в URL</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Антипаттерн</th>
+                <th>Пример</th>
+                <th>Почему плохо</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Цифры без смысла</td>
+                <td>/product?id=12345</td>
+                <td>Неинформативно, нет ключей</td>
+              </tr>
+              <tr>
+                <td>Даты</td>
+                <td>/2024/03/15/kak-...</td>
+                <td>Устаревает, плохо для вечнозелёного контента</td>
+              </tr>
+              <tr>
+                <td>Служебные символы</td>
+                <td>?, &, =, %, $</td>
+                <td>Параметры создают дубли страниц</td>
+              </tr>
+              <tr>
+                <td>Слишком много уровней</td>
+                <td>/a/b/c/d/e/f/g</td>
+                <td>Вес размазывается, сложно индексировать</td>
+              </tr>
+              <tr>
+                <td>Длинные URL ({'>'}100 символов)</td>
+                <td>115 символов</td>
+                <td>Обрезается в выдаче, теряет клики</td>
+              </tr>
+              <tr>
+                <td>Повторы слов</td>
+                <td>/noutbuki/noutbuk-apple</td>
+                <td>Слово «ноутбук» дважды — переоптимизация</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Как бороться с дублями URL</p>
+          <p>
+            <b>Проблема:</b> Фильтры каталога создают тысячи URL:
+            site.ru/noutbuki?sort=price&page=2&filter=apple
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Решение</th>
+                <th>Как работает</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>rel="canonical"</td>
+                <td>
+                  Указать каноническую версию (базовую страницу без параметров)
+                </td>
+              </tr>
+              <tr>
+                <td>robots.txt</td>
+                <td>Запретить сканирование параметров: Disallow: /*?*</td>
+              </tr>
+              <tr>
+                <td>Параметры в GSC</td>
+                <td>
+                  В Google Search Console настроить, как обрабатывать параметры
+                  (игнорировать)
+                </td>
+              </tr>
+              <tr>
+                <td>noindex</td>
+                <td>
+                  Поставить noindex на страницы с фильтрами и сортировками
+                </td>
+              </tr>
+              <tr>
+                <td>301 редирект</td>
+                <td>
+                  Перенаправлять с /index.php на / (убирать дубли главной)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
