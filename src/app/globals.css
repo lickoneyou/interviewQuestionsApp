@@ -60,10 +60,16 @@ a:hover {
   transition: all 300ms ease;
 }
 
+h2 {
+  font-weight: 700;
+  font-size: 19px;
+}
+
 @media screen and (max-width: 1440px) {
   pre {
     margin-left: 15px;
     margin-right: 0;
     min-width: calc(100% - 30px);
   }
+
 }
