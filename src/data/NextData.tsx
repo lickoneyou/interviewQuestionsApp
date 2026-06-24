@@ -1,4 +1,5 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const Next = {
@@ -72,15 +73,16 @@ const Next = {
             Каждая папка в <b>app/</b> — это сегмент URL, а специальные файлы
             определяют, что показывать.
           </p>
-          <pre>{`
-          app/
-          ├── page.tsx           # → /
-          ├── about/
-          │   └── page.tsx       # → /about
-          └── blog/
-            └── [slug]/
-            └── page.tsx   # → /blog/hello-world
-          `}</pre>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`app/
+├── page.tsx           # → /
+├── about/
+│   └── page.tsx       # → /about
+└── blog/
+└── [slug]/
+└── page.tsx   # → /blog/hello-world`}
+          />
           <p>ПОЛНЫЙ СПИСОК СПЕЦИАЛЬНЫХ ФАЙЛОВ</p>
           <ul>
             <li>
@@ -113,285 +115,156 @@ const Next = {
           <ul>
             <li>
               Статические маршруты
-              <pre>{`
-              app/
-              ├── page.tsx           # /
-              ├── about/page.tsx     # /about
-              └── contact/page.tsx   # /contact
-              `}</pre>
+              <CodeHighlighter 
+                language='bash'
+                code={`app/
+├── page.tsx           # /
+├── about/page.tsx     # /about
+└── contact/page.tsx   # /contact`}
+              />
             </li>
             <li>
               Динамические маршруты
-              <pre>{`
-              # Одиночный параметр
-              app/blog/[slug]/page.tsx          # /blog/hello-world
-              # params: { slug: 'hello-world' }
+              <CodeHighlighter 
+                language='bash'
+                code={`# Одиночный параметр
+app/blog/[slug]/page.tsx          # /blog/hello-world
+# params: { slug: 'hello-world' }
 
-              # Несколько параметров
-              app/category/[category]/[id]/page.tsx  # /category/phones/123
-              # params: { category: 'phones', id: '123' }
-              `}</pre>
+# Несколько параметров
+app/category/[category]/[id]/page.tsx  # /category/phones/123
+# params: { category: 'phones', id: '123' }`}
+              />
             </li>
             <li>
               Catch-all маршруты ([...slug])
-              <pre>{`
-              app/docs/[...slug]/page.tsx
-              # /docs/getting-started/installation
-              # params: { slug: ['getting-started', 'installation'] }
-              `}</pre>
+              <CodeHighlighter 
+                language='bash'
+                code={`app/docs/[...slug]/page.tsx
+# /docs/getting-started/installation
+# params: { slug: ['getting-started', 'installation'] }`}
+              />
             </li>
             <li>
               Optional catch-all ([[...slug]])
-              <pre>{`
-              app/docs/[[...slug]]/page.tsx
-              # /docs → params.slug = undefined
-              # /docs/getting-started → params.slug = ['getting-started']
-              `}</pre>
+              <CodeHighlighter 
+                language={'bash'}
+                code={`app/docs/[[...slug]]/page.tsx
+# /docs → params.slug = undefined
+# /docs/getting-started → params.slug = ['getting-started']`}
+              />
             </li>
             <li>
               Группы маршрутов ((folder))
-              <pre>{`
-              app/(marketing)/page.tsx      # / (без /marketing)
-              app/(shop)/products/page.tsx  # /products (без /shop)
-              # Скобки НЕ влияют на URL, только на организацию
-              `}</pre>
+              <CodeHighlighter 
+                language='bash'
+                code={`app/(marketing)/page.tsx      # / (без /marketing)
+app/(shop)/products/page.tsx  # /products (без /shop)
+# Скобки НЕ влияют на URL, только на организацию`}
+              />
             </li>
             <li>
               Параллельные маршруты (@folder)
-              <pre>{`
-              app/@auth/login/page.tsx      # Модалка логина
-              app/@dashboard/page.tsx       # Дашборд
-              # Рендерятся одновременно
-              `}</pre>
+              <CodeHighlighter 
+                language={'bash'}
+                code={`app/@auth/login/page.tsx      # Модалка логина
+app/@dashboard/page.tsx       # Дашборд
+# Рендерятся одновременно`}
+              />
             </li>
             <li>
               Перехватывающие маршруты ((..)folder)
-              <pre>{`
-              app/(.)photos/[id]/page.tsx   # Перехватывает /photos/123
-              # Аналогично относительным путям в файловой системе
-              `}</pre>
+              <CodeHighlighter 
+                language={'bash'}
+                code={`app/(.)photos/[id]/page.tsx   # Перехватывает /photos/123
+# Аналогично относительным путям в файловой системе`}
+              />
             </li>
           </ul>
           <p>НАВИГАЦИЯ</p>
           <p>Компонент Link (предпочтительный способ)</p>
-          <pre>
-            <CodeNumber length={18} />
-            <code>
-              <code>{`import Link from 'next/link';`}</code>
-              <code>{`  `}</code>
-              <code>{'export default function Navigation() {'}</code>
-              <code>
-                {'  '}
-                {'return ('}
-              </code>
-              <code>
-                {'    '}
-                {'<nav>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Link href="/">Главная</Link>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Link href="/about">О нас</Link>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Link href="/products/123">Товар</Link>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Link href="/blog/post-1">Статья</Link>'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'      '}
-                {'{/* С заменой истории */}'}
-              </code>
-              <code>
-                {'      '}
-                {
-                  '<Link href="/dashboard" replace>Дашборд (без добавления в историю)</Link>'
-                }
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'      '}
-                {'{/* С prefetch (по умолчанию true в production) */}'}
-              </code>
-              <code>
-                {'      '}
-                {
-                  '<Link href="/heavy-page" prefetch={false}>Тяжелая страница</Link>'
-                }
-              </code>
-              <code>
-                {'    '}
-                {'</nav>'}
-              </code>
-              <code>
-                {'  '}
-                {');'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`import Link from 'next/link';
+  
+export default function Navigation() {
+  return (
+    <nav>
+      <Link href="/">Главная</Link>
+      <Link href="/about">О нас</Link>
+      <Link href="/products/123">Товар</Link>
+      <Link href="/blog/post-1">Статья</Link>
+  
+      {/* С заменой истории */}
+      <Link href="/dashboard" replace>Дашборд (без добавления в историю)</Link>
+  
+      {/* С prefetch (по умолчанию true в production) */}
+      <Link href="/heavy-page" prefetch={false}>Тяжелая страница</Link>
+    </nav>
+  );
+}`}
+          />
           <p>Хук useRouter (для программной навигации)</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>'use client';</code>
-              <code>{`import { useRouter } from 'next/navigation';`}</code>
-              <code>{'  '}</code>
-              <code>{'export default function NavigationButtons() {'}</code>
-              <code>
-                {'  '}
-                {'const router = useRouter();'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return ('}
-              </code>
-              <code>
-                {'    '}
-                {'<div>'}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.push('/about')}>О нас</button>`}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.replace('/')}>На главную (без истории)</button>`}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.back()}>Назад</button>`}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.forward()}>Вперед</button>`}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.refresh()}>Обновить данные</button>`}
-              </code>
-              <code>
-                {'      '}
-                {`<button onClick={() => router.prefetch('/heavy')}>Предзагрузить</button>`}
-              </code>
-              <code>
-                {'    '}
-                {'</div>'}
-              </code>
-              <code>
-                {'  '}
-                {');'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`'use client';
+import { useRouter } from 'next/navigation';
+  
+export default function NavigationButtons() {
+  const router = useRouter();
+  
+  return (
+    <div>
+      <button onClick={() => router.push('/about')}>О нас</button>
+      <button onClick={() => router.replace('/')}>На главную (без истории)</button>
+      <button onClick={() => router.back()}>Назад</button>
+      <button onClick={() => router.forward()}>Вперед</button>
+      <button onClick={() => router.refresh()}>Обновить данные</button>
+      <button onClick={() => router.prefetch('/heavy')}>Предзагрузить</button>
+    </div>
+  );
+}`}
+          />
           <p>ПОЛУЧЕНИЕ ПАРАМЕТРОВ</p>
           <p>В серверном компоненте</p>
-          <pre>
-            <CodeNumber length={18} />
-            <code>
-              <code className='comment'>
-                {'// app/products/[category]/[id]/page.tsx'}
-              </code>
-              <code>{`export default async function ProductPage({ `}</code>
-              <code>
-                {'  '}
-                {'params,'}
-              </code>
-              <code>
-                {'  '}
-                {'searchParams '}
-              </code>
-              <code>{'}: {'}</code>
-              <code>
-                {'  '}
-                {'params: { category: string; id: string };'}
-              </code>
-              <code>
-                {'  '}
-                {
-                  'searchParams: { [key: string]: string | string[] | undefined };'
-                }
-              </code>
-              <code>{'}) {'}</code>
-              <code className='comment'>
-                {'  '}
-                {'// params из динамического маршрута'}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(params.category); // 'phones'`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(params.id);       // '123'`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// searchParams из query-строки`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(searchParams.sort);   // 'price'`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(searchParams.page);   // '2'`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return <div>Product</div>;'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// app/products/[category]/[id]/page.tsx
+export default async function ProductPage({ 
+  params,
+  searchParams 
+}: {
+  params: { category: string; id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  // params из динамического маршрута
+  console.log(params.category); // 'phones'
+  console.log(params.id);       // '123'
+  
+  // searchParams из query-строки
+  console.log(searchParams.sort);   // 'price'
+  console.log(searchParams.page);   // '2'
+  
+  return <div>Product</div>;
+}`}
+          />
           <p>На клиенте</p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>'use client';</code>
-              <code>{`import { useParams, useSearchParams, usePathname } from 'next/navigation';`}</code>
-              <code>{'  '}</code>
-              <code>{'export default function ClientComponent() {'}</code>
-              <code>
-                {'  '}
-                {`const params = useParams();           // { category: 'phones', id: '123' }`}
-              </code>
-              <code>
-                {'  '}
-                {`const searchParams = useSearchParams(); // URLSearchParams объект`}
-              </code>
-              <code>
-                {'  '}
-                {`const pathname = usePathname();       // '/products/phones/123'`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const sort = searchParams.get('sort');   // 'price'`}
-              </code>
-              <code>
-                {'  '}
-                {`const page = searchParams.get('page');   // '2'`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return <div>...</div>;'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`'use client';
+import { useParams, useSearchParams, usePathname } from 'next/navigation';
+  
+export default function ClientComponent() {
+  const params = useParams();           // { category: 'phones', id: '123' }
+  const searchParams = useSearchParams(); // URLSearchParams объект
+  const pathname = usePathname();       // '/products/phones/123'
+  
+  const sort = searchParams.get('sort');   // 'price'
+  const page = searchParams.get('page');   // '2'
+  
+  return <div>...</div>;
+}`}
+          />
         </div>
       ),
     },
@@ -408,35 +281,18 @@ const Next = {
             <b>Data Cache (Кэш данных)</b> - Кэширует результаты fetch()
             запросов на сервере.
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>{'// app/products/page.tsx'}</code>
-              <code>{'export default async function ProductsPage() {'}</code>
-              <code className='comment'>
-                {'  '}
-                {`// ✅ Этот запрос будет кэшироваться по умолчанию`}
-              </code>
-              <code>
-                {'  '}
-                {`const products = await fetch('https://api.example.com/products', {`}
-              </code>
-              <code>
-                {'    '}
-                {`cache: 'force-cache' // по умолчанию`}
-              </code>
-              <code>
-                {'  '}
-                {`}).then(r => r.json());`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return <ProductList products={products} />;'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// app/products/page.tsx
+export default async function ProductsPage() {
+  // ✅ Этот запрос будет кэшироваться по умолчанию
+  const products = await fetch('https://api.example.com/products', {
+    cache: 'force-cache' // по умолчанию
+  }).then(r => r.json());
+  
+  return <ProductList products={products} />;
+}`}
+          />
           <p>Стратегии кэширования fetch:</p>
           <ul>
             <li>
@@ -460,24 +316,16 @@ const Next = {
             <b>Full Route Cache</b> - Кэширует полностью сгенерированный HTML
             страницы.
           </p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code className='comment'>{`// app/products/page.tsx`}</code>
-              <code>{`export const dynamic = 'force-static'; // ✅ Кэшируем HTML`}</code>
-              <code>{'  '}</code>
-              <code>{`export default async function ProductsPage() {`}</code>
-              <code>
-                {'  '}
-                {`const products = await getProducts(); // Данные тоже кэшируются`}
-              </code>
-              <code>
-                {'  '}
-                {`return <ProductList products={products} />;`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// app/products/page.tsx
+export const dynamic = 'force-static'; // ✅ Кэшируем HTML
+  
+export default async function ProductsPage() {
+  const products = await getProducts(); // Данные тоже кэшируются
+  return <ProductList products={products} />;
+}`}
+          />
           <p>✅ Плюсы:</p>
           <ul>
             <li>Максимальная скорость</li>
@@ -493,19 +341,17 @@ const Next = {
             <b>Router Cache</b> - React-кэш на клиенте, хранит страницы при
             навигации.
           </p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code className='comment'>{`// Это происходит автоматически при использовании <Link>`}</code>
-              <code>{`<Link href="/products">Товары</Link>`}</code>
-              <code className='comment'>{`// Next.js предзагружает и кэширует страницу /products на клиенте`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Настройка длительности кэша`}</code>
-              <code>{`<Link href="/products" prefetch={true}>Товары</Link>`}</code>
-              <code className='comment'>{`// prefetch={true} (по умолчанию) - кэшировать`}</code>
-              <code className='comment'>{`// prefetch={false} - не кэшировать`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// Это происходит автоматически при использовании <Link>
+<Link href="/products">Товары</Link>
+// Next.js предзагружает и кэширует страницу /products на клиенте
+  
+// Настройка длительности кэша
+<Link href="/products" prefetch={true}>Товары</Link>
+// prefetch={true} (по умолчанию) - кэшировать
+// prefetch={false} - не кэшировать`}
+          />
           <p>Время жизни Router Cache:</p>
           <ul>
             <li>
