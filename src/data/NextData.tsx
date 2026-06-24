@@ -379,47 +379,34 @@ export default async function ProductsPage() {
           <p>
             <b>Suspense</b> - Показывает fallback пока грузятся данные
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>{`// ✅ Данные из БД долгие`}</code>
-              <code>{`<Suspense fallback={<Spinner />}>`}</code>
-              <code>
-                {'  '}
-                {'<SlowDataComponent />  {/* async component */}'}
-              </code>
-              <code>{`</Suspense>`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Медленный API запрос`}</code>
-              <code>{`<Suspense fallback={<div>Загрузка...</div>}>`}</code>
-              <code>
-                {'  '}
-                {`<UserProfile userId={id} />`}
-              </code>
-              <code>{`</Suspense>`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// ✅ Данные из БД долгие
+<Suspense fallback={<Spinner />}>
+  <SlowDataComponent />  {/* async component */}
+</Suspense>
+  
+// ✅ Медленный API запрос
+<Suspense fallback={<div>Загрузка...</div>}>
+  <UserProfile userId={id} />
+</Suspense>`}
+          />
           <p>
             <b>dynamic()</b> - Загружает код компонента лениво
           </p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{`// ✅ Тяжелая библиотека`}</code>
-              <code>{`const Editor = dynamic(() => import('@monaco-editor/react'))`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Модалка (не нужна сразу)`}</code>
-              <code>{`const Modal = dynamic(() => import('./Modal'), { ssr: false })`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Тяжелый график (внизу страницы)`}</code>
-              <code>{`const Chart = dynamic(() => import('./HeavyChart'), {`}</code>
-              <code>
-                {'  '}
-                {`loading: () => <div>Загрузка графика...</div>`}
-              </code>
-              <code>{`})`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// ✅ Тяжелая библиотека
+const Editor = dynamic(() => import('@monaco-editor/react'))
+  
+// ✅ Модалка (не нужна сразу)
+const Modal = dynamic(() => import('./Modal'), { ssr: false })
+  
+// ✅ Тяжелый график (внизу страницы)
+const Chart = dynamic(() => import('./HeavyChart'), {
+  loading: () => <div>Загрузка графика...</div>
+})`}
+          />
         </div>
       ),
     },
@@ -437,30 +424,19 @@ export default async function ProductsPage() {
             {'<head>'} (title, description, open graph, и т.д.) непосредственно
             из компонентов страницы.
           </p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{`import { Metadata } from 'next';`}</code>
-              <code>{'  '}</code>
-              <code>{`export const metadata: Metadata = {`}</code>
-              <code>
-                {'  '}
-                {`title: 'О нас | Мой сайт',`}
-              </code>
-              <code>
-                {'  '}
-                {`description: 'Узнайте больше о нашей компании',`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code>{'export default function About() {'}</code>
-              <code>
-                {'  '}
-                {'return <h1>О нас</h1>;'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`import { Metadata } from 'next';
+  
+export const metadata: Metadata = {
+  title: 'О нас | Мой сайт',
+  description: 'Узнайте больше о нашей компании',
+};
+  
+export default function About() {
+  return <h1>О нас</h1>;
+}`}
+          />
         </div>
       ),
     },
@@ -488,47 +464,21 @@ export default async function ProductsPage() {
             <li>✅ Автоматическая адаптация под экран</li>
           </ul>
           <p>Базовое использование</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code>{`import Image from 'next/image';`}</code>
-              <code>{'  '}</code>
-              <code>{'export default function Avatar() {'}</code>
-              <code>
-                {'  '}
-                {'return ('}
-              </code>
-              <code>
-                {'    '}
-                {'<Image'}
-              </code>
-              <code>
-                {'      '}
-                {`src="/avatar.jpg"           // Путь к изображению`}
-              </code>
-              <code>
-                {'      '}
-                {`alt="Аватар пользователя"   // Alt текст (обязателен!)`}
-              </code>
-              <code>
-                {'      '}
-                {`width={100}                 // Ширина в пикселях`}
-              </code>
-              <code>
-                {'      '}
-                {`height={100}                // Высота в пикселях`}
-              </code>
-              <code>
-                {'    '}
-                {'/>'}
-              </code>
-              <code>
-                {'  '}
-                {');'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+                    <CodeHighlighter 
+            language={'jsx'}
+            code={`import Image from 'next/image';
+  
+export default function Avatar() {
+  return (
+    <Image
+      src="/avatar.jpg"           // Путь к изображению
+      alt="Аватар пользователя"   // Alt текст (обязателен!)
+      width={100}                 // Ширина в пикселях
+      height={100}                // Высота в пикселях
+    />
+  );
+}`}
+          />
         </div>
       ),
     },
@@ -545,24 +495,14 @@ export default async function ProductsPage() {
             <b>Middleware</b> — функция, которая выполняется <span>между</span>{' '}
             запросом пользователя и ответом сервера.
           </p>
-          <pre>
-            <CodeNumber length={5} />
-            <code>
-              <code className='comment'>{`// middleware.ts (в корне проекта)`}</code>
-              <code>
-                {'export function middleware(request: NextRequest) {'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// Делаем что-то с запросом`}
-              </code>
-              <code>
-                {'  '}
-                {`return NextResponse.next(); // Пропускаем дальше`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`// middleware.ts (в корне проекта)
+export function middleware(request: NextRequest) {
+  // Делаем что-то с запросом
+  return NextResponse.next(); // Пропускаем дальше
+}`}
+          />
           <p>🛠️ ДЛЯ ЧЕГО НУЖНО?</p>
           <ul>
             <li>
@@ -588,77 +528,49 @@ export default async function ProductsPage() {
           <ul>
             <li>
               Защита админки
-              <pre>
-                <CodeNumber length={4} />
-                <code>
-                  <code>{`const token = request.cookies.get('token');`}</code>
-                  <code>{`if (pathname.startsWith('/admin') && !token) {`}</code>
-                  <code>
-                    {'  '}
-                    {`return NextResponse.redirect(new URL('/login', request.url));`}
-                  </code>
-                  <code>{'}'}</code>
-                </code>
-              </pre>
+              <CodeHighlighter 
+                language={'jsx'}
+                code={`const token = request.cookies.get('token');
+if (pathname.startsWith('/admin') && !token) {
+  return NextResponse.redirect(new URL('/login', request.url));
+}`}
+              />
             </li>
             <li>
               Редирект со старых URL
-              <pre>
-                <CodeNumber length={3} />
-                <code>
-                  <code>{`if (pathname === '/old-blog') {`}</code>
-                  <code>
-                    {'  '}
-                    {`return NextResponse.redirect(new URL('/blog', request.url));`}
-                  </code>
-                  <code>{'}'}</code>
-                </code>
-              </pre>
+              <CodeHighlighter 
+                language={'jsx'}
+                code={`if (pathname === '/old-blog') {
+  return NextResponse.redirect(new URL('/blog', request.url));
+}`}
+              />
             </li>
             <li>
               Проксирование API (скрываем реальный URL)
-              <pre>
-                <CodeNumber length={4} />
-                <code>
-                  <code>{`if (pathname === '/api/weather') {`}</code>
-                  <code>
-                    {'  '}
-                    {
-                      'const data = await fetch(`https://api.weatherapi.com/...`);'
-                    }
-                  </code>
-                  <code>
-                    {'  '}
-                    {`return NextResponse.json(data);`}
-                  </code>
-                  <code>{'}'}</code>
-                </code>
-              </pre>
+              <CodeHighlighter 
+                language={'jsx'}
+                code={`if (pathname === '/api/weather') {
+  const data = await fetch(\`https://api.weatherapi.com/...\`);
+  return NextResponse.json(data);
+}`}
+              />
             </li>
             <li>
               Добавление заголовков
-              <pre>
-                <CodeNumber length={3} />
-                <code>
-                  <code>{`const response = NextResponse.next();`}</code>
-                  <code>{`response.headers.set('X-Request-ID', crypto.randomUUID());`}</code>
-                  <code>{`return response;`}</code>
-                </code>
-              </pre>
+              <CodeHighlighter 
+                language={'jsx'}
+                code={`const response = NextResponse.next();
+response.headers.set('X-Request-ID', crypto.randomUUID());
+return response;`}
+              />
             </li>
             <li>
               A/B тестирование
-              <pre>
-                <CodeNumber length={2} />
-                <code>
-                  <code>{`const variant = Math.random() < 0.5 ? 'A' : 'B';`}</code>
-                  <code>
-                    {
-                      'return NextResponse.rewrite(new URL(`/ab/${variant}${pathname}`, request.url));'
-                    }
-                  </code>
-                </code>
-              </pre>
+              <CodeHighlighter 
+                language={'jsx'}
+                code={`const variant = Math.random() < 0.5 ? 'A' : 'B';
+return NextResponse.rewrite(new URL(\`/ab/\${variant}\${pathname}\`, request.url));`}
+              />
             </li>
           </ul>
           <p>Действия</p>
