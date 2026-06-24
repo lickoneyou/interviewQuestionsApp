@@ -2,7 +2,9 @@ import React               from 'react';
 import { MantineProvider } from '@mantine/core';
 import { Notifications }   from '@mantine/notifications';
 import { Inter }           from 'next/font/google';
-import { Metadata } from 'next';
+
+import type { Metadata } from 'next';
+
 
 import './reset.css';
 import './globals.css';
@@ -12,7 +14,7 @@ import '@mantine/core/styles.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-interface Layout {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
   keywords: `questions`
 };
 
-const RootLayout: React.FC<Layout> = function({ children }) {
+const RootLayout: React.FC<LayoutProps> = function({ children }) {
   return (
     <html lang="en">
     <body>
