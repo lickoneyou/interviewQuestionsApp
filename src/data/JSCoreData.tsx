@@ -1,7 +1,8 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'js'
+const DATA_TITLE = 'js';
 
 const JSCORE = {
   'JS CORE': {
@@ -373,37 +374,19 @@ const JSCORE = {
             необязательный блок <b>default</b>.
           </p>
           <p>Синтаксис:</p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code>
-                switch(<b>x</b>){'{'}
-              </code>
-              <code>
-                {'  '}case '<b>value1</b>':
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'    '}break</code>
-              <code>
-                {'  '}case '<b>value2</b>'
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'    '}break</code>
-              <code>{'  '}default</code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'    '}break</code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`switch(x){
+  case 'value1':
+  //...
+    break
+  case 'value2'
+  //...
+    break
+  default
+  //...
+    break
+}`}
+          />
         </div>
       ),
     },
@@ -423,45 +406,23 @@ const JSCORE = {
           <p>
             Синтаксис <b>function declaration</b>:
           </p>
-          <pre>
-            <CodeNumber length={3} />
-            <code>
-              <code>
-                function <b>fn</b>(<b>a</b>) {'{'}
-              </code>
-              <code>
-                {'  '}return <b>a</b>
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`function fn(a) {
+  return a
+}`}
+          />
           <p>
             Синтаксис <b>function expression</b>:
           </p>
-          <pre>
-            <CodeNumber length={3} />
-            <code>
-              <code>
-                const <b>fn</b> = function(<b>a</b>) {'{'}
-              </code>
-              <code>
-                {'  '}return <b>a</b>
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const fn = function(a) {
+  return a
+}`}
+          />
           <p>
             Синтаксис <b>arrow function</b>:
           </p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                const <b>fn</b> = (<b>a</b>, <b>b</b>) {'=>'} <b>a</b> +{' '}
-                <b>b</b>
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter code={`const fn = (a, b) => a + b`} />
           <p>
             У стрелочных функций нет собственного <b>this</b>, нет{' '}
             <b>arguments</b>, их нельзя вызвать с помощью ключевого слова{' '}
@@ -485,37 +446,16 @@ const JSCORE = {
             которые могут в нем возникнуть.
           </p>
           <p>Синтаксис:</p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code>
-                <b>try</b> {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'// исполняем код'}
-              </code>
-              <code>
-                {'}'} <b>catch</b>(<b>err</b>) {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'// если ошибка случается'}
-              </code>
-              <code>
-                {'}'} <b>finally</b> {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'// выполняется всегда'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'// после'} <b className='comment'>try..catch</b>
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`try {
+  // исполняем код
+} catch(err) {
+  // если ошибка случается
+} finally {
+  // выполняется всегда
+  // после try..catch
+}`}
+          />
           <p>
             Секций <b>catch</b> или <b>finally</b> может не быть, то есть
             короткие конструкции <b>try..catch</b> или <b>try..finally</b> также
@@ -812,34 +752,15 @@ const JSCORE = {
       jsx: (
         <div>
           <p>Синтаксис:</p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>
-                class <b>Class</b> {'{'}
-              </code>
-              <code>
-                {'  '}constructor(<b>...</b>) {'{'}
-              </code>
-              <code className='comment'>
-                {'    '}
-                {'//...'}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>
-                {'  '}
-                <b>method1</b>(<b>...</b>) {'{}'}
-              </code>
-              <code>
-                {'  '}
-                <b>method2</b>(<b>...</b>) {'{}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`class Class {
+  constructor(...) {
+    //...
+  }
+  method1(...) {}
+  method2(...) {}
+}`}
+          />
           <p>
             <b>Class</b> технически является функцией (той, которую мы
             определяем как <b>constructor</b>) в то время как методы - геттеры и
@@ -901,23 +822,11 @@ const JSCORE = {
             </li>
           </ul>
           <p>Синтаксис:</p>
-          <pre>
-            <CodeNumber length={3} />
-            <code>
-              <code>
-                const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{' '}
-                <b>rej</b>) {'=>'} {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>
-                {'}'}
-                {')'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const promise = new Promise((res, rej) => {
+  //...
+})`}
+          />
           <p>
             <b>Promise.all()</b> - этот метод принимает массив промисов и
             возвращает массив их результатов.
@@ -1029,19 +938,11 @@ const JSCORE = {
           <p>
             <b>Генераторы</b> создаются при помощи функций генераторов.
           </p>
-          <pre>
-            <CodeNumber length={3} />
-            <code>
-              <code>
-                function<b>*</b> fn() {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`function* fn() {
+  //...
+}`}
+          />
           <p>
             Внутри генераторов существует оператор <b>yield</b>.
           </p>
@@ -1075,78 +976,43 @@ const JSCORE = {
             <b>Export</b> можно использовать в момент объявления функции,
             переменной или класса.
           </p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code>
-                <b>export</b> function <b>fn</b>() {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>export</b> const <b>num</b> = 4
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>export</b> class <b>User</b>() {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`export function fn() {
+  //...
+}
+  
+export const num = 4
+  
+export class User() {
+  //...
+}`}
+          />
           <p>
             Для больших модулей удобнее использовать группированный экспорт.
           </p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                <b>export</b> {'{'} <b>fn</b>, <b>num</b>, <b>User</b> {'}'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`
+export { fn, num, User }`}
+          />
           <p>
             В случае, когда из файла экспортируется только одна сущность,
             удобнее использовать <span>экспорт по умолчанию</span>.
           </p>
-          <pre>
-            <CodeNumber length={5} />
-            <code>
-              <code>
-                function <b>fn</b> () {'{'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//...'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>export</b> default <b>fn</b>
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`function fn () {
+  //...
+}
+  
+export default fn`}
+          />
           <p>
             Чтобы импортировать какой-либо метод, необходимо воспользоваться
             инструкцией <b>import</b>, указав интересующие части модуля и путь
             до него.
           </p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                <b>import</b> {'{'} <b>fn</b>, <b>num</b> {'}'} <b>from</b>{' '}
-                './путь'
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { fn, num } from './путь'`}
+          />
           <p>
             Для изменения метода в момент <b>импорта / экспорта</b> существует
             инструкция <b>as</b>.
@@ -1155,14 +1021,9 @@ const JSCORE = {
             Можно импортировать все содержимое модуля в переменную и обращаться
             к частям модуля как с свойствам переменной.
           </p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                <b>import</b> * <b>as el</b> from './путь'
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import * as el from './путь'`}
+          />
         </div>
       ),
     },
@@ -1492,28 +1353,19 @@ const JSCORE = {
           <p>
             Способы создания <b>IIFE</b>:
           </p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code>
-                (<b>function</b>() {'{'}
-              </code>
-              <code>{'  '}console.log(1)</code>
-              <code>{'}'})();</code>
-              <code>{'  '}</code>
-              <code>
-                !<b>function</b>() {'{'}
-              </code>
-              <code>{'  '}console.log(2)</code>
-              <code>{'}'}();</code>
-              <code>{'  '}</code>
-              <code>
-                +<b>function</b>() {'{'}
-              </code>
-              <code>{'  '}console.log(3)</code>
-              <code>{'}'}();</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`(function() {
+  console.log(1)
+})();
+  
+!function() {
+  console.log(2)
+}();
+  
++function() {
+  console.log(3)
+}();`}
+          />
         </div>
       ),
     },
@@ -1527,90 +1379,41 @@ const JSCORE = {
       jsx: (
         <div>
           <p>Call:</p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                func.<b>call</b>(context, arg1, arg2, ...)
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`func.call(context, arg1, arg2, ...)`}
+          />
           <p>Apply:</p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>
-                func.<b>apply</b>(context, [arg1, arg2, ...])
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`func.apply(context, [arg1, arg2, ...])`}
+          />
           <p>Bind:</p>
-          <pre>
-            <CodeNumber length={3} />
-            <code>
-              <code>
-                let <b>fn</b> = func.<b>bind</b>(context, arg1, arg2, ...)
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>fn</b>()
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`let fn = func.bind(context, arg1, arg2, ...)
+  
+fn()`}
+          />
           <p>Декоратор:</p>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>
-                let <b>fn</b> = (x) {'=>'} {'{'}
-              </code>
-              <code>
-                {'  '}
-                <b>return</b> x
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                const <b>decorator</b> = (fn) {'=>'} {'{'}
-              </code>
-              <code>
-                {'  '}const <b>cache</b> = <b>new</b> Map()
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}return (x) {'=>'} {'{'}
-              </code>
-              <code>
-                {'    '}if(map.<b>has</b>(x)){'{'}
-              </code>
-              <code>
-                {'      '}return map.<b>get</b>(x)
-              </code>
-              <code>
-                {'    '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}const <b>res</b> = <b>fn</b>(x)
-              </code>
-              <code>
-                {'    '}map.<b>set</b>(x, res)
-              </code>
-              <code>
-                {'    '}return <b>res</b>
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                fn = <b>decorator</b>(fn)
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`let fn = (x) => {
+  return x
+}
+  
+const decorator = (fn) => {
+  const cache = new Map()
+  
+  return (x) => {
+    if(map.has(x)){
+      return map.get(x)
+    }
+  
+    const res = fn(x)
+    map.set(x, res)
+    return res
+  }
+}
+  
+fn = decorator(fn)`}
+          />
         </div>
       ),
     },
@@ -1623,56 +1426,27 @@ const JSCORE = {
       },
       jsx: (
         <div>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>
-                const <b>obj</b> = {'{'} <b>value</b>: 4 {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                const <b>proxy</b> = <b>new</b> Proxy(obj, {'{'}
-              </code>
-              <code>
-                {'  '}
-                <b>get</b>(target, prop) {'{'}
-              </code>
-              <code>
-                {'    '}
-                <b>if</b>(prop === 'value') {'{'}
-              </code>
-              <code>{'      '}console.log('get value check')</code>
-              <code>{'      '}return target[prop]</code>
-              <code>
-                {'    '}
-                {'}'}
-              </code>
-              <code>
-                {'    '} return <b>Reflect</b>.get(...arguments)
-              </code>
-              <code>{'  },'}</code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                <b>set</b>(target, prop, value) {'{'}
-              </code>
-              <code>
-                {'    '}
-                <b>if</b>(prop === 'value') {'{'}
-              </code>
-              <code>{'      '}console.log('set value check')</code>
-              <code>{'      '}target[prop] = value</code>
-              <code>
-                {'    '}
-                {'}'}
-              </code>
-              <code>
-                {'    '} return <b>Reflect</b>.set(...arguments)
-              </code>
-              <code>{'  }'}</code>
-              <code>{'})'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`const obj = { value: 4 }
+  
+const proxy = new Proxy(obj, {
+  get(target, prop) {
+    if(prop === 'value') {
+      console.log('get value check')
+      return target[prop]
+    }
+     return Reflect.get(...arguments)
+  },
+  
+  set(target, prop, value) {
+    if(prop === 'value') {
+      console.log('set value check')
+      target[prop] = value
+    }
+     return Reflect.set(...arguments)
+  }
+})`}
+          />
         </div>
       ),
     },
@@ -1691,33 +1465,18 @@ const JSCORE = {
             (например, блока кода для let и const) и моментом объявления
             переменной, в течение которого к переменной нельзя обратиться.
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>
-                {'//'} ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'
-              </code>
-              <code>{'  '}</code>
-              <code style={{ display: 'flex' }}>
-                console.log(x);{' '}
-                <p className='comment'>
-                  ❌ Ошибка ReferenceError: Cannot access 'x' before
-                  initialization
-                </p>
-              </code>
-              <code style={{ display: 'flex' }}>
-                let x = 10;{' '}
-                <p className='comment'>✅ Здесь TDZ заканчивается</p>
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'//'} После этой строки переменная доступна
-              </code>
-              <code style={{ display: 'flex' }}>
-                console.log(x); <p className='comment'>{'//'} 10</p>
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'
+  
+console.log(x); 
+// ❌ Ошибка ReferenceError: Cannot access 'x' before initialization
+
+let x = 10; 
+// ✅ Здесь TDZ заканчивается
+  
+// После этой строки переменная доступна
+console.log(x); `}
+          />
         </div>
       ),
     },

@@ -1,4 +1,6 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const React = {
   React: {
@@ -353,49 +355,25 @@ const React = {
             загружать компоненты. компонент загружается только когда он
             требуется для рендеринга.
           </p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>
-                import React, {'{'} Suspense {'}'} from 'react';
-              </code>
-              <code>{'  '}</code>
-              <code>
-                const LazyComponent = React.lazy(() ={'>'}{' '}
-                import('./LazyComponent'));
-              </code>
-              <code>{'  '}</code>
-              <code>function App() {'{'}</code>
-              <code>
-                {'  '}return {'('}
-              </code>
-              <code>
-                {'    '}
-                {'<div>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Suspense fallback={<div>Загрузка...</div>}>'}
-              </code>
-              <code>
-                {'        '}
-                {'<LazyComponent />'}
-              </code>
-              <code>
-                {'      '}
-                {'</Suspense>'}
-              </code>
-              <code>
-                {'    '}
-                {'</div>'}
-              </code>
-              <code>
-                {'  '}
-                {')'};
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <SyntaxHighlighter
+            language='jsx'
+            style={vscDarkPlus}
+            showLineNumbers={true}
+          >
+            {`import React, { Suspense } from 'react';
+  
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+  
+function App() {
+  return (
+    <div>
+      <Suspense fallback={<div>Загрузка...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}`}
+          </SyntaxHighlighter>
           <p>Преимущества:</p>
           <ul>
             <li>✅ Уменьшает начальный размер загружаемого кода</li>

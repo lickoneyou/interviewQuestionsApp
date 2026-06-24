@@ -1,3 +1,4 @@
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const DATA_TITLE = 'basic cs'
@@ -406,8 +407,9 @@ const BasicCS = {
             {'{Домен}'}
           </p>
           <p>Пример конфига:</p>
-          <pre style={{ width: '100%' }}>
-            {`# Редирект с HTTP на HTTPS
+          <CodeHighlighter 
+          language='bash'
+          code={`# Редирект с HTTP на HTTPS
 server {
     listen 80;
     server_name {{ДОМЕН}};
@@ -437,7 +439,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }`}
-          </pre>
+          />
           <p>
             11.1 <b>Активация сайта</b>: ln -s /etc/nginx/sites-available/
             {'{ДОМЕН}'} /etc/nginx/sites-enabled/
