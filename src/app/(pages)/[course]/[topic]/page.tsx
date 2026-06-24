@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useMemo } from 'react';
 import { Button } from '@mantine/core';
-import { usePathname, useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { IconCircleArrowLeft } from '@tabler/icons-react';
 import { IconCircleArrowRight } from '@tabler/icons-react';
 
@@ -14,17 +14,18 @@ import getQuestionIndex from '../../../../handlers/getQuestionIndex';
 import getAllQuestions from '../../../../handlers/getAllQuestions';
 
 const Question = function () {
-  const path = usePathname();
   const router = useRouter();
   const params = useParams();
 
   const questionID = useMemo(() => {
-    return params.topic as string || '';
-  }, [path]);
+    return (params.topic as string) || '';
+  }, [params]);
 
   const pageData = useMemo(() => {
-    return getData(questionID, data);
-  }, [data, getData, questionID]);
+    if (typeof params.course === 'string') {
+      return getData(questionID, data, params.course);
+    }
+  }, [params, data, getData, questionID]);
 
   const title = useMemo(() => {
     return pageData ? Object.keys(pageData).join('') : '';
@@ -33,14 +34,6 @@ const Question = function () {
   const jsx = useMemo(() => {
     return pageData ? pageData[title].jsx : <></>;
   }, [pageData, title]);
-
-  const iconLeft = useMemo(() => {
-    return <IconCircleArrowLeft stroke={2} />;
-  }, []);
-
-  const iconRight = useMemo(() => {
-    return <IconCircleArrowRight stroke={2} />;
-  }, []);
 
   const allQuestions = getAllQuestions();
 
@@ -74,7 +67,7 @@ const Question = function () {
         {getQuestionIndex(questionID) > 0 && (
           <Button
             justify='center'
-            leftSection={iconLeft}
+            leftSection={<IconCircleArrowLeft stroke={2} />}
             variant='transparent'
             color='azur'
             mt='md'
@@ -88,7 +81,7 @@ const Question = function () {
         {allQuestions.length - 1 > getQuestionIndex(questionID) && (
           <Button
             justify='center'
-            rightSection={iconRight}
+            rightSection={<IconCircleArrowRight stroke={2} />}
             variant='transparent'
             color='azur'
             mt='md'
