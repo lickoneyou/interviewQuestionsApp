@@ -458,36 +458,19 @@ function App() {
             <b>React Portal</b> - позволяет рендерить дочерние компоненты в
             DOM-узел, который находится вне основной иерархии компонента
           </p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{`import { createPortal } from 'react-dom';`}</code>
-              <code>{'  '}</code>
-              <code>{`function Modal({ children, isOpen }) {`}</code>
-              <code>
-                {'  '}
-                {'if (!isOpen) return null;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return createPortal('}
-              </code>
-              <code>
-                {'    '}
-                {'children,'}
-              </code>
-              <code>
-                {'    '}
-                {`document.body`}
-              </code>
-              <code>
-                {'  '}
-                {');'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'jsx'}
+            code={`import { createPortal } from 'react-dom';
+  
+function Modal({ children, isOpen }) {
+  if (!isOpen) return null;
+  
+  return createPortal(
+    children,
+    document.body
+  );
+}`}
+          />
         </div>
       ),
     },

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Button } from '@mantine/core';
 import { useRouter, useParams } from 'next/navigation';
 import { IconCircleArrowLeft } from '@tabler/icons-react';
@@ -12,10 +12,13 @@ import data from '../../../../data/data';
 import getData from '../../../../handlers/getData';
 import getQuestionIndex from '../../../../handlers/getQuestionIndex';
 import getAllQuestions from '../../../../handlers/getAllQuestions';
+import slugifyText from '../../../../handlers/slugifyText';
 
 const Question = function () {
   const router = useRouter();
   const params = useParams();
+
+  const allQuestions = getAllQuestions();
 
   const questionID = useMemo(() => {
     return (params.topic as string) || '';
@@ -35,11 +38,12 @@ const Question = function () {
     return pageData ? pageData[title].jsx : <></>;
   }, [pageData, title]);
 
-  const allQuestions = getAllQuestions();
-
-  useEffect(() => {
-    router.push(allQuestions[getQuestionIndex(questionID)].id);
-  }, []);
+  const currentQuestion = useCallback(
+    (num?: number) => {
+      return allQuestions[getQuestionIndex(questionID) + (num || 0)];
+    },
+    [allQuestions, getQuestionIndex, questionID],
+  );
 
   return (
     <div
@@ -48,12 +52,16 @@ const Question = function () {
       onKeyDown={(event) => {
         if (event.key === 'ArrowLeft') {
           if (getQuestionIndex(questionID) > 0) {
-            router.push(allQuestions[getQuestionIndex(questionID) - 1].id);
+            const { id, stack } = currentQuestion(-1);
+
+            router.push(`/${slugifyText(stack)}/${id}`);
           }
         }
         if (event.key === 'ArrowRight') {
-          if (allQuestions[getQuestionIndex(questionID) + 1]) {
-            router.push(allQuestions[getQuestionIndex(questionID) + 1].id);
+          if (currentQuestion(1)) {
+            const { id, stack } = currentQuestion(1);
+
+            router.push(`/${slugifyText(stack)}/${id}`);
           }
         }
       }}
@@ -71,11 +79,13 @@ const Question = function () {
             variant='transparent'
             color='azur'
             mt='md'
-            onClick={() =>
-              router.push(allQuestions[getQuestionIndex(questionID) - 1].id)
-            }
+            onClick={() => {
+              const { id, stack } = currentQuestion(-1);
+
+              router.push(`/${slugifyText(stack)}/${id}`);
+            }}
           >
-            {allQuestions[getQuestionIndex(questionID) - 1].title}
+            {currentQuestion(-1).title}
           </Button>
         )}
         {allQuestions.length - 1 > getQuestionIndex(questionID) && (
@@ -85,11 +95,13 @@ const Question = function () {
             variant='transparent'
             color='azur'
             mt='md'
-            onClick={() =>
-              router.push(allQuestions[getQuestionIndex(questionID) + 1].id)
-            }
+            onClick={() => {
+              const { id, stack } = currentQuestion(1);
+
+              router.push(`/${slugifyText(stack)}/${id}`);
+            }}
           >
-            {allQuestions[getQuestionIndex(questionID) + 1].title}
+            {currentQuestion(1).title}
           </Button>
         )}
       </div>
