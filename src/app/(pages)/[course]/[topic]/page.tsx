@@ -8,8 +8,6 @@ import { IconCircleArrowRight } from '@tabler/icons-react';
 import styles from '../../../page.module.css';
 
 import { HeaderSearch } from '../../../../components/HeaderSearch/HeaderSearch';
-import data from '../../../../data/data';
-import getData from '../../../../handlers/getData';
 import getQuestionIndex from '../../../../handlers/getQuestionIndex';
 import getAllQuestions from '../../../../handlers/getAllQuestions';
 import slugifyText from '../../../../handlers/slugifyText';
@@ -23,20 +21,6 @@ const Question = function () {
   const questionID = useMemo(() => {
     return (params.topic as string) || '';
   }, [params]);
-
-  const pageData = useMemo(() => {
-    if (typeof params.course === 'string') {
-      return getData(questionID, data, params.course);
-    }
-  }, [params, data, getData, questionID]);
-
-  const title = useMemo(() => {
-    return pageData ? Object.keys(pageData).join('') : '';
-  }, [pageData]);
-
-  const jsx = useMemo(() => {
-    return pageData ? pageData[title].jsx : <></>;
-  }, [pageData, title]);
 
   const currentQuestion = useCallback(
     (num?: number) => {
@@ -68,8 +52,8 @@ const Question = function () {
     >
       <HeaderSearch isQuestion={true} />
       <div className={styles.answerWrapper}>
-        <h1>{title}</h1>
-        {jsx}
+        <h1>{currentQuestion().title}</h1>
+        {currentQuestion().jsx}
       </div>
       <div className={styles.btnWrapper}>
         {getQuestionIndex(questionID) > 0 && (
