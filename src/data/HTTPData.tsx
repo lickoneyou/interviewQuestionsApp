@@ -1,7 +1,5 @@
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'http'
-
 const HTTP = {
   HTTP: {
     'HTTP basics': {
@@ -9,7 +7,7 @@ const HTTP = {
         return 'HTTP basics';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -52,7 +50,7 @@ const HTTP = {
         return 'Методы HTTP запроса';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -102,7 +100,7 @@ const HTTP = {
         return 'Коды ответа';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -132,7 +130,7 @@ const HTTP = {
         return 'HTTP-кеширование';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -226,7 +224,7 @@ const HTTP = {
         return 'HTTPS';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -300,7 +298,7 @@ const HTTP = {
         return 'CORS';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -356,7 +354,7 @@ const HTTP = {
         return 'WebSocket';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -374,7 +372,7 @@ const HTTP = {
         return 'HTTP-куки';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -413,7 +411,7 @@ const HTTP = {
         return 'Критические этапы загрузки страницы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -447,7 +445,7 @@ const HTTP = {
         return 'Идемпотентность';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -479,7 +477,7 @@ const HTTP = {
         return 'Безопасные методы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -496,7 +494,7 @@ const HTTP = {
         return 'CRUD';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

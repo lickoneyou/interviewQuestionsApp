@@ -8,6 +8,7 @@ import {
   Title,
 }           from '@mantine/core';
 import Link from 'next/link';
+import slugifyText from '../../handlers/slugifyText';
 
 import { Data, FullData } from '../../types';
 
@@ -15,7 +16,7 @@ import styles from './AccordionFAQ.module.css';
 
 const AccordionFAQ = function() {
   const chapters = Object.keys(data as FullData);
-
+  
   return (
     <Container size="sm" className={styles.wrapper}>
       <Title ta="center" className={styles.title}>
@@ -32,8 +33,8 @@ const AccordionFAQ = function() {
               <AccordionPanel>
                 <div className={styles.accordionPanelValue}>
                   {Object.values(ch)
-                    .map((el, ind) => (
-                      <Link key={el.id} href={el.id}>
+                    .map((element, ind) => (
+                      <Link key={`${chapter}-${element.id}`} href={`${slugifyText(chapter.toLowerCase())}/${element.id}`}>
                         {Object.keys(ch)[ind]}
                       </Link>
                     ))}

@@ -1,8 +1,6 @@
 import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'basic cs'
-
 const BasicCS = {
   'Basic CS principles': {
     'Система контроля версий': {
@@ -10,7 +8,7 @@ const BasicCS = {
         return 'Система контроля версий';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -53,7 +51,7 @@ const BasicCS = {
         return 'Bash: Основы командной строки';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -131,7 +129,7 @@ const BasicCS = {
         return 'Основные принципы ООП';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -173,7 +171,7 @@ const BasicCS = {
         return 'SOLID';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -220,7 +218,7 @@ const BasicCS = {
         return 'Команды Git';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -307,7 +305,7 @@ const BasicCS = {
         return 'GitFlow';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -334,7 +332,7 @@ const BasicCS = {
         return 'Процесс разворачивания сайта на Ubuntu';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

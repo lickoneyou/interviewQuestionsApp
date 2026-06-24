@@ -1,8 +1,6 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'next'
-
 const Next = {
   Next: {
     'Серверные vs Клиентские компоненты': {
@@ -10,7 +8,7 @@ const Next = {
         return 'Серверные vs Клиентские компоненты';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -66,7 +64,7 @@ const Next = {
         return 'Роутинг';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -402,7 +400,7 @@ const Next = {
         return 'Кэширование';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -525,7 +523,7 @@ const Next = {
         return 'Streaming, Suspense и dynamic';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -584,7 +582,7 @@ const Next = {
         return 'Metadata API';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -625,7 +623,7 @@ const Next = {
         return 'next/image';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -693,7 +691,7 @@ const Next = {
         return 'Middleware';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

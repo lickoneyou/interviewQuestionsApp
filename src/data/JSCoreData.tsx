@@ -2,8 +2,6 @@ import CodeNumber from '../components/Basic/CodeNumbers';
 import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'js';
-
 const JSCORE = {
   'JS CORE': {
     'Типы данных JavaScript и структуры данных': {
@@ -11,7 +9,7 @@ const JSCORE = {
         return 'Типы данных JavaScript и структуры данных';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -94,7 +92,7 @@ const JSCORE = {
         return 'Var, let или const? Проблемы областей видимости переменных';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -110,7 +108,7 @@ const JSCORE = {
         return 'Преобразование типов для примитивов';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -209,7 +207,7 @@ const JSCORE = {
         return 'Операторы Сравнения';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -255,7 +253,7 @@ const JSCORE = {
         return 'Логические операторы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -294,7 +292,7 @@ const JSCORE = {
         return 'Условное Ветвление: if ?';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -322,7 +320,7 @@ const JSCORE = {
         return 'Циклы while и for';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -365,7 +363,7 @@ const JSCORE = {
         return 'Конструкция "switch"';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -395,7 +393,7 @@ const JSCORE = {
         return 'Функции';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -436,7 +434,7 @@ const JSCORE = {
         return 'try…catch';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -487,7 +485,7 @@ const JSCORE = {
         return 'Строгий режим';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -510,7 +508,7 @@ const JSCORE = {
         return 'Массивы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -607,7 +605,7 @@ const JSCORE = {
         return 'Объекты';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -651,7 +649,7 @@ const JSCORE = {
         return 'Сборка Мусора';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -670,7 +668,7 @@ const JSCORE = {
         return 'This';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -690,7 +688,7 @@ const JSCORE = {
         return 'Оператор new';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -707,7 +705,7 @@ const JSCORE = {
         return 'Именованное функциональное выражение(Named Function Expression)';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -727,7 +725,7 @@ const JSCORE = {
         return 'Прототипы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -747,7 +745,7 @@ const JSCORE = {
         return 'Классы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -793,7 +791,7 @@ const JSCORE = {
         return 'Асинхронный JavaScript';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -931,7 +929,7 @@ const JSCORE = {
         return 'Генераторы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -962,7 +960,7 @@ const JSCORE = {
         return 'Модули Иморт Экспорт';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1032,7 +1030,7 @@ export default fn`}
         return 'FetchAPI - Интерфейсы веб API, XMLHttpRequest';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1076,7 +1074,7 @@ export default fn`}
         return 'Замыкание';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1091,7 +1089,7 @@ export default fn`}
         return 'Рекурсия';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1106,7 +1104,7 @@ export default fn`}
         return 'Map, Set, WeekMap, WeekSet';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1200,7 +1198,7 @@ export default fn`}
         return 'BOM';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1228,7 +1226,7 @@ export default fn`}
         return 'Ошибки';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1251,7 +1249,7 @@ export default fn`}
         return 'Зависимости';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1309,7 +1307,7 @@ export default fn`}
         return 'Символы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1342,7 +1340,7 @@ export default fn`}
         return 'IIFE';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1374,7 +1372,7 @@ export default fn`}
         return 'Apply, call, bind, декоратор';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1422,7 +1420,7 @@ fn = decorator(fn)`}
         return 'new Proxy()';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1455,7 +1453,7 @@ const proxy = new Proxy(obj, {
         return 'Мёртвая зона видимости (Temporal Dead Zone, TDZ)';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

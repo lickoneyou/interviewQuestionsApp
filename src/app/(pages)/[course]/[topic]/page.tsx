@@ -1,24 +1,25 @@
 'use client';
 import React, { useEffect, useMemo } from 'react';
-import { Button }                    from '@mantine/core';
-import { usePathname, useRouter }    from 'next/navigation';
-import { IconCircleArrowLeft }       from '@tabler/icons-react';
-import { IconCircleArrowRight }      from '@tabler/icons-react';
+import { Button } from '@mantine/core';
+import { usePathname, useRouter, useParams } from 'next/navigation';
+import { IconCircleArrowLeft } from '@tabler/icons-react';
+import { IconCircleArrowRight } from '@tabler/icons-react';
 
-import styles from '../../page.module.css';
+import styles from '../../../page.module.css';
 
-import { HeaderSearch } from '../../../components/HeaderSearch/HeaderSearch';
-import data             from '../../../data/data';
-import getData          from '../../../handlers/getData';
-import getQuestionIndex from '../../../handlers/getQuestionIndex';
-import getAllQuestions  from '../../../handlers/getAllQuestions';
+import { HeaderSearch } from '../../../../components/HeaderSearch/HeaderSearch';
+import data from '../../../../data/data';
+import getData from '../../../../handlers/getData';
+import getQuestionIndex from '../../../../handlers/getQuestionIndex';
+import getAllQuestions from '../../../../handlers/getAllQuestions';
 
-const Question = function() {
-  const path   = usePathname();
+const Question = function () {
+  const path = usePathname();
   const router = useRouter();
+  const params = useParams();
 
   const questionID = useMemo(() => {
-    return path.replace('/', '');
+    return params.topic as string || '';
   }, [path]);
 
   const pageData = useMemo(() => {
@@ -26,8 +27,7 @@ const Question = function() {
   }, [data, getData, questionID]);
 
   const title = useMemo(() => {
-    return pageData ? Object.keys(pageData)
-      .join('') : '';
+    return pageData ? Object.keys(pageData).join('') : '';
   }, [pageData]);
 
   const jsx = useMemo(() => {
@@ -35,15 +35,11 @@ const Question = function() {
   }, [pageData, title]);
 
   const iconLeft = useMemo(() => {
-    return (
-      <IconCircleArrowLeft stroke={2} />
-    );
+    return <IconCircleArrowLeft stroke={2} />;
   }, []);
 
   const iconRight = useMemo(() => {
-    return (
-      <IconCircleArrowRight stroke={2} />
-    );
+    return <IconCircleArrowRight stroke={2} />;
   }, []);
 
   const allQuestions = getAllQuestions();
@@ -77,11 +73,11 @@ const Question = function() {
       <div className={styles.btnWrapper}>
         {getQuestionIndex(questionID) > 0 && (
           <Button
-            justify="center"
+            justify='center'
             leftSection={iconLeft}
-            variant="transparent"
-            color="azur"
-            mt="md"
+            variant='transparent'
+            color='azur'
+            mt='md'
             onClick={() =>
               router.push(allQuestions[getQuestionIndex(questionID) - 1].id)
             }
@@ -91,11 +87,11 @@ const Question = function() {
         )}
         {allQuestions.length - 1 > getQuestionIndex(questionID) && (
           <Button
-            justify="center"
+            justify='center'
             rightSection={iconRight}
-            variant="transparent"
-            color="azur"
-            mt="md"
+            variant='transparent'
+            color='azur'
+            mt='md'
             onClick={() =>
               router.push(allQuestions[getQuestionIndex(questionID) + 1].id)
             }

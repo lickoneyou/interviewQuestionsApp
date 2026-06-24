@@ -1,7 +1,5 @@
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'html'
-
 const CSS = {
   CSS: {
     'Основы CSS': {
@@ -9,7 +7,7 @@ const CSS = {
         return 'Основы CSS';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -37,7 +35,7 @@ const CSS = {
         return 'Псевдоклассы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -73,7 +71,7 @@ const CSS = {
         return 'Псевдоэлементы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -102,7 +100,7 @@ const CSS = {
         return 'CSS препроцессор';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -126,7 +124,7 @@ const CSS = {
         return 'Отличия CSS / SASS';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -154,7 +152,7 @@ const CSS = {
         return 'CSS спрайты';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

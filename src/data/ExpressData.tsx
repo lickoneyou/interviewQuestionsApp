@@ -1,8 +1,6 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'express'
-
 const ExpressJs = {
   ExpressJs: {
     'Установка и первый сервер': {
@@ -10,7 +8,7 @@ const ExpressJs = {
         return 'Установка и первый сервер';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -219,7 +217,7 @@ const ExpressJs = {
         return 'Роутинг';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -600,7 +598,7 @@ const ExpressJs = {
         return 'Middleware';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1002,7 +1000,7 @@ const ExpressJs = {
         return 'express.Router';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1128,7 +1126,7 @@ const ExpressJs = {
         return 'Обработка ошибок';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1280,7 +1278,7 @@ const ExpressJs = {
         return 'Работа с БД';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -2804,7 +2802,7 @@ const ExpressJs = {
         return 'Аутентификация и авторизация (JWT, bcrypt)';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -3750,7 +3748,7 @@ const ExpressJs = {
         return 'Валидация данных (express-validator, Joi, Zod)';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -4024,7 +4022,7 @@ const ExpressJs = {
         return 'Логирование и мониторинг';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -4325,7 +4323,7 @@ const ExpressJs = {
         return 'Развертывание Express';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

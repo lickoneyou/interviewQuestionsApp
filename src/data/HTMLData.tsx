@@ -1,7 +1,5 @@
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'html'
-
 const HTML = {
   HTML: {
     'Основы HTML': {
@@ -9,7 +7,7 @@ const HTML = {
         return 'Основы HTML';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -66,7 +64,7 @@ const HTML = {
         return 'Мета-теги';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -122,7 +120,7 @@ const HTML = {
         return 'Семантическая верстка';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -163,7 +161,7 @@ const HTML = {
         return 'Рендер страницы';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -195,7 +193,7 @@ const HTML = {
         return 'Async / Defer';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>

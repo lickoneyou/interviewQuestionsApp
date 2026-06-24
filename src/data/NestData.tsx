@@ -1,8 +1,6 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
 import slugifyText from '../handlers/slugifyText';
 
-const DATA_TITLE = 'nest'
-
 const Nest = {
   NestJs: {
     'NestJS что это, как подключить': {
@@ -10,7 +8,7 @@ const Nest = {
         return 'NestJS что это, как подключить';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -78,7 +76,7 @@ const Nest = {
         return 'Entity';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -155,7 +153,7 @@ const Nest = {
         return 'DTO';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -216,7 +214,7 @@ const Nest = {
         return 'Service';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -282,7 +280,7 @@ const Nest = {
         return 'Module';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -341,7 +339,7 @@ const Nest = {
         return 'Controller';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -450,7 +448,7 @@ const Nest = {
         return 'ORM';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -504,7 +502,7 @@ const Nest = {
         return 'TypeORM';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -643,7 +641,7 @@ const Nest = {
         return 'class-validator и class-transformer';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -720,7 +718,7 @@ const Nest = {
         return 'PostgreSQL установка и подключение';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -808,7 +806,7 @@ const Nest = {
         return 'Настройка CORS';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -884,7 +882,7 @@ const Nest = {
         return 'Swagger';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1064,7 +1062,7 @@ const Nest = {
         return 'JWT';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
@@ -1115,7 +1113,7 @@ const Nest = {
         return 'Миграция';
       },
       get id() {
-        return slugifyText(`${DATA_TITLE} ${this.title}`);
+        return slugifyText(this.title);
       },
       jsx: (
         <div>
