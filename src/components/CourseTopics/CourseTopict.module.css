@@ -1,0 +1,29 @@
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  color: #f0ffff;
+  text-decoration: none;
+  padding: 10;
+  border: 1px solid #f0ffff;
+  border-radius: 8px;
+  min-width: 100%;
+  width: 50%;
+  max-width: 400px;
+  transition: 300ms ease all;
+}
+
+.links:hover {
+  text-decoration: unset;
+  box-shadow: 3px 3px 3px 1px rgba(240, 255, 255, 0.6);
+}
