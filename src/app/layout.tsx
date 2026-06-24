@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<LayoutProps> = function({ children }) {
   return (
     <html lang="en">
-    <body>
+    <body suppressHydrationWarning={true}>
     <MantineProvider>
       <Notifications zIndex={1000} position="top-center" />
       <main className={inter.className}>

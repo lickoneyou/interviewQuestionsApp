@@ -29,6 +29,7 @@ export function HeaderSearch({ isQuestion = false }) {
       )}
       <div className={styles.inner}>
         <Autocomplete
+          id={'search-input'}
           className={styles.search}
           placeholder='Search'
           leftSection={
