@@ -1,10 +1,17 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
+
+const DATA_TITLE = 'express'
 
 const ExpressJs = {
   ExpressJs: {
     'Установка и первый сервер': {
-      id: 'express-1',
-      title: `Установка и первый сервер`,
+      get title() {
+        return 'Установка и первый сервер';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -208,8 +215,12 @@ const ExpressJs = {
       ),
     },
     Роутинг: {
-      id: 'express-2',
-      title: 'Роутинг',
+      get title() {
+        return 'Роутинг';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Базовые методы</p>
@@ -585,8 +596,12 @@ const ExpressJs = {
       ),
     },
     Middleware: {
-      id: 'express-3',
-      title: `Middleware`,
+      get title() {
+        return 'Middleware';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -983,8 +998,12 @@ const ExpressJs = {
       ),
     },
     'express.Router': {
-      id: 'express-4',
-      title: 'express.Router',
+      get title() {
+        return 'express.Router';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <b>Router</b> - мини-приложение Express, позволяющее группировать
@@ -1105,8 +1124,12 @@ const ExpressJs = {
       ),
     },
     'Обработка ошибок': {
-      id: 'express-5',
-      title: `Обработка ошибок`,
+      get title() {
+        return 'Обработка ошибок';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1253,8 +1276,12 @@ const ExpressJs = {
       ),
     },
     'Работа с БД': {
-      id: 'express-6',
-      title: 'Работа с БД',
+      get title() {
+        return 'Работа с БД';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Подходы к работе с БД в Express</p>
@@ -2773,8 +2800,12 @@ const ExpressJs = {
       ),
     },
     'Аутентификация и авторизация (JWT, bcrypt)': {
-      id: 'express-7',
-      title: 'Аутентификация и авторизация (JWT, bcrypt)',
+      get title() {
+        return 'Аутентификация и авторизация (JWT, bcrypt)';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Установка зависимостей</p>
@@ -3715,8 +3746,12 @@ const ExpressJs = {
       ),
     },
     'Валидация данных (express-validator, Joi, Zod)': {
-      id: 'express-8',
-      title: 'Валидация данных (express-validator, Joi, Zod)',
+      get title() {
+        return 'Валидация данных (express-validator, Joi, Zod)';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Зачем нужна валидация</p>
@@ -3985,8 +4020,12 @@ const ExpressJs = {
       ),
     },
     'Логирование и мониторинг': {
-      id: 'express-9',
-      title: 'Логирование и мониторинг',
+      get title() {
+        return 'Логирование и мониторинг';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Зачем нужно логирование</p>
@@ -4282,8 +4321,12 @@ const ExpressJs = {
       ),
     },
     'Развертывание Express': {
-      id: 'express-10',
-      title: 'Развертывание Express',
+      get title() {
+        return 'Развертывание Express';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Структура env файлов</p>

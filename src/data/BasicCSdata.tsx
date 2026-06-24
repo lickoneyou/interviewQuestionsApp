@@ -1,10 +1,16 @@
-import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
+
+const DATA_TITLE = 'basic cs'
 
 const BasicCS = {
   'Basic CS principles': {
     'Система контроля версий': {
-      id: '11',
-      title: 'Система контроля версий',
+      get title() {
+        return 'Система контроля версий';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -42,8 +48,12 @@ const BasicCS = {
       ),
     },
     'Bash: Основы командной строки': {
-      id: '12',
-      title: 'Bash: Основы командной строки',
+      get title() {
+        return 'Bash: Основы командной строки';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -116,8 +126,12 @@ const BasicCS = {
       ),
     },
     'Основные принципы ООП': {
-      id: '13',
-      title: 'Основные принципы ООП',
+      get title() {
+        return 'Основные принципы ООП';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -154,8 +168,12 @@ const BasicCS = {
       ),
     },
     SOLID: {
-      id: '14',
-      title: 'SOLID',
+      get title() {
+        return 'SOLID';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <ul>
@@ -197,8 +215,12 @@ const BasicCS = {
       ),
     },
     'Команды Git': {
-      id: '15',
-      title: 'Команды Git',
+      get title() {
+        return 'Команды Git';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -280,8 +302,12 @@ const BasicCS = {
       ),
     },
     GitFlow: {
-      id: '16',
-      title: 'GitFlow',
+      get title() {
+        return 'GitFlow';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -303,8 +329,12 @@ const BasicCS = {
       ),
     },
     'Процесс разворачивания сайта на Ubuntu': {
-      id: '17',
-      title: 'Процесс разворачивания сайта на Ubuntu',
+      get title() {
+        return 'Процесс разворачивания сайта на Ubuntu';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -408,29 +438,71 @@ server {
     }
 }`}
           </pre>
-          <p>11.1 <b>Активация сайта</b>: ln -s /etc/nginx/sites-available/{'{ДОМЕН}'} /etc/nginx/sites-enabled/</p>
-          <p>11.2 <b>Проверяем конфигурацию на ошибки</b>: nginx -t</p>
-          <p>11.3 <b>Перезагрузка Nginx</b>: systemctl reload nginx</p>
-          <p>12. <b>Установка сертификатов</b>: </p>
+          <p>
+            11.1 <b>Активация сайта</b>: ln -s /etc/nginx/sites-available/
+            {'{ДОМЕН}'} /etc/nginx/sites-enabled/
+          </p>
+          <p>
+            11.2 <b>Проверяем конфигурацию на ошибки</b>: nginx -t
+          </p>
+          <p>
+            11.3 <b>Перезагрузка Nginx</b>: systemctl reload nginx
+          </p>
+          <p>
+            12. <b>Установка сертификатов</b>:{' '}
+          </p>
           <p>12.1 Скачивание с локального компьютера</p>
-          <p>12.1.1 <b>Сертификат</b>: scp /путь/к/файлу.crt {'{ЛОГИН}'}@{'{IPv4}'}:/etc/ssl/certs/{'{ДОМЕН}'}.crt</p>
-          <p>12.1.2 <b>Приватный ключ</b>: scp /путь/к/файлу.key {'{ЛОГИН}'}@{'{IPv4}'}:/etc/ssl/private/{'{ДОМЕН}'}.key</p>
-          <p>12.1.3 <b>Установка прав на сертификат</b>: chmod 644 /etc/ssl/certs/{'{ДОМЕН}'}.crt</p>
-          <p>12.1.4 <b>Установка прав на приватный ключ</b>: chmod 600 /etc/ssl/private/{'{ДОМЕН}'}.key</p>
+          <p>
+            12.1.1 <b>Сертификат</b>: scp /путь/к/файлу.crt {'{ЛОГИН}'}@
+            {'{IPv4}'}:/etc/ssl/certs/{'{ДОМЕН}'}.crt
+          </p>
+          <p>
+            12.1.2 <b>Приватный ключ</b>: scp /путь/к/файлу.key {'{ЛОГИН}'}@
+            {'{IPv4}'}:/etc/ssl/private/{'{ДОМЕН}'}.key
+          </p>
+          <p>
+            12.1.3 <b>Установка прав на сертификат</b>: chmod 644
+            /etc/ssl/certs/{'{ДОМЕН}'}.crt
+          </p>
+          <p>
+            12.1.4 <b>Установка прав на приватный ключ</b>: chmod 600
+            /etc/ssl/private/{'{ДОМЕН}'}.key
+          </p>
           <p>12.2 Через Certbot</p>
-          <p>12.2.1 <b>Установка</b>: apt install certbot python3-certbot-nginx -y</p>
-          <p>12.2.2 <b>Получение сертификата</b>: certbot --nginx -d {'{ДОМЕН}'}</p>
-          <p>13. <b>Перезагрузка</b>: systemctl reload nginx</p>
-          <p>14. <b>Проверки</b>:</p>
-          <p>14.1 <b>pm2 list</b>: </p>
+          <p>
+            12.2.1 <b>Установка</b>: apt install certbot python3-certbot-nginx
+            -y
+          </p>
+          <p>
+            12.2.2 <b>Получение сертификата</b>: certbot --nginx -d {'{ДОМЕН}'}
+          </p>
+          <p>
+            13. <b>Перезагрузка</b>: systemctl reload nginx
+          </p>
+          <p>
+            14. <b>Проверки</b>:
+          </p>
+          <p>
+            14.1 <b>pm2 list</b>:{' '}
+          </p>
           <ul>
             <li>status должен быть online</li>
             <li>name — ваше приложение есть в списке</li>
           </ul>
-          <p>14.2 <b>systemctl status nginx</b>: Показывает статус Nginx</p>
-          <p>14.3 <b>ss -tlnp | grep -E ":80|:443"</b>: Проверяет, какие программы слушают порты 80 (HTTP) и 443 (HTTPS)</p>
-          <p>14.4 <b>curl -I https://localhost -k</b>: Проверяет, отвечает ли HTTPS локально</p>
-          <p>15. <b>Обновление проекта</b>:</p>
+          <p>
+            14.2 <b>systemctl status nginx</b>: Показывает статус Nginx
+          </p>
+          <p>
+            14.3 <b>ss -tlnp | grep -E ":80|:443"</b>: Проверяет, какие
+            программы слушают порты 80 (HTTP) и 443 (HTTPS)
+          </p>
+          <p>
+            14.4 <b>curl -I https://localhost -k</b>: Проверяет, отвечает ли
+            HTTPS локально
+          </p>
+          <p>
+            15. <b>Обновление проекта</b>:
+          </p>
           <ul>
             <li>cd /var/www/{'{Папка}'}</li>
             <li>git pull origin main</li>

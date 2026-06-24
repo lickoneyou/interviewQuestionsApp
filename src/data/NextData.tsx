@@ -1,10 +1,17 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
+
+const DATA_TITLE = 'next'
 
 const Next = {
   Next: {
     'Серверные vs Клиентские компоненты': {
-      id: 'next-1',
-      title: 'Серверные vs Клиентские компоненты',
+      get title() {
+        return 'Серверные vs Клиентские компоненты';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -55,8 +62,12 @@ const Next = {
       ),
     },
     Роутинг: {
-      id: 'next-2',
-      title: 'Роутинг',
+      get title() {
+        return 'Роутинг';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -387,8 +398,12 @@ const Next = {
       ),
     },
     Кэширование: {
-      id: 'next-3',
-      title: 'Кэширование',
+      get title() {
+        return 'Кэширование';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -506,8 +521,12 @@ const Next = {
       ),
     },
     'Streaming, Suspense и dynamic': {
-      id: 'next-4',
-      title: `Streaming, Suspense и dynamic`,
+      get title() {
+        return 'Streaming, Suspense и dynamic';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -561,8 +580,12 @@ const Next = {
       ),
     },
     'Metadata API': {
-      id: 'next-5',
-      title: `Metadata API`,
+      get title() {
+        return 'Metadata API';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -598,8 +621,12 @@ const Next = {
       ),
     },
     'next/image': {
-      id: 'next-6',
-      title: 'next/image',
+      get title() {
+        return 'next/image';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -662,8 +689,12 @@ const Next = {
       ),
     },
     Middleware: {
-      id: 'next-7',
-      title: 'Middleware',
+      get title() {
+        return 'Middleware';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>

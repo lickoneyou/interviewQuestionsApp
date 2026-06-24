@@ -1,10 +1,17 @@
-import CodeNumber from "../components/Basic/CodeNumbers";
+import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
+
+const DATA_TITLE = 'js'
 
 const JSCORE = {
-  "JS CORE": {
-    "Типы данных JavaScript и структуры данных": {
-      id: "51",
-      title: "Типы данных JavaScript и структуры данных",
+  'JS CORE': {
+    'Типы данных JavaScript и структуры данных': {
+      get title() {
+        return 'Типы данных JavaScript и структуры данных';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <ul>
@@ -24,13 +31,13 @@ const JSCORE = {
             таких как числа, строки или объекты.
           </p>
           <p>
-            <b>Стек</b> — это структура данных, которая работает по принципу{" "}
-            <b>LIFO (Last In, First Out)</b>, что означает{" "}
+            <b>Стек</b> — это структура данных, которая работает по принципу{' '}
+            <b>LIFO (Last In, First Out)</b>, что означает{' '}
             <span>«последним пришёл — первым вышел»</span> (push / pop).
           </p>
           <p>
-            <b>Очередь</b> — это структура данных, которая работает по принципу{" "}
-            <b>FIFO (First In, First Out)</b>, что означает{" "}
+            <b>Очередь</b> — это структура данных, которая работает по принципу{' '}
+            <b>FIFO (First In, First Out)</b>, что означает{' '}
             <span>«первым пришёл — первым ушел»</span> (shift).
           </p>
           <p>
@@ -81,21 +88,29 @@ const JSCORE = {
         </div>
       ),
     },
-    "Var, let или const? Проблемы областей видимости переменных": {
-      id: "52",
-      title: "Var, let или const? Проблемы областей видимости переменных",
+    'Var, let или const? Проблемы областей видимости переменных': {
+      get title() {
+        return 'Var, let или const? Проблемы областей видимости переменных';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
-            <b>const</b> и <b>let</b> имеют блочную область видимости,{" "}
+            <b>const</b> и <b>let</b> имеют блочную область видимости,{' '}
             <b>var</b> имеет функциональную область видимости.
           </p>
         </div>
       ),
     },
-    "Преобразование типов для примитивов": {
-      id: "53",
-      title: "Преобразование типов для примитивов",
+    'Преобразование типов для примитивов': {
+      get title() {
+        return 'Преобразование типов для примитивов';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <ul>
@@ -148,8 +163,8 @@ const JSCORE = {
                   <b>string</b>
                 </td>
                 <td>
-                  пробельные символы по краям обрезаются, если{" "}
-                  <span>пустая строка</span> - <b>0</b>, если <span>число</span>{" "}
+                  пробельные символы по краям обрезаются, если{' '}
+                  <span>пустая строка</span> - <b>0</b>, если <span>число</span>{' '}
                   - <b>число</b>, инача <b>NaN</b>
                 </td>
               </tr>
@@ -188,9 +203,13 @@ const JSCORE = {
         </div>
       ),
     },
-    "Операторы Сравнения": {
-      id: "54",
-      title: "Операторы Сравнения",
+    'Операторы Сравнения': {
+      get title() {
+        return 'Операторы Сравнения';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <table>
@@ -204,13 +223,13 @@ const JSCORE = {
               <tr>
                 <td>Больше / меньше</td>
                 <td>
-                  {">"} / {"<"}
+                  {'>'} / {'<'}
                 </td>
               </tr>
               <tr>
                 <td>Больше / меньше или равно</td>
                 <td>
-                  {">="} / {"<="}
+                  {'>='} / {'<='}
                 </td>
               </tr>
               <tr>
@@ -230,9 +249,13 @@ const JSCORE = {
         </div>
       ),
     },
-    "Логические операторы": {
-      id: "55",
-      title: "Логические операторы",
+    'Логические операторы': {
+      get title() {
+        return 'Логические операторы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -242,7 +265,7 @@ const JSCORE = {
             И <b>&&</b> вернет первое <b>false</b> иначе <b>true</b>.
           </p>
           <p>
-            НЕ <b>!</b> сначала приводит аргумент к логическому типу{" "}
+            НЕ <b>!</b> сначала приводит аргумент к логическому типу{' '}
             <b>true / false</b>, затем возвращает противоположное значение.
           </p>
           <p>
@@ -250,7 +273,7 @@ const JSCORE = {
             присваивает <b>a</b> значение <b>b</b> <span>(a ||= b)</span>.
           </p>
           <p>
-            Логическое присваивание И <b>&&=</b> присвоит <b>a</b> значение{" "}
+            Логическое присваивание И <b>&&=</b> присвоит <b>a</b> значение{' '}
             <b>b</b> только в том случае, если <b>a</b> истино.
           </p>
           <p>
@@ -258,40 +281,48 @@ const JSCORE = {
             он не <b>null / undefined</b>, иначе второй.
           </p>
           <p>
-            Оператор нулевого присваивания <b>??=</b> <span>(a ??= b)</span>{" "}
-            присвоит <b>a</b> значение <b>b</b> только в том случае, если{" "}
+            Оператор нулевого присваивания <b>??=</b> <span>(a ??= b)</span>{' '}
+            присвоит <b>a</b> значение <b>b</b> только в том случае, если{' '}
             <b>a = null / undefined</b>.
           </p>
         </div>
       ),
     },
-    "Условное Ветвление: if ?": {
-      id: "56",
-      title: "Условное Ветвление: if ?",
+    'Условное Ветвление: if ?': {
+      get title() {
+        return 'Условное Ветвление: if ?';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
-            Если <b>if(условие)</b> условие вернет <b>true</b> - выполнится тело{" "}
+            Если <b>if(условие)</b> условие вернет <b>true</b> - выполнится тело{' '}
             <b>if</b> иначе <b>else</b>.
           </p>
           <p>
-            Если нужно добавить еще условие, используется конструкция{" "}
+            Если нужно добавить еще условие, используется конструкция{' '}
             <b>if else(условие)</b>.
           </p>
           <p>
-            Тернарный оператор: <b>УСЛОВИЕ</b> ? <b>ЗНАЧЕНИЕ 1</b> :{" "}
+            Тернарный оператор: <b>УСЛОВИЕ</b> ? <b>ЗНАЧЕНИЕ 1</b> :{' '}
             <b>ЗНАЧЕНИЕ 2</b>
           </p>
           <p>
-            Если условие вернет <b>true</b>, оператор вернет <b>значение 1</b>{" "}
+            Если условие вернет <b>true</b>, оператор вернет <b>значение 1</b>{' '}
             иначе оператор вернет <b>значение 2</b>.
           </p>
         </div>
       ),
     },
-    "Циклы while и for": {
-      id: "57",
-      title: "Циклы while и for",
+    'Циклы while и for': {
+      get title() {
+        return 'Циклы while и for';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -305,7 +336,7 @@ const JSCORE = {
             есть возможность задать дополнительные настройки.
           </p>
           <p>
-            Чтобы организовать бесконечный цикл, используют конструкцию{" "}
+            Чтобы организовать бесконечный цикл, используют конструкцию{' '}
             <b>while(true)</b>.
           </p>
           <p>
@@ -313,7 +344,7 @@ const JSCORE = {
           </p>
           <p>
             Если на данной итерации цикла делать больше ничего не надо, но
-            полностью прекращать цикл не следует - используют директиву{" "}
+            полностью прекращать цикл не следует - используют директиву{' '}
             <b>continue</b>.
           </p>
           <p>
@@ -322,15 +353,19 @@ const JSCORE = {
           </p>
           <p>
             Цикл для перебора массивов <b>for..of</b> не предоставляет доступ к
-            номеру текущего элемента, только к его значению. Синтаксис:{" "}
+            номеру текущего элемента, только к его значению. Синтаксис:{' '}
             <span>for(let key of arr)</span>.
           </p>
         </div>
       ),
     },
     'Конструкция "switch"': {
-      id: "58",
-      title: 'Конструкция "switch"',
+      get title() {
+        return 'Конструкция "switch"';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -339,42 +374,46 @@ const JSCORE = {
           </p>
           <p>Синтаксис:</p>
           <pre>
-            <CodeNumber length={11}/>
+            <CodeNumber length={11} />
             <code>
               <code>
-                switch(<b>x</b>){"{"}
+                switch(<b>x</b>){'{'}
               </code>
               <code>
-                {"  "}case '<b>value1</b>':
+                {'  '}case '<b>value1</b>':
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"    "}break</code>
+              <code>{'    '}break</code>
               <code>
-                {"  "}case '<b>value2</b>'
+                {'  '}case '<b>value2</b>'
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"    "}break</code>
-              <code>{"  "}default</code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code>{'    '}break</code>
+              <code>{'  '}default</code>
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"    "}break</code>
-              <code>{"}"}</code>
+              <code>{'    '}break</code>
+              <code>{'}'}</code>
             </code>
           </pre>
         </div>
       ),
     },
     Функции: {
-      id: "59",
-      title: "Функции",
+      get title() {
+        return 'Функции';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -385,55 +424,59 @@ const JSCORE = {
             Синтаксис <b>function declaration</b>:
           </p>
           <pre>
-            <CodeNumber length={3}/>
+            <CodeNumber length={3} />
             <code>
               <code>
-                function <b>fn</b>(<b>a</b>) {"{"}
+                function <b>fn</b>(<b>a</b>) {'{'}
               </code>
               <code>
-                {"  "}return <b>a</b>
+                {'  '}return <b>a</b>
               </code>
-              <code>{"}"}</code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
             Синтаксис <b>function expression</b>:
           </p>
           <pre>
-            <CodeNumber length={3}/>
+            <CodeNumber length={3} />
             <code>
               <code>
-                const <b>fn</b> = function(<b>a</b>) {"{"}
+                const <b>fn</b> = function(<b>a</b>) {'{'}
               </code>
               <code>
-                {"  "}return <b>a</b>
+                {'  '}return <b>a</b>
               </code>
-              <code>{"}"}</code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
             Синтаксис <b>arrow function</b>:
           </p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
-                const <b>fn</b> = (<b>a</b>, <b>b</b>) {"=>"} <b>a</b> +{" "}
+                const <b>fn</b> = (<b>a</b>, <b>b</b>) {'=>'} <b>a</b> +{' '}
                 <b>b</b>
               </code>
             </code>
           </pre>
           <p>
-            У стрелочных функций нет собственного <b>this</b>, нет{" "}
-            <b>arguments</b>, их нельзя вызвать с помощью ключевого слова{" "}
+            У стрелочных функций нет собственного <b>this</b>, нет{' '}
+            <b>arguments</b>, их нельзя вызвать с помощью ключевого слова{' '}
             <b>new</b>, у них нет <b>super</b> и свойства <b>prototype</b>.
           </p>
         </div>
       ),
     },
-    "try…catch": {
-      id: "510",
-      title: "try…catch",
+    'try…catch': {
+      get title() {
+        return 'try…catch';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -443,34 +486,34 @@ const JSCORE = {
           </p>
           <p>Синтаксис:</p>
           <pre>
-            <CodeNumber length={8}/>
+            <CodeNumber length={8} />
             <code>
               <code>
-                <b>try</b> {"{"}
+                <b>try</b> {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"// исполняем код"}
-              </code>
-              <code>
-                {"}"} <b>catch</b>(<b>err</b>) {"{"}
-              </code>
-              <code className="comment">
-                {"  "}
-                {"// если ошибка случается"}
+              <code className='comment'>
+                {'  '}
+                {'// исполняем код'}
               </code>
               <code>
-                {"}"} <b>finally</b> {"{"}
+                {'}'} <b>catch</b>(<b>err</b>) {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"// выполняется всегда"}
+              <code className='comment'>
+                {'  '}
+                {'// если ошибка случается'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"// после"} <b className="comment">try..catch</b>
+              <code>
+                {'}'} <b>finally</b> {'{'}
               </code>
-              <code>{"}"}</code>
+              <code className='comment'>
+                {'  '}
+                {'// выполняется всегда'}
+              </code>
+              <code className='comment'>
+                {'  '}
+                {'// после'} <b className='comment'>try..catch</b>
+              </code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
@@ -491,17 +534,21 @@ const JSCORE = {
             </li>
           </ul>
           <p>
-            Мы можем также генерировать собственные ошибки, используя оператор{" "}
+            Мы можем также генерировать собственные ошибки, используя оператор{' '}
             <b>throw</b>. Аргументом <b>throw</b> может быть что угодно, но
-            обычно это объект ошибки, наследуемый от встроенного класса{" "}
+            обычно это объект ошибки, наследуемый от встроенного класса{' '}
             <b>Error</b>.
           </p>
         </div>
       ),
     },
-    "Строгий режим": {
-      id: "511",
-      title: "Строгий режим",
+    'Строгий режим': {
+      get title() {
+        return 'Строгий режим';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <ul>
@@ -511,7 +558,7 @@ const JSCORE = {
               <b>Нельзя</b> создавать переменную не объявив ее ключевым словом
             </li>
             <li>
-              При строгом режиме <b>this</b> в функциях указывает на{" "}
+              При строгом режиме <b>this</b> в функциях указывает на{' '}
               <b>undefined</b>
             </li>
           </ul>
@@ -519,8 +566,12 @@ const JSCORE = {
       ),
     },
     Массивы: {
-      id: "512",
-      title: "Массивы",
+      get title() {
+        return 'Массивы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -530,19 +581,19 @@ const JSCORE = {
           <p>Методы:</p>
           <p>
             <b>some()</b> проверяет, удовлетворяет ли какой-либо элемент массива
-            условию, заданному в передаваемой функции. Он вернет значение{" "}
+            условию, заданному в передаваемой функции. Он вернет значение{' '}
             <b>true</b>, если хотя бы один элемент совпадет с проверяемой
             функцией, и значение <b>false</b> — если нет.
           </p>
           <p>
             <b>reduce()</b> принимает функцию, которая имеет в качестве
             аргумента аккумулятор и значение. Он применяет функцию к
-            аккумулятору и каждому значению массива, возвращает{" "}
+            аккумулятору и каждому значению массива, возвращает{' '}
             <b>аккумулятор</b>.
           </p>
           <p>
             <b>every()</b> проверяет, удовлетворяют ли все элементы массива
-            условию, заданному в передаваемой функции. Он вернет значение{" "}
+            условию, заданному в передаваемой функции. Он вернет значение{' '}
             <b>true</b>, если каждый элемент совпадет с проверяемой функцией, и
             значение
             <b>false</b> — если нет.
@@ -566,12 +617,12 @@ const JSCORE = {
             <b>findIndex()</b> - принимает функцию в качестве параметра и в
             дальнейшем применяет ее к массиву. Он возвращает индекс найденного
             элемента, если элемент удовлетворяет условию проверяющей функции,
-            переданной в качестве аргумента. Если не удовлетворяет, возвращается{" "}
+            переданной в качестве аргумента. Если не удовлетворяет, возвращается{' '}
             <b>–1</b>.
           </p>
           <p>
             <b>find()</b> принимает функцию в качестве аргумента и возвращает
-            элемент для которого функция вернула <b>true</b> иначе{" "}
+            элемент для которого функция вернула <b>true</b> иначе{' '}
             <b>undefined</b>.
           </p>
           <p>
@@ -583,7 +634,7 @@ const JSCORE = {
             возвращает новый массив.
           </p>
           <p>
-            <b>fill()</b> заполняет все элементы массива одинаковым значением{" "}
+            <b>fill()</b> заполняет все элементы массива одинаковым значением{' '}
             <b>fill(value, start, end)</b>.
           </p>
           <p>
@@ -612,8 +663,12 @@ const JSCORE = {
       ),
     },
     Объекты: {
-      id: "513",
-      title: "Объекты",
+      get title() {
+        return 'Объекты';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -630,7 +685,7 @@ const JSCORE = {
             </li>
           </ul>
           <p>
-            Получить доступ к свойству мы можем через <b>точку</b> или{" "}
+            Получить доступ к свойству мы можем через <b>точку</b> или{' '}
             <b>квадратные скобки</b>.
           </p>
           <p>
@@ -643,17 +698,21 @@ const JSCORE = {
             Перебрать свойства <b>for(let key in object)</b>.
           </p>
           <p>
-            Клонировать объект можно с помощью: <b>Object.assign</b>,{" "}
+            Клонировать объект можно с помощью: <b>Object.assign</b>,{' '}
             <b>рекурсии</b>, <b>_.cloneDeep(obj)</b> (из библиотеки JavaScript
-            lodash), <b>structuredClone()</b>,{" "}
+            lodash), <b>structuredClone()</b>,{' '}
             <b>JSON.parse(JSON.stringify(obj))</b>, <b>Object.create</b>.
           </p>
         </div>
       ),
     },
-    "Сборка Мусора": {
-      id: "514",
-      title: "Сборка Мусора",
+    'Сборка Мусора': {
+      get title() {
+        return 'Сборка Мусора';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -667,8 +726,12 @@ const JSCORE = {
       ),
     },
     This: {
-      id: "515",
-      title: "This",
+      get title() {
+        return 'This';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -682,22 +745,30 @@ const JSCORE = {
         </div>
       ),
     },
-    "Оператор new": {
-      id: "516",
-      title: "Оператор new",
+    'Оператор new': {
+      get title() {
+        return 'Оператор new';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
-            <b>Функции конструкторы</b> следует вызывать только с помощью{" "}
+            <b>Функции конструкторы</b> следует вызывать только с помощью{' '}
             <b>new</b>. Такой вызов подразумевает создание <b>this</b>, привязку
             к нему <b>пустого объекта</b>, и возврат этого <b>this</b>.
           </p>
         </div>
       ),
     },
-    "Именованное функциональное выражение(Named Function Expression)": {
-      id: "517",
-      title: "Именованное функциональное выражение(Named Function Expression)",
+    'Именованное функциональное выражение(Named Function Expression)': {
+      get title() {
+        return 'Именованное функциональное выражение(Named Function Expression)';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -712,8 +783,12 @@ const JSCORE = {
       ),
     },
     Прототипы: {
-      id: "518",
-      title: "Прототипы",
+      get title() {
+        return 'Прототипы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -728,37 +803,41 @@ const JSCORE = {
       ),
     },
     Классы: {
-      id: "519",
-      title: "Классы",
+      get title() {
+        return 'Классы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Синтаксис:</p>
           <pre>
-            <CodeNumber length={7}/>
+            <CodeNumber length={7} />
             <code>
               <code>
-                class <b>Class</b> {"{"}
+                class <b>Class</b> {'{'}
               </code>
               <code>
-                {"  "}constructor(<b>...</b>) {"{"}
+                {'  '}constructor(<b>...</b>) {'{'}
               </code>
-              <code className="comment">
-                {"    "}
-                {"//..."}
-              </code>
-              <code>
-                {"  "}
-                {"}"}
+              <code className='comment'>
+                {'    '}
+                {'//...'}
               </code>
               <code>
-                {"  "}
-                <b>method1</b>(<b>...</b>) {"{}"}
+                {'  '}
+                {'}'}
               </code>
               <code>
-                {"  "}
-                <b>method2</b>(<b>...</b>) {"{}"}
+                {'  '}
+                <b>method1</b>(<b>...</b>) {'{}'}
               </code>
-              <code>{"}"}</code>
+              <code>
+                {'  '}
+                <b>method2</b>(<b>...</b>) {'{}'}
+              </code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
@@ -770,7 +849,7 @@ const JSCORE = {
             Основой ООП являются <b>класс</b> и <b>конструктор</b>. Конструктор
             - это функция, которая служит шаблоном для построения объекта. Это
             функция, которая вызывается с ключевым словом <b>new</b>, в
-            результате этого создается пустой объект, к которому привязывается{" "}
+            результате этого создается пустой объект, к которому привязывается{' '}
             <b>this</b>.
           </p>
           <ul>
@@ -788,9 +867,13 @@ const JSCORE = {
         </div>
       ),
     },
-    "Асинхронный JavaScript": {
-      id: "520",
-      title: "Асинхронный JavaScript",
+    'Асинхронный JavaScript': {
+      get title() {
+        return 'Асинхронный JavaScript';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -819,19 +902,19 @@ const JSCORE = {
           </ul>
           <p>Синтаксис:</p>
           <pre>
-            <CodeNumber length={3}/>
+            <CodeNumber length={3} />
             <code>
               <code>
-                const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{" "}
-                <b>rej</b>) {"=>"} {"{"}
+                const <b>promise</b> = new <b>Promise</b>((<b>res</b>,{' '}
+                <b>rej</b>) {'=>'} {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
               <code>
-                {"}"}
-                {")"}
+                {'}'}
+                {')'}
               </code>
             </code>
           </pre>
@@ -851,7 +934,7 @@ const JSCORE = {
               объекта два свойства:
             </p>
             <li>
-              <b>status: "fulfilled"</b>, если выполнен успешно или{" "}
+              <b>status: "fulfilled"</b>, если выполнен успешно или{' '}
               <b>"rejected"</b>, если ошибка
             </li>
             <li>
@@ -901,7 +984,7 @@ const JSCORE = {
             <li>Использованием асинхронных функций</li>
           </ul>
           <p>
-            <b>Промиссификация</b> - позволяет избежать использования{" "}
+            <b>Промиссификация</b> - позволяет избежать использования{' '}
             <b>callback-функций</b>, что делает код более читаемым и
             поддерживаемым.
           </p>
@@ -928,31 +1011,35 @@ const JSCORE = {
             </li>
           </ul>
           <p>
-            <b>Всегда</b> сначала выполняются все микротаски, затем <b>один</b>{" "}
+            <b>Всегда</b> сначала выполняются все микротаски, затем <b>один</b>{' '}
             макротаск.
           </p>
         </div>
       ),
     },
     Генераторы: {
-      id: "521",
-      title: "Генераторы",
+      get title() {
+        return 'Генераторы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
             <b>Генераторы</b> создаются при помощи функций генераторов.
           </p>
           <pre>
-            <CodeNumber length={3}/>
+            <CodeNumber length={3} />
             <code>
               <code>
-                function<b>*</b> fn() {"{"}
+                function<b>*</b> fn() {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"}"}</code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
@@ -963,20 +1050,24 @@ const JSCORE = {
             посредством вызовом <b>next / yield</b>.
           </p>
           <p>
-            Генераторы возвращают объект: {"{"}
-            <b>value</b>: 1, <b>done</b>: false{"}"}
+            Генераторы возвращают объект: {'{'}
+            <b>value</b>: 1, <b>done</b>: false{'}'}
           </p>
         </div>
       ),
     },
-    "Модули Иморт Экспорт": {
-      id: "522",
-      title: "Модули Иморт Экспорт",
+    'Модули Иморт Экспорт': {
+      get title() {
+        return 'Модули Иморт Экспорт';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
             Для того, чтобы браузер понимал, что мы экспортируем модули,
-            необходимо в тег <b>script</b>, где имеется модуль, добавить атрибут{" "}
+            необходимо в тег <b>script</b>, где имеется модуль, добавить атрибут{' '}
             <b>type="module"</b>. Но обычно используется <b>webpack</b> и
             добавлять ничего не нужно.
           </p>
@@ -985,39 +1076,39 @@ const JSCORE = {
             переменной или класса.
           </p>
           <pre>
-            <CodeNumber length={8}/>
+            <CodeNumber length={8} />
             <code>
               <code>
-                <b>export</b> function <b>fn</b>() {"{"}
+                <b>export</b> function <b>fn</b>() {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"}"}</code>
-              <code>{"  "}</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
               <code>
                 <b>export</b> const <b>num</b> = 4
               </code>
-              <code>{"  "}</code>
+              <code>{'  '}</code>
               <code>
-                <b>export</b> class <b>User</b>() {"{"}
+                <b>export</b> class <b>User</b>() {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"}"}</code>
+              <code>{'}'}</code>
             </code>
           </pre>
           <p>
             Для больших модулей удобнее использовать группированный экспорт.
           </p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
-                <b>export</b> {"{"} <b>fn</b>, <b>num</b>, <b>User</b> {"}"}
+                <b>export</b> {'{'} <b>fn</b>, <b>num</b>, <b>User</b> {'}'}
               </code>
             </code>
           </pre>
@@ -1026,17 +1117,17 @@ const JSCORE = {
             удобнее использовать <span>экспорт по умолчанию</span>.
           </p>
           <pre>
-            <CodeNumber length={5}/>
+            <CodeNumber length={5} />
             <code>
               <code>
-                function <b>fn</b> () {"{"}
+                function <b>fn</b> () {'{'}
               </code>
-              <code className="comment">
-                {"  "}
-                {"//..."}
+              <code className='comment'>
+                {'  '}
+                {'//...'}
               </code>
-              <code>{"}"}</code>
-              <code>{"  "}</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
               <code>
                 <b>export</b> default <b>fn</b>
               </code>
@@ -1048,10 +1139,10 @@ const JSCORE = {
             до него.
           </p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
-                <b>import</b> {"{"} <b>fn</b>, <b>num</b> {"}"} <b>from</b>{" "}
+                <b>import</b> {'{'} <b>fn</b>, <b>num</b> {'}'} <b>from</b>{' '}
                 './путь'
               </code>
             </code>
@@ -1065,7 +1156,7 @@ const JSCORE = {
             к частям модуля как с свойствам переменной.
           </p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
                 <b>import</b> * <b>as el</b> from './путь'
@@ -1075,19 +1166,23 @@ const JSCORE = {
         </div>
       ),
     },
-    "FetchAPI - Интерфейсы веб API, XMLHttpRequest": {
-      id: "523",
-      title: "FetchAPI - Интерфейсы веб API, XMLHttpRequest",
+    'FetchAPI - Интерфейсы веб API, XMLHttpRequest': {
+      get title() {
+        return 'FetchAPI - Интерфейсы веб API, XMLHttpRequest';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
-            Для того, чтобы сделать сетовой запрос можно использовать метод{" "}
+            Для того, чтобы сделать сетовой запрос можно использовать метод{' '}
             <b>fetch()</b>.
           </p>
           <p>
             Первым параметром он принимает <b>URL</b> для отправки запроса,
             вторым <b>options</b> - это объект с дополнительными параметрами
-            (метод, заголовки, тело). Без <b>options</b> - это будет простой{" "}
+            (метод, заголовки, тело). Без <b>options</b> - это будет простой{' '}
             <b>GET</b> запрос, который получит содержимое по <b>URL</b>.
           </p>
           <p>
@@ -1096,12 +1191,12 @@ const JSCORE = {
             страницы.
           </p>
           <p>
-            Чтобы создать запрос, нужно создать конструктор <b>new</b>{" "}
+            Чтобы создать запрос, нужно создать конструктор <b>new</b>{' '}
             XMLHttpRequest.
           </p>
           <p>
-            Чтобы инициализировать его, нужно воспользоваться методом{" "}
-            <b>open</b>, в котором передаются параметры <b>method</b> (обычно{" "}
+            Чтобы инициализировать его, нужно воспользоваться методом{' '}
+            <b>open</b>, в котором передаются параметры <b>method</b> (обычно{' '}
             <b>GET</b> или <b>POST</b>), <b>URL</b>.
           </p>
           <p>
@@ -1116,19 +1211,27 @@ const JSCORE = {
       ),
     },
     Замыкание: {
-      id: "524",
-      title: "Замыкания",
+      get title() {
+        return 'Замыкание';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
-          <b>Замыкание</b> - это способность функции в JavaScript{" "}
+          <b>Замыкание</b> - это способность функции в JavaScript{' '}
           <span>запоминать лексическое окружение</span>, в котором она была
           создана.
         </div>
       ),
     },
     Рекурсия: {
-      id: "525",
-      title: "Рекурсия",
+      get title() {
+        return 'Рекурсия';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1137,9 +1240,13 @@ const JSCORE = {
         </div>
       ),
     },
-    "Map, Set, WeekMap, WeekSet": {
-      id: "526",
-      title: "Map, Set, WeekMap, WeekSet",
+    'Map, Set, WeekMap, WeekSet': {
+      get title() {
+        return 'Map, Set, WeekMap, WeekSet';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1153,15 +1260,15 @@ const JSCORE = {
               <b>new Map()</b> – создаёт коллекцию
             </li>
             <li>
-              <b>map.set(key, value)</b> – записывает по ключу <b>key</b>{" "}
+              <b>map.set(key, value)</b> – записывает по ключу <b>key</b>{' '}
               значение <b>value</b>
             </li>
             <li>
-              <b>map.get(key)</b> – возвращает значение по ключу или{" "}
+              <b>map.get(key)</b> – возвращает значение по ключу или{' '}
               <b>undefined</b>, если ключ <b>key</b> отсутствует
             </li>
             <li>
-              <b>map.has(key)</b> – возвращает <b>true</b>, если ключ <b>key</b>{" "}
+              <b>map.has(key)</b> – возвращает <b>true</b>, если ключ <b>key</b>{' '}
               присутствует в коллекции, иначе <b>false</b>
             </li>
             <li>
@@ -1191,7 +1298,7 @@ const JSCORE = {
               ничего не делает), возвращает тот же объект <b>set</b>
             </li>
             <li>
-              <b>set.delete(value)</b> – удаляет значение, возвращает{" "}
+              <b>set.delete(value)</b> – удаляет значение, возвращает{' '}
               <b>true</b>, если <b>value</b> было в множестве на момент вызова,
               иначе <b>false</b>
             </li>
@@ -1221,15 +1328,19 @@ const JSCORE = {
             <b>WeakMap</b> и <b>WeakSet</b> используются как вспомогательные
             структуры данных в дополнение к «основному» месту хранения объекта.
             Если объект удаляется из основного хранилища и нигде не
-            используется, кроме как в качестве ключа в <b>WeakMap</b> или в{" "}
+            используется, кроме как в качестве ключа в <b>WeakMap</b> или в{' '}
             <b>WeakSet</b>, то он будет удалён автоматически.
           </p>
         </div>
       ),
     },
     BOM: {
-      id: "528",
-      title: "BOM",
+      get title() {
+        return 'BOM';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1252,8 +1363,12 @@ const JSCORE = {
       ),
     },
     Ошибки: {
-      id: "529",
-      title: "Ошибки",
+      get title() {
+        return 'Ошибки';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <ul>
@@ -1271,12 +1386,16 @@ const JSCORE = {
       ),
     },
     Зависимости: {
-      id: "530",
-      title: "Зависимости",
+      get title() {
+        return 'Зависимости';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
-            <b>Dependencies</b> (зависимости) в файле <b>package.json</b>{" "}
+            <b>Dependencies</b> (зависимости) в файле <b>package.json</b>{' '}
             являются объектом, содержащим <b>ключ-значение</b>.
           </p>
           <p>
@@ -1310,7 +1429,7 @@ const JSCORE = {
           </p>
           <p>
             <b>Коретка</b> (<b>^</b>) - этот символ означает, что при обновлении
-            пакетов, упомянутых в <b>package.json</b>, с помощью{" "}
+            пакетов, упомянутых в <b>package.json</b>, с помощью{' '}
             <b>npm update</b> обновятся только патчи и минорные изменения.
           </p>
           <p>
@@ -1318,15 +1437,19 @@ const JSCORE = {
             разрешены только обновления патча.
           </p>
           <p>
-            Для установки последней доступной версии пакета используется{" "}
+            Для установки последней доступной версии пакета используется{' '}
             <b>npm i ...@latest</b>.
           </p>
         </div>
       ),
     },
     Символы: {
-      id: "531",
-      title: "Символы",
+      get title() {
+        return 'Символы';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1341,7 +1464,7 @@ const JSCORE = {
             Символы имеют два основных варианта использования:
             <li>«Скрытые» свойства объектов</li>
             <li>
-              Cистемныe символы: <b>Symbol.iterator</b> для итераторов,{" "}
+              Cистемныe символы: <b>Symbol.iterator</b> для итераторов,{' '}
               <b>Symbol.toPrimitive</b> для настройки преобразования объектов в
               примитивы и другие
             </li>
@@ -1354,8 +1477,12 @@ const JSCORE = {
       ),
     },
     IIFE: {
-      id: "532",
-      title: "IIFE",
+      get title() {
+        return 'IIFE';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1366,38 +1493,42 @@ const JSCORE = {
             Способы создания <b>IIFE</b>:
           </p>
           <pre>
-            <CodeNumber length={11}/>
+            <CodeNumber length={11} />
             <code>
               <code>
-                (<b>function</b>() {"{"}
+                (<b>function</b>() {'{'}
               </code>
-              <code>{"  "}console.log(1)</code>
-              <code>{"}"})();</code>
-              <code>{"  "}</code>
+              <code>{'  '}console.log(1)</code>
+              <code>{'}'})();</code>
+              <code>{'  '}</code>
               <code>
-                !<b>function</b>() {"{"}
+                !<b>function</b>() {'{'}
               </code>
-              <code>{"  "}console.log(2)</code>
-              <code>{"}"}();</code>
-              <code>{"  "}</code>
+              <code>{'  '}console.log(2)</code>
+              <code>{'}'}();</code>
+              <code>{'  '}</code>
               <code>
-                +<b>function</b>() {"{"}
+                +<b>function</b>() {'{'}
               </code>
-              <code>{"  "}console.log(3)</code>
-              <code>{"}"}();</code>
+              <code>{'  '}console.log(3)</code>
+              <code>{'}'}();</code>
             </code>
           </pre>
         </div>
       ),
     },
-    "Apply, call, bind, декоратор": {
-      title: "Apply, call, bind, декоратор",
-      id: "533",
+    'Apply, call, bind, декоратор': {
+      get title() {
+        return 'Apply, call, bind, декоратор';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Call:</p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
                 func.<b>call</b>(context, arg1, arg2, ...)
@@ -1406,7 +1537,7 @@ const JSCORE = {
           </pre>
           <p>Apply:</p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>
                 func.<b>apply</b>(context, [arg1, arg2, ...])
@@ -1415,12 +1546,12 @@ const JSCORE = {
           </pre>
           <p>Bind:</p>
           <pre>
-            <CodeNumber length={3}/>
+            <CodeNumber length={3} />
             <code>
               <code>
                 let <b>fn</b> = func.<b>bind</b>(context, arg1, arg2, ...)
               </code>
-              <code>{"  "}</code>
+              <code>{'  '}</code>
               <code>
                 <b>fn</b>()
               </code>
@@ -1428,53 +1559,53 @@ const JSCORE = {
           </pre>
           <p>Декоратор:</p>
           <pre>
-            <CodeNumber length={19}/>
+            <CodeNumber length={19} />
             <code>
               <code>
-                let <b>fn</b> = (x) {"=>"} {"{"}
+                let <b>fn</b> = (x) {'=>'} {'{'}
               </code>
               <code>
-                {"  "}
+                {'  '}
                 <b>return</b> x
               </code>
-              <code>{"}"}</code>
-              <code>{"  "}</code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
               <code>
-                const <b>decorator</b> = (fn) {"=>"} {"{"}
+                const <b>decorator</b> = (fn) {'=>'} {'{'}
               </code>
               <code>
-                {"  "}const <b>cache</b> = <b>new</b> Map()
+                {'  '}const <b>cache</b> = <b>new</b> Map()
               </code>
-              <code>{"  "}</code>
+              <code>{'  '}</code>
               <code>
-                {"  "}return (x) {"=>"} {"{"}
-              </code>
-              <code>
-                {"    "}if(map.<b>has</b>(x)){"{"}
+                {'  '}return (x) {'=>'} {'{'}
               </code>
               <code>
-                {"      "}return map.<b>get</b>(x)
+                {'    '}if(map.<b>has</b>(x)){'{'}
               </code>
               <code>
-                {"    "}
-                {"}"}
-              </code>
-              <code>{"  "}</code>
-              <code>
-                {"    "}const <b>res</b> = <b>fn</b>(x)
+                {'      '}return map.<b>get</b>(x)
               </code>
               <code>
-                {"    "}map.<b>set</b>(x, res)
+                {'    '}
+                {'}'}
+              </code>
+              <code>{'  '}</code>
+              <code>
+                {'    '}const <b>res</b> = <b>fn</b>(x)
               </code>
               <code>
-                {"    "}return <b>res</b>
+                {'    '}map.<b>set</b>(x, res)
               </code>
               <code>
-                {"  "}
-                {"}"}
+                {'    '}return <b>res</b>
               </code>
-              <code>{"}"}</code>
-              <code>{"  "}</code>
+              <code>
+                {'  '}
+                {'}'}
+              </code>
+              <code>{'}'}</code>
+              <code>{'  '}</code>
               <code>
                 fn = <b>decorator</b>(fn)
               </code>
@@ -1483,67 +1614,75 @@ const JSCORE = {
         </div>
       ),
     },
-    "new Proxy()": {
-      title: "new Proxy()",
-      id: "534",
+    'new Proxy()': {
+      get title() {
+        return 'new Proxy()';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <pre>
-            <CodeNumber length={19}/>
+            <CodeNumber length={19} />
             <code>
               <code>
-                const <b>obj</b> = {"{"} <b>value</b>: 4 {"}"}
+                const <b>obj</b> = {'{'} <b>value</b>: 4 {'}'}
               </code>
-              <code>{"  "}</code>
+              <code>{'  '}</code>
               <code>
-                const <b>proxy</b> = <b>new</b> Proxy(obj, {"{"}
-              </code>
-              <code>
-                {"  "}
-                <b>get</b>(target, prop) {"{"}
+                const <b>proxy</b> = <b>new</b> Proxy(obj, {'{'}
               </code>
               <code>
-                {"    "}
-                <b>if</b>(prop === 'value') {"{"}
-              </code>
-              <code>{"      "}console.log('get value check')</code>
-              <code>{"      "}return target[prop]</code>
-              <code>
-                {"    "}
-                {"}"}
+                {'  '}
+                <b>get</b>(target, prop) {'{'}
               </code>
               <code>
-                {"    "} return <b>Reflect</b>.get(...arguments)
+                {'    '}
+                <b>if</b>(prop === 'value') {'{'}
               </code>
-              <code>{"  },"}</code>
-              <code>{"  "}</code>
+              <code>{'      '}console.log('get value check')</code>
+              <code>{'      '}return target[prop]</code>
               <code>
-                {"  "}
-                <b>set</b>(target, prop, value) {"{"}
-              </code>
-              <code>
-                {"    "}
-                <b>if</b>(prop === 'value') {"{"}
-              </code>
-              <code>{"      "}console.log('set value check')</code>
-              <code>{"      "}target[prop] = value</code>
-              <code>
-                {"    "}
-                {"}"}
+                {'    '}
+                {'}'}
               </code>
               <code>
-                {"    "} return <b>Reflect</b>.set(...arguments)
+                {'    '} return <b>Reflect</b>.get(...arguments)
               </code>
-              <code>{"  }"}</code>
-              <code>{"})"}</code>
+              <code>{'  },'}</code>
+              <code>{'  '}</code>
+              <code>
+                {'  '}
+                <b>set</b>(target, prop, value) {'{'}
+              </code>
+              <code>
+                {'    '}
+                <b>if</b>(prop === 'value') {'{'}
+              </code>
+              <code>{'      '}console.log('set value check')</code>
+              <code>{'      '}target[prop] = value</code>
+              <code>
+                {'    '}
+                {'}'}
+              </code>
+              <code>
+                {'    '} return <b>Reflect</b>.set(...arguments)
+              </code>
+              <code>{'  }'}</code>
+              <code>{'})'}</code>
             </code>
           </pre>
         </div>
       ),
     },
-    "Мёртвая зона видимости (Temporal Dead Zone, TDZ)": {
-      id: "535",
-      title: "Мёртвая зона видимости (Temporal Dead Zone, TDZ)",
+    'Мёртвая зона видимости (Temporal Dead Zone, TDZ)': {
+      get title() {
+        return 'Мёртвая зона видимости (Temporal Dead Zone, TDZ)';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1553,26 +1692,30 @@ const JSCORE = {
             переменной, в течение которого к переменной нельзя обратиться.
           </p>
           <pre>
-            <CodeNumber length={9}/>
+            <CodeNumber length={9} />
             <code>
-              <code className="comment">
+              <code className='comment'>
                 {'//'} ЗДЕСЬ НАЧИНАЕТСЯ TDZ ДЛЯ переменной 'x'
               </code>
-              <code>{"  "}</code>
-              <code style={{ display: "flex" }}>
-                console.log(x);{" "}
-                <p className="comment">
+              <code>{'  '}</code>
+              <code style={{ display: 'flex' }}>
+                console.log(x);{' '}
+                <p className='comment'>
                   ❌ Ошибка ReferenceError: Cannot access 'x' before
                   initialization
                 </p>
               </code>
-              <code style={{ display: "flex" }}>
-                let x = 10;{" "}
-                <p className="comment">✅ Здесь TDZ заканчивается</p>
+              <code style={{ display: 'flex' }}>
+                let x = 10;{' '}
+                <p className='comment'>✅ Здесь TDZ заканчивается</p>
               </code>
               <code>{'  '}</code>
-              <code className="comment">{'//'} После этой строки переменная доступна</code>
-              <code style={{ display: "flex" }}>console.log(x); <p className="comment">{'//'} 10</p></code>
+              <code className='comment'>
+                {'//'} После этой строки переменная доступна
+              </code>
+              <code style={{ display: 'flex' }}>
+                console.log(x); <p className='comment'>{'//'} 10</p>
+              </code>
             </code>
           </pre>
         </div>

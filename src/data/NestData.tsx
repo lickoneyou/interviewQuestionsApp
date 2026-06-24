@@ -1,10 +1,17 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
+
+const DATA_TITLE = 'nest'
 
 const Nest = {
   NestJs: {
     'NestJS что это, как подключить': {
-      id: '101',
-      title: 'NestJS что это, как подключить',
+      get title() {
+        return 'NestJS что это, как подключить';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -67,8 +74,12 @@ const Nest = {
       ),
     },
     Entity: {
-      id: '102',
-      title: 'Entity',
+      get title() {
+        return 'Entity';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -140,8 +151,12 @@ const Nest = {
       ),
     },
     DTO: {
-      id: '103',
-      title: 'DTO',
+      get title() {
+        return 'DTO';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -197,8 +212,12 @@ const Nest = {
       ),
     },
     Service: {
-      id: '104',
-      title: 'Service',
+      get title() {
+        return 'Service';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -259,8 +278,12 @@ const Nest = {
       ),
     },
     Module: {
-      id: '105',
-      title: 'Module',
+      get title() {
+        return 'Module';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -314,8 +337,12 @@ const Nest = {
       ),
     },
     Controller: {
-      id: '106',
-      title: 'Controller',
+      get title() {
+        return 'Controller';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -419,8 +446,12 @@ const Nest = {
       ),
     },
     ORM: {
-      id: '107',
-      title: 'ORM',
+      get title() {
+        return 'ORM';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -469,8 +500,12 @@ const Nest = {
       ),
     },
     TypeORM: {
-      id: '108',
-      title: 'TypeORM',
+      get title() {
+        return 'TypeORM';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -604,8 +639,12 @@ const Nest = {
       ),
     },
     'class-validator и class-transformer': {
-      id: '109',
-      title: 'class-validator и class-transformer',
+      get title() {
+        return 'class-validator и class-transformer';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -677,8 +716,12 @@ const Nest = {
       ),
     },
     'PostgreSQL установка и подключение': {
-      id: '1010',
-      title: 'PostgreSQL установка и подключение',
+      get title() {
+        return 'PostgreSQL установка и подключение';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -761,8 +804,12 @@ const Nest = {
       ),
     },
     'Настройка CORS': {
-      id: '1011',
-      title: 'Настройка CORS',
+      get title() {
+        return 'Настройка CORS';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>Подключение:</p>
@@ -833,8 +880,12 @@ const Nest = {
       ),
     },
     Swagger: {
-      id: '1012',
-      title: 'Swagger',
+      get title() {
+        return 'Swagger';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1009,8 +1060,12 @@ const Nest = {
       ),
     },
     JWT: {
-      id: '1013',
-      title: `JWT`,
+      get title() {
+        return 'JWT';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
@@ -1056,8 +1111,12 @@ const Nest = {
       ),
     },
     Миграция: {
-      id: '1014',
-      title: 'Миграция',
+      get title() {
+        return 'Миграция';
+      },
+      get id() {
+        return slugifyText(`${DATA_TITLE} ${this.title}`);
+      },
       jsx: (
         <div>
           <p>
