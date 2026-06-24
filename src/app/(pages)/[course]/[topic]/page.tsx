@@ -19,7 +19,7 @@ const Question = function () {
   const allQuestions = getAllQuestions();
 
   const questionID = useMemo(() => {
-    return (params.topic as string) || '';
+    return params.topic as string;
   }, [params]);
 
   const currentQuestion = useCallback(
