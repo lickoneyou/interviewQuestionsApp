@@ -1,10 +1,15 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
 
 const ReactNative = {
   ReactNative: {
     'Основные встроенные компоненты': {
-      id: 'react-native-1',
-      title: 'Основные встроенные компоненты',
+      get title() {
+        return 'Основные встроенные компоненты'
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -288,8 +293,12 @@ const ReactNative = {
       ),
     },
     StyleSheet: {
-      id: 'react-native-2',
-      title: 'StyleSheet',
+      get title() {
+        return 'StyleSheet';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Создание стилей</p>
@@ -362,8 +371,12 @@ const ReactNative = {
       ),
     },
     'Специфичные хуки': {
-      id: 'react-native-3',
-      title: 'Специфичные хуки',
+      get title() {
+        return 'Специфичные хуки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -610,8 +623,12 @@ const ReactNative = {
       ),
     },
     Навигация: {
-      id: 'react-native-4',
-      title: 'Навигация',
+      get title() {
+        return 'Навигация';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -754,8 +771,12 @@ const ReactNative = {
       ),
     },
     AsyncStorage: {
-      id: 'react-native-5',
-      title: 'AsyncStorage',
+      get title() {
+        return 'AsyncStorage';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>

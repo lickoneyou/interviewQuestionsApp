@@ -1,10 +1,15 @@
-import CodeNumber from "../components/Basic/CodeNumbers"
+import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
 
 const Vue = {
   Vue: {
     'Особенности Vue': {
-      id: '91',
-      title: 'Особенности Vue',
+      get title() {
+        return 'Особенности Vue';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -75,13 +80,17 @@ const Vue = {
       ),
     },
     'Отличия между Options API и Composition API': {
-      id: '92',
-      title: 'Отличия между Options API и Composition API',
+      get title() {
+        return 'Отличия между Options API и Composition API';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Options API (классический подход):</p>
           <pre>
-            <CodeNumber length={13}/>
+            <CodeNumber length={13} />
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -113,7 +122,7 @@ const Vue = {
           </pre>
           <p>Composition API (новый подход)</p>
           <pre>
-            <CodeNumber length={9}/>
+            <CodeNumber length={9} />
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -197,8 +206,12 @@ const Vue = {
       ),
     },
     Интерполяция: {
-      id: '93',
-      title: 'Интерполяция',
+      get title() {
+        return 'Интерполяция';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -207,7 +220,7 @@ const Vue = {
             <b>{'{{ }}'}</b>.
           </p>
           <pre>
-            <CodeNumber length={7}/>
+            <CodeNumber length={7} />
             <code>
               <code>{'<script setup>'}</code>
               <code>const count = 0</code>
@@ -225,8 +238,12 @@ const Vue = {
       ),
     },
     'v-bind': {
-      id: '94',
-      title: 'v-bind',
+      get title() {
+        return 'v-bind';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -235,7 +252,7 @@ const Vue = {
             данных Vue.
           </p>
           <pre>
-            <CodeNumber length={7}/>
+            <CodeNumber length={7} />
             <code>
               <code>{'<script setup>'}</code>
               <code>const color = 'red'</code>
@@ -253,8 +270,12 @@ const Vue = {
       ),
     },
     slot: {
-      id: '95',
-      title: 'slot',
+      get title() {
+        return 'slot';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -263,7 +284,7 @@ const Vue = {
             компонента.
           </p>
           <pre>
-            <CodeNumber length={11}/>
+            <CodeNumber length={11} />
             <code>
               <code className='comment'>{'//'}App.vue</code>
               <code>{'<script setup>'}</code>
@@ -291,7 +312,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={9}/>
+            <CodeNumber length={9} />
             <code>
               <code className='comment'>{'//'}Comp.vue</code>
               <code>{'<template>'}</code>
@@ -326,8 +347,12 @@ const Vue = {
       ),
     },
     'defineProps и withDefaults': {
-      id: '96',
-      title: 'defineProps и withDefaults',
+      get title() {
+        return 'defineProps и withDefaults';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -335,7 +360,7 @@ const Vue = {
             компонента к дочернему.
           </p>
           <pre>
-            <CodeNumber length={8}/>
+            <CodeNumber length={8} />
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -351,7 +376,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={14}/>
+            <CodeNumber length={14} />
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
@@ -381,7 +406,7 @@ const Vue = {
             компонентах с использованием <b>{'<script setup>'}</b>
           </p>
           <pre>
-            <CodeNumber  length={16}/>
+            <CodeNumber length={16} />
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{'interface Props {'}</code>
@@ -413,8 +438,12 @@ const Vue = {
       ),
     },
     Event: {
-      id: '97',
-      title: 'Event',
+      get title() {
+        return 'Event';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -423,7 +452,7 @@ const Vue = {
             коммуникации между компонентами.
           </p>
           <pre>
-            <CodeNumber length={14}/>
+            <CodeNumber length={14} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -470,8 +499,12 @@ const Vue = {
       ),
     },
     Emits: {
-      id: '98',
-      title: 'Emits',
+      get title() {
+        return 'Emits';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -479,7 +512,7 @@ const Vue = {
             отправляет события родительскому компоненту.
           </p>
           <pre>
-            <CodeNumber length={17}/>
+            <CodeNumber length={17} />
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -510,7 +543,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={12}/>
+            <CodeNumber length={12} />
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup lang="ts">'}</code>
@@ -533,8 +566,12 @@ const Vue = {
       ),
     },
     'ref и reactive': {
-      id: '99',
-      title: 'ref',
+      get title() {
+        return 'ref и reactive';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -574,8 +611,12 @@ const Vue = {
       ),
     },
     'nextTick()': {
-      id: '910',
-      title: 'nextTick()',
+      get title() {
+        return 'nextTick()';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -585,7 +626,7 @@ const Vue = {
             на изменение данных.
           </p>
           <pre>
-            <CodeNumber length={17}/>
+            <CodeNumber length={17} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, nextTick } from 'vue'"}</code>
@@ -620,8 +661,12 @@ const Vue = {
       ),
     },
     computed: {
-      id: '911',
-      title: 'computed',
+      get title() {
+        return 'computed';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -643,7 +688,7 @@ const Vue = {
             </li>
           </ul>
           <pre>
-            <CodeNumber length={22}/>
+            <CodeNumber length={22} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, computed } from 'vue'"}</code>
@@ -679,8 +724,12 @@ const Vue = {
       ),
     },
     'v-if v-else': {
-      id: '912',
-      title: 'v-if v-else',
+      get title() {
+        return 'v-if v-else';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -689,7 +738,7 @@ const Vue = {
             позволяют показывать или скрывать элементы в зависимости от условий.
           </p>
           <pre>
-            <CodeNumber length={15}/>
+            <CodeNumber length={15} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -721,8 +770,12 @@ const Vue = {
       ),
     },
     'v-show': {
-      id: '913',
-      title: 'v-show',
+      get title() {
+        return 'v-show';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -730,7 +783,7 @@ const Vue = {
             которая работает через CSS-свойство <b>display.</b>
           </p>
           <pre>
-            <CodeNumber length={15}/>
+            <CodeNumber length={15} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -762,8 +815,12 @@ const Vue = {
       ),
     },
     'v-for': {
-      id: '914',
-      title: 'v-for',
+      get title() {
+        return 'v-for';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -772,7 +829,7 @@ const Vue = {
             элементы массива или объекта, создавая шаблон для каждого элемента.
           </p>
           <pre>
-            <CodeNumber length={9}/>
+            <CodeNumber length={9} />
             <code>
               <code>{'<script setup>'}</code>
               <code>const arr = [1,2,3,4,5]</code>
@@ -798,8 +855,12 @@ const Vue = {
       ),
     },
     'v-model и defineModel()': {
-      id: '915',
-      title: 'v-model и defineModel()',
+      get title() {
+        return 'v-model и defineModel()';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -810,7 +871,7 @@ const Vue = {
             компонентов с поддержкой v-model в Composition API.
           </p>
           <pre>
-            <CodeNumber length={13}/>
+            <CodeNumber length={13} />
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -834,7 +895,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -857,8 +918,12 @@ const Vue = {
       ),
     },
     'Хуки жизненного цикла': {
-      id: '916',
-      title: 'Хуки жизненного цикла',
+      get title() {
+        return 'Хуки жизненного цикла';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -885,8 +950,12 @@ const Vue = {
       ),
     },
     watch: {
-      id: '917',
-      title: 'watch',
+      get title() {
+        return 'watch';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -895,7 +964,7 @@ const Vue = {
             их изменении.
           </p>
           <pre>
-            <CodeNumber length={13}/>
+            <CodeNumber length={13} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { ref, watch } from 'vue'"}</code>
@@ -918,8 +987,12 @@ const Vue = {
       ),
     },
     'Provide Inject': {
-      id: '918',
-      title: 'Provide Inject',
+      get title() {
+        return 'Provide Inject';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -929,7 +1002,7 @@ const Vue = {
             <span>"props drilling"</span>).
           </p>
           <pre>
-            <CodeNumber length={14}/>
+            <CodeNumber length={14} />
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -951,7 +1024,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={8}/>
+            <CodeNumber length={8} />
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -967,8 +1040,12 @@ const Vue = {
       ),
     },
     useTemplateRef: {
-      id: '919',
-      title: 'useTemplateRef',
+      get title() {
+        return 'useTemplateRef';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -976,7 +1053,7 @@ const Vue = {
             (mutable) ref-ссылку на элемент шаблона.
           </p>
           <pre>
-            <CodeNumber length={13}/>
+            <CodeNumber length={13} />
             <code>
               <code>{'<script setup>'}</code>
               <code>{"import { useTemplateRef, onMounted } from 'vue'"}</code>
@@ -1000,8 +1077,12 @@ const Vue = {
       ),
     },
     Teleport: {
-      id: '920',
-      title: 'Teleport',
+      get title() {
+        return 'Teleport';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1016,7 +1097,7 @@ const Vue = {
             <span>DOM</span>.
           </p>
           <pre>
-            <CodeNumber length={12}/>
+            <CodeNumber length={12} />
             <code>
               <code className='comment'>{'//'} App.vue</code>
               <code>{'<script setup>'}</code>
@@ -1048,7 +1129,7 @@ const Vue = {
             </code>
           </pre>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code className='comment'>{'//'} Comp.vue</code>
               <code>{'<script setup>'}</code>
@@ -1075,8 +1156,12 @@ const Vue = {
       ),
     },
     Transition: {
-      id: '921',
-      title: 'Transition',
+      get title() {
+        return 'Transition';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1084,7 +1169,7 @@ const Vue = {
             анимирования появления.
           </p>
           <pre>
-            <CodeNumber length={21}/>
+            <CodeNumber length={21} />
             <code>
               <code>{'<template>'}</code>
               <code>
@@ -1149,13 +1234,17 @@ const Vue = {
       ),
     },
     Pinia: {
-      id: '922',
-      title: 'Pinia',
+      get title() {
+        return 'Pinia';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Подключение:</p>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code>{"import { createApp } from 'vue'"}</code>
               <code>{"import { createPinia } from 'pinia'"}</code>
@@ -1171,7 +1260,7 @@ const Vue = {
           </pre>
           <p>Создание стора:</p>
           <pre>
-            <CodeNumber length={12}/>
+            <CodeNumber length={12} />
             <code>
               <code>{"import { defineStore } from 'pinia'"}</code>
               <code>{"import { ref } from 'vue'"}</code>
@@ -1205,13 +1294,17 @@ const Vue = {
       ),
     },
     Router: {
-      id: '923',
-      title: 'Router',
+      get title() {
+        return 'Router';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Подключение:</p>
           <pre>
-            <CodeNumber length={10}/>
+            <CodeNumber length={10} />
             <code>
               <code>{"import { createApp } from 'vue'"}</code>
               <code>{"import router from './router'"}</code>
@@ -1227,7 +1320,7 @@ const Vue = {
           </pre>
           <p>Роуты:</p>
           <pre>
-            <CodeNumber length={16}/>
+            <CodeNumber length={16} />
             <code>
               <code>
                 {"import { createRouter, createWebHistory } from 'vue-router'"}
@@ -1268,7 +1361,7 @@ const Vue = {
           </pre>
           <p>Подключение в App.vue:</p>
           <pre>
-            <CodeNumber length={7}/>
+            <CodeNumber length={7} />
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{"import { RouterView } from 'vue-router'"}</code>
@@ -1286,7 +1379,7 @@ const Vue = {
             Для роутов используется <b>RouterLink</b>
           </p>
           <pre>
-            <CodeNumber length={1}/>
+            <CodeNumber length={1} />
             <code>
               <code>{'<RouterLink to="/">Go to Home</RouterLink>'}</code>
             </code>
@@ -1295,7 +1388,7 @@ const Vue = {
             или <b>router.push</b>
           </p>
           <pre>
-            <CodeNumber length={9}/>
+            <CodeNumber length={9} />
             <code>
               <code>{'<script setup lang="ts">'}</code>
               <code>{"import { useRouter } from 'vue-router'"}</code>

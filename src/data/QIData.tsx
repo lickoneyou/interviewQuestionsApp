@@ -1,10 +1,15 @@
 import CodeNumber from "../components/Basic/CodeNumbers";
+import slugifyText from "../handlers/slugifyText";
 
 const QI = {
   QI: {
     'Виды тестирования': {
-      id: '81',
-      title: 'Виды тестирования',
+      get title() {
+        return 'Виды тестирования';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -166,8 +171,12 @@ const QI = {
       ),
     },
     'Тестирование карандаша': {
-      id: '82',
-      title: 'Тестирование карандаша',
+      get title() {
+        return 'Тестирование карандаша';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -202,8 +211,12 @@ const QI = {
       ),
     },
     'Цикл разработки': {
-      id: '83',
-      title: 'Цикл разработки',
+      get title() {
+        return 'Цикл разработки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -253,8 +266,12 @@ const QI = {
       ),
     },
     'Методология разработки': {
-      id: '84',
-      title: 'Методология разработки',
+      get title() {
+        return 'Методология разработки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -333,8 +350,12 @@ const QI = {
       ),
     },
     'Аксиомы тестирования': {
-      id: '85',
-      title: 'Аксиомы тестирования',
+      get title() {
+        return 'Аксиомы тестирования';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -387,8 +408,12 @@ const QI = {
       ),
     },
     API: {
-      id: '86',
-      title: 'API',
+      get title() {
+              return 'API';
+            },
+            get id() {
+              return slugifyText(this.title);
+            },
       jsx: (
         <div>
           <p>
@@ -446,8 +471,12 @@ const QI = {
       ),
     },
     'Чек лист, тест кейс, баг репорт': {
-      id: '87',
-      title: 'Чек лист, тест кейс, баг репорт',
+      get title() {
+        return 'Чек лист, тест кейс, баг репорт';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -703,8 +732,12 @@ const QI = {
       ),
     },
     'Техники тест дизайна': {
-      id: '88',
-      title: 'Техники тест дизайна',
+      get title() {
+              return 'Техники тест дизайна';
+            },
+            get id() {
+              return slugifyText(this.title);
+            },
       jsx: (
         <div>
           <p>
@@ -841,8 +874,12 @@ const QI = {
       ),
     },
     'Тестирование SQL': {
-      id: '89',
-      title: 'Тестирование SQL',
+      get title() {
+        return 'Тестирование SQL';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Поиск:</p>

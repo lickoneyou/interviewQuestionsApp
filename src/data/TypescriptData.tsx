@@ -1,10 +1,15 @@
-import CodeNumber from "../components/Basic/CodeNumbers";
+import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
 
 const Typescript = {
   Typescript: {
     Типы: {
-      id: '71',
-      title: 'Типы',
+      get title() {
+        return 'Типы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <table>
@@ -101,8 +106,12 @@ const Typescript = {
       ),
     },
     Дженерики: {
-      id: '72',
-      title: 'Дженерики',
+      get title() {
+        return 'Дженерики';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -113,8 +122,12 @@ const Typescript = {
       ),
     },
     'Модификаторы доступа': {
-      id: '73',
-      title: 'Модификаторы доступа',
+      get title() {
+        return 'Модификаторы доступа';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -139,8 +152,12 @@ const Typescript = {
       ),
     },
     'Типы Утилит(Utility Types)': {
-      id: '74',
-      title: 'Типы Утилит(Utility Types)',
+      get title() {
+        return 'Типы Утилит(Utility Types)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -224,8 +241,12 @@ const Typescript = {
       ),
     },
     'Narrowing (сужение типов)': {
-      id: '75',
-      title: 'Narrowing (сужение типов)',
+      get title() {
+        return 'Narrowing (сужение типов)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -237,8 +258,12 @@ const Typescript = {
       ),
     },
     'Преимущества interface / type': {
-      id: '76',
-      title: 'Преимущества interface / type',
+      get title() {
+        return 'Преимущества interface / type';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -287,8 +312,12 @@ const Typescript = {
       ),
     },
     'Intersection type': {
-      id: '77',
-      title: 'Intersection type',
+      get title() {
+        return 'Intersection type';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -296,7 +325,7 @@ const Typescript = {
             нескольких типов с использованием оператора <b>"&"</b>
           </p>
           <pre>
-            <CodeNumber length={14}/>
+            <CodeNumber length={14} />
             <code>
               <code>
                 <b>interface</b> Named {'{'}
@@ -330,8 +359,12 @@ const Typescript = {
       ),
     },
     'Супертип/Сабдтип': {
-      id: '78',
-      title: 'Супертип/Сабдтип',
+      get title() {
+        return 'Супертип/Сабдтип';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -345,8 +378,12 @@ const Typescript = {
       ),
     },
     Литералы: {
-      id: '79',
-      title: 'Литералы',
+      get title() {
+        return 'Литералы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -381,8 +418,12 @@ const Typescript = {
       ),
     },
     'keyof/typeof': {
-      id: '710',
-      title: 'keyof/typeof',
+      get title() {
+        return 'keyof/typeof';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -438,8 +479,12 @@ const Typescript = {
       ),
     },
     'Assertion Function with Type Guard': {
-      id: '711',
-      title: 'Assertion Function with Type Guard',
+      get title() {
+        return 'Assertion Function with Type Guard';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -540,8 +585,12 @@ const Typescript = {
       ),
     },
     'Перегрузка функций': {
-      id: '712',
-      title: 'Перегрузка функций',
+      get title() {
+        return 'Перегрузка функций';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -592,8 +641,12 @@ const Typescript = {
       ),
     },
     'Условные типы': {
-      id: '713',
-      title: 'Условные типы',
+      get title() {
+        return 'Условные типы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -635,8 +688,12 @@ const Typescript = {
       ),
     },
     infer: {
-      id: '714',
-      title: 'infer',
+      get title() {
+        return 'infer';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -682,8 +739,12 @@ const Typescript = {
       ),
     },
     'Рекурсивные типы': {
-      id: '715',
-      title: 'Рекурсивные типы',
+      get title() {
+        return 'Рекурсивные типы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>

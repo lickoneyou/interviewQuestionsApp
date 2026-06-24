@@ -1,10 +1,15 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import slugifyText from '../handlers/slugifyText';
 
 const Nodejs = {
   Nodejs: {
     'Основы и инициализация': {
-      id: 'node-1',
-      title: 'Основы и инициализация',
+      get title() {
+        return 'Основы и инициализация';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -51,8 +56,12 @@ const Nodejs = {
       ),
     },
     Модули: {
-      id: 'node-2',
-      title: 'Модули',
+      get title() {
+        return 'Модули';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Экспорт</p>
@@ -111,8 +120,12 @@ const Nodejs = {
       ),
     },
     'Файловая система': {
-      id: 'node-3',
-      title: 'Файловая система',
+      get title() {
+        return 'Файловая система';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Подключение</p>
@@ -221,8 +234,12 @@ const Nodejs = {
       ),
     },
     'Пути (path)': {
-      id: 'node-4',
-      title: 'Пути (path)',
+      get title() {
+        return 'Пути (path)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Модуль path</p>
@@ -305,8 +322,12 @@ const Nodejs = {
       ),
     },
     Buffer: {
-      id: 'node-5',
-      title: 'Buffer',
+      get title() {
+        return 'Buffer';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -376,8 +397,12 @@ const Nodejs = {
       ),
     },
     'HTTP-сервер': {
-      id: 'node-6',
-      title: 'HTTP-сервер',
+      get title() {
+        return 'HTTP-сервер';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Создание сервера</p>
@@ -749,8 +774,12 @@ const Nodejs = {
       ),
     },
     Streams: {
-      id: 'node-7',
-      title: 'Streams',
+      get title() {
+        return 'Streams';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1174,8 +1203,12 @@ const Nodejs = {
       ),
     },
     EventEmitter: {
-      id: 'node-8',
-      title: `EventEmitter`,
+      get title() {
+        return 'EventEmitter';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1233,8 +1266,12 @@ const Nodejs = {
       ),
     },
     'NPM и сторонние пакеты': {
-      id: 'node-9',
-      title: 'NPM и сторонние пакеты',
+      get title() {
+        return 'NPM и сторонние пакеты';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1283,8 +1320,12 @@ const Nodejs = {
       ),
     },
     'Child Process': {
-      id: 'node-10',
-      title: 'Child Process',
+      get title() {
+        return 'Child Process';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1537,8 +1578,12 @@ const Nodejs = {
       ),
     },
     Cluster: {
-      id: 'node-11',
-      title: 'Cluster',
+      get title() {
+        return 'Cluster';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>

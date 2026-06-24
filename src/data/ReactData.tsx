@@ -1,12 +1,16 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
+import slugifyText from '../handlers/slugifyText';
 
 const React = {
   React: {
     'Виртуальный DOM': {
-      id: '61',
-      title: 'Виртуальный DOM',
+      get title() {
+        return 'Виртуальный DOM';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -27,8 +31,12 @@ const React = {
       ),
     },
     'Жизненный цикл компонента': {
-      id: '62',
-      title: 'Жизненный цикл компонента',
+      get title() {
+        return 'Жизненный цикл компонента';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -60,8 +68,12 @@ const React = {
       ),
     },
     Контекст: {
-      id: '63',
-      title: 'Контекст',
+      get title() {
+        return 'Контекст';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -80,8 +92,12 @@ const React = {
       ),
     },
     'Предохранители(Error Boundary)': {
-      id: '64',
-      title: 'Предохранители(Error Boundary)',
+      get title() {
+        return 'Предохранители(Error Boundary)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -111,8 +127,12 @@ const React = {
       ),
     },
     'Алгоритм согласования(Reconcilation)': {
-      id: '65',
-      title: 'Алгоритм согласования(Reconcilation)',
+      get title() {
+        return 'Алгоритм согласования(Reconcilation)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <ul>
@@ -134,8 +154,12 @@ const React = {
       ),
     },
     'Компоненты высшего порядка': {
-      id: '66',
-      title: 'Компоненты высшего порядка',
+      get title() {
+        return 'Компоненты высшего порядка';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -162,8 +186,12 @@ const React = {
       ),
     },
     Рефы: {
-      id: '67',
-      title: 'Рефы',
+      get title() {
+        return 'Рефы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -188,8 +216,12 @@ const React = {
       ),
     },
     Хуки: {
-      id: '68',
-      title: 'Хуки',
+      get title() {
+        return 'Хуки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -240,8 +272,12 @@ const React = {
       ),
     },
     'Реакт версия 18.0': {
-      id: '69',
-      title: 'Реакт версия 18.0',
+      get title() {
+        return 'Реакт версия 18.0';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -263,8 +299,12 @@ const React = {
       ),
     },
     'Оптимизация производительности': {
-      id: '610',
-      title: 'Оптимизация производительности',
+      get title() {
+        return 'Оптимизация производительности';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -276,8 +316,12 @@ const React = {
       ),
     },
     'Императивный / Декларативный подход': {
-      id: '611',
-      title: 'Императивный / Декларативный подход',
+      get title() {
+        return 'Императивный / Декларативный подход';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -293,8 +337,12 @@ const React = {
       ),
     },
     'Особенности React': {
-      id: '612',
-      title: 'Особенности React',
+      get title() {
+        return 'Особенности React';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Особенности:</p>
@@ -346,8 +394,12 @@ const React = {
       ),
     },
     'React.lazy': {
-      id: '613',
-      title: 'React.lazy',
+      get title() {
+        return 'React.lazy';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -355,12 +407,9 @@ const React = {
             загружать компоненты. компонент загружается только когда он
             требуется для рендеринга.
           </p>
-          <SyntaxHighlighter
+          <CodeHighlighter
             language='jsx'
-            style={vscDarkPlus}
-            showLineNumbers={true}
-          >
-            {`import React, { Suspense } from 'react';
+            code={`import React, { Suspense } from 'react';
   
 const LazyComponent = React.lazy(() => import('./LazyComponent'));
   
@@ -373,7 +422,7 @@ function App() {
     </div>
   );
 }`}
-          </SyntaxHighlighter>
+          />
           <p>Преимущества:</p>
           <ul>
             <li>✅ Уменьшает начальный размер загружаемого кода</li>
@@ -397,8 +446,12 @@ function App() {
       ),
     },
     'React Portal': {
-      id: '614',
-      title: 'React Portal',
+      get title() {
+        return 'React Portal';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
