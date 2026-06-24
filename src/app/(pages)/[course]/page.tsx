@@ -8,7 +8,7 @@ import styles from '../../page.module.css'
 const Course = () => {
   return (
     <div className={styles.App}>
-      <HeaderSearch />
+      <HeaderSearch isQuestion/>
       <CourseTopics />
     </div>
   );

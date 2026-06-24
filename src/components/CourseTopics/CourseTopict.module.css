@@ -27,3 +27,10 @@
   text-decoration: unset;
   box-shadow: 3px 3px 3px 1px rgba(240, 255, 255, 0.6);
 }
+
+.title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}

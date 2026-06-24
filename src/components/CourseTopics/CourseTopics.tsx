@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import slugifyText from '../../handlers/slugifyText';
@@ -14,10 +14,17 @@ import type { Data, FullData } from '../../types';
 const CourseTopics = () => {
   const params = useParams();
 
-  const chapters = Object.keys(data as FullData);
+  const chapters = useMemo(() => {
+    return Object.keys(data as FullData);
+  }, [data]);
+
+  const title = useMemo(() => {
+    return chapters.filter((title) => slugifyText(title) === params.course);
+  }, [chapters, params]);
 
   return (
     <main className={styles.container}>
+      <h1 className={styles.title}>{title}</h1>
       {Array.isArray(chapters) &&
         chapters.map((chapter) => {
           if (slugifyText(chapter) === params.course) {
