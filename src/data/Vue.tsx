@@ -1,4 +1,3 @@
-import CodeNumber from '../components/Basic/CodeNumbers';
 import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 

@@ -1,4 +1,4 @@
-import CodeNumber from "../components/Basic/CodeNumbers";
+import CodeHighlighter from "../components/CodeHighlighter/CodeHighlighter";
 import slugifyText from "../handlers/slugifyText";
 
 const QI = {
@@ -883,89 +883,40 @@ const QI = {
       jsx: (
         <div>
           <p>Поиск:</p>
-          <pre>
-            <CodeNumber length={5}/>
-            <code>
-              <code>
-                <b>SELECT</b> *
-              </code>
-              <code>
-                <b>FROM</b> Products
-              </code>
-              <code className='comment'>{'// Название базы данных'}</code>
-              <code>
-                <b>WHERE</b> {'{...}'}
-              </code>
-              <code className='comment'>{'// Условие'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'sql'}
+            code={`SELECT *
+FROM Products
+// Название базы данных
+WHERE {...}
+// Условие`}
+          />
           <p>Добавить:</p>
-          <pre>
-            <div className='numbers'>
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-              <code>6</code>
-            </div>
-            <code>
-              <code>
-                <b>INCERT INTO</b> Products
-              </code>
-              <code className='comment'>{'// Название базы данных'}</code>
-              <code>(title, price, ...)</code>
-              <code className='comment'>{'// Название полей'}</code>
-              <code>
-                <b>VALUES</b>
-              </code>
-              <code>(product1, 100, ...)</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'sql'}
+            code={`INCERT INTO Products
+// Название базы данных
+(title, price, ...)
+// Название полей
+VALUES
+(product1, 100, ...)`}
+          />
           <p>Обновить:</p>
-          <pre>
-            <div className='numbers'>
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-              <code>5</code>
-            </div>
-            <code>
-              <code>
-                <b>UPDATE</b> Products
-              </code>
-              <code className='comment'>{'// Название базы данных'}</code>
-              <code>
-                <b>SET</b> price = 200
-              </code>
-              <code className='comment'>{'// Меняем поле price'}</code>
-              <code>
-                <b>WHERE</b> {'{условие}'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`UPDATE Products
+// Название базы данных
+SET price = 200
+// Меняем поле price
+WHERE {условие}`}
+          />
           <p>Удалить:</p>
-          <pre>
-            <div className='numbers'>
-              <code>1</code>
-              <code>2</code>
-              <code>3</code>
-              <code>4</code>
-            </div>
-            <code>
-              <code>
-                <b>DELETE</b>
-              </code>
-              <code>
-                <b>FROM</b> Products
-              </code>
-              <code className='comment'>{'// Название базы данных'}</code>
-              <code>
-                <b>WHERE</b> {'{условие}'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'sql'}
+            code={`DELETE
+FROM Products
+// Название базы данных
+WHERE {условие}`}
+          />
           <p>
             Ограничение значений - <b>LIMIT</b>
           </p>

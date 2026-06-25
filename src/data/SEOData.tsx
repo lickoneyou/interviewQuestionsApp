@@ -1,11 +1,11 @@
-import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const SEO = {
   SEO: {
     Терминология: {
       get title() {
-        return 'Терминология'
+        return 'Терминология';
       },
       get id() {
         return slugifyText(this.title);
@@ -81,7 +81,7 @@ const SEO = {
     },
     'Запросный индекс': {
       get title() {
-        return 'Запросный индекс'
+        return 'Запросный индекс';
       },
       get id() {
         return slugifyText(this.title);
@@ -139,7 +139,7 @@ const SEO = {
     },
     'Коммерческие и информационные запросы': {
       get title() {
-        return 'Коммерческие и информационные запросы'
+        return 'Коммерческие и информационные запросы';
       },
       get id() {
         return slugifyText(this.title);
@@ -259,7 +259,7 @@ const SEO = {
     },
     'Посадочные страницы': {
       get title() {
-        return 'Посадочные страницы'
+        return 'Посадочные страницы';
       },
       get id() {
         return slugifyText(this.title);
@@ -404,11 +404,11 @@ const SEO = {
     },
     'Яндекс.Вебмастер + Google Search Console': {
       get title() {
-              return 'Яндекс.Вебмастер + Google Search Console'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Яндекс.Вебмастер + Google Search Console';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -613,7 +613,7 @@ const SEO = {
     },
     'Анализ сайта (Screaming Frog + SiteAnalyzer)': {
       get title() {
-        return 'Анализ сайта (Screaming Frog + SiteAnalyzer)'
+        return 'Анализ сайта (Screaming Frog + SiteAnalyzer)';
       },
       get id() {
         return slugifyText(this.title);
@@ -768,7 +768,7 @@ const SEO = {
     },
     'Скорость сайта (Lighthouse, PageSpeed Insights)': {
       get title() {
-        return 'Скорость сайта (Lighthouse, PageSpeed Insights)'
+        return 'Скорость сайта (Lighthouse, PageSpeed Insights)';
       },
       get id() {
         return slugifyText(this.title);
@@ -889,7 +889,7 @@ const SEO = {
     },
     'robots.txt, sitemap.xml, метатеги': {
       get title() {
-        return 'robots.txt, sitemap.xml, метатеги'
+        return 'robots.txt, sitemap.xml, метатеги';
       },
       get id() {
         return slugifyText(this.title);
@@ -944,20 +944,18 @@ const SEO = {
             </tbody>
           </table>
           <p>Типовой robots.txt</p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>User-agent: *</code>
-              <code>Disallow: /admin/</code>
-              <code>Disallow: /wp-admin/</code>
-              <code>Disallow: /cart/</code>
-              <code>Disallow: /checkout/</code>
-              <code>Allow: /</code>
-              <code>{'  '}</code>
-              <code>Sitemap: https://site.ru/sitemap.xml</code>
-              <code>Host: https://site.ru</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`User-agent: *
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cart/
+Disallow: /checkout/
+Allow: /
+  
+Sitemap: https://site.ru/sitemap.xml
+Host: https://site.ru`}
+          />
           <p>Чего нельзя делать:</p>
           <ul>
             <li>Закрывать robots.txt CSS/JS файлы (Google это не любит)</li>
@@ -968,38 +966,18 @@ const SEO = {
             <b>Sitemap.xml</b> - XML-файл со списком всех важных страниц сайта,
             которые должны быть в индексе.
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{`<?xml version="1.0" encoding="UTF-8"?>`}</code>
-              <code>{`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`}</code>
-              <code>
-                {'  '}
-                {`<url>`}
-              </code>
-              <code>
-                {'    '}
-                {`<loc>https://site.ru/category/tovar.html</loc>`}
-              </code>
-              <code>
-                {'    '}
-                {`<lastmod>2025-06-10</lastmod>`}
-              </code>
-              <code>
-                {'    '}
-                {`<changefreq>weekly</changefreq>`}
-              </code>
-              <code>
-                {'    '}
-                {`<priority>0.8</priority>`}
-              </code>
-              <code>
-                {'  '}
-                {`</url>`}
-              </code>
-              <code>{'</urlset>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://site.ru/category/tovar.html</loc>
+    <lastmod>2025-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>`}
+          />
           <p>Что важно:</p>
           <ul>
             <li>Не больше 50 000 URL в одном файле</li>
@@ -1047,7 +1025,7 @@ const SEO = {
     },
     'План сбора запросов (конкуренты, keys.so, вордстат)': {
       get title() {
-        return 'План сбора запросов (конкуренты, keys.so, вордстат)'
+        return 'План сбора запросов (конкуренты, keys.so, вордстат)';
       },
       get id() {
         return slugifyText(this.title);
@@ -1183,11 +1161,11 @@ const SEO = {
     },
     'Wordstat (Яндекс) и Keyword Planner (Google)': {
       get title() {
-              return 'Wordstat (Яндекс) и Keyword Planner (Google)'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Wordstat (Яндекс) и Keyword Planner (Google)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1298,11 +1276,11 @@ const SEO = {
     },
     'Семантическое ядро и кластеризация': {
       get title() {
-              return 'Семантическое ядро и кластеризация'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Семантическое ядро и кластеризация';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1390,7 +1368,7 @@ const SEO = {
     },
     Переспам: {
       get title() {
-        return 'Переспам'
+        return 'Переспам';
       },
       get id() {
         return slugifyText(this.title);
@@ -1588,7 +1566,7 @@ const SEO = {
     },
     'Внутренняя перелинковка': {
       get title() {
-        return 'Внутренняя перелинковка'
+        return 'Внутренняя перелинковка';
       },
       get id() {
         return slugifyText(this.title);
@@ -1753,11 +1731,11 @@ const SEO = {
     },
     'Структура URL (человеко-понятные адреса)': {
       get title() {
-              return 'Структура URL (человеко-понятные адреса)'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Структура URL (человеко-понятные адреса)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -1963,7 +1941,7 @@ const SEO = {
     },
     Микроразметка: {
       get title() {
-        return 'Микроразметка'
+        return 'Микроразметка';
       },
       get id() {
         return slugifyText(this.title);
@@ -2056,7 +2034,7 @@ const SEO = {
     },
     'Дубликаты страниц': {
       get title() {
-        return 'Дубликаты страниц'
+        return 'Дубликаты страниц';
       },
       get id() {
         return slugifyText(this.title);
@@ -2225,11 +2203,11 @@ const SEO = {
     },
     'Коммерческие факторы (влияние на поведение пользователя)': {
       get title() {
-              return 'Коммерческие факторы (влияние на поведение пользователя)'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Коммерческие факторы (влияние на поведение пользователя)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -2341,11 +2319,11 @@ const SEO = {
     },
     'Матрица коммерческих факторов': {
       get title() {
-              return 'Матрица коммерческих факторов'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Матрица коммерческих факторов';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -2460,11 +2438,11 @@ const SEO = {
     },
     Юзабилити: {
       get title() {
-              return 'Юзабилити'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Юзабилити';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -2690,11 +2668,11 @@ const SEO = {
     },
     Ссылки: {
       get title() {
-              return 'Ссылки'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Ссылки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>Почему ссылки до сих пор важны</p>
@@ -2949,11 +2927,11 @@ const SEO = {
     },
     Накрутка: {
       get title() {
-              return 'Накрутка'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Накрутка';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -3036,11 +3014,11 @@ const SEO = {
     },
     'Справочники и геосервисы': {
       get title() {
-              return 'Справочники и геосервисы'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Справочники и геосервисы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -3209,11 +3187,11 @@ const SEO = {
     },
     'Анализ (конверсия, трафик, позиции)': {
       get title() {
-              return 'Анализ (конверсия, трафик, позиции)'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Анализ (конверсия, трафик, позиции)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -3401,11 +3379,11 @@ const SEO = {
     },
     'Проверка позиций (TopWizard, Serpstat, SpyWords)': {
       get title() {
-              return 'Проверка позиций (TopWizard, Serpstat, SpyWords)'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Проверка позиций (TopWizard, Serpstat, SpyWords)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <h2>Почему нужно проверять позиции</h2>
@@ -3563,11 +3541,11 @@ const SEO = {
     },
     'Причины отсутствия роста': {
       get title() {
-              return 'Причины отсутствия роста'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Причины отсутствия роста';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -3872,11 +3850,11 @@ const SEO = {
     },
     'Точки роста трафика': {
       get title() {
-              return 'Точки роста трафика'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Точки роста трафика';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -3974,11 +3952,11 @@ const SEO = {
     },
     'Поддерживающий режим SEO': {
       get title() {
-              return 'Поддерживающий режим SEO'
-            },
-            get id() {
-              return slugifyText(this.title);
-            },
+        return 'Поддерживающий режим SEO';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
       jsx: (
         <div>
           <p>
@@ -4303,7 +4281,7 @@ const SEO = {
     },
     'SEO-аудит': {
       get title() {
-        return 'SEO-аудит'
+        return 'SEO-аудит';
       },
       get id() {
         return slugifyText(this.title);

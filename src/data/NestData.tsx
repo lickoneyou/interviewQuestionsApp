@@ -1,4 +1,4 @@
-import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const Nest = {
@@ -84,67 +84,28 @@ const Nest = {
             <b>Entity</b> - это класс, который отображает структуру таблицы базы
             данных.
           </p>
-          <pre>
-            <CodeNumber length={20} />
-            <code>
-              <code>{'// user.entity.ts'}</code>
-              <code>{`import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';`}</code>
-              <code>{'  '}</code>
-              <code>{'@Entity()'}</code>
-              <code>
-                {'  '}
-                {`export class User {`}
-              </code>
-              <code>
-                {'    '}
-                {'@PrimaryGeneratedColumn()'}
-              </code>
-              <code>
-                {'    '}
-                {'id: number;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {'@Column()'}
-              </code>
-              <code>
-                {'    '}
-                {'name: string;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {'@Column({ unique: true })'}
-              </code>
-              <code>
-                {'    '}
-                {'email: string;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {'@Column()'}
-              </code>
-              <code>
-                {'    '}
-                {'age: number;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {'@Column({ default: true })'}
-              </code>
-              <code>
-                {'    '}
-                {'isActive: boolean;'}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// user.entity.ts
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+  
+@Entity()
+  export class User {
+    @PrimaryGeneratedColumn()
+    id: number;
+  
+    @Column()
+    name: string;
+  
+    @Column({ unique: true })
+    email: string;
+  
+    @Column()
+    age: number;
+  
+    @Column({ default: true })
+    isActive: boolean;
+  }`}
+          />
         </div>
       ),
     },
@@ -162,50 +123,23 @@ const Nest = {
             передаваться по сети. Он не содержит бизнес-логику, только правила
             валидации и типизации.
           </p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code className='comment'>{'// create-user.dto.ts'}</code>
-              <code>{`import { IsEmail, IsInt, IsString, Min, Max } from 'class-validator';`}</code>
-              <code>{'  '}</code>
-              <code>{'export class CreateUserDto {'}</code>
-              <code>
-                {'  '}
-                {'@IsString()'}
-              </code>
-              <code>
-                {'  '}
-                {'name: string;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'@IsEmail()'}
-              </code>
-              <code>
-                {'  '}
-                {'email: string;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'@IsInt()'}
-              </code>
-              <code>
-                {'  '}
-                {'@Min(18)'}
-              </code>
-              <code>
-                {'  '}
-                {'@Max(100)'}
-              </code>
-              <code>
-                {'  '}
-                {'age: number;'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// create-user.dto.ts
+import { IsEmail, IsInt, IsString, Min, Max } from 'class-validator';
+  
+export class CreateUserDto {
+  @IsString()
+  name: string;
+  
+  @IsEmail()
+  email: string;
+  
+  @IsInt()
+  @Min(18)
+  @Max(100)
+  age: number;
+}`}
+          />
         </div>
       ),
     },
@@ -223,55 +157,29 @@ const Nest = {
             не зависит от HTTP-контекста и может использоваться в разных частях
             приложения.
           </p>
-          <pre>
-            <CodeNumber length={21} />
-            <code>
-              <code className='comment'>{'// users.service.ts'}</code>
-              <code>{`import { Injectable } from '@nestjs/common';`}</code>
-              <code>{`import { InjectRepository } from '@nestjs/typeorm';`}</code>
-              <code>{`import { Repository } from 'typeorm';`}</code>
-              <code>{`import { User } from './user.entity';`}</code>
-              <code>{`import { CreateUserDto } from './dto/create-user.dto';`}</code>
-              <code>{`import { UpdateUserDto } from './dto/update-user.dto';`}</code>
-              <code>{'  '}</code>
-              <code>{'@Injectable()'}</code>
-              <code>{'export class UsersService {'}</code>
-              <code>
-                {'  '}
-                {'constructor('}
-              </code>
-              <code>
-                {'    '}
-                {'@InjectRepository(User)'}
-              </code>
-              <code>
-                {'    '}
-                {'private usersRepository: Repository<User>,'}
-              </code>
-              <code>
-                {'  '}
-                {') {}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'async create(createUserDto: CreateUserDto): Promise<User> {}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {
-                  'async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {}'
-                }
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'async remove(id: number): Promise<void> {'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// users.service.ts
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+  
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+  
+  async create(createUserDto: CreateUserDto): Promise<User> {}
+  
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {}
+  
+  async remove(id: number): Promise<void> {
+}`}
+          />
         </div>
       ),
     },
@@ -307,30 +215,15 @@ const Nest = {
               других модулей.
             </li>
           </ul>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>{`@Module({`}</code>
-              <code>
-                {'  '}
-                {'imports: [DatabaseModule],'}
-              </code>
-              <code>
-                {'  '}
-                {'controllers: [UserController],'}
-              </code>
-              <code>
-                {'  '}
-                {'providers: [UserService],'}
-              </code>
-              <code>
-                {'  '}
-                {'exports: [UserService]'}
-              </code>
-              <code>{'})'}</code>
-              <code>{'export class UserModule {}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`@Module({
+  imports: [DatabaseModule],
+  controllers: [UserController],
+  providers: [UserService],
+  exports: [UserService]
+})
+export class UserModule {}`}
+          />
         </div>
       ),
     },
@@ -380,66 +273,27 @@ const Nest = {
             </li>
             <li>Формировать HTTP-ответ (статус, тело, заголовки).</li>
           </ul>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>{`import { Controller, Get, Post, Body, Param } from '@nestjs/common';`}</code>
-              <code>{'  '}</code>
-              <code>{`@Controller('users')         // базовый путь /users`}</code>
-              <code>{'export class UserController {'}</code>
-              <code>
-                {'  '}
-                {`@Get()                    // GET /users`}
-              </code>
-              <code>
-                {'  '}
-                {'findAll() {'}
-              </code>
-              <code>
-                {'    '}
-                {`return ['user1', 'user2'];`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`@Get(':id')               // GET /users/123`}
-              </code>
-              <code>
-                {'  '}
-                {`findOne(@Param('id') id: string) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return { id, name: 'John' };`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`@Post()                   // POST /users`}
-              </code>
-              <code>
-                {'  '}
-                {'create(@Body() createUserDto: CreateUserDto) {'}
-              </code>
-              <code>
-                {'    '}
-                {`return { message: 'User created', data: createUserDto };`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+  
+@Controller('users')         // базовый путь /users
+export class UserController {
+  @Get()                    // GET /users
+  findAll() {
+    return ['user1', 'user2'];
+  }
+  
+  @Get(':id')               // GET /users/123
+  findOne(@Param('id') id: string) {
+    return { id, name: 'John' };
+  }
+  
+  @Post()                   // POST /users
+  create(@Body() createUserDto: CreateUserDto) {
+    return { message: 'User created', data: createUserDto };
+  }
+}`}
+          />
         </div>
       ),
     },
@@ -526,113 +380,59 @@ const Nest = {
             </li>
           </ul>
           <p>Реализация:</p>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code className='comment'>{'// user.entity.ts'}</code>
-              <code>{`import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';`}</code>
-              <code>{'  '}</code>
-              <code>{'@Entity() // Указывает, что это модель таблицы'}</code>
-              <code>{'export class User {'}</code>
-              <code>{'  '}@PrimaryGeneratedColumn()</code>
-              <code>{'  '}id: number;</code>
-              <code>{'  '}</code>
-              <code>{'  '}@Column()</code>
-              <code>{'  '}name: string;</code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'@Column({ unique: true })'}
-              </code>
-              <code>{'  '}email: string;</code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code className='comment'>{'// users.module.ts'}</code>
-              <code>{`import { Module } from '@nestjs/common';`}</code>
-              <code>{`import { TypeOrmModule } from '@nestjs/typeorm';`}</code>
-              <code>{`import { User } from './user.entity';`}</code>
-              <code>{`import { UsersService } from './users.service';`}</code>
-              <code>{'  '}</code>
-              <code>{'@Module({'}</code>
-              <code>
-                {'  '}
-                {
-                  'imports: [TypeOrmModule.forFeature([User])], // Регистрируем сущность'
-                }
-              </code>
-              <code>{'  '}providers: [UsersService],</code>
-              <code>{'})'}</code>
-              <code>export class UsersModule {}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={22} />
-            <code>
-              <code className='comment'>{'// users.service.ts'}</code>
-              <code>{`import { Injectable } from '@nestjs/common';`}</code>
-              <code>{`import { InjectRepository } from '@nestjs/typeorm';`}</code>
-              <code>{`import { Repository } from 'typeorm';`}</code>
-              <code>{`import { User } from './user.entity';`}</code>
-              <code>{'  '}</code>
-              <code>@Injectable()</code>
-              <code>{'export class UsersService {'}</code>
-              <code>
-                {'  '}
-                {'constructor('}
-              </code>
-              <code>
-                {'    '}
-                {'@InjectRepository(User) // Внедряем репозиторий для User'}
-              </code>
-              <code>
-                {'    '}
-                {'private usersRepository: Repository<User>,'}
-              </code>
-              <code>
-                {'  '}
-                {') {}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'async create(userData: Partial<User>): Promise<User> {'}
-              </code>
-              <code>
-                {'    '}
-                {'const newUser = this.usersRepository.create(userData);'}
-              </code>
-              <code>
-                {'    '}
-                {
-                  'return this.usersRepository.save(newUser); // Автоматический INSERT'
-                }
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'async findAll(): Promise<User[]> {'}
-              </code>
-              <code>
-                {'    '}
-                {
-                  'return this.usersRepository.find(); // Автоматический SELECT *'
-                }
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// user.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+  
+@Entity() // Указывает, что это модель таблицы
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+  
+  @Column()
+  name: string;
+  
+  @Column({ unique: true })
+  email: string;
+}`}
+          />
+          <CodeHighlighter 
+            code={`// users.module.ts
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './user.entity';
+import { UsersService } from './users.service';
+  
+@Module({
+  imports: [TypeOrmModule.forFeature([User])], // Регистрируем сущность
+  providers: [UsersService],
+})
+export class UsersModule `}
+          />
+          <CodeHighlighter 
+            code={`// users.service.ts
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+  
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(User) // Внедряем репозиторий для User
+    private usersRepository: Repository<User>,
+  ) {}
+  
+  async create(userData: Partial<User>): Promise<User> {
+    const newUser = this.usersRepository.create(userData);
+    return this.usersRepository.save(newUser); // Автоматический INSERT
+  }
+  
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find(); // Автоматический SELECT *
+  }
+}`}
+          />
         </div>
       ),
     },
@@ -685,31 +485,22 @@ const Nest = {
               {'app.useGlobalPipes(new ValidationPipe({ transform: true }))'}
             </li>
           </ul>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code>{`import { IsString, IsEmail, IsInt, Min, Length } from 'class-validator';`}</code>
-              <code>{`import { Type, Transform } from 'class-transformer';`}</code>
-              <code>{'  '}</code>
-              <code>{'export class CreateUserDto {'}</code>
-              <code>{'  '}@IsString()</code>
-              <code>{'  '}@Length(2, 30)</code>
-              <code>
-                {'  '}
-                {`@Transform(({ value }) => value.trim()) // Убираем пробелы в начале и конце`}
-              </code>
-              <code>{'  '}name: string;</code>
-              <code>{'  '}</code>
-              <code>{'  '}@IsEmail()</code>
-              <code>{'  '}@Min(18)</code>
-              <code>
-                {'  '}
-                {`@Type(() => Number) // Явно преобразуем строку из запроса в число`}
-              </code>
-              <code>{'  '}age: number;</code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { IsString, IsEmail, IsInt, Min, Length } from 'class-validator';
+import { Type, Transform } from 'class-transformer';
+  
+export class CreateUserDto {
+  @IsString()
+  @Length(2, 30)
+  @Transform(({ value }) => value.trim()) // Убираем пробелы в начале и конце
+  name: string;
+  
+  @IsEmail()
+  @Min(18)
+  @Type(() => Number) // Явно преобразуем строку из запроса в число
+  age: number;
+}`}
+          />
         </div>
       ),
     },
@@ -735,69 +526,30 @@ const Nest = {
             <b>Проверка статуса</b>: brew services list | grep postgresql
           </p>
           <p>Подключени:</p>
-          <pre>
-            <CodeNumber length={22} />
-            <code>
-              <code>{`import { Module } from '@nestjs/common';`}</code>
-              <code>{`import { AppController } from './app.controller';`}</code>
-              <code>{`import { AppService } from './app.service';`}</code>
-              <code>{'  '}</code>
-              <code>{'@Module({'}</code>
-              <code>
-                {'  '}
-                {'imports: ['}
-              </code>
-              <code>
-                {'    '}
-                {'TypeOrmModule.forRoot({'}
-              </code>
-              <code>
-                {'      '}
-                {`type: 'postgres',`}
-              </code>
-              <code>
-                {'      '}
-                {`host: 'localhost',`}
-              </code>
-              <code>
-                {'      '}
-                {`port: 5432,`}
-              </code>
-              <code>
-                {'      '}
-                {`username: 'kirill',`}
-              </code>
-              <code>
-                {'      '}
-                {`password: 'root',`}
-              </code>
-              <code>
-                {'      '}
-                {`database: 'online_store',`}
-              </code>
-              <code>
-                {'      '}
-                {`autoLoadEntities: true,`}
-              </code>
-              <code>
-                {'      '}
-                {`synchronize: true,`}
-              </code>
-              <code>
-                {'    '}
-                {'}),'}
-              </code>
-              <code>
-                {'  '}
-                {'],'}
-              </code>
-              <code>{'  '}controllers: [AppController],</code>
-              <code>{'  '}providers: [AppService],</code>
-              <code>{'})'}</code>
-              <code>{'  '}</code>
-              <code>{'export class AppModule {}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+  
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'kirill',
+      password: 'root',
+      database: 'online_store',
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+  
+export class AppModule {}`}
+          />
         </div>
       ),
     },
@@ -811,48 +563,25 @@ const Nest = {
       jsx: (
         <div>
           <p>Подключение:</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>{`import { NestFactory } from '@nestjs/core';`}</code>
-              <code>{`import { AppModule } from './app.module';`}</code>
-              <code>{'  '}</code>
-              <code>{'async function bootstrap() {'}</code>
-              <code>
-                {'  '}const app = await NestFactory.create(AppModule);
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'app.enableCors({'}
-              </code>
-              <code>
-                {'    '}
-                {`origin: 'http://localhost:5173',`}
-              </code>
-              <code>
-                {'    '}
-                {`methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',`}
-              </code>
-              <code>
-                {'    '}
-                {`credentials: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`allowedHeaders: 'Content-Type, Accept, Authorization',`}
-              </code>
-              <code>
-                {'  '}
-                {'});'}
-              </code>
-              <code>{'  '}</code>
-              <code>{'  '}await app.listen(process.env.PORT ?? 3000);</code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>bootstrap();</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+  
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
+  
+  await app.listen(process.env.PORT ?? 3000);
+}
+  
+bootstrap();`}
+          />
           <p>Параметры:</p>
           <ul>
             <li>
@@ -891,169 +620,64 @@ const Nest = {
             разработки и тестирования RESTful API.
           </p>
           <p>Подключение:</p>
-          <pre>
-            <CodeNumber length={22} />
-            <code>
-              <code className='comment'>{'// main.ts'}</code>
-              <code>{`import { NestFactory } from "@nestjs/core";`}</code>
-              <code>{`import { AppModule } from "./app.module";`}</code>
-              <code>{`import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";`}</code>
-              <code>{'  '}</code>
-              <code>{'async function bootstrap() {'}</code>
-              <code>
-                {'  '}
-                {'const app = await NestFactory.create(AppModule);'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'const config = new DocumentBuilder()'}
-              </code>
-              <code>
-                {'    '}
-                {'.setTitle("Online Store")'}
-              </code>
-              <code>
-                {'    '}
-                {'.setDescription("Online Store Documentation")'}
-              </code>
-              <code>
-                {'    '}
-                {'.setVersion("1.0.0")'}
-              </code>
-              <code>
-                {'    '}
-                {'.addTag("online-store")'}
-              </code>
-              <code>
-                {'    '}
-                {'.build();'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'const document = SwaggerModule.createDocument(app, config);'}
-              </code>
-              <code>
-                {'  '}
-                {'SwaggerModule.setup("/docs", app, document);'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'await app.listen(process.env.PORT ?? 3000);'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{'bootstrap();'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={32} />
-            <code>
-              <code className='comment'>{'// create-user.dto.ts'}</code>
-              <code>{`import { ApiProperty } from '@nestjs/swagger';`}</code>
-              <code>{`import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';`}</code>
-              <code>{'  '}</code>
-              <code>{'export class CreateUserDto {'}</code>
-              <code>
-                {'  '}
-                {'@ApiProperty({'}
-              </code>
-              <code>
-                {'    '}
-                {`example: 'user@gmail.ru',`}
-              </code>
-              <code>
-                {'    '}
-                {`description: 'Email',`}
-              </code>
-              <code>
-                {'  '}
-                {'})'}
-              </code>
-              <code>
-                {'  '}
-                {'@IsEmail('}
-              </code>
-              <code>
-                {'    '}
-                {'{},'}
-              </code>
-              <code>
-                {'    '}
-                {'{'}
-              </code>
-              <code>
-                {'      '}
-                {`message: 'Wrong email',`}
-              </code>
-              <code>
-                {'    '}
-                {'},'}
-              </code>
-              <code>
-                {'  '}
-                {')'}
-              </code>
-              <code>{'  '}readonly email: string;</code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'@ApiProperty({'}
-              </code>
-              <code>
-                {'    '}
-                {`example: '123456',`}
-              </code>
-              <code>
-                {'    '}
-                {`description: 'Password',`}
-              </code>
-              <code>
-                {'  '}
-                {'})'}
-              </code>
-              <code>
-                {'  '}
-                {'@IsString({'}
-              </code>
-              <code>
-                {'    '}
-                {`message: 'Must be string',`}
-              </code>
-              <code>
-                {'  '}
-                {'})'}
-              </code>
-              <code>
-                {'  '}
-                {'@MinLength(6, {'}
-              </code>
-              <code>
-                {'    '}
-                {`message: 'Min length must be more or equl 6',`}
-              </code>
-              <code>
-                {'  '}
-                {'})'}
-              </code>
-              <code>
-                {'  '}
-                {'@MaxLength(12, {'}
-              </code>
-              <code>
-                {'    '}
-                {`message: 'Max length must be less 12',`}
-              </code>
-              <code>
-                {'  '}
-                {'})'}
-              </code>
-              <code>{'  '}readonly password: string;</code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// main.ts
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+  
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  
+  const config = new DocumentBuilder()
+    .setTitle("Online Store")
+    .setDescription("Online Store Documentation")
+    .setVersion("1.0.0")
+    .addTag("online-store")
+    .build();
+  
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("/docs", app, document);
+  
+  await app.listen(process.env.PORT ?? 3000);
+}
+  
+bootstrap();`}
+          />
+          <CodeHighlighter 
+            code={`// create-user.dto.ts
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+  
+export class CreateUserDto {
+  @ApiProperty({
+    example: 'user@gmail.ru',
+    description: 'Email',
+  })
+  @IsEmail(
+    {},
+    {
+      message: 'Wrong email',
+    },
+  )
+  readonly email: string;
+  
+  @ApiProperty({
+    example: '123456',
+    description: 'Password',
+  })
+  @IsString({
+    message: 'Must be string',
+  })
+  @MinLength(6, {
+    message: 'Min length must be more or equl 6',
+  })
+  @MaxLength(12, {
+    message: 'Max length must be less 12',
+  })
+  readonly password: string;
+}`}
+          />
         </div>
       ),
     },
@@ -1121,29 +745,26 @@ const Nest = {
             <b>data-source.ts</b> - файл нужен для TypeORM CLI, чтобы он знал,
             как подключаться к базе и где искать entity.
           </p>
-          <pre>
-            <CodeNumber length={18} />
-            <code>
-              <code className='comment'>{'// src/data-source.ts'}</code>
-              <code>{`import { DataSource } from "typeorm";`}</code>
-              <code>{'import { config } from "dotenv";'}</code>
-              <code>{'  '}</code>
-              <code>{'config();'}</code>
-              <code>{'  '}</code>
-              <code>{'export default new DataSource({'}</code>
-              <code>{'  '}type: "postgres",</code>
-              <code>{'  '}host: process.env.DB_HOST,</code>
-              <code>{'  '}port: parseInt(process.env.DB_PORT || "5432")</code>
-              <code>{'  '}username: process.env.DB_USERNAME,</code>
-              <code>{'  '}password: process.env.DB_PASSWORD || "",</code>
-              <code>{'  '}database: process.env.DB_NAME,</code>
-              <code>{'  '}entities: ["src/**/*.entity.ts"],</code>
-              <code>{'  '}migrations: ["src/migrations/*.ts"],</code>
-              <code>{'  '}synchronize: false,</code>
-              <code>{'  '}logging: true,</code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// src/data-source.ts
+import { DataSource } from "typeorm";
+import { config } from "dotenv";
+  
+config();
+  
+export default new DataSource({
+  type: "postgres",
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || "5432")
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME,
+  entities: ["src/**/*.entity.ts"],
+  migrations: ["src/migrations/*.ts"],
+  synchronize: false,
+  logging: true,
+});`}
+          />
           <p>Важно:</p>
           <ul>
             <li>
@@ -1166,55 +787,18 @@ const Nest = {
             </li>
           </ul>
           <p>Команды для миграций</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{'{'}</code>
-              <code>
-                {'  '}
-                {'"scripts": {'}
-              </code>
-              <code>
-                {'    '}
-                {'"typeorm": "ts-node ./node_modules/typeorm/cli.js",'}
-              </code>
-              <code>
-                {'    '}
-                {
-                  '"migration:show": "npm run typeorm -- migration:show -d src/data-source.ts",'
-                }
-              </code>
-              <code>
-                {'    '}
-                {
-                  '"migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",'
-                }
-              </code>
-              <code>
-                {'    '}
-                {
-                  '"migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",'
-                }
-              </code>
-              <code>
-                {'    '}
-                {
-                  '"migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts",'
-                }
-              </code>
-              <code>
-                {'    '}
-                {
-                  '"migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"'
-                }
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`{
+  "scripts": {
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "migration:show": "npm run typeorm -- migration:show -d src/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",
+    "migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",
+    "migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts",
+    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create"
+  }
+}`}
+          />
           <ul>
             <li>
               <b>npm run migration:show</b> - Показывает статус всех миграций
