@@ -23,7 +23,7 @@ const ExpressJs = {
             <li>Отправку ответов (не нужно писать заголовки вручную)</li>
           </ul>
           <p>Установка</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'bash'}
             code={`# Создаем проект
 mkdir my-express-app
@@ -34,7 +34,7 @@ npm init -y
 npm install express`}
           />
           <p>Сервер</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// app.js
 const express = require('express');
   
@@ -49,10 +49,7 @@ app.listen(3000, () => {
 });`}
           />
           <p>Запуск:</p>
-          <CodeHighlighter 
-            language={'bash'}
-            code={`node app.js`}
-          />
+          <CodeHighlighter language={'bash'} code={`node app.js`} />
           <p>Сравнение: чистый http vs Express</p>
           <table>
             <thead>
@@ -210,190 +207,97 @@ app.listen(3000, () => {
       jsx: (
         <div>
           <p>Базовые методы</p>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>{`app.get('/users', (req, res) => {      // Чтение`}</code>
-              <code>
-                {'  '}
-                {`res.json(users);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.post('/users', (req, res) => {     // Создание`}</code>
-              <code>
-                {'  '}
-                {`res.status(201).json(newUser);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.put('/users/:id', (req, res) => {  // Полное обновление`}</code>
-              <code>
-                {'  '}
-                {`res.json(updatedUser);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.patch('/users/:id', (req, res) => { // Частичное обновление`}</code>
-              <code>
-                {'  '}
-                {`res.json(updatedUser);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.delete('/users/:id', (req, res) => { // Удаление`}</code>
-              <code>
-                {'  '}
-                {`res.status(204).send();`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`app.get('/users', (req, res) => {      // Чтение
+  res.json(users);
+});
+  
+app.post('/users', (req, res) => {     // Создание
+  res.status(201).json(newUser);
+});
+  
+app.put('/users/:id', (req, res) => {  // Полное обновление
+  res.json(updatedUser);
+});
+  
+app.patch('/users/:id', (req, res) => { // Частичное обновление
+  res.json(updatedUser);
+});
+  
+app.delete('/users/:id', (req, res) => { // Удаление
+  res.status(204).send();
+});`}
+          />
           <p>Маршруты с параметрами (req.params)</p>
-          <pre>
-            <CodeNumber length={18} />
-            <code>
-              <code className='comment'>{`// /users/5 → req.params = { id: '5' }`}</code>
-              <code>{`app.get('/users/:id', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const id = parseInt(req.params.id);`}
-              </code>
-              <code>
-                {'  '}
-                {`const user = users.find(u => u.id === id);`}
-              </code>
-              <code>
-                {''}
-                {`res.json(user);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Несколько параметров`}</code>
-              <code className='comment'>{`// /posts/123/comments/456 → req.params = { postId: '123', commentId: '456' }`}</code>
-              <code>{`app.get('/posts/:postId/comments/:commentId', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log(req.params);`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(req.params);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Параметр с регуляркой (только цифры)`}</code>
-              <code>{`app.get('/users/:id(\\d+)', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`// id всегда будет числовой строкой`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// /users/5 → req.params = { id: '5' }
+app.get('/users/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = users.find(u => u.id === id);
+res.json(user);
+});
+  
+// Несколько параметров
+// /posts/123/comments/456 → req.params = { postId: '123', commentId: '456' }
+app.get('/posts/:postId/comments/:commentId', (req, res) => {
+  console.log(req.params);
+  res.json(req.params);
+});
+  
+// Параметр с регуляркой (только цифры)
+app.get('/users/:id(\d+)', (req, res) => {
+  // id всегда будет числовой строкой
+});`}
+          />
           <p>Параметры могут быть опциональными</p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>{`// /users/5 → req.params.id = '5'`}</code>
-              <code className='comment'>{`// /users → req.params.id = undefined`}</code>
-              <code>{`app.get('/users/:id?', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`if (req.params.id) {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json({ id: req.params.id });`}
-              </code>
-              <code>
-                {'  '}
-                {`} else {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json({ message: 'Список всех пользователей' });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// /users/5 → req.params.id = '5'
+// /users → req.params.id = undefined
+app.get('/users/:id?', (req, res) => {
+  if (req.params.id) {
+    res.json({ id: req.params.id });
+  } else {
+    res.json({ message: 'Список всех пользователей' });
+  }
+});`}
+          />
           <p>Query параметры (req.query)</p>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code className='comment'>{`// GET /users?page=2&limit=10&sort=name`}</code>
-              <code className='comment'>{`// req.query = { page: '2', limit: '10', sort: 'name' }`}</code>
-              <code>{'  '}</code>
-              <code>{`app.get('/users', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const { page = 1, limit = 10, sort = 'id' } = req.query;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.json({`}
-              </code>
-              <code>
-                {'    '}
-                {`page: parseInt(page),`}
-              </code>
-              <code>
-                {'    '}
-                {`limit: parseInt(limit),`}
-              </code>
-              <code>
-                {'    '}
-                {`sort,`}
-              </code>
-              <code>
-                {'    '}
-                {`data: users.slice((page - 1) * limit, page * limit)`}
-              </code>
-              <code>
-                {'  '}
-                {'});'}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Булевы значения ( ?active=true )`}</code>
-              <code>{`app.get('/products', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const isActive = req.query.active === 'true';`}
-              </code>
-              <code className='comment'>{`// или для чисел: const minPrice = parseInt(req.query.minPrice) || 0`}</code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// GET /users?page=2&limit=10&sort=name
+// req.query = { page: '2', limit: '10', sort: 'name' }
+  
+app.get('/users', (req, res) => {
+  const { page = 1, limit = 10, sort = 'id' } = req.query;
+  
+  res.json({
+    page: parseInt(page),
+    limit: parseInt(limit),
+    sort,
+    data: users.slice((page - 1) * limit, page * limit)
+  });
+});
+  
+// Булевы значения ( ?active=true )
+app.get('/products', (req, res) => {
+  const isActive = req.query.active === 'true';
+// или для чисел: const minPrice = parseInt(req.query.minPrice) || 0
+});`}
+          />
           <p>Тело запроса (req.body)</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code className='comment'>{`// ОБЯЗАТЕЛЬНО подключить middleware ДО маршрутов`}</code>
-              <code>{`app.use(express.json());        // для application/json`}</code>
-              <code>{`app.use(express.urlencoded({ extended: true })); // для form-data (HTML формы)`}</code>
-              <code>{'  '}</code>
-              <code>{`app.post('/users', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log(req.body); // { name: 'Alice', email: 'alice@example.com' }`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(req.body);`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// extended: true — позволяет вложенные объекты`}</code>
-              <code className='comment'>{`// extended: false — только простые key=value`}</code>
-              <code className='comment'>{`// req.body.name, req.body.address.city (если extended: true)`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ОБЯЗАТЕЛЬНО подключить middleware ДО маршрутов
+app.use(express.json());        // для application/json
+app.use(express.urlencoded({ extended: true })); // для form-data (HTML формы)
+  
+app.post('/users', (req, res) => {
+  console.log(req.body); // { name: 'Alice', email: 'alice@example.com' }
+  res.json(req.body);
+});
+  
+// extended: true — позволяет вложенные объекты
+// extended: false — только простые key=value
+// req.body.name, req.body.address.city (если extended: true)`}
+          />
           <p>Что приходит в req.body в зависимости от Content-Type:</p>
           <table>
             <thead>
@@ -427,157 +331,79 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>app.route() — группировка методов для одного пути</p>
-          <pre>
-            <CodeNumber length={26} />
-            <code>
-              <code className='comment'>{`// Вместо этого:`}</code>
-              <code>{`app.get('/users', getUsers);`}</code>
-              <code>{`app.post('/users', createUser);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Лучше (группировка):`}</code>
-              <code>{`app.route('/users')`}</code>
-              <code>
-                {'  '}
-                {`.get((req, res) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json(users);`}
-              </code>
-              <code>
-                {'  '}
-                {`})`}
-              </code>
-              <code>
-                {'  '}
-                {`.post((req, res) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`const newUser = { id: Date.now(), ...req.body };`}
-              </code>
-              <code>
-                {'    '}
-                {`users.push(newUser);`}
-              </code>
-              <code>
-                {'    '}
-                {`res.status(201).json(newUser);`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code>{`app.route('/users/:id')`}</code>
-              <code>
-                {'  '}
-                {`.get((req, res) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`const user = users.find(u => u.id === parseInt(req.params.id));`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json(user);`}
-              </code>
-              <code>
-                {'  '}
-                {`})`}
-              </code>
-              <code>
-                {'  '}
-                {`.put((req, res) => {`}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// обновление`}
-              </code>
-              <code>
-                {'  '}
-                {`})`}
-              </code>
-              <code>
-                {'  '}
-                {`.delete((req, res) => {`}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// удаление`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Вместо этого:
+app.get('/users', getUsers);
+app.post('/users', createUser);
+  
+// Лучше (группировка):
+app.route('/users')
+  .get((req, res) => {
+    res.json(users);
+  })
+  .post((req, res) => {
+    const newUser = { id: Date.now(), ...req.body };
+    users.push(newUser);
+    res.status(201).json(newUser);
+  });
+  
+app.route('/users/:id')
+  .get((req, res) => {
+    const user = users.find(u => u.id === parseInt(req.params.id));
+    res.json(user);
+  })
+  .put((req, res) => {
+  // обновление
+  })
+  .delete((req, res) => {
+  // удаление
+});`}
+          />
           <p>app.all() — все HTTP методы</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code className='comment'>{`// Обрабатывает GET, POST, PUT, DELETE и т.д.`}</code>
-              <code>{`app.all('/secret', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json({ message: 'Этот эндпоинт принимает любые методы' });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверка авторизации для всех методов`}</code>
-              <code>{`app.all('/admin/*', (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`if (!req.headers.authorization) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return res.status(401).send('Unauthorized');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Обрабатывает GET, POST, PUT, DELETE и т.д.
+app.all('/secret', (req, res) => {
+  res.json({ message: 'Этот эндпоинт принимает любые методы' });
+});
+  
+// Проверка авторизации для всех методов
+app.all('/admin/*', (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).send('Unauthorized');
+  }
+  next();
+});`}
+          />
           <p>Паттерны маршрутов</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code className='comment'>{`// Строка`}</code>
-              <code>{`app.get('/about', handler);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Строка с параметром`}</code>
-              <code>{`app.get('/users/:userId', handler);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Несколько параметров`}</code>
-              <code>{`app.get('/flights/:from-:to', handler);`}</code>
-              <code className='comment'>{`// /flights/Moscow-London → { from: 'Moscow', to: 'London' }`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Регулярное выражение`}</code>
-              <code>{`app.get(/.*fly$/, handler); // заканчивается на 'fly'`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Массив паттернов`}</code>
-              <code>{`app.get(['/users', '/user-list', '/members'], handler);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Строка
+app.get('/about', handler);
+  
+// Строка с параметром
+app.get('/users/:userId', handler);
+  
+// Несколько параметров
+app.get('/flights/:from-:to', handler);
+// /flights/Moscow-London → { from: 'Moscow', to: 'London' }
+  
+// Регулярное выражение
+app.get(/.*fly$/, handler); // заканчивается на 'fly'
+  
+// Массив паттернов
+app.get(['/users', '/user-list', '/members'], handler);`}
+          />
           <p>
             Порядок маршрутов <span>ВАЖЕН!</span>
           </p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code className='comment'>{`// ❌ Плохо (конкретный никогда не сработает)`}</code>
-              <code>{`app.get('/users/:id', handler);      // перехватит /users/me`}</code>
-              <code>{`app.get('/users/me', handler);       // никогда не вызовется`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Хорошо (конкретный раньше)`}</code>
-              <code>{`app.get('/users/me', handler);       // сначала конкретный`}</code>
-              <code>{`app.get('/users/:id', handler);      // потом общий`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ❌ Плохо (конкретный никогда не сработает)
+app.get('/users/:id', handler);      // перехватит /users/me
+app.get('/users/me', handler);       // никогда не вызовется
+  
+// ✅ Хорошо (конкретный раньше)
+app.get('/users/me', handler);       // сначала конкретный
+app.get('/users/:id', handler);      // потом общий`}
+          />
         </div>
       ),
     },
@@ -603,39 +429,34 @@ app.listen(3000, () => {
             <li>Вызвать следующий middleware в цепочке</li>
           </ul>
           <p>Конвейер обработки (цепочка middleware)</p>
-          <pre>
-            {`Запрос → middleware1 → middleware2 → middleware3 → route → Ответ
+          <CodeHighlighter
+            language={'bash'}
+            code={`Запрос → middleware1 → middleware2 → middleware3 → route → Ответ
            ↓              ↓              ↓
         next()         next()         next()`}
-          </pre>
-          <pre>
-            <CodeNumber length={4} />
-            <code>
-              <code>app.use(middleware1);</code>
-              <code>app.use(middleware2);</code>
-              <code>app.use(middleware3);</code>
-              <code>app.get('/', handler);</code>
-            </code>
-          </pre>
+          />
+          <CodeHighlighter
+            code={`app.use(middleware1);
+app.use(middleware2);
+app.use(middleware3);
+app.get('/', handler);`}
+          />
           <p>Сигнатура middleware</p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>{`function myMiddleware(req, res, next) {`}</code>
-              <code className='comment'>{`// 1. Что-то делаем`}</code>
-              <code>{"console.log('1');"}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 2. Меняем req/res`}</code>
-              <code>{`req.timestamp = Date.now();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{` // 3. Либо завершаем запрос`}</code>
-              <code className='comment'>{`// if (!req.headers.token) return res.status(401).send('No token');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 4. Либо передаем дальше`}</code>
-              <code>{`next();`}</code>
-              <code>{`}`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`function myMiddleware(req, res, next) {
+// 1. Что-то делаем
+console.log('1');
+  
+// 2. Меняем req/res
+req.timestamp = Date.now();
+  
+ // 3. Либо завершаем запрос
+// if (!req.headers.token) return res.status(401).send('No token');
+  
+// 4. Либо передаем дальше
+next();
+}`}
+          />
           <p>Типы middleware</p>
           <table>
             <thead>
@@ -668,318 +489,193 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>Application-level middleware (app.use)</p>
-          <pre>
-            <CodeNumber length={26} />
-            <code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const app = express();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Глобальный middleware (для всех запросов)`}</code>
-              <code>{`app.use((req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {
-                  'console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);'
-                }
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Для конкретного пути`}</code>
-              <code>{`app.use('/api', (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Только для /api/*');`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Несколько middleware подряд`}</code>
-              <code>{`app.use('/users', `}</code>
-              <code>
-                {'  '}
-                {`(req, res, next) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`console.log('Middleware 1 для /users');`}
-              </code>
-              <code>
-                {'    '}
-                {`next();`}
-              </code>
-              <code>{'  },'}</code>
-              <code>
-                {'  '}
-                {`(req, res, next) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`console.log('Middleware 2 для /users');`}
-              </code>
-              <code>
-                {'    '}
-                {`next();`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{');'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const express = require('express');
+const app = express();
+  
+// Глобальный middleware (для всех запросов)
+app.use((req, res, next) => {
+  console.log(\`\${new Date().toISOString()} - \${req.method} \${req.url}\`);
+  next();
+});
+  
+// Для конкретного пути
+app.use('/api', (req, res, next) => {
+  console.log('Только для /api/*');
+  next();
+});
+  
+// Несколько middleware подряд
+app.use('/users', 
+  (req, res, next) => {
+    console.log('Middleware 1 для /users');
+    next();
+  },
+  (req, res, next) => {
+    console.log('Middleware 2 для /users');
+    next();
+  }
+);`}
+          />
           <p>Router-level middleware (express.Router)</p>
-          <pre>
-            <CodeNumber length={21} />
-            <code>
-              <code>{`const express = require('express');`}</code>
-              <code>{'const router = express.Router();'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Middleware для всех роутов этого роутера`}</code>
-              <code>{`router.use((req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Time:', Date.now());`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Middleware для конкретного маршрута`}</code>
-              <code>{`router.use('/protected', (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`if (!req.headers.authorization) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return res.status(401).send('Unauthorized');`}
-              </code>
-              <code>{'  }'}</code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'});'}</code>
-              <code>{`router.get('/protected/data', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json({ secret: 'data' });`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.use('/api', router);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const express = require('express');
+const router = express.Router();
+  
+// Middleware для всех роутов этого роутера
+router.use((req, res, next) => {
+  console.log('Time:', Date.now());
+  next();
+});
+  
+// Middleware для конкретного маршрута
+router.use('/protected', (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).send('Unauthorized');
+  }
+  next();
+});
+router.get('/protected/data', (req, res) => {
+  res.json({ secret: 'data' });
+});
+  
+app.use('/api', router);`}
+          />
           <p>Built-in middleware (встроенные)</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code className='comment'>{`// Парсинг JSON`}</code>
-              <code>{`app.use(express.json());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Парсинг URL-encoded (form data)`}</code>
-              <code>{`app.use(express.urlencoded({ extended: true }));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Отдача статических файлов`}</code>
-              <code>{`app.use(express.static('public'));`}</code>
-              <code>{`app.use('/static', express.static('public'));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Raw body (строка/буфер)`}</code>
-              <code>{`app.use(express.raw());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Text body`}</code>
-              <code>{`app.use(express.text());`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Парсинг JSON
+app.use(express.json());
+  
+// Парсинг URL-encoded (form data)
+app.use(express.urlencoded({ extended: true }));
+  
+// Отдача статических файлов
+app.use(express.static('public'));
+app.use('/static', express.static('public'));
+  
+// Raw body (строка/буфер)
+app.use(express.raw());
+  
+// Text body
+app.use(express.text());`}
+          />
           <p>Error-handling middleware</p>
           <p>
             <span>Особенность</span>: принимает 4 аргумента (err, req, res,
             next)
           </p>
-          <pre>
-            <CodeNumber length={29} />
-            <code>
-              <code className='comment'>{`// Обычный middleware, который вызывает ошибку`}</code>
-              <code>{`app.get('/error', (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`next(new Error('Что-то пошло не так'));`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Error-handling middleware (ДОЛЖЕН быть последним)`}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`console.error(err.stack);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const status = err.status || 500;`}
-              </code>
-              <code>
-                {'  '}
-                {`const message = err.message || 'Internal Server Error';`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.status(status).json({`}
-              </code>
-              <code>
-                {'    '}
-                {`error: {`}
-              </code>
-              <code>
-                {'      '}
-                {`message,`}
-              </code>
-              <code>
-                {'      '}
-                {`status`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Можно создать несколько (например, для 404)`}</code>
-              <code>{`app.use((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.status(404).json({ error: 'Not Found' });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Затем error-handling`}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// обрабатываем ошибки`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Обычный middleware, который вызывает ошибку
+app.get('/error', (req, res, next) => {
+  next(new Error('Что-то пошло не так'));
+});
+  
+// Error-handling middleware (ДОЛЖЕН быть последним)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+  
+  res.status(status).json({
+    error: {
+      message,
+      status
+    }
+  });
+});
+  
+// Можно создать несколько (например, для 404)
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
+  
+// Затем error-handling
+app.use((err, req, res, next) => {
+  // обрабатываем ошибки
+});`}
+          />
           <p>Third-party middleware (популярные)</p>
-          <pre>npm install morgan cors helmet compression rate-limit</pre>
-          <pre>
-            <CodeNumber length={30} />
-            <code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const morgan = require('morgan');`}</code>
-              <code>{`const cors = require('cors');`}</code>
-              <code>{`const helmet = require('helmet');`}</code>
-              <code>{`const compression = require('compression');`}</code>
-              <code>{`const rateLimit = require('express-rate-limit');`}</code>
-              <code>{'  '}</code>
-              <code>{`const app = express();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Логирование`}</code>
-              <code>{`app.use(morgan('dev'));  // 'combined', 'common', 'short', 'tiny'`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Безопасность`}</code>
-              <code>{`app.use(helmet());  // ставит безопасные заголовки`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// CORS`}</code>
-              <code>{`app.use(cors());  // разрешить все источники`}</code>
-              <code className='comment'>{`// или с опциями:`}</code>
-              <code>{`app.use(cors({ origin: 'https://myfrontend.com' }));`}</code>
-              <code>{'  '}</code>
-              <code>{`// Сжатие ответов`}</code>
-              <code>{`app.use(compression());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Rate limiting`}</code>
-              <code>{`const limiter = rateLimit({`}</code>
-              <code>
-                {'  '}
-                {`windowMs: 15 * 60 * 1000, // 15 минут`}
-              </code>
-              <code>
-                {'  '}
-                {`max: 100, // максимум 100 запросов`}
-              </code>
-              <code>
-                {'  '}
-                {`message: 'Too many requests from this IP'`}
-              </code>
-              <code>{'});'}</code>
-              <code>{`app.use('/api', limiter);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install morgan cors helmet compression rate-limit`}
+          />
+          <CodeHighlighter
+            code={`const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const rateLimit = require('express-rate-limit');
+  
+const app = express();
+  
+// Логирование
+app.use(morgan('dev'));  // 'combined', 'common', 'short', 'tiny'
+  
+// Безопасность
+app.use(helmet());  // ставит безопасные заголовки
+  
+// CORS
+app.use(cors());  // разрешить все источники
+// или с опциями:
+app.use(cors({ origin: 'https://myfrontend.com' }));
+  
+// Сжатие ответов
+app.use(compression());
+  
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 минут
+  max: 100, // максимум 100 запросов
+  message: 'Too many requests from this IP'
+});
+app.use('/api', limiter);`}
+          />
           <p>Порядок middleware — критически важен!</p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{`const app = express();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ❌ Неправильно (будет 404)`}</code>
-              <code>{`app.get('/users', handler);`}</code>
-              <code>{`app.use(express.json());  // поздно, запрос уже обработан`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Правильно`}</code>
-              <code>{`app.use(express.json());  // сначала middleware`}</code>
-              <code>{`app.get('/users', handler);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const app = express();
+  
+// ❌ Неправильно (будет 404)
+app.get('/users', handler);
+app.use(express.json());  // поздно, запрос уже обработан
+  
+// ✅ Правильно
+app.use(express.json());  // сначала middleware
+app.get('/users', handler);`}
+          />
           <p>Полный правильный порядок:</p>
-          <pre>
-            <CodeNumber length={29} />
-            <code>
-              <code className='comment'>{`// 1. Безопасность и логирование (самые первые)`}</code>
-              <code>{`app.use(helmet());`}</code>
-              <code>{`app.use(cors());`}</code>
-              <code>{`app.use(morgan('dev'));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 2. Парсеры тела запроса`}</code>
-              <code>{`app.use(express.json());`}</code>
-              <code>{`app.use(express.urlencoded({ extended: true }));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 3. Статика (может быть рано, если не нужна)`}</code>
-              <code>{`app.use(express.static('public'));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 4. Кастомные middleware`}</code>
-              <code>{`app.use(authMiddleware);`}</code>
-              <code>{`app.use(loggerMiddleware);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 5. Роуты`}</code>
-              <code>{`app.use('/api', apiRouter);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 6. 404 обработчик (если не найден маршрут)`}</code>
-              <code>{`app.use((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.status(404).json({ error: 'Not Found' });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 7. Error-handling middleware (самый последний)`}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`console.error(err);`}
-              </code>
-              <code>
-                {'  '}
-                {`res.status(500).json({ error: 'Internal Server Error' });`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// 1. Безопасность и логирование (самые первые)
+app.use(helmet());
+app.use(cors());
+app.use(morgan('dev'));
+  
+// 2. Парсеры тела запроса
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+  
+// 3. Статика (может быть рано, если не нужна)
+app.use(express.static('public'));
+  
+// 4. Кастомные middleware
+app.use(authMiddleware);
+app.use(loggerMiddleware);
+  
+// 5. Роуты
+app.use('/api', apiRouter);
+  
+// 6. 404 обработчик (если не найден маршрут)
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found' });
+});
+  
+// 7. Error-handling middleware (самый последний)
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});`}
+          />
         </div>
       ),
     },
@@ -994,20 +690,17 @@ app.listen(3000, () => {
         <div>
           <b>Router</b> - мини-приложение Express, позволяющее группировать
           маршруты в отдельные модули.
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>const express = require('express');</code>
-              <code>const router = express.Router();</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// router работает как app, но только для своих маршрутов`}</code>
-              <code>{`router.get('/users', (req, res) => { ... });`}</code>
-              <code>{`router.post('/users', (req, res) => { ... });`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Подключаем к приложению`}</code>
-              <code>{`app.use('/api', router);  // все маршруты router будут с префиксом /api`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const express = require('express');
+const router = express.Router();
+  
+// router работает как app, но только для своих маршрутов
+router.get('/users', (req, res) => { ... });
+router.post('/users', (req, res) => { ... });
+  
+// Подключаем к приложению
+app.use('/api', router);  // все маршруты router будут с префиксом /api`}
+          />
           <table>
             <thead>
               <tr>
@@ -1034,66 +727,45 @@ app.listen(3000, () => {
               </tr>
             </tbody>
           </table>
-          <pre>
-            <CodeNumber length={24} />
-            <code>
-              <code className='comment'>{`// routes/users.js`}</code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const router = express.Router();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Middleware только для этого роутера`}</code>
-              <code>{`router.use((req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Time:', Date.now());`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Маршруты`}</code>
-              <code>{`router.get('/', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json([{ id: 1, name: 'Alice' }]);`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`router.get('/:id', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json({ id: req.params.id, name: 'User' });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`router.post('/', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.status(201).json({ id: Date.now(), ...req.body });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = router;`}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code className='comment'>{`// app.js`}</code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const userRoutes = require('./routes/users');`}</code>
-              <code>{'  '}</code>
-              <code>{`const app = express();`}</code>
-              <code>{`app.use(express.json());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Подключаем роутер с префиксом /users`}</code>
-              <code>{`app.use('/users', userRoutes);`}</code>
-              <code>{'  '}</code>
-              <code>{`app.listen(3000);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// routes/users.js
+const express = require('express');
+const router = express.Router();
+  
+// Middleware только для этого роутера
+router.use((req, res, next) => {
+  console.log('Time:', Date.now());
+  next();
+});
+  
+// Маршруты
+router.get('/', (req, res) => {
+  res.json([{ id: 1, name: 'Alice' }]);
+});
+  
+router.get('/:id', (req, res) => {
+  res.json({ id: req.params.id, name: 'User' });
+});
+  
+router.post('/', (req, res) => {
+  res.status(201).json({ id: Date.now(), ...req.body });
+});
+  
+module.exports = router;`}
+          />
+          <CodeHighlighter
+            code={`// app.js
+const express = require('express');
+const userRoutes = require('./routes/users');
+  
+const app = express();
+app.use(express.json());
+  
+// Подключаем роутер с префиксом /users
+app.use('/users', userRoutes);
+  
+app.listen(3000);`}
+          />
           <p>Итог:</p>
           <ul>
             <li>
@@ -1122,142 +794,70 @@ app.listen(3000, () => {
             В Express ошибки обрабатываются <span>специальными middleware</span>{' '}
             с 4 параметрами: (<b>err</b>, <b>req</b>, <b>res</b>, <b>next</b>)
           </p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code className='comment'>{`// Обычный middleware (3 параметра)`}</code>
-              <code>{`app.use((req, res, next) => { ... });`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Error-handling middleware (4 параметра) — ОБЯЗАТЕЛЬНО все 4!`}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`res.status(500).json({ error: err.message });`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Обычный middleware (3 параметра)
+app.use((req, res, next) => { ... });
+  
+// Error-handling middleware (4 параметра) — ОБЯЗАТЕЛЬНО все 4!
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message });
+});`}
+          />
           <p>
             <b>Важно</b>: Error-handling middleware должен быть{' '}
             <span>последним</span> в цепочке.
           </p>
           <p>Способы генерации ошибок</p>
-          <pre>
-            <CodeNumber length={21} />
-            <code>
-              <code className='comment'>{`// 1. throw в синхронном коде`}</code>
-              <code>{`app.get('/sync-error', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`throw new Error('Что-то сломалось');`}
-              </code>
-              <code>{`});`}</code>
-              <code> </code>
-              <code className='comment'>{`// 2. next(err) — ручная передача ошибки`}</code>
-              <code>{`app.get('/next-error', (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`const err = new Error('Ошибка валидации');`}
-              </code>
-              <code>
-                {'  '}
-                {`err.status = 400;`}
-              </code>
-              <code>
-                {'  '}
-                {`next(err);  // отправляем в error-handler`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// 3. Ошибки в асинхронном коде (промисы)`}</code>
-              <code>{`app.get('/async-error', async (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`const data = await someAsyncFunction();`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json(data);`}
-              </code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`next(err);  // передаем в error-handler`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// 1. throw в синхронном коде
+app.get('/sync-error', (req, res) => {
+  throw new Error('Что-то сломалось');
+});
+ 
+// 2. next(err) — ручная передача ошибки
+app.get('/next-error', (req, res, next) => {
+  const err = new Error('Ошибка валидации');
+  err.status = 400;
+  next(err);  // отправляем в error-handler
+});
+  
+// 3. Ошибки в асинхронном коде (промисы)
+app.get('/async-error', async (req, res, next) => {
+  try {
+    const data = await someAsyncFunction();
+    res.json(data);
+  } catch (err) {
+    next(err);  // передаем в error-handler
+  }
+});`}
+          />
           <p>Проблема: асинхронные ошибки не ловятся автоматически</p>
-          <pre>
-            <CodeNumber length={24} />
-            <code>
-              <code className='comment'>{`// ❌ Так НЕ РАБОТАЕТ — throw в асинхронной функции`}</code>
-              <code>{`app.get('/broken', async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`throw new Error('Эта ошибка не будет поймана Express');`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Правильно — try/catch + next`}</code>
-              <code>{`app.get('/fixed', async (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`const data = await riskyOperation();`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json(data);`}
-              </code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`next(err);`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Еще лучше — обертка (wrapper)`}</code>
-              <code>{`const asyncHandler = (fn) => (req, res, next) => {`}</code>
-              <code>
-                {'  '}
-                {`Promise.resolve(fn(req, res, next)).catch(next);`}
-              </code>
-              <code>{`};`}</code>
-              <code>{'  '}</code>
-              <code>{`app.get('/wrapped', asyncHandler(async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const data = await riskyOperation();`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(data);`}
-              </code>
-              <code>{`}));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ❌ Так НЕ РАБОТАЕТ — throw в асинхронной функции
+app.get('/broken', async (req, res) => {
+  throw new Error('Эта ошибка не будет поймана Express');
+});
+  
+// ✅ Правильно — try/catch + next
+app.get('/fixed', async (req, res, next) => {
+  try {
+    const data = await riskyOperation();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+  
+// ✅ Еще лучше — обертка (wrapper)
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
+  
+app.get('/wrapped', asyncHandler(async (req, res) => {
+  const data = await riskyOperation();
+  res.json(data);
+}));`}
+          />
         </div>
       ),
     },
@@ -1303,1485 +903,549 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>PostgreSQL с raw SQL (pg)</p>
-          <pre>npm install pg</pre>
+          <CodeHighlighter language={'bash'} code={`npm install pg`} />
           <p>Подключение и пул соединений</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code className='comment'>{`// db/pool.js`}</code>
-              <code>{`const { Pool } = require('pg');`}</code>
-              <code>{'  '}</code>
-              <code>{`const pool = new Pool({`}</code>
-              <code>
-                {'  '}
-                {`host: process.env.DB_HOST || 'localhost',`}
-              </code>
-              <code>
-                {'  '}
-                {`port: process.env.DB_PORT || 5432,`}
-              </code>
-              <code>
-                {'  '}
-                {`database: process.env.DB_NAME || 'mydb',`}
-              </code>
-              <code>
-                {'  '}
-                {`user: process.env.DB_USER || 'postgres',`}
-              </code>
-              <code>
-                {'  '}
-                {`password: process.env.DB_PASSWORD || 'password',`}
-              </code>
-              <code>
-                {'  '}
-                {`max: 20,              // максимум соединений в пуле`}
-              </code>
-              <code>
-                {'  '}
-                {`idleTimeoutMillis: 30000,`}
-              </code>
-              <code>
-                {'  '}
-                {`connectionTimeoutMillis: 2000,`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = pool;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// db/pool.js
+const { Pool } = require('pg');
+  
+const pool = new Pool({
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'mydb',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'password',
+  max: 20,              // максимум соединений в пуле
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+  
+module.exports = pool;`}
+          />
           <p>Репозиторий (слой работы с БД)</p>
-          <pre>
-            <CodeNumber length={68} />
-            <code>
-              <code className='comment'>{`// repositories/userRepository.js`}</code>
-              <code>{`const pool = require('../db/pool');`}</code>
-              <code>{'  '}</code>
-              <code>{`class UserRepository {`}</code>
-              <code>
-                {'  '}
-                {`async findAll() {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = await pool.query('SELECT id, name, email, created_at FROM users');`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rows;`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async findById(id) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = await pool.query(`}
-              </code>
-              <code>
-                {'      '}
-                {`'SELECT id, name, email, created_at FROM users WHERE id = $1',`}
-              </code>
-              <code>
-                {'      '}
-                {`id]`}
-              </code>
-              <code>
-                {'    '}
-                {`);`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rows[0];`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async findByEmail(email) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = await pool.query(`}
-              </code>
-              <code>
-                {'      '}
-                {`'SELECT * FROM users WHERE email = $1',`}
-              </code>
-              <code>
-                {'      '}
-                {`[email]`}
-              </code>
-              <code>
-                {'    '}
-                {`);`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rows[0];`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async create(userData) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const { name, email, password_hash } = userData;`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = await pool.query(`}
-              </code>
-              <code>
-                {'      '}
-                {'`INSERT INTO users (name, email, password_hash) '}
-              </code>
-              <code>
-                {'      '}
-                {`VALUES ($1, $2, $3) `}
-              </code>
-              <code>
-                {'      '}
-                {'RETURNING id, name, email, created_at`,'}
-              </code>
-              <code>
-                {'      '}
-                {`[name, email, password_hash]`}
-              </code>
-              <code>
-                {'    '}
-                {`);`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rows[0];`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async update(id, updates) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const fields = [];`}
-              </code>
-              <code>
-                {'    '}
-                {`const values = [];`}
-              </code>
-              <code>
-                {'    '}
-                {`let index = 1;`}
-              </code>
-              <code> </code>
-              <code>
-                {'    '}
-                {`if (updates.name) {`}
-              </code>
-              <code>
-                {'      '}
-                {'fields.push(`name = $${index++}`);'}
-              </code>
-              <code>
-                {'      '}
-                {`values.push(updates.name);`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`if (updates.email) {`}
-              </code>
-              <code>
-                {'      '}
-                {'fields.push(`email = $${index++}`);'}
-              </code>
-              <code>
-                {'      '}
-                {`values.push(updates.email);`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`if (fields.length === 0) return null;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`values.push(id);`}
-              </code>
-              <code>
-                {'    '}
-                {'const query = `'}
-              </code>
-              <code>
-                {'      '}
-                {`UPDATE users `}
-              </code>
-              <code>
-                {'      '}
-                {"SET ${fields.join(', ')} "}
-              </code>
-              <code>
-                {'      '}
-                {'WHERE id = $${index}'}
-              </code>
-              <code>
-                {'      '}
-                {`RETURNING id, name, email, created_at`}
-              </code>
-              <code>
-                {'    '}
-                {'`;'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`const result = await pool.query(query, values);`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rows[0];`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async delete(id) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);`}
-              </code>
-              <code>
-                {'    '}
-                {`return result.rowCount > 0;`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = new UserRepository();`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// repositories/userRepository.js
+const pool = require('../db/pool');
+  
+class UserRepository {
+  async findAll() {
+    const result = await pool.query('SELECT id, name, email, created_at FROM users');
+    return result.rows;
+  }
+  
+  async findById(id) {
+    const result = await pool.query(
+      'SELECT id, name, email, created_at FROM users WHERE id = $1',
+      id]
+    );
+    return result.rows[0];
+  }
+  
+  async findByEmail(email) {
+    const result = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    );
+    return result.rows[0];
+  }
+  
+  async create(userData) {
+    const { name, email, password_hash } = userData;
+    const result = await pool.query(
+      \`INSERT INTO users (name, email, password_hash) 
+      VALUES ($1, $2, $3) 
+      RETURNING id, name, email, created_at\`,
+      [name, email, password_hash]
+    );
+    return result.rows[0];
+  }
+  
+  async update(id, updates) {
+    const fields = [];
+    const values = [];
+    let index = 1;
+ 
+    if (updates.name) {
+      fields.push(\`name = $\${index++}\`);
+      values.push(updates.name);
+    }
+    if (updates.email) {
+      fields.push(\`email = $\${index++}\`);
+      values.push(updates.email);
+    }
+  
+    if (fields.length === 0) return null;
+  
+    values.push(id);
+    const query = \`
+      UPDATE users 
+      SET \${fields.join(', ')} 
+      WHERE id = $\${index}
+      RETURNING id, name, email, created_at
+   \`;
+  
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  }
+  
+  async delete(id) {
+    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);
+    return result.rowCount > 0;
+  }
+}
+  
+module.exports = new UserRepository();`}
+          />
           <p>Контроллер с использованием репозитория</p>
-          <pre>
-            <CodeNumber length={31} />
-            <code>
-              <code className='comment'>{`// controllers/userController.js`}</code>
-              <code>{`const userRepository = require('../repositories/userRepository');`}</code>
-              <code>{`const { ValidationError, NotFoundError } = require('../utils/errors');`}</code>
-              <code>{`const bcrypt = require('bcrypt');`}</code>
-              <code>{'  '}</code>
-              <code>{`exports.getAllUsers = async (req, res) => {`}</code>
-              <code>
-                {'    '}
-                {`const users = await userRepository.findAll();`}
-              </code>
-              <code>
-                {'    '}
-                {`res.json(users);`}
-              </code>
-              <code>
-                {'  '}
-                {`};`}
-              </code>
-              <code>{'  '}</code>
-              <code>{`exports.getUserById = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const user = await userRepository.findById(req.params.id);`}
-              </code>
-              <code>
-                {'  '}
-                {`if (!user) throw new NotFoundError('User');`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(user);`}
-              </code>
-              <code>{'};'}</code>
-              <code>{`exports.createUser = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const { name, email, password } = req.body;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!name || !email || !password) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new ValidationError('Name, email and password are required');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Проверка уникальности email`}
-              </code>
-              <code>
-                {'  '}
-                {`const existing = await userRepository.findByEmail(email);`}
-              </code>
-              <code>
-                {'  '}
-                {`if (existing) throw new ValidationError('Email already exists');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const password_hash = await bcrypt.hash(password, 10);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const user = await userRepository.create({ name, email, password_hash });`}
-              </code>
-              <code>
-                {'  '}
-                {`res.status(201).json(user);`}
-              </code>
-              <code>{'};'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// controllers/userController.js
+const userRepository = require('../repositories/userRepository');
+const { ValidationError, NotFoundError } = require('../utils/errors');
+const bcrypt = require('bcrypt');
+  
+exports.getAllUsers = async (req, res) => {
+    const users = await userRepository.findAll();
+    res.json(users);
+  };
+  
+exports.getUserById = async (req, res) => {
+  const user = await userRepository.findById(req.params.id);
+  if (!user) throw new NotFoundError('User');
+  res.json(user);
+};
+exports.createUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  
+  if (!name || !email || !password) {
+    throw new ValidationError('Name, email and password are required');
+  }
+  
+  // Проверка уникальности email
+  const existing = await userRepository.findByEmail(email);
+  if (existing) throw new ValidationError('Email already exists');
+  
+  const password_hash = await bcrypt.hash(password, 10);
+  
+  const user = await userRepository.create({ name, email, password_hash });
+  res.status(201).json(user);
+};`}
+          />
           <p>Роуты</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{`// routes/users.js`}</code>
-              <code>{`const router = require('express').Router();`}</code>
-              <code>{`const asyncHandler = require('../utils/asyncHandler');`}</code>
-              <code>{`const userController = require('../controllers/userController');`}</code>
-              <code>{'  '}</code>
-              <code>{`router.get('/', asyncHandler(userController.getAllUsers));`}</code>
-              <code>{`router.get('/:id', asyncHandler(userController.getUserById));`}</code>
-              <code>{`router.post('/', asyncHandler(userController.createUser));`}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = router;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// routes/users.js
+const router = require('express').Router();
+const asyncHandler = require('../utils/asyncHandler');
+const userController = require('../controllers/userController');
+  
+router.get('/', asyncHandler(userController.getAllUsers));
+router.get('/:id', asyncHandler(userController.getUserById));
+router.post('/', asyncHandler(userController.createUser));
+  
+module.exports = router;`}
+          />
           <p>Транзакции</p>
-          <pre>
-            <CodeNumber length={42} />
-            <code>
-              <code className='comment'>{`// services/orderService.js`}</code>
-              <code>{`const pool = require('../db/pool');`}</code>
-              <code>{'  '}</code>
-              <code>{`class OrderService {`}</code>
-              <code>
-                {'    '}
-                {`async createOrder(userId, items) {`}
-              </code>
-              <code>
-                {'      '}
-                {`const client = await pool.connect();`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`await client.query('BEGIN');`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// 1. Создаем заказ`}
-              </code>
-              <code>
-                {'    '}
-                {`const orderResult = await client.query(`}
-              </code>
-              <code>
-                {'      '}
-                {`'INSERT INTO orders (user_id, status, created_at) VALUES ($1, $2, NOW()) RETURNING id',`}
-              </code>
-              <code>
-                {'      '}
-                {`[userId, 'pending']`}
-              </code>
-              <code>
-                {'    '}
-                {`);`}
-              </code>
-              <code>
-                {'    '}
-                {`const orderId = orderResult.rows[0].id;`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// 2. Добавляем товары в заказ`}
-              </code>
-              <code>
-                {'    '}
-                {`for (const item of items) {`}
-              </code>
-              <code>
-                {'      '}
-                {`await client.query(`}
-              </code>
-              <code>
-                {'        '}
-                {`'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)'`}
-              </code>
-              <code>
-                {'        '}
-                {`[orderId, item.productId, item.quantity, item.price]`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'      '}
-                {`// 3. Обновляем остатки`}
-              </code>
-              <code>
-                {'      '}
-                {`await client.query(`}
-              </code>
-              <code>
-                {'        '}
-                {`'UPDATE products SET stock = stock - $1 WHERE id = $2',`}
-              </code>
-              <code>
-                {'        '}
-                {`[item.quantity, item.productId]`}
-              </code>
-              <code>
-                {'      '}
-                {`);`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`await client.query('COMMIT');`}
-              </code>
-              <code>
-                {'    '}
-                {`return { orderId, status: 'created' };`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'      '}
-                {`await client.query('ROLLBACK');`}
-              </code>
-              <code>
-                {'      '}
-                {`throw err;`}
-              </code>
-              <code>
-                {'    '}
-                {`} finally {`}
-              </code>
-              <code>
-                {'      '}
-                {`client.release();`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// services/orderService.js
+const pool = require('../db/pool');
+  
+class OrderService {
+    async createOrder(userId, items) {
+      const client = await pool.connect();
+  
+  try {
+    await client.query('BEGIN');
+  
+    // 1. Создаем заказ
+    const orderResult = await client.query(
+      'INSERT INTO orders (user_id, status, created_at) VALUES ($1, $2, NOW()) RETURNING id',
+      [userId, 'pending']
+    );
+    const orderId = orderResult.rows[0].id;
+  
+    // 2. Добавляем товары в заказ
+    for (const item of items) {
+      await client.query(
+        'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4)'
+        [orderId, item.productId, item.quantity, item.price]
+  
+      // 3. Обновляем остатки
+      await client.query(
+        'UPDATE products SET stock = stock - $1 WHERE id = $2',
+        [item.quantity, item.productId]
+      );
+    }
+  
+    await client.query('COMMIT');
+    return { orderId, status: 'created' };
+  
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
+}`}
+          />
           <p>Часть 3: MongoDB с Mongoose (ODM)</p>
-          <pre>npm install mongoose</pre>
+          <CodeHighlighter language={'bash'} code={`npm install mongoose`} />
           <p>Подключение</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{`// db/mongoose.js`}</code>
-              <code>{`const mongoose = require('mongoose');`}</code>
-              <code>{'  '}</code>
-              <code>{`const connectDB = async () => {`}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/myapp', {`}
-              </code>
-              <code>
-                {'      '}
-                {`useNewUrlParser: true,`}
-              </code>
-              <code>
-                {'      '}
-                {`useUnifiedTopology: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`});`}
-              </code>
-              <code>
-                {'    '}
-                {`console.log('MongoDB connected');`}
-              </code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`console.error('MongoDB connection error:', err);`}
-              </code>
-              <code>
-                {'  '}
-                {`process.exit(1);`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = connectDB;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// db/mongoose.js
+const mongoose = require('mongoose');
+  
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/myapp', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  process.exit(1);
+  }
+}
+  
+module.exports = connectDB;`}
+          />
+
           <p>Схема и модель</p>
-          <pre>
-            <CodeNumber length={58} />
-            <code>
-              <code className='comment'>{`// models/User.js`}</code>
-              <code>{`const mongoose = require('mongoose');`}</code>
-              <code>{`const bcrypt = require('bcrypt');`}</code>
-              <code>{'  '}</code>
-              <code>{`const userSchema = new mongoose.Schema({`}</code>
-              <code>
-                {'  '}
-                {`name: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: String,`}
-              </code>
-              <code>
-                {'    '}
-                {`required: [true, 'Name is required'],`}
-              </code>
-              <code>
-                {'    '}
-                {`trim: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`minlength: [2, 'Name must be at least 2 characters'],`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`email: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: String,`}
-              </code>
-              <code>
-                {'    '}
-                {`required: [true, 'Email is required'],`}
-              </code>
-              <code>
-                {'    '}
-                {`unique: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`lowercase: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`trim: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`password: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: String,`}
-              </code>
-              <code>
-                {'    '}
-                {`required: [true, 'Password is required'],`}
-              </code>
-              <code>
-                {'    '}
-                {`minlength: [6, 'Password must be at least 6 characters'],`}
-              </code>
-              <code>
-                {'    '}
-                {`select: false, // не возвращать по умолчанию`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`role: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: String,`}
-              </code>
-              <code>
-                {'    '}
-                {`enum: ['user', 'admin'],`}
-              </code>
-              <code>
-                {'    '}
-                {`default: 'user',`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`createdAt: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: Date,`}
-              </code>
-              <code>
-                {'    '}
-                {`default: Date.now,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>{'}, {'}</code>
-              <code>
-                {'  '}
-                {`timestamps: true, // автоматически добавляет createdAt и updatedAt`}
-              </code>
-              <code>
-                {'  '}
-                {`toJSON: { virtuals: true },`}
-              </code>
-              <code>
-                {'  '}
-                {`toObject: { virtuals: true },`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Хеширование пароля перед сохранением`}</code>
-              <code>{"userSchema.pre('save', async function(next) {"}</code>
-              <code>
-                {'  '}
-                {`if (!this.isModified('password')) return next();`}
-              </code>
-              <code>
-                {'  '}
-                {`this.password = await bcrypt.hash(this.password, 10);`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Метод для сравнения пароля`}</code>
-              <code>{`userSchema.methods.comparePassword = async function(candidatePassword) {`}</code>
-              <code>
-                {'  '}
-                {`return await bcrypt.compare(candidatePassword, this.password);`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Виртуальное поле (не хранится в БД)`}</code>
-              <code>{`userSchema.virtual('profileUrl').get(function() {`}</code>
-              <code>
-                {'  '}
-                {'return `/users/${this._id}`;'}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = mongoose.model('User', userSchema);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// models/User.js
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+  
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    trim: true,
+    minlength: [2, 'Name must be at least 2 characters'],
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
+    lowercase: true,
+    trim: true,
+    match: [/^S+@S+.S+$/, 'Please enter a valid email'],
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [6, 'Password must be at least 6 characters'],
+    select: false, // не возвращать по умолчанию
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+}, {
+  timestamps: true, // автоматически добавляет createdAt и updatedAt
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
+  
+// Хеширование пароля перед сохранением
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+  
+// Метод для сравнения пароля
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+  
+// Виртуальное поле (не хранится в БД)
+userSchema.virtual('profileUrl').get(function() {
+  return \`/users/\${this._id}\`;
+});
+  
+module.exports = mongoose.model('User', userSchema);`}
+          />
           <p>Репозиторий/Сервис с Mongoose</p>
-          <pre>
-            <CodeNumber length={59} />
-            <code>
-              <code className='comment'>{`// services/userService.js`}</code>
-              <code>{`const User = require('../models/User');`}</code>
-              <code>{'  '}</code>
-              <code>{`class UserService {`}</code>
-              <code>
-                {'  '}
-                {`async findAll() {`}
-              </code>
-              <code>
-                {'    '}
-                {`return await User.find().select('-password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async findById(id) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return await User.findById(id).select('-password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async findByEmail(email) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return await User.findOne({ email }).select('+password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async create(userData) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const user = new User(userData);`}
-              </code>
-              <code>
-                {'    '}
-                {`await user.save();`}
-              </code>
-              <code>
-                {'    '}
-                {`user.password = undefined; // убираем из ответа`}
-              </code>
-              <code>
-                {'    '}
-                {`return user;`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async update(id, updates) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const allowed = ['name', 'email'];`}
-              </code>
-              <code>
-                {'    '}
-                {`const updateData = {};`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`for (const key of allowed) {`}
-              </code>
-              <code>
-                {'      '}
-                {`if (updates[key]) updateData[key] = updates[key];`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`return await User.findByIdAndUpdate(id, updateData, {`}
-              </code>
-              <code>
-                {'      '}
-                {`new: true, // возвращаем обновленный документ`}
-              </code>
-              <code>
-                {'      '}
-                {`runValidators: true, // запускаем валидацию`}
-              </code>
-              <code>
-                {'    '}
-                {`}).select('-password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async delete(id) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return await User.findByIdAndDelete(id);`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`async findPaginated(page = 1, limit = 10) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const skip = (page - 1) * limit;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`const [users, total] = await Promise.all([`}
-              </code>
-              <code>
-                {'      '}
-                {`User.find().select('-password').skip(skip).limit(limit),`}
-              </code>
-              <code>
-                {'      '}
-                {`User.countDocuments(),`}
-              </code>
-              <code>
-                {'    '}
-                {`]);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`return {`}
-              </code>
-              <code>
-                {'      '}
-                {`data: users,`}
-              </code>
-              <code>
-                {'      '}
-                {`total,`}
-              </code>
-              <code>
-                {'      '}
-                {`page,`}
-              </code>
-              <code>
-                {'      '}
-                {`totalPages: Math.ceil(total / limit),`}
-              </code>
-              <code>
-                {'    '}
-                {`};`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = new UserService();`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// services/userService.js
+const User = require('../models/User');
+  
+class UserService {
+  async findAll() {
+    return await User.find().select('-password');
+  }
+  
+  async findById(id) {
+    return await User.findById(id).select('-password');
+  }
+  
+  async findByEmail(email) {
+    return await User.findOne({ email }).select('+password');
+  }
+  
+  async create(userData) {
+    const user = new User(userData);
+    await user.save();
+    user.password = undefined; // убираем из ответа
+    return user;
+  }
+  
+  async update(id, updates) {
+    const allowed = ['name', 'email'];
+    const updateData = {};
+  
+    for (const key of allowed) {
+      if (updates[key]) updateData[key] = updates[key];
+    }
+  
+    return await User.findByIdAndUpdate(id, updateData, {
+      new: true, // возвращаем обновленный документ
+      runValidators: true, // запускаем валидацию
+    }).select('-password');
+  }
+  
+  async delete(id) {
+    return await User.findByIdAndDelete(id);
+  }
+  
+  async findPaginated(page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+  
+    const [users, total] = await Promise.all([
+      User.find().select('-password').skip(skip).limit(limit),
+      User.countDocuments(),
+    ]);
+  
+    return {
+      data: users,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+}
+  
+module.exports = new UserService();`}
+          />
           <p>Часть 4: Sequelize (ORM для SQL)</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code>{`npm install sequelize pg pg-hstore`}</code>
-              <code className='comment'>{`# или для MySQL: npm install sequelize mysql2`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install sequelize pg pg-hstore
+# или для MySQL: npm install sequelize mysql2`}
+          />
           <p>Подключение</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{`// db/sequelize.js`}</code>
-              <code>{`const { Sequelize } = require('sequelize');`}</code>
-              <code>{'  '}</code>
-              <code>{`const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {`}</code>
-              <code>
-                {'  '}
-                {`host: process.env.DB_HOST,`}
-              </code>
-              <code>
-                {'  '}
-                {`dialect: 'postgres', // или 'mysql', 'sqlite', 'mssql'`}
-              </code>
-              <code>
-                {'  '}
-                {`logging: process.env.NODE_ENV === 'development' ? console.log : false,`}
-              </code>
-              <code>
-                {'  '}
-                {`pool: {`}
-              </code>
-              <code>
-                {'    '}
-                {`max: 5,`}
-              </code>
-              <code>
-                {'    '}
-                {`min: 0,`}
-              </code>
-              <code>
-                {'    '}
-                {`acquire: 30000,`}
-              </code>
-              <code>
-                {'    '}
-                {`idle: 10000,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = sequelize;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// db/sequelize.js
+const { Sequelize } = require('sequelize');
+  
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: 'postgres', // или 'mysql', 'sqlite', 'mssql'
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+});
+  
+module.exports = sequelize;`}
+          />
           <p>Модель</p>
-          <pre>
-            <CodeNumber length={45} />
-            <code>
-              <code className='comment'>{`// models/User.js`}</code>
-              <code>{`const { DataTypes } = require('sequelize');`}</code>
-              <code>{`const sequelize = require('../db/sequelize');`}</code>
-              <code>{'  '}</code>
-              <code>{`const User = sequelize.define('User', {`}</code>
-              <code>
-                {'  '}
-                {`id: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: DataTypes.INTEGER,`}
-              </code>
-              <code>
-                {'    '}
-                {`autoIncrement: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`primaryKey: true,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`name: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: DataTypes.STRING,`}
-              </code>
-              <code>
-                {'    '}
-                {`allowNull: false,`}
-              </code>
-              <code>
-                {'    '}
-                {`validate: {`}
-              </code>
-              <code>
-                {'      '}
-                {`len: [2, 100],`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`email: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: DataTypes.STRING,`}
-              </code>
-              <code>
-                {'    '}
-                {`allowNull: false,`}
-              </code>
-              <code>
-                {'    '}
-                {`unique: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`validate: {`}
-              </code>
-              <code>
-                {'      '}
-                {`isEmail: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`password: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: DataTypes.STRING,`}
-              </code>
-              <code>
-                {'    '}
-                {`allowNull: false,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`role: {`}
-              </code>
-              <code>
-                {'    '}
-                {`type: DataTypes.ENUM('user', 'admin'),`}
-              </code>
-              <code>
-                {'    '}
-                {`defaultValue: 'user',`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>{'}, {'}</code>
-              <code>
-                {'  '}
-                {`timestamps: true, // adds createdAt and updatedAt`}
-              </code>
-              <code>
-                {'  '}
-                {`paranoid: true,   // soft delete (deletedAt)`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Ассоциации (отношения)`}</code>
-              <code>{'User.associate = (models) => {'}</code>
-              <code>
-                {'  '}
-                {`User.hasMany(models.Post, { foreignKey: 'userId' });`}
-              </code>
-              <code>
-                {'  '}
-                {`User.belongsToMany(models.Role, { through: 'UserRoles' });`}
-              </code>
-              <code>{`};`}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = User;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// models/User.js
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/sequelize');
+  
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: [2, 100],
+    },
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true,
+    },
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.ENUM('user', 'admin'),
+    defaultValue: 'user',
+  },
+}, {
+  timestamps: true, // adds createdAt and updatedAt
+  paranoid: true,   // soft delete (deletedAt)
+});
+  
+// Ассоциации (отношения)
+User.associate = (models) => {
+  User.hasMany(models.Post, { foreignKey: 'userId' });
+  User.belongsToMany(models.Role, { through: 'UserRoles' });
+};
+  
+module.exports = User;`}
+          />
           <p>Использование в контроллере</p>
-          <pre>
-            <CodeNumber length={44} />
-            <code>
-              <code className='comment'>{`// controllers/userController.js`}</code>
-              <code>{`const User = require('../models/User');`}</code>
-              <code>{`const { ValidationError, NotFoundError } = require('../utils/errors');`}</code>
-              <code>{'  '}</code>
-              <code>{`exports.getAllUsers = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const users = await User.findAll({`}
-              </code>
-              <code>
-                {'    '}
-                {`attributes: ['id', 'name', 'email', 'createdAt'],`}
-              </code>
-              <code>
-                {'    '}
-                {`order: [['createdAt', 'DESC']],`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(users);`}
-              </code>
-              <code>{`};`}</code>
-              <code>{'  '}</code>
-              <code>{`exports.getUserById = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const user = await User.findByPk(req.params.id, {`}
-              </code>
-              <code>
-                {'    '}
-                {`attributes: ['id', 'name', 'email', 'createdAt'],`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>
-                {'  '}
-                {`if (!user) throw new NotFoundError('User');`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(user);`}
-              </code>
-              <code>{`};`}</code>
-              <code>{'  '}</code>
-              <code>{`exports.createUser = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const { name, email, password } = req.body;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const existing = await User.findOne({ where: { email } });`}
-              </code>
-              <code>
-                {'  '}
-                {`if (existing) throw new ValidationError('Email already exists');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const user = await User.create({ name, email, password });`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.status(201).json({`}
-              </code>
-              <code>
-                {'    '}
-                {`id: user.id,`}
-              </code>
-              <code>
-                {'    '}
-                {`name: user.name,`}
-              </code>
-              <code>
-                {'    '}
-                {`email: user.email,`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Сложные запросы с include`}</code>
-              <code>{`exports.getUserWithPosts = async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const user = await User.findByPk(req.params.id, {`}
-              </code>
-              <code>
-                {'    '}
-                {`include: [{`}
-              </code>
-              <code>
-                {'      '}
-                {`model: Post,`}
-              </code>
-              <code>
-                {'      '}
-                {`as: 'posts',`}
-              </code>
-              <code>
-                {'      '}
-                {`attributes: ['id', 'title', 'createdAt'],`}
-              </code>
-              <code>
-                {'    '}
-                {`}],`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(user);`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// controllers/userController.js
+const User = require('../models/User');
+const { ValidationError, NotFoundError } = require('../utils/errors');
+  
+exports.getAllUsers = async (req, res) => {
+  const users = await User.findAll({
+    attributes: ['id', 'name', 'email', 'createdAt'],
+    order: [['createdAt', 'DESC']],
+  });
+  res.json(users);
+};
+  
+exports.getUserById = async (req, res) => {
+  const user = await User.findByPk(req.params.id, {
+    attributes: ['id', 'name', 'email', 'createdAt'],
+  });
+  if (!user) throw new NotFoundError('User');
+  res.json(user);
+};
+  
+exports.createUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  
+  const existing = await User.findOne({ where: { email } });
+  if (existing) throw new ValidationError('Email already exists');
+  
+  const user = await User.create({ name, email, password });
+  
+  res.status(201).json({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  });
+};
+  
+// Сложные запросы с include
+exports.getUserWithPosts = async (req, res) => {
+  const user = await User.findByPk(req.params.id, {
+    include: [{
+      model: Post,
+      as: 'posts',
+      attributes: ['id', 'title', 'createdAt'],
+    }],
+  });
+  res.json(user);
+}`}
+          />
           <p>Миграции и настройка окружения</p>
-          <pre>
-            <CodeNumber length={16} />
-            <code>
-              <code># .env</code>
-              <code>NODE_ENV=development</code>
-              <code>PORT=3000</code>
-              <code>{'  '}</code>
-              <code># Database</code>
-              <code>DB_HOST=localhost</code>
-              <code>DB_PORT=5432</code>
-              <code>DB_NAME=mydb</code>
-              <code>DB_USER=postgres</code>
-              <code>DB_PASSWORD=secret</code>
-              <code>{'  '}</code>
-              <code># MongoDB</code>
-              <code>MONGODB_URI=mongodb://localhost:27017/myapp</code>
-              <code>{'  '}</code>
-              <code># JWT</code>
-              <code>JWT_SECRET=your-super-secret-key</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`# .env
+NODE_ENV=development
+PORT=3000
+  
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=mydb
+DB_USER=postgres
+DB_PASSWORD=secret
+  
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/myapp
+  
+# JWT
+JWT_SECRET=your-super-secret-key`}
+          />
           <p>Конфигурация</p>
-          <pre>
-            <CodeNumber length={30} />
-            <code>
-              <code className='comment'>{`// config/db.js`}</code>
-              <code>{`require('dotenv').config();`}</code>
-              <code>{'  '}</code>
-              <code>{`const config = {`}</code>
-              <code>
-                {'  '}
-                {`development: {`}
-              </code>
-              <code>
-                {'    '}
-                {`host: process.env.DB_HOST,`}
-              </code>
-              <code>
-                {'    '}
-                {`port: process.env.DB_PORT,`}
-              </code>
-              <code>
-                {'    '}
-                {`database: process.env.DB_NAME,`}
-              </code>
-              <code>
-                {'    '}
-                {`username: process.env.DB_USER,`}
-              </code>
-              <code>
-                {'    '}
-                {`password: process.env.DB_PASSWORD,`}
-              </code>
-              <code>
-                {'    '}
-                {`dialect: 'postgres',`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`test: {`}
-              </code>
-              <code>
-                {'    '}
-                {`database: 'mydb_test',`}
-              </code>
-              <code>
-                {'    '}
-                {`dialect: 'postgres',`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`production: {`}
-              </code>
-              <code>
-                {'    '}
-                {`host: process.env.DB_HOST,`}
-              </code>
-              <code>
-                {'    '}
-                {`database: process.env.DB_NAME,`}
-              </code>
-              <code>
-                {'    '}
-                {`username: process.env.DB_USER,`}
-              </code>
-              <code>
-                {'    '}
-                {`password: process.env.DB_PASSWORD,`}
-              </code>
-              <code>
-                {'    '}
-                {`dialect: 'postgres',`}
-              </code>
-              <code>
-                {'    '}
-                {`ssl: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`dialectOptions: {`}
-              </code>
-              <code>
-                {'      '}
-                {`ssl: { require: true },`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = config[process.env.NODE_ENV || 'development'];`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// config/db.js
+require('dotenv').config();
+  
+const config = {
+  development: {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    dialect: 'postgres',
+  },
+  test: {
+    database: 'mydb_test',
+    dialect: 'postgres',
+  },
+  production: {
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    dialect: 'postgres',
+    ssl: true,
+    dialectOptions: {
+      ssl: { require: true },
+    },
+  },
+};
+  
+module.exports = config[process.env.NODE_ENV || 'development'];`}
+          />
           <p>Готовый шаблон подключения к БД</p>
-          <pre>
-            <CodeNumber length={35} />
-            <code>
-              <code className='comment'>{`// app.js (полный пример)`}</code>
-              <code>const express = require('express');</code>
-              <code>require('dotenv').config();</code>
-              <code>{'  '}</code>
-              <code>{`const connectDB = require('./db/mongoose'); // или pg, sequelize`}</code>
-              <code>{`const userRoutes = require('./routes/users');`}</code>
-              <code>{'  '}</code>
-              <code>const app = express();</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Middleware`}</code>
-              <code>{`app.use(express.json());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Подключение к БД`}</code>
-              <code>connectDB();</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Роуты`}</code>
-              <code>app.use('/api/users', userRoutes);</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Error handler`}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Обработка ошибок БД`}
-              </code>
-              <code>
-                {'  '}
-                {`if (err.code === '23505') { // PostgreSQL duplicate key`}
-              </code>
-              <code>
-                {'    '}
-                {`return res.status(409).json({ error: 'Duplicate entry' });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`if (err.name === 'ValidationError') { // Mongoose validation`}
-              </code>
-              <code>
-                {'    '}
-                {`return res.status(400).json({ error: err.message });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.status(err.status || 500).json({ error: err.message });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>const PORT = process.env.PORT || 3000;</code>
-              <code>{`app.listen(PORT, () => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Server running on port ${PORT}`);'}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// app.js (полный пример)
+const express = require('express');
+require('dotenv').config();
+  
+const connectDB = require('./db/mongoose'); // или pg, sequelize
+const userRoutes = require('./routes/users');
+  
+const app = express();
+  
+// Middleware
+app.use(express.json());
+  
+// Подключение к БД
+connectDB();
+  
+// Роуты
+app.use('/api/users', userRoutes);
+  
+// Error handler
+app.use((err, req, res, next) => {
+  // Обработка ошибок БД
+  if (err.code === '23505') { // PostgreSQL duplicate key
+    return res.status(409).json({ error: 'Duplicate entry' });
+  }
+  if (err.name === 'ValidationError') { // Mongoose validation
+    return res.status(400).json({ error: err.message });
+  }
+  
+  res.status(err.status || 500).json({ error: err.message });
+});
+  
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(\`Server running on port \${PORT}\`);
+});`}
+          />
         </div>
       ),
     },
@@ -2795,939 +1459,374 @@ app.listen(3000, () => {
       jsx: (
         <div>
           <p>Установка зависимостей</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code>npm install jsonwebtoken bcrypt express</code>
-              <code>
-                npm install --save-dev @types/jsonwebtoken @types/bcrypt # для
-                TypeScript
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install jsonwebtoken bcrypt express
+npm install --save-dev @types/jsonwebtoken @types/bcrypt # для TypeScript`}
+          />
           <p>Хеширование паролей с bcrypt</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{`// utils/password.js`}</code>
-              <code>{`const bcrypt = require('bcrypt');`}</code>
-              <code>{'  '}</code>
-              <code>{`const SALT_ROUNDS = 10;  // сложность хеширования (10-12 оптимально)`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Хеширование пароля`}</code>
-              <code>{`async function hashPassword(password) {`}</code>
-              <code>
-                {'  '}
-                {`const salt = await bcrypt.genSalt(SALT_ROUNDS);`}
-              </code>
-              <code>
-                {'  '}
-                {`return await bcrypt.hash(password, salt);`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверка пароля`}</code>
-              <code>{`async function verifyPassword(password, hash) {`}</code>
-              <code>
-                {'  '}
-                {`return await bcrypt.compare(password, hash);`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = { hashPassword, verifyPassword };`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// utils/password.js
+const bcrypt = require('bcrypt');
+  
+const SALT_ROUNDS = 10;  // сложность хеширования (10-12 оптимально)
+  
+// Хеширование пароля
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt(SALT_ROUNDS);
+  return await bcrypt.hash(password, salt);
+}
+  
+// Проверка пароля
+async function verifyPassword(password, hash) {
+  return await bcrypt.compare(password, hash);
+}
+  
+module.exports = { hashPassword, verifyPassword };`}
+          />
           <p>Использование в модели пользователя</p>
-          <pre>
-            <CodeNumber length={25} />
-            <code>
-              <code className='comment'>{`// models/User.js (Mongoose)`}</code>
-              <code>{`const mongoose = require('mongoose');`}</code>
-              <code>{`const { hashPassword, verifyPassword } = require('../utils/password');`}</code>
-              <code>{'  '}</code>
-              <code>{`const userSchema = new mongoose.Schema({`}</code>
-              <code>
-                {'  '}
-                {`email: { type: String, required: true, unique: true },`}
-              </code>
-              <code>
-                {'  '}
-                {`password: { type: String, required: true, select: false }, // select false — не возвращать по умолчанию`}
-              </code>
-              <code>
-                {'  '}
-                {`name: String,`}
-              </code>
-              <code>
-                {'  '}
-                {`role: { type: String, enum: ['user', 'admin'], default: 'user' }`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Хешируем пароль перед сохранением`}</code>
-              <code>{`userSchema.pre('save', async function(next) {`}</code>
-              <code>
-                {'  '}
-                {`if (!this.isModified('password')) return next();`}
-              </code>
-              <code>
-                {'  '}
-                {`this.password = await hashPassword(this.password);`}
-              </code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Метод для проверки пароля`}</code>
-              <code>{`userSchema.methods.comparePassword = async function(candidatePassword) {`}</code>
-              <code>
-                {'  '}
-                {`return await verifyPassword(candidatePassword, this.password);`}
-              </code>
-              <code>{`};`}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = mongoose.model('User', userSchema);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// models/User.js (Mongoose)
+const mongoose = require('mongoose');
+const { hashPassword, verifyPassword } = require('../utils/password');
+  
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, select: false }, // select false — не возвращать по умолчанию
+  name: String,
+  role: { type: String, enum: ['user', 'admin'], default: 'user' }
+});
+  
+// Хешируем пароль перед сохранением
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await hashPassword(this.password);
+  next();
+});
+  
+// Метод для проверки пароля
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await verifyPassword(candidatePassword, this.password);
+};
+  
+module.exports = mongoose.model('User', userSchema);`}
+          />
           <p>JWT — генерация и верификация</p>
-          <pre>
-            <CodeNumber length={44} />
-            <code>
-              <code className='comment'>{`// utils/jwt.js`}</code>
-              <code>{`const jwt = require('jsonwebtoken');`}</code>
-              <code>{'  '}</code>
-              <code>{`const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-it';`}</code>
-              <code>{`const JWT_EXPIRES_IN = '7d';  // 7 дней`}</code>
-              <code>{`const JWT_REFRESH_EXPIRES_IN = '30d';`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Генерация access токена`}</code>
-              <code>{`function generateAccessToken(payload) {`}</code>
-              <code>
-                {'  '}
-                {`return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Генерация refresh токена`}</code>
-              <code>{`function generateRefreshToken(payload) {`}</code>
-              <code>
-                {'  '}
-                {`return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_REFRESH_EXPIRES_IN });`}
-              </code>
-              <code></code>
-              <code>{`}`}</code>
-              <code className='comment'>{`// Верификация токена`}</code>
-              <code>{`function verifyToken(token) {`}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`return jwt.verify(token, JWT_SECRET);`}
-              </code>
-              <code>
-                {'  '}
-                {`} catch (error) {`}
-              </code>
-              <code>
-                {'    '}
-                {`if (error.name === 'TokenExpiredError') {`}
-              </code>
-              <code>
-                {'      '}
-                {`throw new Error('Token expired');`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`if (error.name === 'JsonWebTokenError') {`}
-              </code>
-              <code>
-                {'      '}
-                {`throw new Error('Invalid token');`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`throw error;`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Декодирование без верификации (небезопасно, только для отладки)`}</code>
-              <code>{`function decodeToken(token) {`}</code>
-              <code>
-                {'  '}
-                {`return jwt.decode(token);`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = {`}</code>
-              <code>
-                {'  '}
-                {`generateAccessToken,`}
-              </code>
-              <code>
-                {'  '}
-                {`generateRefreshToken,`}
-              </code>
-              <code>
-                {'  '}
-                {`verifyToken,`}
-              </code>
-              <code>
-                {'  '}
-                {`decodeToken`}
-              </code>
-              <code>{'};'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// utils/jwt.js
+const jwt = require('jsonwebtoken');
+  
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-it';
+const JWT_EXPIRES_IN = '7d';  // 7 дней
+const JWT_REFRESH_EXPIRES_IN = '30d';
+  
+// Генерация access токена
+function generateAccessToken(payload) {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+}
+  
+// Генерация refresh токена
+function generateRefreshToken(payload) {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_REFRESH_EXPIRES_IN });
+}
+// Верификация токена
+function verifyToken(token) {
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      throw new Error('Token expired');
+    }
+    if (error.name === 'JsonWebTokenError') {
+      throw new Error('Invalid token');
+    }
+    throw error;
+  }
+}
+  
+// Декодирование без верификации (небезопасно, только для отладки)
+function decodeToken(token) {
+  return jwt.decode(token);
+}
+  
+module.exports = {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyToken,
+  decodeToken
+};`}
+          />
           <p>Middleware для авторизации</p>
-          <pre>
-            <CodeNumber length={69} />
-            <code>
-              <code className='comment'>{`// middleware/auth.js`}</code>
-              <code>{`const { verifyToken } = require('../utils/jwt');`}</code>
-              <code>{`const User = require('../models/User');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверка наличия токена`}</code>
-              <code>{`function authenticate(req, res, next) {`}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code className='comment'>
-                {'    '}
-                {`// Получаем токен из заголовка Authorization`}
-              </code>
-              <code>
-                {'      '}
-                {`const authHeader = req.headers.authorization;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'      '}
-                {`if (!authHeader || !authHeader.startsWith('Bearer ')) {`}
-              </code>
-              <code>
-                {'        '}
-                {`return res.status(401).json({ `}
-              </code>
-              <code>
-                {'          '}
-                {`error: 'No token provided or invalid format' `}
-              </code>
-              <code>
-                {'        '}
-                {`});`}
-              </code>
-              <code>
-                {'      '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`const token = authHeader.split(' ')[1];`}
-              </code>
-              <code>
-                {'    '}
-                {`const decoded = verifyToken(token);`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// Сохраняем данные пользователя в req`}
-              </code>
-              <code>
-                {'    '}
-                {`req.user = decoded;`}
-              </code>
-              <code>
-                {'    '}
-                {`next();`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`if (err.message === 'Token expired') {`}
-              </code>
-              <code>
-                {'      '}
-                {`return res.status(401).json({ error: 'Token expired' });`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`if (err.message === 'Invalid token') {`}
-              </code>
-              <code>
-                {'      '}
-                {`return res.status(401).json({ error: 'Invalid token' });`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`res.status(500).json({ error: 'Authentication error' });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверка роли (после authenticate)`}</code>
-              <code>{`function authorize(...roles) {`}</code>
-              <code>
-                {'  '}
-                {`return (req, res, next) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`if (!req.user) {`}
-              </code>
-              <code>
-                {'      '}
-                {`return res.status(401).json({ error: 'Not authenticated' });`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`if (!roles.includes(req.user.role)) {`}
-              </code>
-              <code>
-                {'      '}
-                {`return res.status(403).json({ `}
-              </code>
-              <code>
-                {'        '}
-                {`error: 'Access denied. Required role: ' + roles.join(' or ') `}
-              </code>
-              <code>
-                {'      '}
-                {`});`}
-              </code>
-              <code>
-                {'    '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`next();`}
-              </code>
-              <code>
-                {'  '}
-                {`};`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// Опциональная аутентификация (не блокирует)'}
-              </code>
-              <code>{'function optionalAuth(req, res, next) {'}</code>
-              <code>
-                {'  '}
-                {`const authHeader = req.headers.authorization;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (authHeader && authHeader.startsWith('Bearer ')) {`}
-              </code>
-              <code>
-                {'    '}
-                {`try {`}
-              </code>
-              <code>
-                {'      '}
-                {`const token = authHeader.split(' ')[1];`}
-              </code>
-              <code>
-                {'      '}
-                {`const decoded = verifyToken(token);`}
-              </code>
-              <code>
-                {'      '}
-                {`req.user = decoded;`}
-              </code>
-              <code>
-                {'    '}
-                {`} catch (err) {`}
-              </code>
-              <code className='comment'>
-                {'      '}
-                {`// Игнорируем ошибки токена при опциональной аутентификации`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`next();`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = { authenticate, authorize, optionalAuth };`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// middleware/auth.js
+const { verifyToken } = require('../utils/jwt');
+const User = require('../models/User');
+  
+// Проверка наличия токена
+function authenticate(req, res, next) {
+  try {
+    // Получаем токен из заголовка Authorization
+      const authHeader = req.headers.authorization;
+  
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ 
+          error: 'No token provided or invalid format' 
+        });
+      }
+  
+    const token = authHeader.split(' ')[1];
+    const decoded = verifyToken(token);
+  
+    // Сохраняем данные пользователя в req
+    req.user = decoded;
+    next();
+  
+  } catch (err) {
+    if (err.message === 'Token expired') {
+      return res.status(401).json({ error: 'Token expired' });
+    }
+    if (err.message === 'Invalid token') {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+    res.status(500).json({ error: 'Authentication error' });
+  }
+}
+  
+// Проверка роли (после authenticate)
+function authorize(...roles) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+  
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ 
+        error: 'Access denied. Required role: ' + roles.join(' or ') 
+      });
+    }
+  
+    next();
+  };
+}
+  
+// Опциональная аутентификация (не блокирует)
+function optionalAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    try {
+      const token = authHeader.split(' ')[1];
+      const decoded = verifyToken(token);
+      req.user = decoded;
+    } catch (err) {
+      // Игнорируем ошибки токена при опциональной аутентификации
+    }
+  }
+  
+  next();
+}
+  
+module.exports = { authenticate, authorize, optionalAuth };`}
+          />
           <p>Регистрация и логин</p>
-          <pre>
-            <CodeNumber length={144} />
-            <code>
-              <code className='comment'>{`// controllers/authController.js`}</code>
-              <code>{`const User = require('../models/User');`}</code>
-              <code>{`const { generateAccessToken, generateRefreshToken } = require('../utils/jwt');`}</code>
-              <code>{`const { ValidationError, UnauthorizedError } = require('../utils/errors');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Регистрация`}</code>
-              <code>{`async function register(req, res) {`}</code>
-              <code>
-                {'  '}
-                {`const { email, password, name } = req.body;`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Валидация`}
-              </code>
-              <code>
-                {'  '}
-                {`if (!email || !password) {`}
-              </code>
-              <code>
-                {'   '}
-                {`throw new ValidationError('Email and password are required');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (password.length < 6) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new ValidationError('Password must be at least 6 characters');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Проверка существующего пользователя`}
-              </code>
-              <code>
-                {'  '}
-                {`const existingUser = await User.findOne({ email });`}
-              </code>
-              <code>
-                {'  '}
-                {`if (existingUser) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new ValidationError('Email already registered');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Создание пользователя`}
-              </code>
-              <code>
-                {'  '}
-                {`const user = await User.create({`}
-              </code>
-              <code>
-                {'    '}
-                {`email,`}
-              </code>
-              <code>
-                {'    '}
-                {`password,  // хешируется в pre-save хуке`}
-              </code>
-              <code>
-                {'    '}
-                {`name: name || email.split('@')[0],`}
-              </code>
-              <code>
-                {'    '}
-                {`role: 'user'`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Генерация токенов`}
-              </code>
-              <code>
-                {'  '}
-                {`const payload = { id: user._id, email: user.email, role: user.role };`}
-              </code>
-              <code>
-                {'  '}
-                {`const accessToken = generateAccessToken(payload);`}
-              </code>
-              <code>
-                {'  '}
-                {`const refreshToken = generateRefreshToken(payload);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.status(201).json({`}
-              </code>
-              <code>
-                {'    '}
-                {`message: 'User registered successfully',`}
-              </code>
-              <code>
-                {'    '}
-                {`user: {`}
-              </code>
-              <code>
-                {'      '}
-                {`id: user._id,`}
-              </code>
-              <code>
-                {'      '}
-                {`email: user.email,`}
-              </code>
-              <code>
-                {'      '}
-                {`name: user.name,`}
-              </code>
-              <code>
-                {'      '}
-                {`role: user.role`}
-              </code>
-              <code>
-                {'    '}
-                {'},'}
-              </code>
-              <code>
-                {'    '}
-                {`tokens: {`}
-              </code>
-              <code>
-                {'      '}
-                {`accessToken,`}
-              </code>
-              <code>
-                {'      '}
-                {`refreshToken`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Логин`}</code>
-              <code>{'async function login(req, res) {'}</code>
-              <code>
-                {'  '}
-                {`const { email, password } = req.body;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!email || !password) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new ValidationError('Email and password are required');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Ищем пользователя с паролем (+password)`}
-              </code>
-              <code>
-                {'  '}
-                {`const user = await User.findOne({ email }).select('+password');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!user) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new UnauthorizedError('Invalid email or password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверяем пароль`}</code>
-              <code>
-                {'  '}
-                {`const isPasswordValid = await user.comparePassword(password);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!isPasswordValid) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new UnauthorizedError('Invalid email or password');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Генерация токенов`}
-              </code>
-              <code>
-                {'  '}
-                {`const payload = { id: user._id, email: user.email, role: user.role };`}
-              </code>
-              <code>
-                {'  '}
-                {`const accessToken = generateAccessToken(payload);`}
-              </code>
-              <code>
-                {'  '}
-                {`const refreshToken = generateRefreshToken(payload);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.json({`}
-              </code>
-              <code>
-                {'    '}
-                {`message: 'Login successful',`}
-              </code>
-              <code>
-                {'    '}
-                {`user: {`}
-              </code>
-              <code>
-                {'      '}
-                {`id: user._id,`}
-              </code>
-              <code>
-                {'      '}
-                {`email: user.email,`}
-              </code>
-              <code>
-                {'      '}
-                {`name: user.name,`}
-              </code>
-              <code>
-                {'      '}
-                {`role: user.role`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>
-                {'    '}
-                {`tokens: {`}
-              </code>
-              <code>
-                {'      '}
-                {`accessToken,`}
-              </code>
-              <code>
-                {'      '}
-                {`refreshToken`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Обновление токена (refresh)`}</code>
-              <code>{`async function refreshToken(req, res) {`}</code>
-              <code>
-                {'  '}
-                {`const { refreshToken } = req.body;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!refreshToken) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new ValidationError('Refresh token required');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`const decoded = verifyToken(refreshToken);`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// Проверяем, что пользователь все еще существует`}
-              </code>
-              <code>
-                {'    '}
-                {`const user = await User.findById(decoded.id);`}
-              </code>
-              <code>
-                {'    '}
-                {`if (!user) {`}
-              </code>
-              <code>
-                {'      '}
-                {`throw new UnauthorizedError('User not found');`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// Генерируем новые токены`}
-              </code>
-              <code>
-                {'    '}
-                {`const payload = { id: user._id, email: user.email, role: user.role };`}
-              </code>
-              <code>
-                {'    '}
-                {`const newAccessToken = generateAccessToken(payload);`}
-              </code>
-              <code>
-                {'    '}
-                {`const newRefreshToken = generateRefreshToken(payload);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`res.json({`}
-              </code>
-              <code>
-                {'      '}
-                {`tokens: {`}
-              </code>
-              <code>
-                {'        '}
-                {`accessToken: newAccessToken,`}
-              </code>
-              <code>
-                {'        '}
-                {`refreshToken: newRefreshToken`}
-              </code>
-              <code>
-                {'      '}
-                {`}`}
-              </code>
-              <code>
-                {'    '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new UnauthorizedError('Invalid or expired refresh token');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Получение текущего пользователя`}</code>
-              <code>{`async function getMe(req, res) {`}</code>
-              <code>
-                {'  '}
-                {`const user = await User.findById(req.user.id).select('-password');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (!user) {`}
-              </code>
-              <code>
-                {'    '}
-                {`throw new NotFoundError('User');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.json(user);`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = {`}</code>
-              <code>
-                {'  '}
-                {`register,`}
-              </code>
-              <code>
-                {'  '}
-                {`login,`}
-              </code>
-              <code>
-                {'  '}
-                {`refreshToken,`}
-              </code>
-              <code>{'  '}</code>
-              <code>{`};`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// controllers/authController.js
+const User = require('../models/User');
+const { generateAccessToken, generateRefreshToken } = require('../utils/jwt');
+const { ValidationError, UnauthorizedError } = require('../utils/errors');
+  
+// Регистрация
+async function register(req, res) {
+  const { email, password, name } = req.body;
+  
+  // Валидация
+  if (!email || !password) {
+   throw new ValidationError('Email and password are required');
+  }
+  
+  if (password.length < 6) {
+    throw new ValidationError('Password must be at least 6 characters');
+  }
+  
+  // Проверка существующего пользователя
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ValidationError('Email already registered');
+  }
+  
+  // Создание пользователя
+  const user = await User.create({
+    email,
+    password,  // хешируется в pre-save хуке
+    name: name || email.split('@')[0],
+    role: 'user'
+  });
+  
+  // Генерация токенов
+  const payload = { id: user._id, email: user.email, role: user.role };
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
+  
+  res.status(201).json({
+    message: 'User registered successfully',
+    user: {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role
+    },
+    tokens: {
+      accessToken,
+      refreshToken
+    }
+  });
+}
+  
+// Логин
+async function login(req, res) {
+  const { email, password } = req.body;
+  
+  if (!email || !password) {
+    throw new ValidationError('Email and password are required');
+  }
+  
+  // Ищем пользователя с паролем (+password)
+  const user = await User.findOne({ email }).select('+password');
+  
+  if (!user) {
+    throw new UnauthorizedError('Invalid email or password');
+  }
+  
+// Проверяем пароль
+  const isPasswordValid = await user.comparePassword(password);
+  
+  if (!isPasswordValid) {
+    throw new UnauthorizedError('Invalid email or password');
+  }
+  
+  // Генерация токенов
+  const payload = { id: user._id, email: user.email, role: user.role };
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
+  
+  res.json({
+    message: 'Login successful',
+    user: {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role
+    },
+    tokens: {
+      accessToken,
+      refreshToken
+    }
+  });
+}
+  
+// Обновление токена (refresh)
+async function refreshToken(req, res) {
+  const { refreshToken } = req.body;
+  
+  if (!refreshToken) {
+    throw new ValidationError('Refresh token required');
+  }
+  
+  try {
+    const decoded = verifyToken(refreshToken);
+  
+    // Проверяем, что пользователь все еще существует
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      throw new UnauthorizedError('User not found');
+    }
+  
+    // Генерируем новые токены
+    const payload = { id: user._id, email: user.email, role: user.role };
+    const newAccessToken = generateAccessToken(payload);
+    const newRefreshToken = generateRefreshToken(payload);
+  
+    res.json({
+      tokens: {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken
+      }
+    });
+  
+  } catch (err) {
+    throw new UnauthorizedError('Invalid or expired refresh token');
+  }
+}
+  
+// Получение текущего пользователя
+async function getMe(req, res) {
+  const user = await User.findById(req.user.id).select('-password');
+  
+  if (!user) {
+    throw new NotFoundError('User');
+  }
+  
+  res.json(user);
+}
+  
+module.exports = {
+  register,
+  login,
+  refreshToken,
+  
+};`}
+          />
           <p>Роуты аутентификации</p>
-          <pre>
-            <CodeNumber length={20} />
-            <code>
-              <code className='comment'>{`// routes/auth.js`}</code>
-              <code>{`const router = require('express').Router();`}</code>
-              <code>{`const asyncHandler = require('../utils/asyncHandler');`}</code>
-              <code>{`const { authenticate } = require('../middleware/auth');`}</code>
-              <code>{`const authController = require('../controllers/authController');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Публичные маршруты`}</code>
-              <code>{`router.post('/register', asyncHandler(authController.register));`}</code>
-              <code>{`router.post('/login', asyncHandler(authController.login));`}</code>
-              <code>{`router.post('/refresh', asyncHandler(authController.refreshToken));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Защищенные маршруты`}</code>
-              <code>{`router.get('/me', authenticate, asyncHandler(authController.getMe));`}</code>
-              <code>{`router.post('/logout', authenticate, asyncHandler(async (req, res) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// На клиенте нужно удалить токены`}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// В реальном проекте можно добавить черный список токенов`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json({ message: 'Logged out successfully' });`}
-              </code>
-              <code>{'}));'}</code>
-              <code>{'  '}</code>
-              <code>module.exports = router;</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// routes/auth.js
+const router = require('express').Router();
+const asyncHandler = require('../utils/asyncHandler');
+const { authenticate } = require('../middleware/auth');
+const authController = require('../controllers/authController');
+  
+// Публичные маршруты
+router.post('/register', asyncHandler(authController.register));
+router.post('/login', asyncHandler(authController.login));
+router.post('/refresh', asyncHandler(authController.refreshToken));
+  
+// Защищенные маршруты
+router.get('/me', authenticate, asyncHandler(authController.getMe));
+router.post('/logout', authenticate, asyncHandler(async (req, res) => {
+  // На клиенте нужно удалить токены
+  // В реальном проекте можно добавить черный список токенов
+  res.json({ message: 'Logged out successfully' });
+}));
+  
+module.exports = router;
+`}
+          />
           <p>Защита маршрутов по ролям</p>
-          <pre>
-            <CodeNumber length={24} />
-            <code>
-              <code className='comment'>{`// routes/admin.js`}</code>
-              <code>{`const router = require('express').Router();`}</code>
-              <code>{`const { authenticate, authorize } = require('../middleware/auth');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Все маршруты в этом роутере требуют аутентификации`}</code>
-              <code>{`router.use(authenticate);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Только админы могут получить список всех пользователей`}</code>
-              <code>{`router.get('/users', authorize('admin'), async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const users = await User.find().select('-password');`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(users);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Админы и менеджеры могут просматривать отчеты`}</code>
-              <code>{`router.get('/reports', authorize('admin', 'manager'), async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json({ report: 'sales_data' });`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Обычный пользователь может просматривать свою статистику`}</code>
-              <code>{`router.get('/my-stats', authorize('user', 'admin'), async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.json({ stats: { visits: 42 } });`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>module.exports = router;</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// routes/admin.js
+const router = require('express').Router();
+const { authenticate, authorize } = require('../middleware/auth');
+  
+// Все маршруты в этом роутере требуют аутентификации
+router.use(authenticate);
+  
+// Только админы могут получить список всех пользователей
+router.get('/users', authorize('admin'), async (req, res) => {
+  const users = await User.find().select('-password');
+  res.json(users);
+});
+  
+// Админы и менеджеры могут просматривать отчеты
+router.get('/reports', authorize('admin', 'manager'), async (req, res) => {
+  res.json({ report: 'sales_data' });
+});
+  
+// Обычный пользователь может просматривать свою статистику
+router.get('/my-stats', authorize('user', 'admin'), async (req, res) => {
+  res.json({ stats: { visits: 42 } });
+});
+  
+module.exports = router;`}
+          />
         </div>
       ),
     },
@@ -3768,191 +1867,86 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>express-validator</p>
-          <pre>npm install express-validator</pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install express-validator`}
+          />
           <p>Базовое использование</p>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>{`const { body, validationResult } = require('express-validator');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Маршрут с валидацией`}</code>
-              <code>{`app.post('/users',`}</code>
-              <code>
-                {'  '}
-                {`body('email').isEmail().normalizeEmail(),`}
-              </code>
-              <code>
-                {'  '}
-                {`body('password').isLength({ min: 6 }),`}
-              </code>
-              <code>
-                {'  '}
-                {`body('name').notEmpty().trim().isLength({ min: 2, max: 50 }),`}
-              </code>
-              <code>
-                {'  '}
-                {`body('age').optional().isInt({ min: 18, max: 120 }),`}
-              </code>
-              <code>{'  '}</code>
-              <code>{`(req, res) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Проверка результатов`}
-              </code>
-              <code>
-                {'  '}
-                {`const errors = validationResult(req);`}
-              </code>
-              <code>
-                {'  '}
-                {`if (!errors.isEmpty()) {`}
-              </code>
-              <code>
-                {'    '}
-                {`return res.status(400).json({ errors: errors.array() });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.json({ message: 'User created', data: req.body });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{');'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { body, validationResult } = require('express-validator');
+  
+// Маршрут с валидацией
+app.post('/users',
+  body('email').isEmail().normalizeEmail(),
+  body('password').isLength({ min: 6 }),
+  body('name').notEmpty().trim().isLength({ min: 2, max: 50 }),
+  body('age').optional().isInt({ min: 18, max: 120 }),
+  
+(req, res) => {
+  // Проверка результатов
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
+  res.json({ message: 'User created', data: req.body });
+  }
+);`}
+          />
           <p>Joi</p>
-          <pre>npm install joi</pre>
+          <CodeHighlighter language={'bash'} code={`npm install joi`} />
           <p>Создание схемы</p>
-          <pre>
-            <CodeNumber length={26} />
-            <code>
-              <code>{`const Joi = require('joi');`}</code>
-              <code>{'  '}</code>
-              <code>{'const userSchema = Joi.object({'}</code>
-              <code>
-                {'  '}
-                {`name: Joi.string().min(2).max(50).required(),`}
-              </code>
-              <code>
-                {'  '}
-                {`email: Joi.string().email().required(),`}
-              </code>
-              <code>
-                {'  '}
-                {`password: Joi.string().min(6).required(),`}
-              </code>
-              <code>
-                {'  '}
-                {`age: Joi.number().integer().min(18).max(120).optional(),`}
-              </code>
-              <code>
-                {'  '}
-                {`role: Joi.string().valid('user', 'admin').default('user'),`}
-              </code>
-              <code>
-                {'  '}
-                {`tags: Joi.array().items(Joi.string()).optional(),`}
-              </code>
-              <code>
-                {'  '}
-                {`address: Joi.object({`}
-              </code>
-              <code>
-                {'    '}
-                {`street: Joi.string().required(),`}
-              </code>
-              <code>
-                {'    '}
-                {`city: Joi.string().required(),`}
-              </code>
-              <code>
-                {'    '}
-                {`zip: Joi.string().pattern(/^\d{5}$/)`}
-              </code>
-              <code>
-                {'  '}
-                {`}).optional()`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Валидация`}</code>
-              <code>{`const { error, value } = userSchema.validate(req.body);`}</code>
-              <code>{'  '}</code>
-              <code>{`if (error) {`}</code>
-              <code>
-                {'  '}
-                {`return res.status(400).json({ `}
-              </code>
-              <code>
-                {'    '}
-                {`error: error.details[0].message `}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>{'res.json({ validated: value });'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const Joi = require('joi');
+  
+const userSchema = Joi.object({
+  name: Joi.string().min(2).max(50).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  age: Joi.number().integer().min(18).max(120).optional(),
+  role: Joi.string().valid('user', 'admin').default('user'),
+  tags: Joi.array().items(Joi.string()).optional(),
+  address: Joi.object({
+    street: Joi.string().required(),
+    city: Joi.string().required(),
+    zip: Joi.string().pattern(/^d{5}$/)
+  }).optional()
+});
+  
+// Валидация
+const { error, value } = userSchema.validate(req.body);
+  
+if (error) {
+  return res.status(400).json({ 
+    error: error.details[0].message 
+  });
+}
+  
+res.json({ validated: value });`}
+          />
           <p>Zod (TypeScript-first, современный)</p>
-          <pre>npm install zod</pre>
+          <CodeHighlighter language={'bash'} code={`npm install zod`} />
           <p>Схемы Zod</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>{`const z = require('zod');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Схема пользователя`}</code>
-              <code>{`const UserSchema = z.object({`}</code>
-              <code>
-                {'  '}
-                {`name: z.string().min(2).max(50),`}
-              </code>
-              <code>
-                {'  '}
-                {`email: z.string().email(),`}
-              </code>
-              <code>
-                {'  '}
-                {`password: z.string().min(6),`}
-              </code>
-              <code>
-                {'  '}
-                {`age: z.number().int().min(18).max(120).optional(),`}
-              </code>
-              <code>
-                {'  '}
-                {`role: z.enum(['user', 'admin']).default('user')`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Валидация`}</code>
-              <code>{'try {'}</code>
-              <code>
-                {'  '}
-                {`const validated = UserSchema.parse(req.body);`}
-              </code>
-              <code>
-                {'  '}
-                {`res.json(validated);`}
-              </code>
-              <code>{`} catch (error) {`}</code>
-              <code>
-                {'  '}
-                {`res.status(400).json({ errors: error.errors });`}
-              </code>
-              <code>{`}`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const z = require('zod');
+  
+// Схема пользователя
+const UserSchema = z.object({
+  name: z.string().min(2).max(50),
+  email: z.string().email(),
+  password: z.string().min(6),
+  age: z.number().int().min(18).max(120).optional(),
+  role: z.enum(['user', 'admin']).default('user')
+});
+  
+// Валидация
+try {
+  const validated = UserSchema.parse(req.body);
+  res.json(validated);
+} catch (error) {
+  res.status(400).json({ errors: error.errors });
+}`}
+          />
           <p>Сравнение подходов</p>
           <table>
             <thead>
@@ -4042,28 +2036,25 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>Morgan (HTTP логгер)</p>
-          <pre>npm install morgan</pre>
+          <CodeHighlighter language={'bash'} code={`npm install morgan`} />
           <p>Базовое использование</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code>{`const morgan = require('morgan');`}</code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const app = express();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Простой логгер`}</code>
-              <code>{`app.use(morgan('tiny'));`}</code>
-              <code className='comment'>{`// вывод: GET /users 200 12 - 3ms`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Для разработки (подробный)`}</code>
-              <code>{`app.use(morgan('dev'));`}</code>
-              <code className='comment'>{`// вывод: GET /users 200 12.345 ms - 123`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Для продакшена (комбинированный)`}</code>
-              <code>{`app.use(morgan('combined'));`}</code>
-              <code>{`// вывод: ::1 - - [08/Jun/2024:12:00:00 +0000] "GET /users HTTP/1.1" 200 123 "-" "curl/7.68.0"`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`onst morgan = require('morgan');
+const express = require('express');
+const app = express();
+  
+// Простой логгер
+app.use(morgan('tiny'));
+// вывод: GET /users 200 12 - 3ms
+  
+// Для разработки (подробный)
+app.use(morgan('dev'));
+// вывод: GET /users 200 12.345 ms - 123
+  
+// Для продакшена (комбинированный)
+app.use(morgan('combined'));
+// вывод: ::1 - - [08/Jun/2024:12:00:00 +0000] "GET /users HTTP/1.1" 200 123 "-" "curl/7.68.0"`}
+          />
           <p>Форматы Morgan</p>
           <table>
             <thead>
@@ -4096,117 +2087,45 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>Winston (полноценный логгер)</p>
-          <pre>npm install winston</pre>
+          <CodeHighlighter language={'bash'} code={`npm install winston`} />
           <p>Базовая настройка</p>
-          <pre>
-            <CodeNumber length={35} />
-            <code>
-              <code className='comment'>{`// logger.js`}</code>
-              <code>{`const winston = require('winston');`}</code>
-              <code>{`const path = require('path');`}</code>
-              <code>{'  '}</code>
-              <code>{`const logger = winston.createLogger({`}</code>
-              <code>
-                {'  '}
-                {`level: process.env.LOG_LEVEL || 'info',`}
-              </code>
-              <code>
-                {'  '}
-                {`format: winston.format.combine(`}
-              </code>
-              <code>
-                {'    '}
-                {`winston.format.timestamp(),`}
-              </code>
-              <code>
-                {'    '}
-                {`winston.format.errors({ stack: true }),`}
-              </code>
-              <code>
-                {'    '}
-                {`winston.format.json()`}
-              </code>
-              <code>
-                {'  '}
-                {`),`}
-              </code>
-              <code>
-                {'  '}
-                {`transports: [`}
-              </code>
-              <code className='comment'>
-                {'    '}
-                {`// Ошибки в отдельный файл`}
-              </code>
-              <code>
-                {'    '}
-                {`new winston.transports.File({`}
-              </code>
-              <code>
-                {'      '}
-                {`filename: path.join('logs', 'error.log'),`}
-              </code>
-              <code>
-                {'      '}
-                {`level: 'error'`}
-              </code>
-              <code>
-                {'    '}
-                {`}),`}
-              </code>
-              <code className='comment'>
-                {'    '}
-                {`// Все логи в общий файл`}
-              </code>
-              <code>
-                {'    '}
-                {`new winston.transports.File({`}
-              </code>
-              <code>
-                {'      '}
-                {`filename: path.join('logs', 'combined.log')`}
-              </code>
-              <code>
-                {'    '}
-                {`})`}
-              </code>
-              <code>
-                {'  '}
-                {`]`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// В разработке еще и в консоль`}</code>
-              <code>{`if (process.env.NODE_ENV !== 'production') {`}</code>
-              <code>
-                {'  '}
-                {`logger.add(new winston.transports.Console({`}
-              </code>
-              <code>
-                {'    '}
-                {`format: winston.format.combine(`}
-              </code>
-              <code>
-                {'      '}
-                {`winston.format.colorize(),`}
-              </code>
-              <code>
-                {'      '}
-                {`winston.format.simple()`}
-              </code>
-              <code>
-                {'    '}
-                {`)`}
-              </code>
-              <code>
-                {'  '}
-                {`}));`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`module.exports = logger;`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// logger.js
+const winston = require('winston');
+const path = require('path');
+  
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  transports: [
+    // Ошибки в отдельный файл
+    new winston.transports.File({
+      filename: path.join('logs', 'error.log'),
+      level: 'error'
+    }),
+    // Все логи в общий файл
+    new winston.transports.File({
+      filename: path.join('logs', 'combined.log')
+    })
+  ]
+});
+  
+// В разработке еще и в консоль
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    )
+  }));
+}
+  
+module.exports = logger;`}
+          />
           <p>Структура логов</p>
           <table>
             <thead>
@@ -4245,64 +2164,42 @@ app.listen(3000, () => {
             </tbody>
           </table>
           <p>Пример структурированного лога</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{`// Хорошо (структурированный)`}</code>
-              <code>{`logger.info('User logged in', {`}</code>
-              <code>
-                {'  '}
-                {`userId: 123,`}
-              </code>
-              <code>
-                {'  '}
-                {`email: 'user@example.com',`}
-              </code>
-              <code>
-                {'  '}
-                {`ip: '192.168.1.1',`}
-              </code>
-              <code>
-                {'  '}
-                {`timestamp: new Date().toISOString()`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Плохо (строка)`}</code>
-              <code>
-                {'logger.info(`User ${userId} logged in from ${ip}`);'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Хорошо (структурированный)
+logger.info('User logged in', {
+  userId: 123,
+  email: 'user@example.com',
+  ip: '192.168.1.1',
+  timestamp: new Date().toISOString()
+});
+  
+// Плохо (строка)
+logger.info(\`User \${userId} logged in from \${ip}\`);`}
+          />
           <p>Мониторинг (metrics)</p>
           <p>express-status-monitor</p>
-          <pre>npm install express-status-monitor</pre>
-          <pre>
-            <CodeNumber length={4} />
-            <code>
-              <code>{`const statusMonitor = require('express-status-monitor');`}</code>
-              <code>{'  '}</code>
-              <code>{`app.use(statusMonitor());`}</code>
-              <code className='comment'>{`// Доступно на /status`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install express-status-monitor`}
+          />
+          <CodeHighlighter
+            code={`const statusMonitor = require('express-status-monitor');
+  
+app.use(statusMonitor());
+// Доступно на /status`}
+          />
           <p>response-time (измерение времени ответа)</p>
-          <pre>npm install response-time</pre>
-          <pre>
-            <CodeNumber length={5} />
-            <code>
-              <code>{`const responseTime = require('response-time');`}</code>
-              <code>{'  '}</code>
-              <code>{'app.use(responseTime((req, res, time) => {'}</code>
-              <code>
-                {'  '}
-                {
-                  'logger.debug(`${req.method} ${req.url} - ${time.toFixed(2)}ms`);'
-                }
-              </code>
-              <code>{`}));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install response-time`}
+          />
+          <CodeHighlighter
+            code={`const responseTime = require('response-time');
+  
+app.use(responseTime((req, res, time) => {
+  logger.debug(\`\${req.method} \${req.url} - \${time.toFixed(2)}ms\`);
+}));`}
+          />
         </div>
       ),
     },
@@ -4316,924 +2213,493 @@ app.listen(3000, () => {
       jsx: (
         <div>
           <p>Структура env файлов</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code># .env (не коммитим)</code>
-              <code>NODE_ENV=production</code>
-              <code>PORT=3000</code>
-              <code>{'  '}</code>
-              <code># База данных</code>
-              <code>DB_HOST=localhost</code>
-              <code>DB_NAME=myapp</code>
-              <code>DB_USER=postgres</code>
-              <code>{'DB_PASSWORD=secret'}</code>
-              <code>{'  '}</code>
-              <code># JWT</code>
-              <code>{`JWT_SECRET=very-long-secret-key`}</code>
-              <code>{'  '}</code>
-              <code>{`# Внешние сервисы`}</code>
-              <code>{`REDIS_URL=redis://localhost:6379`}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={24} />
-            <code>
-              <code className='comment'>{`// config/index.js`}</code>
-              <code>{`require('dotenv').config();`}</code>
-              <code>{'  '}</code>
-              <code>{'const config = {'}</code>
-              <code>
-                {'  '}
-                {`env: process.env.NODE_ENV || 'development',`}
-              </code>
-              <code>
-                {'  '}
-                {`port: parseInt(process.env.PORT, 10) || 3000,`}
-              </code>
-              <code>
-                {'  '}
-                {`db: {`}
-              </code>
-              <code>
-                {'    '}
-                {`host: process.env.DB_HOST,`}
-              </code>
-              <code>
-                {'    '}
-                {`name: process.env.DB_NAME,`}
-              </code>
-              <code>
-                {'    '}
-                {`user: process.env.DB_USER,`}
-              </code>
-              <code>
-                {'    '}
-                {`password: process.env.DB_PASSWORD,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`jwt: {`}
-              </code>
-              <code>
-                {'    '}
-                {`secret: process.env.JWT_SECRET,`}
-              </code>
-              <code>
-                {'    '}
-                {`expiresIn: '7d',`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`redis: {`}
-              </code>
-              <code>
-                {'    '}
-                {`url: process.env.REDIS_URL,`}
-              </code>
-              <code>
-                {'  '}
-                {`},`}
-              </code>
-              <code>
-                {'  '}
-                {`isProduction: process.env.NODE_ENV === 'production',`}
-              </code>
-              <code>
-                {'  '}
-                {`isDevelopment: process.env.NODE_ENV === 'development',`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code>module.exports = config;</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`# .env (не коммитим)
+NODE_ENV=production
+PORT=3000
+  
+# База данных
+DB_HOST=localhost
+DB_NAME=myapp
+DB_USER=postgres
+DB_PASSWORD=secret
+  
+# JWT
+JWT_SECRET=very-long-secret-key
+  
+# Внешние сервисы
+REDIS_URL=redis://localhost:6379`}
+          />
+          <CodeHighlighter
+            code={`// config/index.js
+require('dotenv').config();
+  
+const config = {
+  env: process.env.NODE_ENV || 'development',
+  port: parseInt(process.env.PORT, 10) || 3000,
+  db: {
+    host: process.env.DB_HOST,
+    name: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: '7d',
+  },
+  redis: {
+    url: process.env.REDIS_URL,
+  },
+  isProduction: process.env.NODE_ENV === 'production',
+  isDevelopment: process.env.NODE_ENV === 'development',
+};
+  
+module.exports = config;`}
+          />
           <p>package.json скрипты</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{`{`}</code>
-              <code>
-                {'  '}
-                {`"scripts": {`}
-              </code>
-              <code>
-                {'    '}
-                {`"start": "node app.js",`}
-              </code>
-              <code>
-                {'    '}
-                {`"start:prod": "NODE_ENV=production node app.js",`}
-              </code>
-              <code>
-                {'    '}
-                {`"dev": "nodemon app.js",`}
-              </code>
-              <code>
-                {'    '}
-                {`"pm2:start": "pm2 start ecosystem.config.js",`}
-              </code>
-              <code>
-                {'    '}
-                {`"pm2:stop": "pm2 stop ecosystem.config.js",`}
-              </code>
-              <code>
-                {'    '}
-                {`"pm2:restart": "pm2 restart ecosystem.config.js"`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'json'}
+            code={`{
+  "scripts": {
+    "start": "node app.js",
+    "start:prod": "NODE_ENV=production node app.js",
+    "dev": "nodemon app.js",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop ecosystem.config.js",
+    "pm2:restart": "pm2 restart ecosystem.config.js"
+  }
+}`}
+          />
           <p>Проверка окружения при запуске</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{`// app.js (в начале)`}</code>
-              <code>{`const config = require('./config');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Проверка обязательных переменных`}</code>
-              <code>{`const requiredEnv = ['JWT_SECRET'];`}</code>
-              <code>{`if (config.isProduction) {`}</code>
-              <code>
-                {'  '}
-                {`requiredEnv.push('DB_HOST', 'DB_PASSWORD');`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`for (const env of requiredEnv) {`}</code>
-              <code>
-                {'  '}
-                {`if (!process.env[env]) {`}
-              </code>
-              <code>
-                {'    '}
-                {'console.error(`❌ Missing required env: ${env}`);'}
-              </code>
-              <code>
-                {'    '}
-                {`process.exit(1);`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>
-                {
-                  'console.log(`✅ Running in ${config.env} mode on port ${config.port}`);'
-                }
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// app.js (в начале)
+const config = require('./config');
+  
+// Проверка обязательных переменных
+const requiredEnv = ['JWT_SECRET'];
+if (config.isProduction) {
+  requiredEnv.push('DB_HOST', 'DB_PASSWORD');
+}
+  
+for (const env of requiredEnv) {
+  if (!process.env[env]) {
+    console.error(\`❌ Missing required env: \${env}\`);
+    process.exit(1);
+  }
+}
+  
+console.log(\`✅ Running in \${config.env} mode on port \${config.port}\`);`}
+          />
           <p>Настройка Express для продакшена</p>
-          <pre>
-            <CodeNumber length={61} />
-            <code>
-              <code className='comment'>{`// app.js`}</code>
-              <code>{`const express = require('express');`}</code>
-              <code>{`const compression = require('compression');`}</code>
-              <code>{`const helmet = require('helmet');`}</code>
-              <code>{`const cors = require('cors');`}</code>
-              <code>{`const rateLimit = require('express-rate-limit');`}</code>
-              <code>{`const config = require('./config');`}</code>
-              <code>{'  '}</code>
-              <code>{`const app = express();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Безопасность`}</code>
-              <code>{`app.use(helmet()); // Защитные заголовки`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// CORS (ограниченный для продакшена)`}</code>
-              <code>{`const corsOptions = {`}</code>
-              <code>
-                {'  '}
-                {`origin: config.isProduction `}
-              </code>
-              <code>
-                {'    '}
-                {`? ['https://myapp.com', 'https://api.myapp.com']`}
-              </code>
-              <code>
-                {'    '}
-                {`: '*',`}
-              </code>
-              <code>
-                {'  '}
-                {`credentials: true,`}
-              </code>
-              <code>{'};'}</code>
-              <code>{`app.use(cors(corsOptions));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Сжатие ответов`}</code>
-              <code>{`app.use(compression());`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Rate limiting`}</code>
-              <code>{`const limiter = rateLimit({`}</code>
-              <code>
-                {'  '}
-                {`windowMs: 15 * 60 * 1000, // 15 минут`}
-              </code>
-              <code>
-                {'  '}
-                {`max: config.isProduction ? 100 : 10000, // лимит запросов`}
-              </code>
-              <code>
-                {'  '}
-                {`message: 'Too many requests from this IP',`}
-              </code>
-              <code>
-                {'  '}
-                {`standardHeaders: true,`}
-              </code>
-              <code>
-                {'  '}
-                {`legacyHeaders: false,`}
-              </code>
-              <code>{`});`}</code>
-              <code>{`app.use('/api', limiter);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Более строгий лимит для аутентификации`}</code>
-              <code>{`const authLimiter = rateLimit({`}</code>
-              <code>
-                {'  '}
-                {`windowMs: 15 * 60 * 1000,`}
-              </code>
-              <code>
-                {'  '}
-                {`max: 5,`}
-              </code>
-              <code>
-                {'  '}
-                {`skipSuccessfulRequests: true,`}
-              </code>
-              <code>{`});`}</code>
-              <code>{`app.use('/api/auth/login', authLimiter);`}</code>
-              <code>{`app.use('/api/auth/register', authLimiter);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Парсинг с лимитами`}</code>
-              <code>{`app.use(express.json({ limit: '10mb' }));`}</code>
-              <code>{`app.use(express.urlencoded({ extended: true, limit: '10mb' }));`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Доверять прокси (если за Nginx/Cloudflare)`}</code>
-              <code>{`if (config.isProduction) {`}</code>
-              <code>
-                {'  '}
-                {`app.set('trust proxy', 1);`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Статика с кэшированием`}</code>
-              <code>{`app.use('/static', express.static('public', {`}</code>
-              <code>
-                {'  '}
-                {`maxAge: '1y',`}
-              </code>
-              <code>
-                {'  '}
-                {`etag: true,`}
-              </code>
-              <code>
-                {'  '}
-                {`lastModified: true,`}
-              </code>
-              <code>{`}));`}</code>
-              <code>{'  '}</code>
-              <code>module.exports = app;</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// app.js
+const express = require('express');
+const compression = require('compression');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const config = require('./config');
+  
+const app = express();
+  
+// Безопасность
+app.use(helmet()); // Защитные заголовки
+  
+// CORS (ограниченный для продакшена)
+const corsOptions = {
+  origin: config.isProduction 
+    ? ['https://myapp.com', 'https://api.myapp.com']
+    : '*',
+  credentials: true,
+};
+app.use(cors(corsOptions));
+  
+// Сжатие ответов
+app.use(compression());
+  
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 минут
+  max: config.isProduction ? 100 : 10000, // лимит запросов
+  message: 'Too many requests from this IP',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api', limiter);
+  
+// Более строгий лимит для аутентификации
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  skipSuccessfulRequests: true,
+});
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+  
+// Парсинг с лимитами
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+  
+// Доверять прокси (если за Nginx/Cloudflare)
+if (config.isProduction) {
+  app.set('trust proxy', 1);
+}
+  
+// Статика с кэшированием
+app.use('/static', express.static('public', {
+  maxAge: '1y',
+  etag: true,
+  lastModified: true,
+}));
+  
+module.exports = app;`}
+          />
           <p>Отключение debug в продакшене</p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>{`// logger.js`}</code>
-              <code>{`const winston = require('winston');`}</code>
-              <code>{'  '}</code>
-              <code>{`const level = process.env.NODE_ENV === 'production' ? 'info' : 'debug';`}</code>
-              <code>{'  '}</code>
-              <code>{`const logger = winston.createLogger({`}</code>
-              <code>
-                {'  '}
-                {`level,`}
-              </code>
-              <code>
-                {'  '}
-                {`// ... остальная конфигурация`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// logger.js
+const winston = require('winston');
+  
+const level = process.env.NODE_ENV === 'production' ? 'info' : 'debug';
+  
+const logger = winston.createLogger({
+  level,
+  // ... остальная конфигурация
+});`}
+          />
           <p>PM2 — менеджер процессов</p>
-          <pre>npm install -g pm2</pre>
+          <CodeHighlighter language={'bash'} code={`npm install -g pm2`} />
           <p>Запуск через PM2</p>
-          <pre>
-            <CodeNumber length={27} />
-            <code>
-              <code className='comment'>{`# Базовый запуск`}</code>
-              <code>{`pm2 start app.js --name myapp`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# С указанием окружения`}</code>
-              <code>pm2 start app.js --env production --name myapp</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# С параметрами`}</code>
-              <code>pm2 start app.js --name myapp -- --port=3001</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Просмотр списка процессов`}</code>
-              <code>pm2 list</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Логи`}</code>
-              <code>pm2 logs myapp</code>
-              <code>pm2 logs --lines 100</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Мониторинг`}</code>
-              <code>pm2 monit</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Остановка/перезапуск/удаление`}</code>
-              <code>pm2 stop myapp</code>
-              <code>pm2 restart myapp</code>
-              <code>pm2 delete myapp</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Сохранить конфигурацию (автозапуск после перезагрузки)`}</code>
-              <code>pm2 save</code>
-              <code>pm2 startup</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`# Базовый запуск
+pm2 start app.js --name myapp
+  
+# С указанием окружения
+pm2 start app.js --env production --name myapp
+  
+# С параметрами
+pm2 start app.js --name myapp -- --port=3001
+  
+# Просмотр списка процессов
+pm2 list
+  
+# Логи
+pm2 logs myapp
+pm2 logs --lines 100
+  
+# Мониторинг
+pm2 monit
+  
+# Остановка/перезапуск/удаление
+pm2 stop myapp
+pm2 restart myapp
+pm2 delete myapp
+  
+# Сохранить конфигурацию (автозапуск после перезагрузки)
+pm2 save
+pm2 startup`}
+          />
           <p>ecosystem.config.js</p>
-          <pre>
-            <CodeNumber length={33} />
-            <code>
-              <code className='comment'>{`// ecosystem.config.js`}</code>
-              <code>{`module.exports = {`}</code>
-              <code>
-                {'  '}
-                {`apps: [{`}
-              </code>
-              <code>
-                {'    '}
-                {`name: 'myapp',`}
-              </code>
-              <code>
-                {'    '}
-                {`script: './app.js',`}
-              </code>
-              <code>
-                {'    '}
-                {`instances: 'max',              // по числу CPU ядер`}
-              </code>
-              <code>
-                {'    '}
-                {`exec_mode: 'cluster',         // кластерный режим`}
-              </code>
-              <code>
-                {'    '}
-                {`watch: false,                  // не следить за изменениями в проде`}
-              </code>
-              <code>
-                {'    '}
-                {`max_memory_restart: '1G',     // перезапуск при 1GB памяти`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`env: {`}
-              </code>
-              <code>
-                {'      '}
-                {`NODE_ENV: 'development',`}
-              </code>
-              <code>
-                {'      '}
-                {`PORT: 3000`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>
-                {'    '}
-                {`env_production: {`}
-              </code>
-              <code>
-                {'      '}
-                {`NODE_ENV: 'production',`}
-              </code>
-              <code>
-                {'      '}
-                {`PORT: 3000`}
-              </code>
-              <code>
-                {'    '}
-                {`},`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`error_file: './logs/pm2-error.log',`}
-              </code>
-              <code>
-                {'    '}
-                {`out_file: './logs/pm2-out.log',`}
-              </code>
-              <code>
-                {'    '}
-                {`log_file: './logs/combined.log',`}
-              </code>
-              <code>
-                {'    '}
-                {`time: true,`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// Автоматический перезапуск`}
-              </code>
-              <code>
-                {'    '}
-                {`autorestart: true,`}
-              </code>
-              <code>
-                {'    '}
-                {`max_restarts: 10,`}
-              </code>
-              <code>
-                {'    '}
-                {`min_uptime: '10s',`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`// Переменные окружения из файла`}
-              </code>
-              <code>
-                {'    '}
-                {`env_file: '.env'`}
-              </code>
-              <code>
-                {'  '}
-                {`}]`}
-              </code>
-              <code>{`};`}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={4} />
-            <code>
-              <code className='comment'>{`# Запуск с ecosystem`}</code>
-              <code>pm2 start ecosystem.config.js --env production</code>
-              <code>pm2 save</code>
-              <code>pm2 startup # автозапуск при загрузке системы</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ecosystem.config.js
+module.exports = {
+  apps: [{
+    name: 'myapp',
+    script: './app.js',
+    instances: 'max',              // по числу CPU ядер
+    exec_mode: 'cluster',         // кластерный режим
+    watch: false,                  // не следить за изменениями в проде
+    max_memory_restart: '1G',     // перезапуск при 1GB памяти
+  
+    env: {
+      NODE_ENV: 'development',
+      PORT: 3000
+    },
+    env_production: {
+      NODE_ENV: 'production',
+      PORT: 3000
+    },
+  
+    error_file: './logs/pm2-error.log',
+    out_file: './logs/pm2-out.log',
+    log_file: './logs/combined.log',
+    time: true,
+  
+    // Автоматический перезапуск
+    autorestart: true,
+    max_restarts: 10,
+    min_uptime: '10s',
+  
+    // Переменные окружения из файла
+    env_file: '.env'
+  }]
+};`}
+          />
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Запуск с ecosystem
+pm2 start ecosystem.config.js --env production
+pm2 save
+pm2 startup # автозапуск при загрузке системы`}
+          />
           <p>Dockerfile</p>
-          <pre>
-            <CodeNumber length={24} />
-            <code>
-              <code># Dockerfile</code>
-              <code>FROM node:20-alpine</code>
-              <code>{'  '}</code>
-              <code>WORKDIR /app</code>
-              <code>{'  '}</code>
-              <code># Копируем package files</code>
-              <code>COPY package*.json ./</code>
-              <code>{'  '}</code>
-              <code># Устанавливаем только production зависимости</code>
-              <code>
-                RUN npm ci --only=production && npm cache clean --force
-              </code>
-              <code>{'  '}</code>
-              <code># Копируем исходники</code>
-              <code>COPY . .</code>
-              <code>{'  '}</code>
-              <code># Создаем пользователя не root</code>
-              <code>RUN addgroup -g 1001 -S nodejs && \</code>
-              <code>{'  '}adduser -S nodejs -u 1001 && \</code>
-              <code>{'  '}chown -R nodejs:nodejs /app</code>
-              <code>{'  '}</code>
-              <code>USER nodejs</code>
-              <code>{'  '}</code>
-              <code>EXPOSE 3000</code>
-              <code>{'  '}</code>
-              <code>CMD ["node", "app.js"]</code>
-            </code>
-          </pre>
-          <p>docker-compose.yml</p>
-          <pre>
-            <CodeNumber length={33} />
-            <code>
-              <code>version: '3.8'</code>
-              <code>{'  '}</code>
-              <code>services:</code>
-              <code>{'  '}app:</code>
-              <code>
-                {'    '}
-                {'build: .'}
-              </code>
-              <code>{'    '}ports:</code>
-              <code>{'      '}- "3000:3000"</code>
-              <code>{'    '}environment:</code>
-              <code>{'      '}NODE_ENV: production</code>
-              <code>{'      '}PORT: 3000</code>
-              <code>{'    '}env_file:</code>
-              <code>{'      '}- .env</code>
-              <code>{'    '}depends_on:</code>
-              <code>{'      '}- db</code>
-              <code>{'      '}- redis</code>
-              <code>{'    '}restart: unless-stopped</code>
-              <code>{'  '}</code>
-              <code>{'  '}db:</code>
-              <code>{'    '}image: postgres:15-alpine</code>
-              <code>{'    '}environment:</code>
-              <code>{'      '}POSTGRES_DB: myapp</code>
-              <code>{'      '}POSTGRES_USER: postgres</code>
-              <code>
-                {'      '}
-                {'POSTGRES_PASSWORD: ${DB_PASSWORD}'}
-              </code>
-              <code>{'    '}volumes:</code>
-              <code>{'      '}- postgres_data:/var/lib/postgresql/data</code>
-              <code>{'    '}restart: unless-stopped</code>
-              <code>{'  '}</code>
-              <code>{'  '}redis:</code>
-              <code>{'    '}image: redis:7-alpine</code>
-              <code>{'    '}restart: unless-stopped</code>
-              <code>{'  '}</code>
-              <code>{'  '}volumes:</code>
-              <code>{'    '}postgres_data:</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code className='comment'>{`# Сборка и запуск`}</code>
-              <code>docker-compose up -d --build</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Просмотр логов`}</code>
-              <code>docker-compose logs -f app</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Остановка`}</code>
-              <code>docker-compose down</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`# Dockerfile
+FROM node:20-alpine
+  
+WORKDIR /app
+  
+# Копируем package files
+COPY package*.json ./
+  
+# Устанавливаем только production зависимости
+RUN npm ci --only=production && npm cache clean --force
+  
+# Копируем исходники
+COPY . .
+  
+# Создаем пользователя не root
+RUN addgroup -g 1001 -S nodejs && \
+  adduser -S nodejs -u 1001 && \
+  chown -R nodejs:nodejs /app
+  
+USER nodejs
+  
+EXPOSE 3000
+  
+CMD ["node", "app.js"]`}
+          />
+          <p>docker-compose.yaml</p>
+          <CodeHighlighter
+            language={'yaml'}
+            code={`version: '3.8'
+  
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+  
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: \${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+  
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+  
+  volumes:
+    postgres_data:`}
+          />
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Сборка и запуск
+docker-compose up -d --build
+  
+# Просмотр логов
+docker-compose logs -f app
+  
+# Остановка
+docker-compose down`}
+          />
           <p>Конфигурация Nginx</p>
-          <pre>
-            <CodeNumber length={51} />
-            <code>
-              <code># /etc/nginx/sites-available/myapp</code>
-              <code>{`server {`}</code>
-              <code>
-                {'  '}
-                {`listen 80;`}
-              </code>
-              <code>{'  '}server_name api.myapp.com;</code>
-              <code>{'  '}return 301 https://$server_name$request_uri;</code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{`server {`}</code>
-              <code>{'  '}listen 443 ssl http2;</code>
-              <code>{'  '}server_name api.myapp.com;</code>
-              <code>{'  '}</code>
-              <code>{'  '}# SSL сертификаты (Let's Encrypt)</code>
-              <code>
-                {'  '}ssl_certificate
-                /etc/letsencrypt/live/api.myapp.com/fullchain.pem;
-              </code>
-              <code>
-                {'  '}ssl_certificate_key
-                /etc/letsencrypt/live/api.myapp.com/privkey.pem;
-              </code>
-              <code>{'  '}</code>
-              <code>{'  '}# Безопасность</code>
-              <code>
-                {'  '}add_header Strict-Transport-Security "max-age=31536000"
-                always;
-              </code>
-              <code>{'  '}add_header X-Frame-Options "SAMEORIGIN" always;</code>
-              <code>
-                {'  '}add_header X-Content-Type-Options "nosniff" always;
-              </code>
-              <code>{'  '}</code>
-              <code>{'  '}# Логи</code>
-              <code>{'  '}access_log /var/log/nginx/myapp-access.log;</code>
-              <code>{'  '}error_log /var/log/nginx/myapp-error.log;</code>
-              <code>{'  '}</code>
-              <code>{'  '}# Лимиты</code>
-              <code>{'  '}client_max_body_size 10M;</code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`location / {`}
-              </code>
-              <code>{'    '}proxy_pass http://localhost:3000;</code>
-              <code>{'    '}proxy_http_version 1.1;</code>
-              <code>{'    '}proxy_set_header Upgrade $http_upgrade;</code>
-              <code>{'    '}proxy_set_header Connection 'upgrade';</code>
-              <code>{'    '}proxy_set_header Host $host;</code>
-              <code>{'    '}proxy_set_header X-Real-IP $remote_addr;</code>
-              <code>
-                {'    '}proxy_set_header X-Forwarded-For
-                $proxy_add_x_forwarded_for;
-              </code>
-              <code>{'    '}proxy_set_header X-Forwarded-Proto $scheme;</code>
-              <code>{'    '}proxy_cache_bypass $http_upgrade;</code>
-              <code>{'  '}</code>
-              <code>{'    '}# Таймауты</code>
-              <code>{'    '}proxy_connect_timeout 60s;</code>
-              <code>{'    '}proxy_send_timeout 60s;</code>
-              <code>{'    '}proxy_read_timeout 60s;</code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>{'  '}# Статика (если есть)</code>
-              <code>
-                {'  '}
-                {`location /static {`}
-              </code>
-              <code>{'    '}alias /var/www/myapp/static;</code>
-              <code>{'    '}expires 1y;</code>
-              <code>{'    '}add_header Cache-Control "public, immutable";</code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={4} />
-            <code>
-              <code># Активация сайта</code>
-              <code>
-                sudo ln -s /etc/nginx/sites-available/myapp
-                /etc/nginx/sites-enabled/
-              </code>
-              <code>sudo nginx -t</code>
-              <code>sudo systemctl restart nginx</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'nginx'}
+            code={`# /etc/nginx/sites-available/myapp
+server {
+  listen 80;
+  server_name api.myapp.com;
+  return 301 https://$server_name$request_uri;
+}
+  
+server {
+  listen 443 ssl http2;
+  server_name api.myapp.com;
+  
+  # SSL сертификаты (Let's Encrypt)
+  ssl_certificate /etc/letsencrypt/live/api.myapp.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/api.myapp.com/privkey.pem;
+  
+  # Безопасность
+  add_header Strict-Transport-Security "max-age=31536000" always;
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  
+  # Логи
+  access_log /var/log/nginx/myapp-access.log;
+  error_log /var/log/nginx/myapp-error.log;
+  
+  # Лимиты
+  client_max_body_size 10M;
+  
+  location / {
+    proxy_pass http://localhost:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_cache_bypass $http_upgrade;
+  
+    # Таймауты
+    proxy_connect_timeout 60s;
+    proxy_send_timeout 60s;
+    proxy_read_timeout 60s;
+  }
+  
+  # Статика (если есть)
+  location /static {
+    alias /var/www/myapp/static;
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+  }
+}`}
+          />
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Активация сайта
+sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx`}
+          />
           <p>SSL/TLS (Let's Encrypt)</p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code># Установка certbot</code>
-              <code>sudo apt install certbot python3-certbot-nginx</code>
-              <code>{'  '}</code>
-              <code># Получение сертификата</code>
-              <code>sudo certbot --nginx -d api.myapp.com</code>
-              <code>{'  '}</code>
-              <code># Автообновление</code>
-              <code>sudo certbot renew --dry-run</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Установка certbot
+sudo apt install certbot python3-certbot-nginx
+  
+# Получение сертификата
+sudo certbot --nginx -d api.myapp.com
+  
+# Автообновление
+sudo certbot renew --dry-run`}
+          />
           <p>Health check endpoint</p>
-          <pre>
-            <CodeNumber length={30} />
-            <code>
-              <code className='comment'>{'// routes/health.js'}</code>
-              <code>{`const router = require('express').Router();`}</code>
-              <code>{`const db = require('../db/pool');`}</code>
-              <code>{'  '}</code>
-              <code>{`router.get('/health', async (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const checks = {`}
-              </code>
-              <code>
-                {'    '}
-                {`uptime: process.uptime(),`}
-              </code>
-              <code>
-                {'    '}
-                {`timestamp: new Date().toISOString(),`}
-              </code>
-              <code>
-                {'    '}
-                {`status: 'healthy'`}
-              </code>
-              <code>
-                {'  '}
-                {`};`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Проверка БД`}
-              </code>
-              <code>
-                {'  '}
-                {`try {`}
-              </code>
-              <code>
-                {'    '}
-                {`await db.query('SELECT 1');`}
-              </code>
-              <code>
-                {'    '}
-                {`checks.database = 'connected';`}
-              </code>
-              <code>
-                {'  '}
-                {`} catch (err) {`}
-              </code>
-              <code>
-                {'    '}
-                {`checks.database = 'disconnected';`}
-              </code>
-              <code>
-                {'    '}
-                {`checks.status = 'unhealthy';`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`const statusCode = checks.status === 'healthy' ? 200 : 503;`}
-              </code>
-              <code>
-                {'  '}
-                {`res.status(statusCode).json(checks);`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Более простой вариант`}</code>
-              <code>{`app.get('/ping', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.status(200).send('pong');`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>module.exports = router;</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// routes/health.js
+const router = require('express').Router();
+const db = require('../db/pool');
+  
+router.get('/health', async (req, res) => {
+  const checks = {
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    status: 'healthy'
+  };
+  
+  // Проверка БД
+  try {
+    await db.query('SELECT 1');
+    checks.database = 'connected';
+  } catch (err) {
+    checks.database = 'disconnected';
+    checks.status = 'unhealthy';
+  }
+  
+  const statusCode = checks.status === 'healthy' ? 200 : 503;
+  res.status(statusCode).json(checks);
+});
+  
+// Более простой вариант
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
+});
+  
+module.exports = router;`}
+          />
           <p>Sentry для отслеживания ошибок</p>
-          <pre>npm install @sentry/node</pre>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code className='comment'>{`// sentry.js`}</code>
-              <code>{`const Sentry = require('@sentry/node');`}</code>
-              <code>{`const config = require('./config');`}</code>
-              <code>{'  '}</code>
-              <code>{`if (config.isProduction) {`}</code>
-              <code>
-                {'  '}
-                {`Sentry.init({`}
-              </code>
-              <code>
-                {'    '}
-                {`dsn: process.env.SENTRY_DSN,`}
-              </code>
-              <code>
-                {'    '}
-                {`environment: config.env,`}
-              </code>
-              <code>
-                {'    '}
-                {`tracesSampleRate: 0.1, // 10% запросов`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>module.exports = Sentry;</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{`// app.js`}</code>
-              <code>{`const Sentry = require('./sentry');`}</code>
-              <code>{'  '}</code>
-              <code>{`if (config.isProduction) {`}</code>
-              <code>
-                {'  '}
-                {`app.use(Sentry.Handlers.requestHandler());`}
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Роуты...`}</code>
-              <code>{'  '}</code>
-              <code>{`if (config.isProduction) {`}</code>
-              <code>
-                {'  '}
-                {`app.use(Sentry.Handlers.errorHandler());`}
-              </code>
-              <code>{`}`}</code>
-              <code>{'  '}</code>
-              <code>{`app.use((err, req, res, next) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Sentry автоматически ловит ошибки`}
-              </code>
-              <code>
-                {'  '}
-                {`res.status(500).json({ error: 'Internal Server Error' });`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'bash'}
+            code={`npm install @sentry/node`}
+          />
+          <CodeHighlighter
+            code={`// sentry.js
+const Sentry = require('@sentry/node');
+const config = require('./config');
+  
+if (config.isProduction) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: config.env,
+    tracesSampleRate: 0.1, // 10% запросов
+  });
+}
+  
+module.exports = Sentry;`}
+          />
+          <CodeHighlighter
+            code={`// app.js
+const Sentry = require('./sentry');
+  
+if (config.isProduction) {
+  app.use(Sentry.Handlers.requestHandler());
+}
+  
+// Роуты...
+  
+if (config.isProduction) {
+  app.use(Sentry.Handlers.errorHandler());
+}
+  
+app.use((err, req, res, next) => {
+  // Sentry автоматически ловит ошибки
+  res.status(500).json({ error: 'Internal Server Error' });
+});`}
+          />
           <p>Graceful Shutdown</p>
-          <pre>
-            <CodeNumber length={33} />
-            <code>
-              <code className='comment'>{`// server.js`}</code>
-              <code>{`const app = require('./app');`}</code>
-              <code>{`const config = require('./config');`}</code>
-              <code>{`const logger = require('./logger');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = app.listen(config.port, () => {`}</code>
-              <code>
-                {'  '}
-                {'logger.info(`Server running on port ${config.port}`);'}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Graceful shutdown`}</code>
-              <code>{`const shutdown = async (signal) => {`}</code>
-              <code>
-                {'  '}
-                {'logger.info(`${signal} received, closing server...`);'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`server.close(async () => {`}
-              </code>
-              <code>
-                {'    '}
-                {`logger.info('HTTP server closed');`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'    '}
-                {`// Закрыть соединения с БД`}
-              </code>
-              <code>
-                {'    '}
-                {`await db.pool.end();`}
-              </code>
-              <code>
-                {'    '}
-                {`logger.info('Database connections closed');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`logger.info('Shutdown complete');`}
-              </code>
-              <code>
-                {'    '}
-                {`process.exit(0);`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Принудительное завершение через 10 секунд`}
-              </code>
-              <code>
-                {'  '}
-                {`setTimeout(() => {`}
-              </code>
-              <code>
-                {'    '}
-                {`logger.error('Forced shutdown');`}
-              </code>
-              <code>
-                {'    '}
-                {`process.exit(1);`}
-              </code>
-              <code>
-                {'  '}
-                {`}, 10000);`}
-              </code>
-              <code>{'};'}</code>
-              <code>{'  '}</code>
-              <code>{`process.on('SIGTERM', () => shutdown('SIGTERM'));`}</code>
-              <code>{`process.on('SIGINT', () => shutdown('SIGINT'));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// server.js
+const app = require('./app');
+const config = require('./config');
+const logger = require('./logger');
+  
+const server = app.listen(config.port, () => {
+  logger.info(\`Server running on port \${config.port}\`);
+});
+  
+// Graceful shutdown
+const shutdown = async (signal) => {
+  logger.info(\`\${signal} received, closing server...\`);
+  
+  server.close(async () => {
+    logger.info('HTTP server closed');
+  
+    // Закрыть соединения с БД
+    await db.pool.end();
+    logger.info('Database connections closed');
+  
+    logger.info('Shutdown complete');
+    process.exit(0);
+  });
+  
+  // Принудительное завершение через 10 секунд
+  setTimeout(() => {
+    logger.error('Forced shutdown');
+    process.exit(1);
+  }, 10000);
+};
+  
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));`}
+          />
         </div>
       ),
     },

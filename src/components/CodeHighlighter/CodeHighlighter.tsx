@@ -4,7 +4,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface CodeHighlighterProps {
   code: string;
-  language?: 'js' | 'jsx' | 'bash' | 'html' | 'json';
+  language?: 'js' | 'jsx' | 'bash' | 'html' | 'json' | 'markdown' | 'yaml' | 'nginx';
 }
 
 const CodeHighlighter: FC<CodeHighlighterProps> = (props) => {
@@ -14,7 +14,7 @@ const CodeHighlighter: FC<CodeHighlighterProps> = (props) => {
     <SyntaxHighlighter
       language={language}
       style={vscDarkPlus}
-      showLineNumbers={true}
+      showLineNumbers={language !== 'bash'}
     >
       {code}
     </SyntaxHighlighter>

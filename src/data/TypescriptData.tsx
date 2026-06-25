@@ -377,8 +377,7 @@ let person: Person = {
             тип данных, как это делают обычные типы.
           </p>
           <CodeHighlighter 
-            code={`
-let myString: "hello" = "hello";`}
+            code={`let myString: "hello" = "hello";`}
           />
           <p>
             <b>Шаблонные литеральные типы</b>- позволяют создавать строковые
@@ -461,8 +460,7 @@ const user1: User = { id: '1', name: 'Alice', displayName: 'Alice123' };
 logUserDisplayName(user1); // Работает
   
 const user2: User = { id: '2', name: 'Bob' };
-logUserDisplayName(user2); // Выбросит ошибку: User has no displayName property
-`}
+logUserDisplayName(user2); // Выбросит ошибку: User has no displayName property`}
           />
         </div>
       ),
