@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Autocomplete, Button, rem } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconSearch } from '@tabler/icons-react';
@@ -9,6 +9,7 @@ import styles from './HeaderSearch.module.css';
 
 import getAutoCompletedData from '../../handlers/getAutoCompletedData';
 import getAllQuestions from '../../handlers/getAllQuestions';
+import slugifyText from '../../handlers/slugifyText';
 
 export function HeaderSearch({ isQuestion = false }) {
   const [searchValue, setSearchValue] = useState('');
@@ -16,6 +17,28 @@ export function HeaderSearch({ isQuestion = false }) {
   const router = useRouter();
   const params = useParams();
   const flex = isQuestion ? { display: 'flex' } : {};
+
+  const moveIntoQuestion = useCallback(() => {
+    const question = getAllQuestions().find((question) =>
+      `${question.title} (${question.stack})`
+        .toLowerCase()
+        .includes(searchValue.toLowerCase()),
+    );
+
+    if (question && question.id) {
+      router.push(`/${slugifyText(question.stack)}/${question.id}`);
+      return;
+    }
+
+    notifications.show({
+      title: 'Ничего не нашли 🤥',
+      message: '',
+      color: 'red',
+      loading: true,
+      withBorder: true,
+      autoClose: 2000,
+    });
+  }, [getAllQuestions, router, notifications]);
 
   return (
     <header className={styles.header} style={flex}>
@@ -60,27 +83,7 @@ export function HeaderSearch({ isQuestion = false }) {
           value={searchValue}
           onChange={(value) => setSearchValue(value)}
         />
-        <Button
-          variant='outline'
-          color='azure'
-          onClick={() => {
-            const id = getAllQuestions().find((question) =>
-              `${question.title} (${question.stack})`
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()),
-            )?.id;
-            id
-              ? router.push(id)
-              : notifications.show({
-                  title: 'Ничего не нашли 🤥',
-                  message: '',
-                  color: 'red',
-                  loading: true,
-                  withBorder: true,
-                  autoClose: 2000,
-                });
-          }}
-        >
+        <Button variant='outline' color='azure' onClick={moveIntoQuestion}>
           Найти
         </Button>
       </div>
