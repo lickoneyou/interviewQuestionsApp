@@ -1,4 +1,5 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const Typescript = {
@@ -324,37 +325,22 @@ const Typescript = {
             <b>Intersection type</b> - тип, который создается путем объединения
             нескольких типов с использованием оператора <b>"&"</b>
           </p>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code>
-                <b>interface</b> Named {'{'}
-              </code>
-              <code>
-                {'  '}name: <b>string</b>;
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>interface</b> Aged {'{'}
-              </code>
-              <code>
-                {'  '}name: <b>number</b>;
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>type</b> Person = Named & Aged;
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>let</b> person: Person = {'{'}
-              </code>
-              <code>{'  '} name: "Name",</code>
-              <code>{'  '} age: 30,</code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`interface Named {
+  name: string;
+}
+  
+interface Aged {
+  name: number;
+}
+  
+type Person = Named & Aged;
+  
+let person: Person = {
+   name: "Name",
+   age: 30,
+}`}
+          />
         </div>
       ),
     },
@@ -390,30 +376,17 @@ const Typescript = {
             <b>Литералы</b> - позволяют указать конкретное значение, а не просто
             тип данных, как это делают обычные типы.
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-            </div>
-            <code>
-              <code>
-                let <b>myString</b>: "hello" = "hello";
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`
+let myString: "hello" = "hello";`}
+          />
           <p>
             <b>Шаблонные литеральные типы</b>- позволяют создавать строковые
             литералы на основе других типов или значений.
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-            </div>
-            <code>
-              <code>
-                <b>type</b> Size = "small" | "medium" | "large";
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+              code={`type Size = "small" | "medium" | "large";`}
+            />
         </div>
       ),
     },
@@ -429,52 +402,22 @@ const Typescript = {
           <p>
             <b>typeof</b> - позволяет получить тип значения во время компиляции
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-            </div>
-            <code>
-              <code>
-                <b>let</b> str = "hello";
-              </code>
-              <code>
-                <b>let</b> num: <b>typeof</b> str = "world"; // num будет иметь
-                тип string
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`let str = "hello";
+let num: typeof str = "world"; // num будет иметь тип string`}
+          />
           <p>
             <b>keyof</b> - возвращает объединение строковых литералов,
             представляющих ключи объекта
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-            </div>
-            <code>
-              <code>
-                <b>interface</b> Person {'{'}
-              </code>
-              <code>
-                {'  '}name: <b>string</b>;
-              </code>
-              <code>
-                {'  '}age: <b>number</b>;
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>type</b> PersonKeys = <b>keyof</b> Person; // PersonKeys
-                будет типом "name" | "age"
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`interface Person {
+  name: string;
+  age: number;
+}
+  
+type PersonKeys = keyof Person; // PersonKeys будет типом "name" | "age"`}
+          />
         </div>
       ),
     },
@@ -497,90 +440,30 @@ const Typescript = {
             </li>
             <li>Если проверка не проходит — выбрасывает исключение</li>
           </ul>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-              <code className='codeNumber'>15</code>
-              <code className='codeNumber'>16</code>
-              <code className='codeNumber'>17</code>
-              <code className='codeNumber'>18</code>
-              <code className='codeNumber'>19</code>
-              <code className='codeNumber'>20</code>
-              <code className='codeNumber'>21</code>
-            </div>
-            <code>
-              <code>
-                <b>interface</b> User {'{'}
-              </code>
-              <code>
-                {'  '}id: <b>string</b>;
-              </code>
-              <code>
-                {'  '}name: <b>string</b>;
-              </code>
-              <code>
-                {'  '}displayName: <b>string</b>;
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>function</b> assertDisplayName(user: <b>User</b>):{' '}
-                <b>asserts</b> user <b>is</b> User <b>&</b> {'{'} displayName:{' '}
-                <b>string</b> {'}'} {'{'}
-              </code>
-              <code>
-                {'  '}
-                <b>if</b> (<b>!</b>('displayName' <b>in</b> user)) {'{'}
-              </code>
-              <code>
-                {'    '}
-                <b>throw new</b> Error('User has no displayName property');
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>function</b> logUserDisplayName(user: <b>User</b>) {'{'}
-              </code>
-              <code>
-                {'  '}
-                <b>assertDisplayName</b>(user);
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                <b>console.log</b>(user.displayName.<b>toUpperCase()</b>);
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>const</b> user1: User = {'{'} id: '1', name: 'Alice',
-                displayName: 'Alice123' {'}'};
-              </code>
-              <code>
-                <b>logUserDisplayName</b>(user1); // Работает
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>const</b> user2: User = {'{'} id: '2', name: 'Bob' {'}'};
-              </code>
-              <code>
-                <b>logUserDisplayName</b>(user2); // Выбросит ошибку: User has
-                no displayName property
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`interface User {
+  id: string;
+  name: string;
+  displayName: string;
+  
+function assertDisplayName(user: User): asserts user is User & { displayName: string } {
+  if (!('displayName' in user)) {
+    throw new Error('User has no displayName property');
+}
+  
+function logUserDisplayName(user: User) {
+  assertDisplayName(user);
+  
+  console.log(user.displayName.toUpperCase());
+}
+  
+const user1: User = { id: '1', name: 'Alice', displayName: 'Alice123' };
+logUserDisplayName(user1); // Работает
+  
+const user2: User = { id: '2', name: 'Bob' };
+logUserDisplayName(user2); // Выбросит ошибку: User has no displayName property
+`}
+          />
         </div>
       ),
     },
@@ -599,44 +482,16 @@ const Typescript = {
             количество аргументов, обеспечивая большую гибкость и удобство
             использования.
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-            </div>
-            <code>
-              <code>
-                <b>function</b> add(a: <b>number</b>, b: <b>number</b>):{' '}
-                <b>number</b>;
-              </code>
-              <code>
-                <b>function</b> add(a: <b>string</b>, b: <b>string</b>):{' '}
-                <b>string</b>;
-              </code>
-              <code>
-                <b>function</b> add(a: <b>any</b>, b: <b>any</b>): <b>any</b>{' '}
-                {'{'}
-              </code>
-              <code>
-                {'  '} <b>return</b> a + b;
-              </code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                <b>let</b> result1 = add(1, 2); {'// 3'}
-              </code>
-              <code>
-                <b>let</b> result2 = add("Hello, ", "world!");{' '}
-                {'// "Hello, world!"'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: any, b: any): any {
+   return a + b;
+}
+  
+let result1 = add(1, 2); // 3
+let result2 = add("Hello, ", "world!"); // "Hello, world!"`}
+          />
         </div>
       ),
     },
@@ -653,16 +508,9 @@ const Typescript = {
             <b>Условные типы</b> - это особенный синтаксис для работы с типами,
             позволяющий определять типы данных на основе условий.
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-            </div>
-            <code>
-              <code>
-                T <b>extends</b> U ? X : Y
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`T extends U ? X : Y`}
+          />
           <ul>
             <b>Где:</b>
             <li>
@@ -706,35 +554,14 @@ const Typescript = {
             работаете с массивом, <b>infer</b> может вывести тип элементов
             массива.
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-            </div>
-            <code>
-              <code>
-                <b>type</b> ElementType{'<T>'} = T <b>extends</b> (<b>infer</b>{' '}
-                U)[] ? U : T;
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>type</b> Arr = <b>numbe</b>[];
-              </code>
-              <code>
-                <b>type</b> Num = ElementType{'<Arr>'};{' '}
-                <span className='comment'>{'//  Num будет number'}</span>
-              </code>
-              <code>{'  '}</code>
-              <code>
-                <b>type</b> Str = ElementType{'<string>'};{' '}
-                <span className='comment'>{'// Str будет string'}</span>
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`type ElementType<T> = T extends (infer U)[] ? U : T;
+  
+type Arr = numbe[];
+type Num = ElementType<Arr>; //  Num будет number
+  
+type Str = ElementType<string>; // Str будет string`}
+          />
         </div>
       ),
     },
@@ -753,62 +580,22 @@ const Typescript = {
             использования типа внутри его собственного определения, что
             позволяет TypeScript обрабатывать сложные вложенные структуры
           </p>
-          <pre>
-            <div className='numbers'>
-              <code className='codeNumber'>1</code>
-              <code className='codeNumber'>2</code>
-              <code className='codeNumber'>3</code>
-              <code className='codeNumber'>4</code>
-              <code className='codeNumber'>5</code>
-              <code className='codeNumber'>6</code>
-              <code className='codeNumber'>7</code>
-              <code className='codeNumber'>8</code>
-              <code className='codeNumber'>9</code>
-              <code className='codeNumber'>10</code>
-              <code className='codeNumber'>11</code>
-              <code className='codeNumber'>12</code>
-              <code className='codeNumber'>13</code>
-              <code className='codeNumber'>14</code>
-            </div>
-            <code>
-              <code>
-                <b>type</b> NestedValue = {'{'}
-              </code>
-              <code>
-                {'  '}value: <b>string</b>;
-              </code>
-              <code>{'  '}next?: NestedValue;</code>
-              <code>{'}'};</code>
-              <code>{'  '}</code>
-              <code>
-                <b>const</b> list: NestedValue = {'{'}
-              </code>
-              <code>
-                {'  '}value: <b>'a'</b>,
-              </code>
-              <code>
-                {'  '}next: {'{'}
-              </code>
-              <code>
-                {'    '}value: <b>'b'</b>,
-              </code>
-              <code>
-                {'    '}next: {'{'}
-              </code>
-              <code>
-                {'      '}value: <b>'c'</b>
-              </code>
-              <code>
-                {'    '}
-                {'}'}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'};</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`type NestedValue = {
+  value: string;
+  next?: NestedValue;
+};
+  
+const list: NestedValue = {
+  value: 'a',
+  next: {
+    value: 'b',
+    next: {
+      value: 'c'
+    }
+  }
+};`}
+          />
         </div>
       ),
     },

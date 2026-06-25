@@ -4,7 +4,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface CodeHighlighterProps {
   code: string;
-  language?: 'js' | 'jsx' | 'bash';
+  language?: 'js' | 'jsx' | 'bash' | 'html' | 'json';
 }
 
 const CodeHighlighter: FC<CodeHighlighterProps> = (props) => {

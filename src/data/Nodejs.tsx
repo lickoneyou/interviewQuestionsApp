@@ -1,4 +1,5 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const Nodejs = {
@@ -16,37 +17,17 @@ const Nodejs = {
             Создание проекта - <b>npm init</b>
           </p>
           <p>package.json</p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code>{'{'}</code>
-              <code>
-                {'  '}
-                {'"name": "my-app",'}
-              </code>
-              <code>
-                {'  '}
-                {'"version": "1.0.0",'}
-              </code>
-              <code>
-                {'  '}
-                {'"main": "index.js",        // точка входа'}
-              </code>
-              <code>
-                {'  '}
-                {'"scripts": {'}
-              </code>
-              <code>
-                {'    '}
-                {'"start": "node index.js" // npm run start'}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            language={'json'}
+            code={`{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "index.js",        // точка входа
+  "scripts": {
+    "start": "node index.js" // npm run start
+  }
+}`}
+          />
           <p>Запуск</p>
           <ul>
             <li>node index.js</li>
@@ -65,57 +46,44 @@ const Nodejs = {
       jsx: (
         <div>
           <p>Экспорт</p>
-          <pre>
-            <CodeNumber length={6} />
-            <code>
-              <code className='comment'>{'// math.js'}</code>
-              <code>{'const add = (a, b) => a + b;'}</code>
-              <code>{'const multiply = (a, b) => a * b;'}</code>
-              <code>{'  '}</code>
-              <code>{'module.exports = { add, multiply };'}</code>
-              <code className='comment'>
-                {'// или по одному: module.exports.add = add;'}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// math.js
+const add = (a, b) => a + b;
+const multiply = (a, b) => a * b;
+  
+module.exports = { add, multiply };
+// или по одному: module.exports.add = add;`}
+          />
           <p>Импорт</p>
-          <pre>
-            <CodeNumber length={5} />
-            <code>
-              <code className='comment'>{'/ app.js'}</code>
-              <code>{`const math = require('./math.js');        // берем всё`}</code>
-              <code>{`const { add } = require('./math.js');     // деструктуризация`}</code>
-              <code>{'  '}</code>
-              <code>{'console.log(add(2, 3));   // 5'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`/ app.js
+const math = require('./math.js');        // берем всё
+const { add } = require('./math.js');     // деструктуризация
+  
+console.log(add(2, 3));   // 5`}
+          />
           <p>path</p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>{`const path = require('path');`}</code>
-              <code>{'  '}</code>
-              <code>{`path.join('folder', 'file.txt');        // folder/file.txt`}</code>
-              <code>{`path.resolve('index.js');               // абсолютный путь`}</code>
-              <code>{`path.dirname('/a/b/c.js');              // /a/b`}</code>
-              <code>{`path.basename('/a/b/c.js');             // c.js`}</code>
-              <code>{`path.extname('/a/b/c.js');              // .js`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const path = require('path');
+  
+path.join('folder', 'file.txt');        // folder/file.txt
+path.resolve('index.js');               // абсолютный путь
+path.dirname('/a/b/c.js');              // /a/b
+path.basename('/a/b/c.js');             // c.js
+path.extname('/a/b/c.js');              // .js
+os`}
+          />
           <p>os</p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code>{`const os = require('os');`}</code>
-              <code>{'  '}</code>
-              <code>{`os.platform();          // 'win32' / 'linux' / 'darwin'`}</code>
-              <code>{`os.cpus();              // информация о процессорах`}</code>
-              <code>{`os.totalmem();          // всего памяти (байт)`}</code>
-              <code>{`os.freemem();           // свободно памяти`}</code>
-              <code>{`os.homedir();           // домашняя папка`}</code>
-              <code>{`os.userInfo();          // информация о пользователе`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const os = require('os');
+  
+os.platform();          // 'win32' / 'linux' / 'darwin'
+os.cpus();              // информация о процессорах
+os.totalmem();          // всего памяти (байт)
+os.freemem();           // свободно памяти
+os.homedir();           // домашняя папка
+os.userInfo();          // информация о пользователе`}
+          />
         </div>
       ),
     },
@@ -129,89 +97,59 @@ const Nodejs = {
       jsx: (
         <div>
           <p>Подключение</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{`const fsPromises = require('fs').promises;  // современный вариант`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const fs = require('fs');
+const fsPromises = require('fs').promises;  // современный вариант
+`}
+          />
           <p>Чтение файла (readFile)</p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code className='comment'>{'// Синхронно'}</code>
-              <code>{`const data = fs.readFileSync('./file.txt', 'utf8');`}</code>
-              <code>{`console.log(data);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{'// Асинхронно (Promises)'}</code>
-              <code>{`const fs = require('fs').promises;`}</code>
-              <code>{'  '}</code>
-              <code>{`async function read() {`}</code>
-              <code>
-                {'  '}
-                {`const data = await fs.readFile('./file.txt', 'utf8');`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(data);`}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Синхронно
+const data = fs.readFileSync('./file.txt', 'utf8');
+console.log(data);
+  
+// Асинхронно (Promises)
+const fs = require('fs').promises;
+  
+async function read() {
+  const data = await fs.readFile('./file.txt', 'utf8');
+  console.log(data);
+}`}
+          />
           <p>Запись файла (writeFile)</p>
-          <pre>
-            <CodeNumber length={4} />
-            <code>
-              <code>{`fs.writeFileSync('./output.txt', 'Hello World');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Или асинхронно`}</code>
-              <code>{`await fs.writeFile('./output.txt', 'Hello World');`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`fs.writeFileSync('./output.txt', 'Hello World');
+  
+// Или асинхронно
+await fs.writeFile('./output.txt', 'Hello World');`}
+          />
           <p>Добавление в файл (appendFile)</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code>{`fs.appendFileSync('./log.txt', 'Новая строка');`}</code>
-              <code>{`await fs.appendFile('./log.txt', 'Еще строка');`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`fs.appendFileSync('./log.txt', 'Новая строка');
+await fs.appendFile('./log.txt', 'Еще строка');`}
+          />
           <p>Создание папки (mkdir)</p>
-          <pre>
-            <CodeNumber length={5} />
-            <code>
-              <code>{`fs.mkdirSync('./my-folder');`}</code>
-              <code>{`await fs.mkdir('./my-folder');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// С вложенными папками (рекурсивно)'}
-              </code>
-              <code>{`await fs.mkdir('./a/b/c', { recursive: true });`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`fs.mkdirSync('./my-folder');
+await fs.mkdir('./my-folder');
+  
+// С вложенными папками (рекурсивно)
+await fs.mkdir('./a/b/c', { recursive: true });`}
+          />
           <p>Удаление папки (rmdir / rm)</p>
-          <pre>
-            <CodeNumber length={6} />
-            <code>
-              <code className='comment'>
-                {'// Старый способ (только пустые папки)'}
-              </code>
-              <code>{`fs.rmdirSync('./empty-folder');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Новый способ (рекурсивно с содержимым)`}</code>
-              <code>{`fs.rmSync('./folder', { recursive: true, force: true });`}</code>
-              <code>{`await fs.rm('./folder', { recursive: true, force: true });`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Старый способ (только пустые папки)
+fs.rmdirSync('./empty-folder');
+  
+// Новый способ (рекурсивно с содержимым)
+fs.rmSync('./folder', { recursive: true, force: true });
+await fs.rm('./folder', { recursive: true, force: true });`}
+          />
           <p>Удаление файла (unlink)</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code>{`fs.unlinkSync('./file.txt');`}</code>
-              <code>{`await fs.unlink('./file.txt');`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`fs.unlinkSync('./file.txt');
+await fs.unlink('./file.txt');`}
+          />
           <p>Полезные методы</p>
           <ul>
             <li>
@@ -243,81 +181,40 @@ const Nodejs = {
       jsx: (
         <div>
           <p>Модуль path</p>
-          <pre>
-            <CodeNumber length={32} />
-            <code>
-              <code>{`const path = require('path');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// path.join() - Склеивает части пути (с учетом OS)'}
-              </code>
-              <code>{`path.join('folder', 'file.txt') // folder/file.txt`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// path.resolve() - Строит абсолютный путь'}
-              </code>
-              <code>{`path.resolve('index.js')  // /full/path/index.js`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// path.basename() - Имя файла (с расширением)'}
-              </code>
-              <code>{`path.basename('/a/b/c.js')  // c.js`}</code>
-              <code className='comment'>
-                {'// path.dirname() - Путь без имени файла'}
-              </code>
-              <code>{`path.dirname('/a/b/c.js') // /a/b`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'// path.extname() - Расширение файла'}
-              </code>
-              <code>{`path.extname('/a/b/c.js') //  .js`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// path.parse() - Разбирает путь на части, возвращает объект`}</code>
-              <code>{`console.log(path.parse('/home/user/dir/file.txt'))`}</code>
-              <code className='comment'>{'//  {'}</code>
-              <code className='comment'>
-                {'//  '}
-                {'"root": "/",'}
-              </code>
-              <code className='comment'>
-                {'//  '}
-                {'"dir": "/home/user/dir",'}
-              </code>
-              <code className='comment'>
-                {'//  '}
-                {'"base": "file.txt",'}
-              </code>
-              <code className='comment'>
-                {'//  '}
-                {'"ext": ".txt",'}
-              </code>
-              <code className='comment'>
-                {'//  '}
-                {'"name": "file"'}
-              </code>
-              <code className='comment'>{'//  }'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {
-                  '// path.format() - Собирает путь из частей, обратный к parse()'
-                }
-              </code>
-              <code>{`const fullPath = path.format({`}</code>
-              <code>
-                {'  '}
-                {`dir: '/home/user',`}
-              </code>
-              <code>
-                {'  '}
-                {`name: 'file',`}
-              </code>
-              <code>
-                {'  '}
-                {`ext: '.txt'`}
-              </code>
-              <code>{`}); // '/home/user/file.txt'`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const path = require('path');
+  
+// path.join() - Склеивает части пути (с учетом OS)
+path.join('folder', 'file.txt') // folder/file.txt
+  
+// path.resolve() - Строит абсолютный путь
+path.resolve('index.js')  // /full/path/index.js
+  
+// path.basename() - Имя файла (с расширением)
+path.basename('/a/b/c.js')  // c.js
+// path.dirname() - Путь без имени файла
+path.dirname('/a/b/c.js') // /a/b
+  
+// path.extname() - Расширение файла
+path.extname('/a/b/c.js') //  .js
+  
+// path.parse() - Разбирает путь на части, возвращает объект
+console.log(path.parse('/home/user/dir/file.txt'))
+//  {
+//  "root": "/",
+//  "dir": "/home/user/dir",
+//  "base": "file.txt",
+//  "ext": ".txt",
+//  "name": "file"
+//  }
+  
+// path.format() - Собирает путь из частей, обратный к parse()
+const fullPath = path.format({
+  dir: '/home/user',
+  name: 'file',
+  ext: '.txt'
+}); // '/home/user/file.txt'`}
+          />
         </div>
       ),
     },
@@ -355,44 +252,38 @@ const Nodejs = {
             </li>
           </ul>
           <p>Создание буфера</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{'// Из строки'}</code>
-              <code>{`const buf1 = Buffer.from('Hello');`}</code>
-              <code>{`const buf2 = Buffer.from('Привет', 'utf8');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Пустой буфер заданного размера`}</code>
-              <code>{`const buf3 = Buffer.alloc(10);        // заполнен нулями (безопасно)`}</code>
-              <code>{`const buf4 = Buffer.allocUnsafe(10);  // быстрее, но может содержать "мусор"`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Из массива байтов`}</code>
-              <code>{`const buf5 = Buffer.from([72, 101, 108, 108, 111]); // 'Hello'`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Из строки
+const buf1 = Buffer.from('Hello');
+const buf2 = Buffer.from('Привет', 'utf8');
+  
+// Пустой буфер заданного размера
+const buf3 = Buffer.alloc(10);        // заполнен нулями (безопасно)
+const buf4 = Buffer.allocUnsafe(10);  // быстрее, но может содержать "мусор"
+  
+// Из массива байтов
+const buf5 = Buffer.from([72, 101, 108, 108, 111]); // 'Hello'`}
+          />
           <p>{'Основные операции'}</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>{`const buf = Buffer.from('Hello Node');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Длина (в байтах)`}</code>
-              <code>{`console.log(buf.length);  // 10`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Чтение байта`}</code>
-              <code>{`console.log(buf[0]);      // 72 (код 'H')`}</code>
-              <code>{`console.log(buf[1]);      // 101 (код 'e')`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Запись байта`}</code>
-              <code>{`buf[0] = 104;             // 'h'`}</code>
-              <code>{`console.log(buf.toString()); // 'hello Node'`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Преобразование в строку`}</code>
-              <code>{`buf.toString();           // 'hello Node'`}</code>
-              <code>{`buf.toString('utf8');     // то же самое`}</code>
-              <code>{`buf.toString('hex');      // 68656c6c6f204e6f6465`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const buf = Buffer.from('Hello Node');
+  
+// Длина (в байтах)
+console.log(buf.length);  // 10
+  
+// Чтение байта
+console.log(buf[0]);      // 72 (код 'H')
+console.log(buf[1]);      // 101 (код 'e')
+  
+// Запись байта
+buf[0] = 104;             // 'h'
+console.log(buf.toString()); // 'hello Node'
+  
+// Преобразование в строку
+buf.toString();           // 'hello Node'
+buf.toString('utf8');     // то же самое
+buf.toString('hex');      // 68656c6c6f204e6f6465`}
+          />
         </div>
       ),
     },
@@ -406,17 +297,14 @@ const Nodejs = {
       jsx: (
         <div>
           <p>Создание сервера</p>
-          <pre>
-            <CodeNumber length={6} />
-            <code>
-              <code>{`const http = require('http');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code className='comment'>{`// req — входящий запрос (IncomingMessage)`}</code>
-              <code className='comment'>{`// res — исходящий ответ (ServerResponse)`}</code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const http = require('http');
+  
+const server = http.createServer((req, res) => {
+// req — входящий запрос (IncomingMessage)
+// res — исходящий ответ (ServerResponse)
+});`}
+          />
           <p>Объект req</p>
           <ul>
             <li>
@@ -448,277 +336,107 @@ const Nodejs = {
             </li>
           </ul>
           <p>Простейший сервер</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{`const http = require('http');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.writeHead(200, { 'Content-Type': 'text/plain' });`}
-              </code>
-              <code>
-                {'  '}
-                {`res.end('Hello World!');`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`server.listen(3000, () => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Сервер запущен на http://localhost:3000');`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const http = require('http');
+  
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello World!');
+});
+  
+server.listen(3000, () => {
+  console.log('Сервер запущен на http://localhost:3000');
+});`}
+          />
           <p>Обработка маршрутов</p>
-          <pre>
-            <CodeNumber length={25} />
-            <code>
-              <code>{`const http = require('http');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const { url, method } = req;`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (url === '/' && method === 'GET') {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(200, { 'Content-Type': 'text/html' });`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end('<h1>Главная</h1>');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} else if (url === '/about' && method === 'GET') {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(200, { 'Content-Type': 'text/html' });`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end('<h1>О нас</h1>');`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} else if (url === '/api/users' && method === 'GET') {`}
-              </code>
-              <code>
-                {'    '}
-                {`const users = [{ id: 1, name: 'Alice' }];`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end(JSON.stringify(users));`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} else {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(404, { 'Content-Type': 'text/plain' });`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end('404 Not Found');`}
-              </code>
-              <code>{'  }'}</code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`server.listen(3000);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const http = require('http');
+  
+const server = http.createServer((req, res) => {
+  const { url, method } = req;
+  
+  if (url === '/' && method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>Главная</h1>');
+  
+  } else if (url === '/about' && method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>О нас</h1>');
+  
+  } else if (url === '/api/users' && method === 'GET') {
+    const users = [{ id: 1, name: 'Alice' }];
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(users));
+  
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found');
+  }
+});
+  
+server.listen(3000);`}
+          />
           <p>Чтение тела запроса (POST)</p>
-          <pre>
-            <CodeNumber length={28} />
-            <code>
-              <code>{`const http = require('http');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`if (req.method === 'POST' && req.url === '/submit') {`}
-              </code>
-              <code>
-                {'    '}
-                {`let body = '';`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`req.on('data', chunk => {`}
-              </code>
-              <code>
-                {'      '}
-                {`body += chunk.toString();`}
-              </code>
-              <code>
-                {'    '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'    '}
-                {`eq.on('end', () => {`}
-              </code>
-              <code>
-                {'      '}
-                {`console.log('Получены данные:', body);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'      '}
-                {'try {'}
-              </code>
-              <code>
-                {'        '}
-                {`const data = JSON.parse(body);`}
-              </code>
-              <code>
-                {'        '}
-                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
-              </code>
-              <code>
-                {'        '}
-                {`res.end(JSON.stringify({ received: true, data }));`}
-              </code>
-              <code>
-                {'      '}
-                {'} catch (err) {'}
-              </code>
-              <code>
-                {'        '}
-                {`res.writeHead(400, { 'Content-Type': 'application/json' });`}
-              </code>
-              <code>
-                {'        '}
-                {`res.end(JSON.stringify({ error: 'Invalid JSON' }));`}
-              </code>
-              <code>
-                {'      '}
-                {'}'}
-              </code>
-              <code>
-                {'    '}
-                {'});'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`} else {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(404);`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end();`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const http = require('http');
+  
+const server = http.createServer((req, res) => {
+  if (req.method === 'POST' && req.url === '/submit') {
+    let body = '';
+  
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+  
+    eq.on('end', () => {
+      console.log('Получены данные:', body);
+  
+      try {
+        const data = JSON.parse(body);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ received: true, data }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
+    });
+  
+  } else {
+    res.writeHead(404);
+    res.end();
+  }
+});`}
+          />
           <p>Параметры запроса</p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code className='comment'>{`// GET /users?name=Alice&age=25`}</code>
-              <code>{`const url = require('url');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const parsedUrl = url.parse(req.url, true); // true = парсить query`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(parsedUrl.pathname);   // '/users'`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(parsedUrl.query);      // { name: 'Alice', age: '25' }`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
-              </code>
-              <code>
-                {'  '}
-                {`res.end(JSON.stringify({ query: parsedUrl.query }));`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// GET /users?name=Alice&age=25
+const url = require('url');
+  
+const server = http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url, true); // true = парсить query
+  console.log(parsedUrl.pathname);   // '/users'
+  console.log(parsedUrl.query);      // { name: 'Alice', age: '25' }
+  
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ query: parsedUrl.query }));
+});`}
+          />
           <p>Динамические маршруты</p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code className='comment'>{`// GET /users/123`}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`const match = req.url.match(/^\/users\/(\d+)$/);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`if (match) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const userId = match[1];`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(200, { 'Content-Type': 'application/json' });`}
-              </code>
-              <code>
-                {'    '}
-                {
-                  'res.end(JSON.stringify({ userId, message: `Пользователь ${userId}` }));'
-                }
-              </code>
-              <code>
-                {'  '}
-                {`} else {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(404);`}
-              </code>
-              <code>
-                {'    '}
-                {`res.end('Not found');`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// GET /users/123
+const server = http.createServer((req, res) => {
+  const match = req.url.match(/^/users/(d+)$/);
+  
+  if (match) {
+    const userId = match[1];
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ userId, message: \`Пользователь \${userId}\` }));
+  } else {
+    res.writeHead(404);
+    res.end('Not found');
+  }
+});`}
+          />
           <p>Статус-коды</p>
           <ul>
             <li>
@@ -787,21 +505,15 @@ const Nodejs = {
             <span>(чанкам)</span>, без загрузки всего файла в память.
           </p>
           <p>Проблема без стримов:</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code className='comment'>{`// ❌ Весь файл (10 ГБ) загрузится в память`}</code>
-              <code>{`const data = await fs.readFile('./huge-file.mp4');`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ❌ Весь файл (10 ГБ) загрузится в память
+const data = await fs.readFile('./huge-file.mp4');`}
+          />
           <p>Решение со стримами:</p>
-          <pre>
-            <CodeNumber length={2} />
-            <code>
-              <code className='comment'>{`// ✅ Читаем и обрабатываем по кусочкам`}</code>
-              <code>{`const stream = fs.createReadStream('./huge-file.mp4');`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ✅ Читаем и обрабатываем по кусочкам
+const stream = fs.createReadStream('./huge-file.mp4');`}
+          />
           <p>Типы стримов</p>
           <ul>
             <li>
@@ -821,232 +533,129 @@ const Nodejs = {
             </li>
           </ul>
           <p>Readable Stream</p>
-          <pre>
-            <CodeNumber length={19} />
-            <code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{`const readable = fs.createReadStream('./input.txt', {`}</code>
-              <code>
-                {'  '}
-                {`encoding: 'utf8',`}
-              </code>
-              <code>
-                {'  '}
-                {`highWaterMark: 64 * 1024  // чанк по 64KB (по умолчанию)`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// События`}</code>
-              <code>{`readable.on('data', (chunk) => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Получен чанк размером: ${chunk.length} байт`);'}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(chunk);`}
-              </code>
-              <code>{'});'}</code>
-              <code>{`readable.on('end', () => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Файл прочитан полностью');`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`readable.on('error', (err) => {`}</code>
-              <code>
-                {'  '}
-                {`console.error('Ошибка:', err);`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const fs = require('fs');
+const readable = fs.createReadStream('./input.txt', {
+  encoding: 'utf8',
+  highWaterMark: 64 * 1024  // чанк по 64KB (по умолчанию)
+});
+  
+// События
+readable.on('data', (chunk) => {
+  console.log(\`Получен чанк размером: \${chunk.length} байт\`);
+  console.log(chunk);
+});
+readable.on('end', () => {
+  console.log('Файл прочитан полностью');
+});
+  
+readable.on('error', (err) => {
+  console.error('Ошибка:', err);
+});`}
+          />
           <p>Writable Stream</p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Запись данных`}</code>
-              <code>{`writable.write('Первая строка');`}</code>
-              <code>{`writable.write('Вторая строка\n');`}</code>
-              <code>{`writable.end('Последняя строка\n');  // end() завершает поток`}</code>
-              <code>{'  '}</code>
-              <code>{`writable.on('finish', () => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Запись завершена');`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code>{`writable.on('error', (err) => {`}</code>
-              <code>
-                {'  '}
-                {`console.error('Ошибка:', err);`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const fs = require('fs');
+const writable = fs.createWriteStream('./output.txt');
+  
+// Запись данных
+writable.write('Первая строка');
+writable.write('Вторая строка
+');
+writable.end('Последняя строка
+');  // end() завершает поток
+  
+writable.on('finish', () => {
+  console.log('Запись завершена');
+});
+  
+writable.on('error', (err) => {
+  console.error('Ошибка:', err);
+});`}
+          />
           <p>
             <b>pipe()</b> - соединяет <span>Readable</span> →{' '}
             <span>Writable</span>, автоматически управляя потоком
             (backpressure).
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Копирование файла (эффективно!)`}</code>
-              <code>{`const readable = fs.createReadStream('./source.mp4');`}</code>
-              <code>{`const writable = fs.createWriteStream('./destination.mp4');`}</code>
-              <code>{'  '}</code>
-              <code>{`readable.pipe(writable);`}</code>
-              <code>{'  '}</code>
-              <code>{`readable.on('end', () => console.log('Копирование завершено'));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const fs = require('fs');
+  
+// Копирование файла (эффективно!)
+const readable = fs.createReadStream('./source.mp4');
+const writable = fs.createWriteStream('./destination.mp4');
+  
+readable.pipe(writable);
+  
+readable.on('end', () => console.log('Копирование завершено'));`}
+          />
           <p>Короткая запись:</p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>{`fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}
+          />
           <p>pipe vs ручное копирование</p>
-          <pre>
-            <CodeNumber length={6} />
-            <code>
-              <code className='comment'>{`// ❌ Плохо (весь файл в память)`}</code>
-              <code>{`const data = fs.readFileSync('./source.mp4');`}</code>
-              <code>{`fs.writeFileSync('./dest.mp4', data);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// ✅ Хорошо (по чанкам)`}</code>
-              <code>{`fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// ❌ Плохо (весь файл в память)
+const data = fs.readFileSync('./source.mp4');
+fs.writeFileSync('./dest.mp4', data);
+  
+// ✅ Хорошо (по чанкам)
+fs.createReadStream('./source.mp4').pipe(fs.createWriteStream('./dest.mp4'));`}
+          />
           <p>Transform Stream</p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code>{`const { Transform } = require('stream');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Создаем трансформер (например, в верхний регистр)`}</code>
-              <code>{`const upperCaseTransform = new Transform({`}</code>
-              <code>
-                {'  '}
-                {`transform(chunk, encoding, callback) {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = chunk.toString().toUpperCase();`}
-              </code>
-              <code>
-                {'    '}
-                {`this.push(result);`}
-              </code>
-              <code>
-                {'    '}
-                {`callback();`}
-              </code>
-              <code>{'  }'}</code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Использование`}</code>
-              <code>{`fs.createReadStream('./input.txt')`}</code>
-              <code>
-                {'  '}
-                {`.pipe(upperCaseTransform)`}
-              </code>
-              <code>
-                {'  '}
-                {`.pipe(fs.createWriteStream('./output.txt'));`}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { Transform } = require('stream');
+  
+// Создаем трансформер (например, в верхний регистр)
+const upperCaseTransform = new Transform({
+  transform(chunk, encoding, callback) {
+    const result = chunk.toString().toUpperCase();
+    this.push(result);
+    callback();
+  }
+});
+  
+// Использование
+fs.createReadStream('./input.txt')
+  .pipe(upperCaseTransform)
+  .pipe(fs.createWriteStream('./output.txt'));`}
+          />
           <p>Готовые трансформеры</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code>{`const zlib = require('zlib');`}</code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Сжатие файла`}</code>
-              <code>{`fs.createReadStream('./big-file.txt')`}</code>
-              <code>
-                {'  '}
-                {`.pipe(zlib.createGzip())`}
-              </code>
-              <code>
-                {'  '}
-                {`.pipe(fs.createWriteStream('./big-file.txt.gz'));`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Распаковка`}</code>
-              <code>{`fs.createReadStream('./big-file.txt.gz')`}</code>
-              <code>
-                {'  '}
-                {`.pipe(zlib.createGunzip())`}
-              </code>
-              <code>
-                {'  '}
-                {`.pipe(fs.createWriteStream('./big-file-restored.txt'));`}
-              </code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const zlib = require('zlib');
+const fs = require('fs');
+  
+// Сжатие файла
+fs.createReadStream('./big-file.txt')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('./big-file.txt.gz'));
+  
+// Распаковка
+fs.createReadStream('./big-file.txt.gz')
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream('./big-file-restored.txt'));`}
+          />
           <p>HTTP-сервер со стримами </p>
-          <pre>
-            <CodeNumber length={18} />
-            <code>
-              <code>{`const http = require('http');`}</code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{`const path = require('path');`}</code>
-              <code>{'  '}</code>
-              <code>{`const server = http.createServer((req, res) => {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// ❌ Плохо: читаем весь файл в память`}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// const data = fs.readFileSync('./big-video.mp4');`}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {`// res.end(data);`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// ✅ Хорошо: стримим клиенту`}
-              </code>
-              <code>
-                {'  '}
-                {`const stream = fs.createReadStream('./big-video.mp4');`}
-              </code>
-              <code>
-                {'  '}
-                {`stream.pipe(res);  // res — это Writable Stream!`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {`stream.on('error', (err) => {`}
-              </code>
-              <code>
-                {'  '}
-                {`res.statusCode = 404;`}
-              </code>
-              <code>
-                {'  '}
-                {`res.end('File not found');`}
-              </code>
-              <code>{`  });`}</code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const http = require('http');
+const fs = require('fs');
+const path = require('path');
+  
+const server = http.createServer((req, res) => {
+  // ❌ Плохо: читаем весь файл в память
+  // const data = fs.readFileSync('./big-video.mp4');
+  // res.end(data);
+  
+  // ✅ Хорошо: стримим клиенту
+  const stream = fs.createReadStream('./big-video.mp4');
+  stream.pipe(res);  // res — это Writable Stream!
+  
+  stream.on('error', (err) => {
+  res.statusCode = 404;
+  res.end('File not found');
+  });
+});`}
+          />
           <p>❌ Без стримов</p>
           <ul>
             <li>Файл загружается в RAM</li>
@@ -1062,143 +671,74 @@ const Nodejs = {
           <p>
             Остановка потока (<span>unpipe</span>, <span>destroy</span>)
           </p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>{`const readable = fs.createReadStream('./file.txt');`}</code>
-              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
-              <code>{'  '}</code>
-              <code>{`readable.pipe(writable);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Отключить поток`}</code>
-              <code>{`setTimeout(() => {`}</code>
-              <code>
-                {'  '}
-                {`readable.unpipe(writable);`}
-              </code>
-              <code>
-                {'  '}
-                {`console.log('Поток остановлен');`}
-              </code>
-              <code>{`}, 1000);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Уничтожить поток`}</code>
-              <code>{`readable.destroy();`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const readable = fs.createReadStream('./file.txt');
+const writable = fs.createWriteStream('./output.txt');
+  
+readable.pipe(writable);
+  
+// Отключить поток
+setTimeout(() => {
+  readable.unpipe(writable);
+  console.log('Поток остановлен');
+}, 1000);
+  
+// Уничтожить поток
+readable.destroy();`}
+          />
           <p>
             <b>pipeline()</b> — правильный способ (с обработкой ошибок)
           </p>
-          <pre>
-            <CodeNumber length={28} />
-            <code>
-              <code>{`const { pipeline } = require('stream');`}</code>
-              <code>{`const fs = require('fs');`}</code>
-              <code>{`const zlib = require('zlib');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// pipe() не всегда правильно пробрасывает ошибки`}</code>
-              <code className='comment'>{`// pipeline() — современная альтернатива`}</code>
-              <code>{'  '}</code>
-              <code>{`pipeline(`}</code>
-              <code>
-                {'  '}
-                {`fs.createReadStream('./input.txt'),`}
-              </code>
-              <code>
-                {'  '}
-                {`zlib.createGzip(),`}
-              </code>
-              <code>
-                {'  '}
-                {`fs.createWriteStream('./input.txt.gz'),`}
-              </code>
-              <code>
-                {'  '}
-                {`(err) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`if (err) {`}
-              </code>
-              <code>
-                {'      '}
-                {`console.error('Ошибка:', err);`}
-              </code>
-              <code>
-                {'    '}
-                {`} else {`}
-              </code>
-              <code>
-                {'      '}
-                {`console.log('Готово!');`}
-              </code>
-              <code>
-                {'    '}
-                {`}`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// С версией promises (Node.js 15+)`}</code>
-              <code>{`const { pipeline } = require('stream/promises');`}</code>
-              <code>{'  '}</code>
-              <code>{`await pipeline(`}</code>
-              <code>
-                {'  '}
-                {`fs.createReadStream('./input.txt'),`}
-              </code>
-              <code>
-                {'  '}
-                {`zlib.createGzip(),`}
-              </code>
-              <code>
-                {'  '}
-                {`fs.createWriteStream('./input.txt.gz')`}
-              </code>
-              <code>{`);`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { pipeline } = require('stream');
+const fs = require('fs');
+const zlib = require('zlib');
+  
+// pipe() не всегда правильно пробрасывает ошибки
+// pipeline() — современная альтернатива
+  
+pipeline(
+  fs.createReadStream('./input.txt'),
+  zlib.createGzip(),
+  fs.createWriteStream('./input.txt.gz'),
+  (err) => {
+    if (err) {
+      console.error('Ошибка:', err);
+    } else {
+      console.log('Готово!');
+    }
+  }
+);
+  
+// С версией promises (Node.js 15+)
+const { pipeline } = require('stream/promises');
+  
+await pipeline(
+  fs.createReadStream('./input.txt'),
+  zlib.createGzip(),
+  fs.createWriteStream('./input.txt.gz')
+);`}
+          />
           <p>
             <b>Backpressure</b> - когда Writable медленнее Readable →
             накапливается буфер.
           </p>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code>{`const readable = fs.createReadStream('./huge.txt');`}</code>
-              <code>{`const writable = fs.createWriteStream('./output.txt');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// pipe() автоматически управляет backpressure`}</code>
-              <code>{`readable.pipe(writable);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Ручная реализация`}</code>
-              <code>{`readable.on('data', (chunk) => {`}</code>
-              <code>
-                {'  '}
-                {`const canWrite = writable.write(chunk);`}
-              </code>
-              <code>
-                {'  '}
-                {`if (!canWrite) {`}
-              </code>
-              <code>
-                {'    '}
-                {`readable.pause();  // приостановить чтение`}
-              </code>
-              <code>
-                {'    '}
-                {`writable.once('drain', () => readable.resume());  // возобновить`}
-              </code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const readable = fs.createReadStream('./huge.txt');
+const writable = fs.createWriteStream('./output.txt');
+  
+// pipe() автоматически управляет backpressure
+readable.pipe(writable);
+  
+// Ручная реализация
+readable.on('data', (chunk) => {
+  const canWrite = writable.write(chunk);
+  if (!canWrite) {
+    readable.pause();  // приостановить чтение
+    writable.once('drain', () => readable.resume());  // возобновить
+  }
+});`}
+          />
         </div>
       ),
     },
@@ -1216,25 +756,20 @@ const Nodejs = {
             событийно-ориентированной архитектуры. Многие объекты Node.js
             наследуют EventEmitter (streams, http.Server, process).
           </p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code>{`const EventEmitter = require('events');`}</code>
-              <code>{'  '}</code>
-              <code>{`const emitter = new EventEmitter();`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Подписка на событие (слушатель)`}</code>
-              <code>{`emitter.on('greet', (name) => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Hello, ${name}!`);'}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Генерация события`}</code>
-              <code>{`emitter.emit('greet', 'Alice');  // Hello, Alice!`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const EventEmitter = require('events');
+  
+const emitter = new EventEmitter();
+  
+// Подписка на событие (слушатель)
+emitter.on('greet', (name) => {
+  console.log(\`Hello, \${name}!\`);
+});
+  
+// Генерация события
+emitter.emit('greet', 'Alice');  // Hello, Alice!
+`}
+          />
           <p>Методы</p>
           <ul>
             <li>
@@ -1367,213 +902,124 @@ const Nodejs = {
             </li>
           </ul>
           <p>exec()</p>
-          <pre>
-            <CodeNumber length={20} />
-            <code>
-              <code>{`const { exec } = require('child_process');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Выполнить команду`}</code>
-              <code>{`exec('ls -la', (error, stdout, stderr) => {`}</code>
-              <code>
-                {'  '}
-                {`if (error) {`}
-              </code>
-              <code>
-                {'    '}
-                {'console.error(`Ошибка: ${error.message}`);'}
-              </code>
-              <code>
-                {'    '}
-                {`return;`}
-              </code>
-              <code>{'  }'}</code>
-              <code>
-                {'  '}
-                {`if (stderr) {`}
-              </code>
-              <code>
-                {'    '}
-                {'console.error(`Stderr: ${stderr}`);'}
-              </code>
-              <code>
-                {'  '}
-                {`return;`}
-              </code>
-              <code>{'  }'}</code>
-              <code>
-                {'  '}
-                {'console.log(`Вывод:\n${stdout}`);'}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Для Windows`}</code>
-              <code>{`exec('dir', { shell: 'cmd.exe' }, (err, stdout) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log(stdout);`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { exec } = require('child_process');
+  
+// Выполнить команду
+exec('ls -la', (error, stdout, stderr) => {
+  if (error) {
+    console.error(\`Ошибка: $\{error.message}\`);
+    return;
+  }
+  if (stderr) {
+    console.error(\`Stderr: \${stderr}\`);
+  return;
+  }
+  console.log(\`Вывод:
+\${stdout}\`);
+});
+  
+// Для Windows
+exec('dir', { shell: 'cmd.exe' }, (err, stdout) => {
+  console.log(stdout);
+});`}
+          />
           <p>
             <b>Ограничение:</b> Буфер по умолчанию <span>1MB</span> (можно
             увеличить)
           </p>
           <p>execFile()</p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code>{`const { execFile } = require('child_process');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Запуск внешней программы с аргументами`}</code>
-              <code>{`execFile('node', ['--version'], (err, stdout) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Node version:', stdout);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Запуск Python`}</code>
-              <code>{`execFile('python', ['script.py', 'arg1'], (err, stdout) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Python output:', stdout);`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { execFile } = require('child_process');
+  
+// Запуск внешней программы с аргументами
+execFile('node', ['--version'], (err, stdout) => {
+  console.log('Node version:', stdout);
+});
+  
+// Запуск Python
+execFile('python', ['script.py', 'arg1'], (err, stdout) => {
+  console.log('Python output:', stdout);
+});`}
+          />
           <p>spawn()</p>
-          <pre>
-            <CodeNumber length={20} />
-            <code>
-              <code>{`const { spawn } = require('child_process');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Создаем процесс`}</code>
-              <code>{`const ls = spawn('ls', ['-la', '/usr']);`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Слушаем stdout (читаем по кусочкам)`}</code>
-              <code>{`ls.stdout.on('data', (data) => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Чанк: ${data.length} байт`);'}
-              </code>
-              <code>
-                {'  '}
-                {`console.log(data.toString());`}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Слушаем stderr`}</code>
-              <code>{`ls.stderr.on('data', (data) => {`}</code>
-              <code>
-                {'  '}
-                {'console.error(`Ошибка: ${data}`);'}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Ждем завершения`}</code>
-              <code>{`ls.on('close', (code) => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Процесс завершен с кодом ${code}`);'}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const { spawn } = require('child_process');
+  
+// Создаем процесс
+const ls = spawn('ls', ['-la', '/usr']);
+  
+// Слушаем stdout (читаем по кусочкам)
+ls.stdout.on('data', (data) => {
+  console.log(\`Чанк: \${data.length} байт\`);
+  console.log(data.toString());
+});
+  
+// Слушаем stderr
+ls.stderr.on('data', (data) => {
+  console.error(\`Ошибка: \${data}\`);
+});
+  
+// Ждем завершения
+ls.on('close', (code) => {
+  console.log(\`Процесс завершен с кодом \${code}\`);
+});`}
+          />
           <p>
             <b>Преимущество spawn</b>: не ждет завершения, данные идут по
             стримам (хорошо для больших объемов).
           </p>
           <p>fork()</p>
-          <pre>
-            <CodeNumber length={21} />
-            <code>
-              <code className='comment'>{`// parent.js`}</code>
-              <code>{`const { fork } = require('child_process');`}</code>
-              <code>{'  '}</code>
-              <code>{`const child = fork('./child.js');`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// Отправляем данные дочернему процессу`}</code>
-              <code>{`child.send({ hello: 'world' });`}</code>
-              <code>{'  '}</code>
-              <code>{`// Получаем ответ`}</code>
-              <code>{`child.on('message', (message) => {`}</code>
-              <code>
-                {`  `}
-                {`console.log('От ребенка:', message);`}
-              </code>
-              <code>
-                {'  '}
-                {`child.kill();`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// child.js`}</code>
-              <code>{`process.on('message', (message) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Родитель сказал:', message);`}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Отправляем ответ`}
-              </code>
-              <code>
-                {'  '}
-                {`process.send({ reply: 'Принято!' });`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// parent.js
+const { fork } = require('child_process');
+  
+const child = fork('./child.js');
+  
+// Отправляем данные дочернему процессу
+child.send({ hello: 'world' });
+  
+// Получаем ответ
+child.on('message', (message) => {
+  console.log('От ребенка:', message);
+  child.kill();
+});
+  
+// child.js
+process.on('message', (message) => {
+  console.log('Родитель сказал:', message);
+  
+  // Отправляем ответ
+  process.send({ reply: 'Принято!' });
+});`}
+          />
           <p>
             <b>fork()</b> создает отдельный Node.js процесс с собственным Event
             Loop.
           </p>
           <p>IPC (Inter-Process Communication)</p>
-          <pre>
-            <CodeNumber length={20} />
-            <code>
-              <code className='comment'>{`// Родитель`}</code>
-              <code>{`const child = fork('./worker.js');`}</code>
-              <code>{'  '}</code>
-              <code>{`child.send({ task: 'calculate', data: 1000 });`}</code>
-              <code>{'  '}</code>
-              <code>{`child.on('message', (result) => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Результат:', result);`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`child.on('exit', (code) => {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Ребенок завершен с кодом ${code}`);'}
-              </code>
-              <code>{'});'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`// worker.js`}</code>
-              <code>{`process.on('message', async (msg) => {`}</code>
-              <code>
-                {'  '}
-                {`if (msg.task === 'calculate') {`}
-              </code>
-              <code>
-                {'    '}
-                {`const result = heavyCalculation(msg.data);`}
-              </code>
-              <code>
-                {'    '}
-                {`process.send({ result });`}
-              </code>
-              <code>
-                {'  '}
-                {`}`}
-              </code>
-              <code>{`});`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`// Родитель
+const child = fork('./worker.js');
+  
+child.send({ task: 'calculate', data: 1000 });
+  
+child.on('message', (result) => {
+  console.log('Результат:', result);
+});
+  
+child.on('exit', (code) => {
+  console.log(\`Ребенок завершен с кодом \${code}\`);
+});
+  
+// worker.js
+process.on('message', async (msg) => {
+  if (msg.task === 'calculate') {
+    const result = heavyCalculation(msg.data);
+    process.send({ result });
+  }
+});`}
+          />
         </div>
       ),
     },
@@ -1612,87 +1058,37 @@ const Nodejs = {
               </tr>
             </tbody>
           </table>
-          <pre>
-            <CodeNumber length={29} />
-            <code>
-              <code>{`const cluster = require('cluster');`}</code>
-              <code>{`const http = require('http');`}</code>
-              <code>{`const os = require('os');`}</code>
-              <code>{'  '}</code>
-              <code>{`const numCPUs = os.cpus().length; // количество ядер`}</code>
-              <code>{'  '}</code>
-              <code>{`if (cluster.isMaster) {`}</code>
-              <code>
-                {'  '}
-                {'console.log(`Мастер процесс ${process.pid} запущен`);'}
-              </code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Создаем воркеров по числу ядер`}
-              </code>
-              <code>
-                {'  '}
-                {`for (let i = 0; i < numCPUs; i++) {`}
-              </code>
-              <code>
-                {'    '}
-                {`cluster.fork();`}
-              </code>
-              <code>{'  }'}</code>
-              <code>{'  '}</code>
-              <code className='comment'>
-                {'  '}
-                {`// При смерти воркера — перезапускаем`}
-              </code>
-              <code>
-                {'  '}
-                {`cluster.on('exit', (worker, code, signal) => {`}
-              </code>
-              <code>
-                {'    '}
-                {
-                  'console.log(`Воркер ${worker.process.pid} умер. Создаем нового...`);'
-                }
-              </code>
-              <code>
-                {'    '}
-                {`cluster.fork();`}
-              </code>
-              <code>
-                {'  '}
-                {`});`}
-              </code>
-              <code>{'  '}</code>
-              <code>{`} else {`}</code>
-              <code className='comment'>
-                {'  '}
-                {`// Воркер — обычный HTTP сервер`}
-              </code>
-              <code>
-                {'  '}
-                {`http.createServer((req, res) => {`}
-              </code>
-              <code>
-                {'    '}
-                {`res.writeHead(200);`}
-              </code>
-              <code>
-                {'    '}
-                {'res.end(`Привет от воркера ${process.pid}`);'}
-              </code>
-              <code>
-                {'  '}
-                {`}).listen(3000);`}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'console.log(`Воркер ${process.pid} запущен`);'}
-              </code>
-              <code>{'}'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter
+            code={`const cluster = require('cluster');
+const http = require('http');
+const os = require('os');
+  
+const numCPUs = os.cpus().length; // количество ядер
+  
+if (cluster.isMaster) {
+  console.log(\`Мастер процесс \${process.pid} запущен\`);
+  
+  // Создаем воркеров по числу ядер
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+  
+  // При смерти воркера — перезапускаем
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(\`Воркер \${worker.process.pid} умер. Создаем нового...\`);
+    cluster.fork();
+  });
+  
+} else {
+  // Воркер — обычный HTTP сервер
+  http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end(\`Привет от воркера \${process.pid}\`);
+  }).listen(3000);
+  
+  console.log(\`Воркер \${process.pid} запущен\`);
+}`}
+          />
           <table>
             <thead>
               <tr>

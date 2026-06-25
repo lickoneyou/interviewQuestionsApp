@@ -1,4 +1,5 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const Vue = {
@@ -89,55 +90,35 @@ const Vue = {
       jsx: (
         <div>
           <p>Options API (классический подход):</p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<button @click="count++">Кликнули {{ count }} раз</button>'}
-              </code>
-              <code>{'</template>'}</code>
-              <code>{'  '}</code>
-              <code>{'<script>'}</code>
-              <code>export default {'{'}</code>
-              <code>
-                {'  '}data() {'{'}
-              </code>
-              <code>
-                {'    '}return {'{'}
-              </code>
-              <code>{'      '}count: 0</code>
-              <code>
-                {'    '}
-                {'{'}
-              </code>
-              <code>
-                {'  '}
-                {'{'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<template>
+  <button @click="count++">Кликнули {{ count }} раз</button>
+</template>
+  
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    {
+  {
+}
+</script>`}
+          />
           <p>Composition API (новый подход)</p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<button @click="count++">Кликнули {{ count }} раз</button>'}
-              </code>
-              <code>{'</template>'}</code>
-              <code>{'  '}</code>
-              <code>{'<script setup>'}</code>
-              <code>import {'{ ref }'} from 'vue'</code>
-              <code>{'  '}</code>
-              <code>const count = ref(0)</code>
-              <code>{'</script>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<template>
+  <button @click="count++">Кликнули {{ count }} раз</button>
+</template>
+  
+<script setup>
+import { ref } from 'vue'
+  
+const count = ref(0)
+</script>`}
+          />
           <p>Ключевые отличия:</p>
           <ul>
             <li>
@@ -219,21 +200,16 @@ const Vue = {
             JavaScript в HTML-шаблонах с помощью двойных фигурных скобок{' '}
             <b>{'{{ }}'}</b>.
           </p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>const count = 0</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<h1>{{ 0 }}</h1>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+const count = 0
+</script>
+  
+<template>
+  <h1>{{ 0 }}</h1>
+</template>`}
+          />
         </div>
       ),
     },
@@ -251,21 +227,16 @@ const Vue = {
             style) или входной параметр компонента с выражением JavaScript из
             данных Vue.
           </p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>const color = 'red'</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<h1 :class="color">Title</h1>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+const color = 'red'
+</script>
+  
+<template>
+  <h1 :class="color">Title</h1>
+</template>`}
+          />
         </div>
       ),
     },
@@ -283,66 +254,32 @@ const Vue = {
             контент (HTML, компоненты, текст) в определённые места внутри
             компонента.
           </p>
-          <pre>
-            <CodeNumber length={11} />
-            <code>
-              <code className='comment'>{'//'}App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>import Comp from './Comp.vue'</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<Comp>'}
-              </code>
-              <code>
-                {'    '}
-                {'<template #default>default</template>'}
-              </code>
-              <code>
-                {'    '}
-                {'<template #header>header</template>'}
-              </code>
-              <code>
-                {'  '}
-                {'</Comp>'}
-              </code>
-              <code>{'<template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code className='comment'>{'//'}Comp.vue</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<div>'}
-              </code>
-              <code>
-                {'    '}
-                {'<slot name="header"/>'}
-              </code>
-              <code>
-                {'    '}
-                {'<div>'}
-              </code>
-              <code>
-                {'      '}
-                {'<slot />'}
-              </code>
-              <code>
-                {'    '}
-                {'</div>'}
-              </code>
-              <code>
-                {'  '}
-                {'</div>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`//App.vue
+<script setup>
+import Comp from './Comp.vue'
+</script>
+  
+<template>
+  <Comp>
+    <template #default>default</template>
+    <template #header>header</template>
+  </Comp>
+<template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`//Comp.vue
+<template>
+  <div>
+    <slot name="header"/>
+    <div>
+      <slot />
+    </div>
+  </div>
+</template>`}
+          />
         </div>
       ),
     },
@@ -359,81 +296,58 @@ const Vue = {
             <b>Props</b> - это механизм передачи данных от родительского
             компонента к дочернему.
           </p>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code className='comment'>{'//'} App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>import Comp from './Comp.vue'</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {"<Comp title='myTitle' :count='10'/>"}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code className='comment'>{'//'} Comp.vue</code>
-              <code>{'<script setup lang="ts">'}</code>
-              <code>{'interface Props {'}</code>
-              <code>{'  '}title: string,</code>
-              <code>{'  '}count: number</code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>{'const {title, count} = defineProps<Props>()'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<h1>{{title}}</h1>'}
-              </code>
-              <code>
-                {'  '}
-                {'<p>count: {{count}}</p>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`// App.vue
+<script setup>
+import Comp from './Comp.vue'
+</script>
+  
+<template>
+  <Comp title='myTitle' :count='10'/>
+</template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`// Comp.vue
+<script setup lang="ts">
+interface Props {
+  title: string,
+  count: number
+}
+  
+const {title, count} = defineProps<Props>()
+</script>
+  
+<template>
+  <h1>{{title}}</h1>
+  <p>count: {{count}}</p>
+</template>`}
+          />
           <p>
             <b>withDefaults</b> — это утилита TypeScript в Composition API Vue
             3, которая позволяет задавать значения по умолчанию для props в
             компонентах с использованием <b>{'<script setup>'}</b>
           </p>
-          <pre>
-            <CodeNumber length={16} />
-            <code>
-              <code>{'<script setup lang="ts">'}</code>
-              <code>{'interface Props {'}</code>
-              <code>{'  '}title?: string,</code>
-              <code>{'  '}count?: number</code>
-              <code>{'}'}</code>
-              <code>{'  '}</code>
-              <code>
-                {'const props = withDefaults(defineProps<Props>(), {'}
-              </code>
-              <code>{'  '}title: 'title',</code>
-              <code>{'  '}count: 15</code>
-              <code>{'})'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<h1>{{props.title}}</h1>'}
-              </code>
-              <code>
-                {'  '}
-                {'<p>count: {{props.count}}</p>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup lang="ts">
+interface Props {
+  title?: string,
+  count?: number
+}
+  
+const props = withDefaults(defineProps<Props>(), {
+  title: 'title',
+  count: 15
+})
+</script>
+  
+<template>
+  <h1>{{props.title}}</h1>
+  <p>count: {{props.count}}</p>
+</template>`}
+          />
         </div>
       ),
     },
@@ -451,31 +365,23 @@ const Vue = {
             пользователя с элементами интерфейса (клики, ввод текста и т.д.) и
             коммуникации между компонентами.
           </p>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const count = ref(0)</code>
-              <code>{'  '}</code>
-              <code>{'function countUp() {'}</code>
-              <code>{'  '}++count.value</code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p>count: {{count}}</p>'}
-              </code>
-              <code>
-                {'  '}
-                {"<button @click='countUp'>Add</button>"}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref } from 'vue'
+  
+const count = ref(0)
+  
+function countUp() {
+  ++count.value
+}
+</script>
+  
+<template>
+  <p>count: {{count}}</p>
+  <button @click='countUp'>Add</button>
+</template>`}
+          />
           <ul>
             Vue предоставляет модификаторы для частых операций:
             <li>
@@ -511,57 +417,41 @@ const Vue = {
             <b>Emits</b> — это способ, с помощью которого дочерний компонент
             отправляет события родительскому компоненту.
           </p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code className='comment'>{'//'} App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>{"import Comp from './Comp.vue'"}</code>
-              <code>{'  '}</code>
-              <code>const count = ref(0)</code>
-              <code>{'  '}</code>
-              <code>{'function updateCount(newCount) {'}</code>
-              <code>
-                {'  '}
-                {'count.value = newCount'}
-              </code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p>count: {{count}}</p>'}
-              </code>
-              <code>
-                {'  '}
-                {"<Comp @update-count='updateCount'/>"}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code className='comment'>{'//'} Comp.vue</code>
-              <code>{'<script setup lang="ts">'}</code>
-              <code>const emit = defineEmits(['updateCount'])</code>
-              <code>{'  '}</code>
-              <code>{'function handleClick() {'}</code>
-              <code>{'  '}emit('updateCount', 12)</code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {"<button @click='handleClick'>Add</button>"}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`// App.vue
+<script setup>
+import { ref } from 'vue'
+  
+import Comp from './Comp.vue'
+  
+const count = ref(0)
+  
+function updateCount(newCount) {
+  count.value = newCount
+}
+</script>
+  
+<template>
+  <p>count: {{count}}</p>
+  <Comp @update-count='updateCount'/>
+</template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`// Comp.vue
+<script setup lang="ts">
+const emit = defineEmits(['updateCount'])
+  
+function handleClick() {
+  emit('updateCount', 12)
+}
+</script>
+  
+<template>
+  <button @click='handleClick'>Add</button>
+</template>`}
+          />
         </div>
       ),
     },
@@ -625,38 +515,26 @@ const Vue = {
             когда нужно работать с DOM после того, как Vue обновил его в ответ
             на изменение данных.
           </p>
-          <pre>
-            <CodeNumber length={17} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref, nextTick } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const msg = ref(1)</code>
-              <code>{'  '}</code>
-              <code>{'async function fn() {'}</code>
-              <code>{'  '}msg.value = 2</code>
-              <code>{'  '}await nextTick()</code>
-              <code>
-                {'  '}const value = document.getElementById('msg').innerHTML
-              </code>
-              <code>
-                {'  '}console.log(value) {'//'} без nextTick выведет '1' c '2'
-              </code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p id="msg">{{msg}}</p>'}
-              </code>
-              <code>
-                {'  '}
-                {'<button @click="fn">Кнопка</button>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref, nextTick } from 'vue'
+  
+const msg = ref(1)
+  
+async function fn() {
+  msg.value = 2
+  await nextTick()
+  const value = document.getElementById('msg').innerHTML
+  console.log(value) // без nextTick выведет '1' c '2'
+}
+</script>
+  
+<template>
+  <p id="msg">{{msg}}</p>
+  <button @click="fn">Кнопка</button>
+</template>`}
+          />
         </div>
       ),
     },
@@ -687,39 +565,31 @@ const Vue = {
               <b>Оптимизация</b> — предотвращает лишние перерасчеты
             </li>
           </ul>
-          <pre>
-            <CodeNumber length={22} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref, computed } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const msg = ref(1)</code>
-              <code>const num = ref(1)</code>
-              <code>{'  '}</code>
-              <code>{'const value = computed(() => {'}</code>
-              <code>{'  '}return msg.value + 1</code>
-              <code>{'})'}</code>
-              <code>{'  '}</code>
-              <code>{'function fn() {'}</code>
-              <code>{'  '}msg.value = msg.value - num.value</code>
-              <code>{'  '}num.value += 1</code>
-              <code>{'}'}</code>
-              <code className='comment'>{'//'} первый клик value = 1</code>
-              <code className='comment'>{'//'} второй клик value = -1</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p>{{value}}</p>'}
-              </code>
-              <code>
-                {'  '}
-                {'<button @click="fn">Кнопка</button>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref, computed } from 'vue'
+  
+const msg = ref(1)
+const num = ref(1)
+  
+const value = computed(() => {
+  return msg.value + 1
+})
+  
+function fn() {
+  msg.value = msg.value - num.value
+  num.value += 1
+}
+// первый клик value = 1
+// второй клик value = -1
+</script>
+  
+<template>
+  <p>{{value}}</p>
+  <button @click="fn">Кнопка</button>
+</template>`}
+          />
         </div>
       ),
     },
@@ -737,35 +607,24 @@ const Vue = {
             <span>директивы условного рендеринга</span> во Vue.js, которые
             позволяют показывать или скрывать элементы в зависимости от условий.
           </p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const isVisible = ref(true)</code>
-              <code>{'  '}</code>
-              <code>{'function fn() {'}</code>
-              <code>{'  '}isVisible.value = !isVisible.value</code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p v-if="isVisible">true</p>'}
-              </code>
-              <code>
-                {'  '}
-                {'<p v-else>false</p>'}
-              </code>
-              <code>
-                {'  '}
-                {'<button @click="fn">Кнопка</button>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref } from 'vue'
+  
+const isVisible = ref(true)
+  
+function fn() {
+  isVisible.value = !isVisible.value
+}
+</script>
+  
+<template>
+  <p v-if="isVisible">true</p>
+  <p v-else>false</p>
+  <button @click="fn">Кнопка</button>
+</template>`}
+          />
         </div>
       ),
     },
@@ -782,35 +641,24 @@ const Vue = {
             <b>v-show</b> это директива для условного отображения элементов,
             которая работает через CSS-свойство <b>display.</b>
           </p>
-          <pre>
-            <CodeNumber length={15} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const isVisible = ref(true)</code>
-              <code>{'  '}</code>
-              <code>{'function fn() {'}</code>
-              <code>{'  '}isVisible.value = !isVisible.value</code>
-              <code>{'}'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p class="text" v-show="isVisible">true</p>'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {"'//' при false text получит display: none"}
-              </code>
-              <code>
-                {'  '}
-                {'<button @click="fn">Кнопка</button>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref } from 'vue'
+  
+const isVisible = ref(true)
+  
+function fn() {
+  isVisible.value = !isVisible.value
+}
+</script>
+  
+<template>
+  <p class="text" v-show="isVisible">true</p>
+  '//' при false text получит display: none
+  <button @click="fn">Кнопка</button>
+</template>`}
+          />
         </div>
       ),
     },
@@ -828,29 +676,18 @@ const Vue = {
             <span>рендеринга списков</span> данных. Она позволяет отображать
             элементы массива или объекта, создавая шаблон для каждого элемента.
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>const arr = [1,2,3,4,5]</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<ul>'}
-              </code>
-              <code>
-                {'    '}
-                {'<li v-for="element in arr" :key="element">{{element}}</li>'}
-              </code>
-              <code>
-                {'  '}
-                {'</ul>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+const arr = [1,2,3,4,5]
+</script>
+  
+<template>
+  <ul>
+    <li v-for="element in arr" :key="element">{{element}}</li>
+  </ul>
+</template>`}
+          />
         </div>
       ),
     },
@@ -870,50 +707,35 @@ const Vue = {
             <b>defineModel()</b> - Упрощает создание пользовательских
             компонентов с поддержкой v-model в Composition API.
           </p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code className='comment'>{'//'} App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>{"import Comp from './Comp.vue'"}</code>
-              <code>{'  '}</code>
-              <code>const value = ref('')</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<p>{{value}}</p>'}
-              </code>
-              <code>
-                {'  '}
-                {'<Comp v-model="value" />'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{'//'} Comp.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { defineModel } from 'vue';"}</code>
-              <code>{'  '}</code>
-              <code>{'const model = defineModel()'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {
-                  '<input :value="model" @input="model = $event.target.value" />'
-                }
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`// App.vue
+<script setup>
+import { ref } from 'vue'
+  
+import Comp from './Comp.vue'
+  
+const value = ref('')
+</script>
+  
+<template>
+  <p>{{value}}</p>
+  <Comp v-model="value" />
+</template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`// Comp.vue
+<script setup>
+import { defineModel } from 'vue';
+  
+const model = defineModel()
+</script>
+  
+<template>
+  <input :value="model" @input="model = $event.target.value" />
+</template>`}
+          />
         </div>
       ),
     },
@@ -963,26 +785,22 @@ const Vue = {
             одного или нескольких реактивных источников и выполняет колбэк при
             их изменении.
           </p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref, watch } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>let count = ref(0)</code>
-              <code>let secondCount = ref(1)</code>
-              <code>{'  '}</code>
-              <code>{'watch([count, secondCount], () => {'}</code>
-              <code>{'  '}console.log(count.value, 'count')</code>
-              <code className='comment'>
-                {'//'} выведет в консоль 0 при изменении secondCount
-              </code>
-              <code>{'})'}</code>
-              <code>{'  '}</code>
-              <code>{'secondCount.value = 2'}</code>
-              <code>{'</script>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { ref, watch } from 'vue'
+  
+let count = ref(0)
+let secondCount = ref(1)
+  
+watch([count, secondCount], () => {
+  console.log(count.value, 'count')
+// выведет в консоль 0 при изменении secondCount
+})
+  
+secondCount.value = 2
+</script>`}
+          />
         </div>
       ),
     },
@@ -1001,41 +819,34 @@ const Vue = {
             компонентам, минуя промежуточные компоненты (пропуская{' '}
             <span>"props drilling"</span>).
           </p>
-          <pre>
-            <CodeNumber length={14} />
-            <code>
-              <code className='comment'>{'//'} App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { ref, provide } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>{"import Comp from './Comp.vue'"}</code>
-              <code>{'  '}</code>
-              <code>let count = ref(10)</code>
-              <code>{'  '}</code>
-              <code>provide('count', count)</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<Comp />'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={8} />
-            <code>
-              <code className='comment'>{'//'} Comp.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { inject } from 'vue';"}</code>
-              <code>{'  '}</code>
-              <code>const count = inject('count')</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>{{count}}</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`// App.vue
+<script setup>
+import { ref, provide } from 'vue'
+  
+import Comp from './Comp.vue'
+  
+let count = ref(10)
+  
+provide('count', count)
+</script>
+  
+<template>
+  <Comp />
+</template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`// Comp.vue
+<script setup>
+import { inject } from 'vue';
+  
+const count = inject('count')
+</script>
+  
+<template>{{count}}</template>`}
+          />
         </div>
       ),
     },
@@ -1052,27 +863,22 @@ const Vue = {
             <b>useTemplateRef</b> — это функция, возвращающая мутирующую
             (mutable) ref-ссылку на элемент шаблона.
           </p>
-          <pre>
-            <CodeNumber length={13} />
-            <code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { useTemplateRef, onMounted } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>const elem = useTemplateRef('elem')</code>
-              <code>{'  '}</code>
-              <code>{'onMounted(() => {'}</code>
-              <code>{'  '}elem.value.innerHTML = '1'</code>
-              <code>{'})'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<div ref="elem">100</div>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup>
+import { useTemplateRef, onMounted } from 'vue'
+  
+const elem = useTemplateRef('elem')
+  
+onMounted(() => {
+  elem.value.innerHTML = '1'
+})
+</script>
+  
+<template>
+  <div ref="elem">100</div>
+</template>`}
+          />
         </div>
       ),
     },
@@ -1096,62 +902,34 @@ const Vue = {
             Атрибут <b>defer</b> заставляет Teleport ждать, пока цель появится в{' '}
             <span>DOM</span>.
           </p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code className='comment'>{'//'} App.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import Comp  from './Comp.vue';"}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<div class="wrapper">'}
-              </code>
-              <code>
-                {'    '}
-                {'<div>'}
-              </code>
-              <code>
-                {'      '}
-                {'<Comp />'}
-              </code>
-              <code>
-                {'    '}
-                {'/div>'}
-              </code>
-              <code>
-                {'  '}
-                {'</div>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code className='comment'>{'//'} Comp.vue</code>
-              <code>{'<script setup>'}</code>
-              <code>{"import { Teleport } from 'vue';"}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<Teleport defer to=".wrapper">'}
-              </code>
-              <code>
-                {'    '}
-                {'<div class="comp">component</div>'}
-              </code>
-              <code>
-                {'  '}
-                {'</Teleport>'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`// App.vue
+<script setup>
+import Comp  from './Comp.vue';
+</script>
+  
+<template>
+  <div class="wrapper">
+    <div>
+      <Comp />
+    /div>
+  </div>
+</template>`}
+          />
+          <CodeHighlighter 
+            language={'html'}
+            code={`// Comp.vue
+<script setup>
+import { Teleport } from 'vue';
+</script>
+  
+<template>
+  <Teleport defer to=".wrapper">
+    <div class="comp">component</div>
+  </Teleport>
+</template>`}
+          />
         </div>
       ),
     },
@@ -1168,68 +946,30 @@ const Vue = {
             <b>Transition</b> - это встроенный компонент для плавного
             анимирования появления.
           </p>
-          <pre>
-            <CodeNumber length={21} />
-            <code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<Transition>'}
-              </code>
-              <code>
-                {'    '}
-                {'<Teleport to="body">'}
-              </code>
-              <code>
-                {'      '}
-                {'<div class="modal_overlay">'}
-              </code>
-              <code>
-                {'        '}
-                {'<div class="modal"></div>'}
-              </code>
-              <code>
-                {'      '}
-                {'</div>'}
-              </code>
-              <code>
-                {'    '}
-                {'</Teleport>'}
-              </code>
-              <code>
-                {'  '}
-                {'</Transition>'}
-              </code>
-              <code>{'</template>'}</code>
-              <code>{'  '}</code>
-              <code>{'<style lang="scss" scoped>'}</code>
-              <code>
-                {'  '}
-                {'.v-enter-active,'}
-              </code>
-              <code>
-                {'  '}
-                {'.v-leave-active {'}
-              </code>
-              <code>{'    '}transition: opacity 0.5s ease;</code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'  '}</code>
-              <code>{'  '}.v-enter-from,</code>
-              <code>
-                {'  '}
-                {'.v-leave-to {'}
-              </code>
-              <code>{'    '}opacity: 0;</code>
-              <code>
-                {'  '}
-                {'}'}
-              </code>
-              <code>{'</style>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<template>
+  <Transition>
+    <Teleport to="body">
+      <div class="modal_overlay">
+        <div class="modal"></div>
+      </div>
+    </Teleport>
+  </Transition>
+</template>
+  
+<style lang="scss" scoped>
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.5s ease;
+  }
+  
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
+  }
+</style>`}
+          />
         </div>
       ),
     },
@@ -1243,53 +983,33 @@ const Vue = {
       jsx: (
         <div>
           <p>Подключение:</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{"import { createApp } from 'vue'"}</code>
-              <code>{"import { createPinia } from 'pinia'"}</code>
-              <code>{'  '}</code>
-              <code>{"import App from './App.vue'"}</code>
-              <code>{'  '}</code>
-              <code>const app = createApp(App)</code>
-              <code>{'  '}</code>
-              <code>app.use(createPinia())</code>
-              <code>{'  '}</code>
-              <code>{"app.mount('#app')"}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+  
+import App from './App.vue'
+  
+const app = createApp(App)
+  
+app.use(createPinia())
+  
+app.mount('#app')`}
+          />
           <p>Создание стора:</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code>{"import { defineStore } from 'pinia'"}</code>
-              <code>{"import { ref } from 'vue'"}</code>
-              <code>{'  '}</code>
-              <code>
-                {"export const useStore = defineStore('store', () => {"}
-              </code>
-              <code>
-                {'  '}
-                {'const value = ref([])'}
-              </code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'const fn = () => {'}
-              </code>
-              <code className='comment'>
-                {'  '}
-                {'//'}...
-              </code>
-              <code>{'  }'}</code>
-              <code>{'  '}</code>
-              <code>
-                {'  '}
-                {'return { value, fn }'}
-              </code>
-              <code>{'})'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { defineStore } from 'pinia'
+import { ref } from 'vue'
+  
+export const useStore = defineStore('store', () => {
+  const value = ref([])
+  
+  const fn = () => {
+  //...
+  }
+  
+  return { value, fn }
+})`}
+          />
         </div>
       ),
     },
@@ -1303,107 +1023,70 @@ const Vue = {
       jsx: (
         <div>
           <p>Подключение:</p>
-          <pre>
-            <CodeNumber length={10} />
-            <code>
-              <code>{"import { createApp } from 'vue'"}</code>
-              <code>{"import router from './router'"}</code>
-              <code>{'  '}</code>
-              <code>{"import App from './App.vue'"}</code>
-              <code>{'  '}</code>
-              <code>const app = createApp(App)</code>
-              <code>{'  '}</code>
-              <code>app.use(router)</code>
-              <code>{'  '}</code>
-              <code>{"app.mount('#app')"}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { createApp } from 'vue'
+import router from './router'
+  
+import App from './App.vue'
+  
+const app = createApp(App)
+  
+app.use(router)
+  
+app.mount('#app')`}
+          />
           <p>Роуты:</p>
-          <pre>
-            <CodeNumber length={16} />
-            <code>
-              <code>
-                {"import { createRouter, createWebHistory } from 'vue-router'"}
-              </code>
-              <code>{'  '}</code>
-              <code>{"import Main from '@/pages/Main.vue'"}</code>
-              <code>{"import Card from '@/pages/Card.vue'"}</code>
-              <code>{"import Product from '@/pages/Product.vue'"}</code>
-              <code>{'  '}</code>
-              <code>{'const router = createRouter({'}</code>
-              <code>
-                {'  '}history: createWebHistory(import.meta.env.BASE_URL),
-              </code>
-              <code>
-                {'  '}
-                {'routes: ['}
-              </code>
-              <code>
-                {'    '}
-                {"{ path: '/', component: Main },"}
-              </code>
-              <code>
-                {'    '}
-                {"{ path: '/card', component: Card },"}
-              </code>
-              <code>
-                {'    '}
-                {"{ path: '/product/:id', component: Product },"}
-              </code>
-              <code>
-                {'  '}
-                {'],'}
-              </code>
-              <code>{'})'}</code>
-              <code>{'  '}</code>
-              <code>export default router</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`import { createRouter, createWebHistory } from 'vue-router'
+  
+import Main from '@/pages/Main.vue'
+import Card from '@/pages/Card.vue'
+import Product from '@/pages/Product.vue'
+  
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    { path: '/', component: Main },
+    { path: '/card', component: Card },
+    { path: '/product/:id', component: Product },
+  ],
+})
+  
+export default router`}
+          />
           <p>Подключение в App.vue:</p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code>{'<script setup lang="ts">'}</code>
-              <code>{"import { RouterView } from 'vue-router'"}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {'<RouterView />'}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup lang="ts">
+import { RouterView } from 'vue-router'
+</script>
+  
+<template>
+  <RouterView />
+</template>`}
+          />
           <p>
             Для роутов используется <b>RouterLink</b>
           </p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>{'<RouterLink to="/">Go to Home</RouterLink>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<RouterLink to="/">Go to Home</RouterLink>`}
+          />
           <p>
             или <b>router.push</b>
           </p>
-          <pre>
-            <CodeNumber length={9} />
-            <code>
-              <code>{'<script setup lang="ts">'}</code>
-              <code>{"import { useRouter } from 'vue-router'"}</code>
-              <code>{'  '}</code>
-              <code>{'const router = useRouter()'}</code>
-              <code>{'</script>'}</code>
-              <code>{'  '}</code>
-              <code>{'<template>'}</code>
-              <code>
-                {'  '}
-                {`<Button @click="router.push('/')" label="Go to Home" />`}
-              </code>
-              <code>{'</template>'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'html'}
+            code={`<script setup lang="ts">
+import { useRouter } from 'vue-router'
+  
+const router = useRouter()
+</script>
+  
+<template>
+  <Button @click="router.push('/')" label="Go to Home" />
+</template>`}
+          />
         </div>
       ),
     },

@@ -1,4 +1,5 @@
 import CodeNumber from '../components/Basic/CodeNumbers';
+import CodeHighlighter from '../components/CodeHighlighter/CodeHighlighter';
 import slugifyText from '../handlers/slugifyText';
 
 const ExpressJs = {
@@ -22,49 +23,36 @@ const ExpressJs = {
             <li>Отправку ответов (не нужно писать заголовки вручную)</li>
           </ul>
           <p>Установка</p>
-          <pre>
-            <CodeNumber length={7} />
-            <code>
-              <code className='comment'>{`# Создаем проект`}</code>
-              <code>{`mkdir my-express-app`}</code>
-              <code>{`cd my-express-app`}</code>
-              <code>{`npm init -y`}</code>
-              <code>{'  '}</code>
-              <code className='comment'>{`# Устанавливаем express`}</code>
-              <code>{`npm install express`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`# Создаем проект
+mkdir my-express-app
+cd my-express-app
+npm init -y
+  
+# Устанавливаем express
+npm install express`}
+          />
           <p>Сервер</p>
-          <pre>
-            <CodeNumber length={12} />
-            <code>
-              <code className='comment'>{`// app.js`}</code>
-              <code>{`const express = require('express');`}</code>
-              <code>{'  '}</code>
-              <code>{`const app = express();  // создаем приложение`}</code>
-              <code>{'  '}</code>
-              <code>{`app.get('/', (req, res) => {`}</code>
-              <code>
-                {'  '}
-                {`res.send('Hello World!');`}
-              </code>
-              <code>{`});`}</code>
-              <code>{'  '}</code>
-              <code>{`app.listen(3000, () => {`}</code>
-              <code>
-                {'  '}
-                {`console.log('Сервер запущен на http://localhost:3000');`}
-              </code>
-              <code>{'});'}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            code={`// app.js
+const express = require('express');
+  
+const app = express();  // создаем приложение
+  
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+  
+app.listen(3000, () => {
+  console.log('Сервер запущен на http://localhost:3000');
+});`}
+          />
           <p>Запуск:</p>
-          <pre>
-            <CodeNumber length={1} />
-            <code>
-              <code>{`node app.js`}</code>
-            </code>
-          </pre>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`node app.js`}
+          />
           <p>Сравнение: чистый http vs Express</p>
           <table>
             <thead>
