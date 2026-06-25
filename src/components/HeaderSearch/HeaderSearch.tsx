@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Autocomplete, Button, rem } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconSearch } from '@tabler/icons-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 import styles from './HeaderSearch.module.css';
 
@@ -11,21 +11,35 @@ import getAutoCompletedData from '../../handlers/getAutoCompletedData';
 import getAllQuestions from '../../handlers/getAllQuestions';
 
 export function HeaderSearch({ isQuestion = false }) {
-  const router = useRouter();
-  const flex = isQuestion ? { display: 'flex' } : {};
   const [searchValue, setSearchValue] = useState('');
+
+  const router = useRouter();
+  const params = useParams();
+  const flex = isQuestion ? { display: 'flex' } : {};
 
   return (
     <header className={styles.header} style={flex}>
       {isQuestion && (
-        <Button
-          variant='transparent'
-          size='md'
-          color='azure'
-          onClick={() => router.push('/')}
-        >
-          Главная
-        </Button>
+        <div>
+          <Button
+            variant='transparent'
+            size='md'
+            color='azure'
+            onClick={() => router.push('/')}
+          >
+            Главная
+          </Button>
+          {params.topic && (
+            <Button
+              variant='transparent'
+              size='md'
+              color='azure'
+              onClick={() => router.push(`/${params.course}`)}
+            >
+              Темы
+            </Button>
+          )}
+        </div>
       )}
       <div className={styles.inner}>
         <Autocomplete
