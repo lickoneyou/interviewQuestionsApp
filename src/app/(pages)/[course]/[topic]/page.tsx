@@ -24,9 +24,11 @@ const Question = function () {
 
   const currentQuestion = useCallback(
     (num?: number) => {
-      return allQuestions[getQuestionIndex(questionID) + (num || 0)];
+      return allQuestions[
+        getQuestionIndex(questionID, params.course as string) + (num || 0)
+      ];
     },
-    [allQuestions, getQuestionIndex, questionID],
+    [allQuestions, getQuestionIndex, questionID, params],
   );
 
   return (
@@ -34,18 +36,20 @@ const Question = function () {
       className={styles.App}
       tabIndex={-1}
       onKeyDown={(event) => {
-        if (event.key === 'ArrowLeft') {
-          if (getQuestionIndex(questionID) > 0) {
-            const { id, stack } = currentQuestion(-1);
+        if (typeof params.course === 'string') {
+          if (event.key === 'ArrowLeft') {
+            if (getQuestionIndex(questionID, params.course) > 0) {
+              const { id, stack } = currentQuestion(-1);
 
-            router.push(`/${slugifyText(stack)}/${id}`);
+              router.push(`/${slugifyText(stack)}/${id}`);
+            }
           }
-        }
-        if (event.key === 'ArrowRight') {
-          if (currentQuestion(1)) {
-            const { id, stack } = currentQuestion(1);
+          if (event.key === 'ArrowRight') {
+            if (currentQuestion(1)) {
+              const { id, stack } = currentQuestion(1);
 
-            router.push(`/${slugifyText(stack)}/${id}`);
+              router.push(`/${slugifyText(stack)}/${id}`);
+            }
           }
         }
       }}
@@ -56,38 +60,41 @@ const Question = function () {
         {currentQuestion().jsx}
       </div>
       <div className={styles.btnWrapper}>
-        {getQuestionIndex(questionID) > 0 && (
-          <Button
-            justify='center'
-            leftSection={<IconCircleArrowLeft stroke={2} />}
-            variant='transparent'
-            color='azur'
-            mt='md'
-            onClick={() => {
-              const { id, stack } = currentQuestion(-1);
+        {typeof params.course === 'string' &&
+          getQuestionIndex(questionID, params.course) > 0 && (
+            <Button
+              justify='center'
+              leftSection={<IconCircleArrowLeft stroke={2} />}
+              variant='transparent'
+              color='azur'
+              mt='md'
+              onClick={() => {
+                const { id, stack } = currentQuestion(-1);
 
-              router.push(`/${slugifyText(stack)}/${id}`);
-            }}
-          >
-            {currentQuestion(-1).title}
-          </Button>
-        )}
-        {allQuestions.length - 1 > getQuestionIndex(questionID) && (
-          <Button
-            justify='center'
-            rightSection={<IconCircleArrowRight stroke={2} />}
-            variant='transparent'
-            color='azur'
-            mt='md'
-            onClick={() => {
-              const { id, stack } = currentQuestion(1);
+                router.push(`/${slugifyText(stack)}/${id}`);
+              }}
+            >
+              {currentQuestion(-1).title}
+            </Button>
+          )}
+        {typeof params.course === 'string' &&
+          allQuestions.length - 1 >
+            getQuestionIndex(questionID, params.course) && (
+            <Button
+              justify='center'
+              rightSection={<IconCircleArrowRight stroke={2} />}
+              variant='transparent'
+              color='azur'
+              mt='md'
+              onClick={() => {
+                const { id, stack } = currentQuestion(1);
 
-              router.push(`/${slugifyText(stack)}/${id}`);
-            }}
-          >
-            {currentQuestion(1).title}
-          </Button>
-        )}
+                router.push(`/${slugifyText(stack)}/${id}`);
+              }}
+            >
+              {currentQuestion(1).title}
+            </Button>
+          )}
       </div>
     </div>
   );
