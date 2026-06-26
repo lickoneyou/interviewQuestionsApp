@@ -13,6 +13,7 @@ import ReactNative from './ReactNativeData';
 import Nodejs from './Nodejs';
 import ExpressJs from './ExpressData';
 import SEO from './SEOData';
+import Golang from './GolangData';
 
 const data = {
   ...BasicCS,
@@ -28,6 +29,7 @@ const data = {
   ...Nodejs,
   ...ExpressJs,
   ...Nest,
+  ...Golang,
   ...QI,
   ...SEO,
 };
