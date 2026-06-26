@@ -160,6 +160,102 @@ const Greeting = "Hello, World!"`}
         </div>
       ),
     },
+    'Приведение типов': {
+      get title() {
+        return 'Приведение типов';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>ОТКУДА → КУДА</th>
+                <th>СИНТАКСИС</th>
+                <th>РЕЗУЛЬТАТ</th>
+                <th>	ПРИМЕР</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>int → float64</td>
+                <td>float64(x)</td>
+                <td>Дробное число</td>
+                <td>float64(5) → 5.0</td>
+              </tr>
+              <tr>
+                <td>float64 → int</td>
+                <td>int(x)</td>
+                <td>Дробная часть отбрасывается (НЕ округляется!)</td>
+                <td>int(3.99) → 3</td>
+              </tr>
+              <tr>
+                <td>int → string</td>
+                <td>strconv.Itoa(x)</td>
+                <td>Текст с числом</td>
+                <td>strconv.Itoa(42) → "42"</td>
+              </tr>
+              <tr>
+                <td>string → int</td>
+                <td>strconv.Atoi(s)</td>
+                <td>Число или ошибка</td>
+                <td>strconv.Atoi("42") → 42, nil</td>
+              </tr>
+              <tr>
+                <td>int → byte</td>
+                <td>byte(x)</td>
+                <td>Байт (0-255)</td>
+                <td>byte(65) → 'A'</td>
+              </tr>
+              <tr>
+                <td>byte → int</td>
+                <td>int(b)</td>
+                <td>Число</td>
+                <td>int('A') → 65</td>
+              </tr>
+              <tr>
+                <td>string → []byte</td>
+                <td>[]byte(s)</td>
+                <td>Срез байтов</td>
+                <td>[]byte("Hi") → [72 105]</td>
+              </tr>
+              <tr>
+                <td>[]byte → string</td>
+                <td>string(b)</td>
+                <td>Строка</td>
+                <td>string([72 105]) → "Hi"</td>
+              </tr>
+              <tr>
+                <td>string → []rune</td>
+                <td>[]rune(s)</td>
+                <td>Срез рун (символов)</td>
+                <td>[]rune("Привет") → [1055 1088 ...]</td>
+              </tr>
+              <tr>
+                <td>[]rune → string</td>
+                <td>string(r)</td>
+                <td>Строка</td>
+                <td>string([]rune{1055}) → "П"</td>
+              </tr>
+              <tr>
+                <td>int → int64</td>
+                <td>int64(x)</td>
+                <td>Просто число</td>
+                <td>int64(42) → 42</td>
+              </tr>
+              <tr>
+                <td>float32 → float64</td>
+                <td>float64(x)</td>
+                <td>Просто число</td>
+                <td>float64(3.14) → 3.14</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )
+    }
   },
 };
 
