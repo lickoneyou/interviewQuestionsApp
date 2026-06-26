@@ -100,6 +100,66 @@ const Greeting = "Hello, World!"`}
         </div>
       ),
     },
+    'Базовые типы данных': {
+      get title() {
+        return 'Базовые типы данных';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>ТИП</th>
+                <th>ЧТО ЭТО</th>
+                <th>ПРИМЕР</th>
+                <th>ZERO VALUE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>int</td>
+                <td><b>Целое число</b>. Используйте всегда, когда нужно число без запятой.</td>
+                <td>age := 25</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>float64</td>
+                <td><b>Число с плавающей точкой</b>. Используйте, когда нужно число с запятой.</td>
+                <td>temperature := 98.6</td>
+                <td>0.0</td>
+              </tr>
+              <tr>
+                <td>string</td>
+                <td><b>Строка</b>. Используйте для хранения текста.</td>
+                <td>name := "Alice"</td>
+                <td>""</td>
+              </tr>
+              <tr>
+                <td>bool</td>
+                <td><b>Булево значение</b>. Используйте для хранения истинных или ложных значений.</td>
+                <td>isStudent := true</td>
+                <td>false</td>
+              </tr>
+              <tr>
+                <td>byte</td>
+                <td><b>Байт</b>. Используйте для хранения 8-битных значений.</td>
+                <td>data := byte(255)</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>rune</td>
+                <td><b>Символ</b>. Используйте для хранения Unicode символов.</td>
+                <td>char := rune('A')</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
