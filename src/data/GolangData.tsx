@@ -44,14 +44,12 @@ year := 2024`}
             <b>Особенность</b>: если переменная уже объявлена, := нельзя
             использовать повторно.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`age := 25   // OK
 age := 30   // ОШИБКА: no new variables on left side of :=`}
           />
           <p>Но можно присвоить новое значение простым =:</p>
-          <CodeHighlighter
-            code={`age = 30   // OK`}
-          />
+          <CodeHighlighter code={`age = 30   // OK`} />
           <hr />
           <p>Константы объявляются с помощью ключевого слова const:</p>
           <CodeHighlighter
@@ -121,37 +119,52 @@ const Greeting = "Hello, World!"`}
             <tbody>
               <tr>
                 <td>int</td>
-                <td><b>Целое число</b>. Используйте всегда, когда нужно число без запятой.</td>
+                <td>
+                  <b>Целое число</b>. Используйте всегда, когда нужно число без
+                  запятой.
+                </td>
                 <td>age := 25</td>
                 <td>0</td>
               </tr>
               <tr>
                 <td>float64</td>
-                <td><b>Число с плавающей точкой</b>. Используйте, когда нужно число с запятой.</td>
+                <td>
+                  <b>Число с плавающей точкой</b>. Используйте, когда нужно
+                  число с запятой.
+                </td>
                 <td>temperature := 98.6</td>
                 <td>0.0</td>
               </tr>
               <tr>
                 <td>string</td>
-                <td><b>Строка</b>. Используйте для хранения текста.</td>
+                <td>
+                  <b>Строка</b>. Используйте для хранения текста.
+                </td>
                 <td>name := "Alice"</td>
                 <td>""</td>
               </tr>
               <tr>
                 <td>bool</td>
-                <td><b>Булево значение</b>. Используйте для хранения истинных или ложных значений.</td>
+                <td>
+                  <b>Булево значение</b>. Используйте для хранения истинных или
+                  ложных значений.
+                </td>
                 <td>isStudent := true</td>
                 <td>false</td>
               </tr>
               <tr>
                 <td>byte</td>
-                <td><b>Байт</b>. Используйте для хранения 8-битных значений.</td>
+                <td>
+                  <b>Байт</b>. Используйте для хранения 8-битных значений.
+                </td>
                 <td>data := byte(255)</td>
                 <td>0</td>
               </tr>
               <tr>
                 <td>rune</td>
-                <td><b>Символ</b>. Используйте для хранения Unicode символов.</td>
+                <td>
+                  <b>Символ</b>. Используйте для хранения Unicode символов.
+                </td>
                 <td>char := rune('A')</td>
                 <td>0</td>
               </tr>
@@ -175,7 +188,7 @@ const Greeting = "Hello, World!"`}
                 <th>ОТКУДА → КУДА</th>
                 <th>СИНТАКСИС</th>
                 <th>РЕЗУЛЬТАТ</th>
-                <th>	ПРИМЕР</th>
+                <th> ПРИМЕР</th>
               </tr>
             </thead>
             <tbody>
@@ -254,8 +267,106 @@ const Greeting = "Hello, World!"`}
             </tbody>
           </table>
         </div>
-      )
-    }
+      ),
+    },
+    'Условные ветвления': {
+      get title() {
+        return 'Условные ветвления';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <CodeHighlighter
+            code={`score := 85
+
+if score >= 90 {
+    fmt.Println("Отлично!")
+} else if score >= 75 {
+    fmt.Println("Хорошо")
+} else if score >= 50 {
+    fmt.Println("Удовлетворительно")
+} else {
+    fmt.Println("Не сдал")
+}`}
+          />
+          <p>Операторы сравнения</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Оператор</th>
+                <th>Значение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>==</td>
+                <td>Равно</td>
+              </tr>
+              <tr>
+                <td>!=</td>
+                <td>Не равно</td>
+              </tr>
+              <tr>
+                <td>{'<'}</td>
+                <td>Меньше</td>
+              </tr>
+              <tr>
+                <td>{'>'}</td>
+                <td>Больше</td>
+              </tr>
+              <tr>
+                <td>{'<='}</td>
+                <td>Меньше или равно</td>
+              </tr>
+              <tr>
+                <td>{'>='}</td>
+                <td>Больше или равно</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Логические операторы:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Оператор</th>
+                <th>Значение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>&&</td>
+                <td>И (AND)</td>
+              </tr>
+              <tr>
+                <td>||</td>
+                <td>ИЛИ (OR)</td>
+              </tr>
+              <tr>
+                <td>!</td>
+                <td>НЕ (NOT)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>SWITCH</p>
+          <CodeHighlighter 
+            code={`day := "Monday"
+
+switch day {
+case "Monday":
+    fmt.Println("Понедельник")
+case "Tuesday":
+    fmt.Println("Вторник")
+case "Wednesday":
+    fmt.Println("Среда")
+default:
+    fmt.Println("Другой день")
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
