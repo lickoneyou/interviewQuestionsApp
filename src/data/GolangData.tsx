@@ -350,7 +350,7 @@ if score >= 90 {
             </tbody>
           </table>
           <p>SWITCH</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`day := "Monday"
 
 switch day {
@@ -362,6 +362,72 @@ case "Wednesday":
     fmt.Println("Среда")
 default:
     fmt.Println("Другой день")
+}`}
+          />
+        </div>
+      ),
+    },
+    Циклы: {
+      get title() {
+        return 'Циклы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>FOR</p>
+          <CodeHighlighter
+            code={`for i := 0; i < 5; i++ {
+    fmt.Println(i) // 0, 1, 2, 3, 4
+}`}
+          />
+          <p>В Go можно опустить любую часть for:</p>
+          <CodeHighlighter
+            code={`// Как while (условие)
+x := 0
+for x < 5 {
+    fmt.Println(x) // 0, 1, 2, 3, 4
+    x++
+}
+
+// Бесконечный цикл (как while true)
+for {
+    fmt.Println("Бесконечность")
+    break // Выход
+}`}
+          />
+          <p>
+            Самый частый способ перебора массивов, слайсов, мап и строк:{' '}
+            <b>FOR RANGE</b>
+          </p>
+          <CodeHighlighter
+            code={`nums := []int{10, 20, 30, 40}
+
+for i, val := range nums {
+    fmt.Printf("Индекс %d, Значение %d\n", i, val)
+}
+// Индекс 0, Значение 10
+// Индекс 1, Значение 20
+// Индекс 2, Значение 30
+// Индекс 3, Значение 40`}
+          />
+          <h2>BREAK И CONTINUE</h2>
+          <CodeHighlighter 
+            code={`// break - выход из цикла
+for i := 0; i < 10; i++ {
+    if i == 5 {
+        break // Выход при i == 5
+    }
+    fmt.Println(i) // 0, 1, 2, 3, 4
+}
+
+// continue - пропуск итерации
+for i := 0; i < 10; i++ {
+    if i%2 == 0 {
+        continue // Пропускаем четные
+    }
+    fmt.Println(i) // 1, 3, 5, 7, 9
 }`}
           />
         </div>
