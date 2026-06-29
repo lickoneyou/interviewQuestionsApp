@@ -413,7 +413,7 @@ for i, val := range nums {
 // Индекс 3, Значение 40`}
           />
           <h2>BREAK И CONTINUE</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// break - выход из цикла
 for i := 0; i < 10; i++ {
     if i == 5 {
@@ -429,6 +429,192 @@ for i := 0; i < 10; i++ {
     }
     fmt.Println(i) // 1, 3, 5, 7, 9
 }`}
+          />
+        </div>
+      ),
+    },
+    Функции: {
+      get title() {
+        return 'Функции';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>ОБЪЯВЛЕНИЕ ФУНКЦИИ</p>
+          <CodeHighlighter
+            code={`// Простая функция
+func greet() {
+    fmt.Println("Привет!")
+}
+
+// С одним параметром
+func greetName(name string) {
+    fmt.Println("Привет,", name)
+}
+
+// С одним возвращаемым значением
+func add(a int, b int) int {
+    return a + b
+}
+
+// Сокращенная запись для одинаковых типов
+func add(a, b int) int {
+    return a + b
+}`}
+          />
+          <p>НЕСКОЛЬКО ВОЗВРАЩАЕМЫХ ЗНАЧЕНИЙ</p>
+          <CodeHighlighter
+            code={`// Возвращаем два значения
+func divide(a, b int) (int, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("деление на ноль")
+    }
+    return a / b, nil
+}
+
+// Использование
+result, err := divide(10, 2)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+} else {
+    fmt.Println("Результат:", result)
+}
+
+// Можно игнорировать одно из значений через _
+result, _ := divide(10, 2) // Игнорируем ошибку (НО ТАК НЕ ДЕЛАЙТЕ!)`}
+          />
+          <p>ИМЕНОВАННЫЕ ВОЗВРАЩАЕМЫЕ ЗНАЧЕНИЯ</p>
+          <CodeHighlighter
+            code={`// Объявляем имена переменных для возврата
+func getCoordinates() (x, y int) {
+    x = 10
+    y = 20
+    return // "Голый" return - вернет x и y
+}
+
+// Использование
+x, y := getCoordinates()
+fmt.Println(x, y) // 10, 20`}
+          />
+          <p>ВАРИАДИЧЕСКИЕ ФУНКЦИИ (ПЕРЕМЕННОЕ ЧИСЛО ПАРАМЕТРОВ)</p>
+          <CodeHighlighter
+            code={`// Сумма любого количества чисел
+func sum(nums ...int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+
+fmt.Println(sum(1, 2, 3))       // 6
+fmt.Println(sum(10, 20, 30, 40)) // 100
+
+// Передача слайса в вариадическую функцию
+numbers := []int{1, 2, 3, 4}
+fmt.Println(sum(numbers...)) // 10 (разворачиваем слайс)`}
+          />
+          <p>ОТЛОЖЕННЫЙ ВЫЗОВ</p>
+          <CodeHighlighter
+            code={`func readFile() {
+    file := openFile()
+    defer file.Close() // Закроется в конце функции
+    
+    // Работаем с файлом...
+    // file.Close() вызовется автоматически
+}`}
+          />
+        </div>
+      ),
+    },
+    defer: {
+      get title() {
+        return 'defer';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>defer</b> — это отложенный вызов функции. Функция выполнится в
+            самом конце, перед выходом из текущей функции, даже если произошла
+            ошибка или паника.
+          </p>
+          <h2>Синтаксис</h2>
+          <CodeHighlighter
+            code={`func main() {
+    fmt.Println("1. Старт")
+    
+    defer fmt.Println("3. Выполнится последним")
+    
+    fmt.Println("2. Конец")
+}
+
+// Вывод:
+// 1. Старт
+// 2. Конец
+// 3. Выполнится последнимs`}
+          />
+          <h2>ГДЕ ПРИМЕНЯЕТСЯ</h2>
+          <ul>
+            <li>
+              <h3>Закрытие ресурсов</h3>
+              <CodeHighlighter
+                code={`func readFile() {
+    file, err := os.Open("data.txt")
+    if err != nil {
+        return
+    }
+    defer file.Close() // Закроется в конце функции
+    // Работаем с файлом...
+    // Когда функция закончится, file.Close() вызовется автоматически
+}`}
+              />
+            </li>
+            <li>
+              <h2>Освобождение блокировок</h2>
+              <CodeHighlighter
+                code={`func updateData() {
+    mu.Lock()
+    defer mu.Unlock() // Разблокируется в конце
+    // Критическая секция
+}`}
+              />
+            </li>
+            <li>
+              <h3>Закрытие соединений с БД</h3>
+              <CodeHighlighter
+                code={`func getUsers() {
+    db, err := sql.Open("postgres", "...")
+    if err != nil {
+        return
+    }
+    defer db.Close() // Закроется в конце
+    // Работаем с БД
+}`}
+              />
+            </li>
+          </ul>
+          <p>
+            Выполняются <span>в обратном порядке</span> (LIFO — Last In First
+            Out):
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    defer fmt.Println("1")
+    defer fmt.Println("2")
+    defer fmt.Println("3")
+    fmt.Println("Основной код")
+}
+
+// Вывод:
+// Основной код
+// 3
+// 2
+// 1`}
           />
         </div>
       ),
