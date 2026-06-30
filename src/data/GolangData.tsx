@@ -1310,7 +1310,7 @@ fmt.Println(c.Value()) // 2`}
             <li>Заглавная буква = публичный (экспортируемый)</li>
             <li>Строчная буква = приватный (внутри пакета)</li>
           </ul>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package user
 
 // Экспортируемая структура
@@ -1328,6 +1328,125 @@ func (u User) GetAge() int {
 func (u User) calculate() int {
     return u.age * 2
 }`}
+          />
+        </div>
+      ),
+    },
+    'Экспорт/импорт пакетов': {
+      get title() {
+        return 'Экспорт/импорт пакетов';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>ОСНОВНЫЕ ПОНЯТИ</h2>
+          <p>
+            <b>Пакет (package)</b> - Группа файлов <span>.go</span> в одной
+            папке, объединенных общим именем
+          </p>
+          <p>
+            <b>Модуль (module)</b> - Набор связанных пакетов с файлом{' '}
+            <span>go.mod</span>
+            (корень проекта)
+          </p>
+          <p>
+            <b>Экспорт</b> - Имена с заглавной буквы видны из других пакетов
+          </p>
+          <p>
+            <b>Импорт</b> - Подключение других пакетов через <span>import</span>
+          </p>
+          <CodeHighlighter
+            code={`// main.go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello")
+}`}
+          />
+          <p>Правила:</p>
+          <ul>
+            <li>
+              В одной папке все файлы должны иметь <span>одинаковое</span> имя
+              пакета
+            </li>
+            <li>
+              <span>package main</span> — точка входа (исполняемый файл)
+            </li>
+            <li>Остальные пакеты — библиотеки</li>
+          </ul>
+          <h2>ЭКСПОРТ (ПУБЛИЧНЫЕ VS ПРИВАТНЫЕ)</h2>
+          <ul>
+            <li>
+              <b>Заглавная буква</b> → экспортируемый (публичный)
+            </li>
+            <li>
+              <b>Строчная буква</b> → приватный (внутри пакета)
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`// user/user.go
+package user
+
+// Экспортируемая структура
+type User struct {
+    Name string // Экспортируемое поле
+    age  int    // Приватное поле
+}
+
+// Экспортируемая функция
+func NewUser(name string, age int) *User {
+    return &User{
+        Name: name,
+        age:  age,
+    }
+}
+
+// Экспортируемый метод
+func (u User) GetAge() int {
+    return u.age
+}
+
+// Приватный метод (только внутри пакета)
+func (u User) isAdult() bool {
+    return u.age >= 18
+}`}
+          />
+          <h2>ИМПОРТ ПАКЕТОВ</h2>
+          <CodeHighlighter
+            code={`// main.go
+package main
+
+import (
+    "fmt"           // Стандартный пакет
+    "strings"       // Стандартный пакет
+    "myproject/user" // Свой пакет
+    "myproject/utils" // Свой пакет
+)
+
+func main() {
+    // Использование экспортированных имен
+    u := user.NewUser("Alice", 25)
+    fmt.Println(u.Name) // Alice
+    
+    // Приватное поле недоступно
+    // fmt.Println(u.age) // ОШИБКА
+}`}
+          />
+          <h2>СОЗДАНИЕ МОДУЛЯ</h2>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`# Создаем папку
+mkdir myproject
+cd myproject
+
+# Инициализируем модуль
+go mod init myproject
+
+# Файл go.mod создан`}
           />
         </div>
       ),
