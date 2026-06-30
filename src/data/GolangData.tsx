@@ -3361,7 +3361,7 @@ func main() {
           <p>
             Читает данные, пока канал открыт. Как только закрыт — завершается.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func main() {
     ch := make(chan int)
 
@@ -3378,7 +3378,109 @@ func main() {
     fmt.Println("Канал закрыт, цикл завершён")
 }`}
           />
-          <p><b>Важно</b>: если не закрыть канал — for range будет ждать вечно (deadlock).</p>
+          <p>
+            <b>Важно</b>: если не закрыть канал — for range будет ждать вечно
+            (deadlock).
+          </p>
+        </div>
+      ),
+    },
+    'sync.WaitGroup': {
+      get title() {
+        return 'Закрытие каналов. Аксиомы каналов';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>sync.WaitGroup</b> — это счётчик горутин. Он позволяет главной
+            горутине дождаться завершения всех запущенных горутин.
+          </p>
+          <p>Счётчик:</p>
+          <ul>
+            <li>
+              <b>Add(n)</b> - увеличивает счётчик на n
+            </li>
+            <li>
+              <b>Done()</b> - уменьшает счётчик на 1 (вызывается в конце
+              горутины)
+            </li>
+            <li>
+              <b>Wait()</b> - блокируется, пока счётчик не станет 0
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`var wg sync.WaitGroup
+
+wg.Add(1)          // +1 горутина
+go func() {
+    defer wg.Done() // -1 при завершении
+    // работа
+}()
+wg.Wait()          // ждём, пока счётчик станет 0`}
+          />
+          <p>
+            <b>Add()</b> должен вызываться ДО запуска горутины.
+          </p>
+          <CodeHighlighter
+            code={`// ПРАВИЛЬНО
+wg.Add(1)
+go func() {
+    defer wg.Done()
+}()
+
+// ОШИБКА (гонка данных)
+go func() {
+    wg.Add(1) // поздно! Wait() может уже начаться
+    defer wg.Done()
+}()`}
+          />
+          <h2>Несколько горутин</h2>
+          <CodeHighlighter
+            code={`func main() {
+    var wg sync.WaitGroup
+
+    for i := 0; i < 5; i++ {
+        wg.Add(1)
+        go func(id int) {
+            defer wg.Done()
+            fmt.Printf("Горутина %d\\n", id)
+        }(i)
+    }
+
+    wg.Wait()
+    fmt.Println("Все завершены")
+}`}
+          />
+          <h2>Когда использовать WaitGroup</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>СЦЕНАРИЙ</th>
+                <th>НУЖЕН ЛИ WAITGROUP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Запустили горутину и ждём результат</td>
+                <td>✅ Да</td>
+              </tr>
+              <tr>
+                <td>Запустили фоновую задачу (логгирование)</td>
+                <td>❌ Нет (можно не ждать)</td>
+              </tr>
+              <tr>
+                <td>Несколько параллельных запросов</td>
+                <td>✅ Да</td>
+              </tr>
+              <tr>
+                <td>Главная функция должна завершиться после всех горутин</td>
+                <td>✅ Да</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
