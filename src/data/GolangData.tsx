@@ -1557,6 +1557,7 @@ func (m MockRepo) GetUser(id int) (User, error) {
         </div>
       ),
     },
+    
   },
 };
 
