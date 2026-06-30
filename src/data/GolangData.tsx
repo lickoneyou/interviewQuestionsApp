@@ -1185,6 +1185,153 @@ for _, value := range m {
         </div>
       ),
     },
+    Структуры: {
+      get title() {
+        return 'Структуры';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Структура</b> — это составной тип данных, который объединяет
+            несколько полей в одну сущность. Это аналог классов в ООП, но без
+            наследования.
+          </p>
+          <CodeHighlighter
+            code={`// Определение структуры
+type User struct {
+    Name  string
+    Age   int
+    Email string
+}
+
+// Создание экземпляра
+var user1 User // Все поля с zero value ("", 0, "")
+user1.Name = "Alice"
+user1.Age = 25
+user1.Email = "alice@mail.com"
+
+// Создание через литерал (по порядку)
+user2 := User{"Bob", 30, "bob@mail.com"}
+
+// Создание через литерал (по именам полей - рекомендуется)
+user3 := User{
+    Name:  "John",
+    Age:   28,
+    Email: "john@mail.com",
+}
+
+// Частичная инициализация (остальные zero value)
+user4 := User{Name: "Kate"} // Age=0, Email=""`}
+          />
+          <h2>ДОСТУП К ПОЛЯМ (ЧЕРЕЗ ТОЧКУ)</h2>
+          <CodeHighlighter
+            code={`type Person struct {
+    Name string
+    Age  int
+}
+
+p := Person{Name: "Alice", Age: 25}
+
+// Чтение
+fmt.Println(p.Name) // Alice
+fmt.Println(p.Age)  // 25
+
+// Изменение
+p.Age = 26
+fmt.Println(p.Age) // 26`}
+          />
+          <h2>МЕТОДЫ СТРУКТУР</h2>
+          <CodeHighlighter
+            code={`type User struct {
+    Name string
+    Age  int
+}
+
+// Метод с получателем по значению (копия)
+func (u User) Greet() {
+    fmt.Printf("Привет, я %s, мне %d лет\n", u.Name, u.Age)
+}
+
+// Метод с получателем по указателю (изменяет оригинал)
+func (u *User) Birthday() {
+    u.Age++ // Изменяет оригинал
+}
+
+// Использование
+user := User{Name: "Alice", Age: 25}
+user.Greet()      // Привет, я Alice, мне 25 лет
+user.Birthday()
+fmt.Println(user.Age) // 26`}
+          />
+          <h2>VALUE RECEIVER VS POINTER RECEIVER</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>RECEIVER</th>
+                <th>КОГДА ИСПОЛЬЗОВАТЬ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Value receiver (u User)</td>
+                <td>Не изменяет структуру, читает данные</td>
+              </tr>
+              <tr>
+                <td>Pointer receiver (u *User)</td>
+                <td>Изменяет структуру, экономит память</td>
+              </tr>
+            </tbody>
+          </table>
+          <CodeHighlighter
+            code={`type Counter struct {
+    count int
+}
+
+// Value receiver (читает)
+func (c Counter) Value() int {
+    return c.count
+}
+
+// Pointer receiver (изменяет)
+func (c *Counter) Increment() {
+    c.count++
+}
+
+c := Counter{count: 0}
+c.Increment()
+c.Increment()
+fmt.Println(c.Value()) // 2`}
+          />
+          <h2>ЭКСПОРТ ПОЛЕЙ И МЕТОДОВ</h2>
+          <ul>
+            <li>Заглавная буква = публичный (экспортируемый)</li>
+            <li>Строчная буква = приватный (внутри пакета)</li>
+          </ul>
+          <CodeHighlighter 
+            code={`package user
+
+// Экспортируемая структура
+type User struct {
+    Name string // Экспортируемое поле
+    age  int    // Приватное поле (внутри пакета)
+}
+
+// Экспортируемый метод
+func (u User) GetAge() int {
+    return u.age
+}
+
+// Приватный метод
+func (u User) calculate() int {
+    return u.age * 2
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
