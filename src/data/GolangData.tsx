@@ -3152,6 +3152,105 @@ value := <-ch // получить значение из канала`}
         </div>
       ),
     },
+    select: {
+      get title() {
+        return 'select';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>select</b> — позволяет горутине ждать несколько каналов
+            одновременно. Он блокируется, пока один из case не будет готов
+            (канал не получит или не отправит данные).
+          </p>
+          <CodeHighlighter
+            code={`select {
+case msg := <-ch1:
+    // ch1 готов к чтению
+case ch2 <- 42:
+    // ch2 готов к записи
+}`}
+          />
+          <h2>Как работает select</h2>
+          <ul>
+            <li>Блокирует горутину</li>
+            <li>
+              Ждёт, пока <span>любой</span> канал станет готов
+            </li>
+            <li>
+              Выполняет <span>один</span> случайный готовый <span>case</span>
+            </li>
+            <li>Если готовы несколько — выбирает случайный</li>
+          </ul>
+          <CodeHighlighter
+            code={`func main() {
+    ch1 := make(chan string)
+    ch2 := make(chan string)
+
+    go func() {
+        time.Sleep(1 * time.Second)
+        ch1 <- "один"
+    }()
+    go func() {
+        time.Sleep(2 * time.Second)
+        ch2 <- "два"
+    }()
+
+    select {
+    case msg := <-ch1:
+        fmt.Println(msg) // выполнится первым (через 1 сек)
+    case msg := <-ch2:
+        fmt.Println(msg) // не выполнится
+    }
+}`}
+          />
+          <p>
+            <b>default</b> — выполняется сразу, если{' '}
+            <span>ни один канал не готов</span>.
+          </p>
+          <CodeHighlighter
+            code={`select {
+case msg := <-ch:
+    fmt.Println(msg)
+default:
+    fmt.Println("Ничего нет, идём дальше")
+}`}
+          />
+          <p>
+            <b>Важно</b>: с <b>default</b> select <span>НЕ БЛОКИРУЕТСЯ</span>!
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Задача</th>
+                <th>Без default</th>
+                <th>С default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Проверить, есть ли данные</td>
+                <td>Блокируется, если данных нет</td>
+                <td>Не блокируется</td>
+              </tr>
+              <tr>
+                <td>Отправить, если есть место</td>
+                <td>Блокируется, если места нет</td>
+                <td>Не блокируется</td>
+              </tr>
+              <tr>
+                <td>Таймауты</td>
+                <td>Через time.After</td>
+                <td>Через time.After + default (реже)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
