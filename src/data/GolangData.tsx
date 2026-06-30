@@ -873,6 +873,188 @@ for _, value := range arr {
         </div>
       ),
     },
+    Слайсы: {
+      get title() {
+        return 'Слайсы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Слайсы</b> — это динамические массивы. Это самая важная структура
+            данных в Go. Вы будете использовать их постоянно. Они содержат:
+          </p>
+          <ul>
+            <li>
+              <b>Указатель</b> на массив
+            </li>
+            <li>
+              <b>Длину (len)</b> — сколько элементов используется
+            </li>
+            <li>
+              <b>Емкость (cap)</b> — сколько элементов может вместить
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`// 1. Пустой слайс (nil)
+var s1 []int
+fmt.Println(s1 == nil) // true
+
+// 2. Создание через make()
+s2 := make([]int, 5)    // len=5, cap=5, все элементы 0
+s3 := make([]int, 3, 5) // len=3, cap=5
+
+// 3. С литералом
+s4 := []int{1, 2, 3, 4, 5} // len=5, cap=5
+
+// 4. Из массива (срезка)
+arr := [5]int{1, 2, 3, 4, 5}
+s5 := arr[1:4] // [2 3 4], len=3, cap=4`}
+          />
+          <h2>ОПЕРАЦИИ СО СЛАЙСАМИ</h2>
+          <CodeHighlighter
+            code={`s := []int{1, 2, 3}
+fmt.Println(s) // [1 2 3]
+
+// Добавить один элемент
+s = append(s, 4)
+fmt.Println(s) // [1 2 3 4]
+
+// Добавить несколько элементов
+s = append(s, 5, 6, 7)
+fmt.Println(s) // [1 2 3 4 5 6 7]
+
+// Добавить другой слайс (с ...)
+other := []int{8, 9, 10}
+s = append(s, other...)
+fmt.Println(s) // [1 2 3 4 5 6 7 8 9 10]`}
+          />
+          <h2>Чтение и изменение</h2>
+          <CodeHighlighter
+            code={`s := []int{10, 20, 30, 40, 50}
+
+// Чтение
+fmt.Println(s[0]) // 10
+fmt.Println(s[2]) // 30
+
+// Изменение
+s[1] = 99
+fmt.Println(s) // [10 99 30 40 50]
+
+// Длина и емкость
+fmt.Println("len:", len(s)) // 5
+fmt.Println("cap:", cap(s)) // 5`}
+          />
+          <h2>Срезка (создание нового слайса из существующего)</h2>
+          <CodeHighlighter
+            code={`s := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+// Взять элементы с 2 по 5 (индекс 2 включительно, 5 исключительно)
+sub := s[2:5]
+fmt.Println(sub) // [3 4 5]
+
+// Взять с начала до индекса 5
+sub2 := s[:5]
+fmt.Println(sub2) // [1 2 3 4 5]
+
+// Взять с индекса 5 до конца
+sub3 := s[5:]
+fmt.Println(sub3) // [6 7 8 9 10]
+
+// Взять весь слайс
+sub4 := s[:]
+fmt.Println(sub4) // [1 2 3 4 5 6 7 8 9 10]`}
+          />
+          <h2>LEN И CAP (ВАЖНО!)</h2>
+          <CodeHighlighter
+            code={`// len = количество элементов
+// cap = максимальное количество элементов (без переаллокации)
+
+s := make([]int, 3, 5)
+fmt.Printf("len=%d, cap=%d\\n", len(s), cap(s)) // len=3, cap=5
+
+// Добавляем элементы
+s = append(s, 4)
+fmt.Printf("len=%d, cap=%d\\n", len(s), cap(s)) // len=4, cap=5
+
+s = append(s, 5)
+fmt.Printf("len=%d, cap=%d\\n", len(s), cap(s)) // len=5, cap=5
+
+// Добавляем еще (cap удваивается!)
+s = append(s, 6)
+fmt.Printf("len=%d, cap=%d\\n", len(s), cap(s)) // len=6, cap=10`}
+          />
+          <h2>ОБХОД СЛАЙСОВ</h2>
+          <CodeHighlighter
+            code={`s := []string{"Go", "Python", "Java"}
+
+// Через for
+for i := 0; i < len(s); i++ {
+    fmt.Println(s[i])
+}
+
+// Через range
+for i, v := range s {
+    fmt.Printf("Индекс %d: %s\\n", i, v)
+}
+
+// Только значения
+for _, v := range s {
+    fmt.Println(v)
+}`}
+          />
+          <h2>МАССИВЫ VS СЛАЙСЫ</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>СВОЙСТВО</th>
+                <th>МАССИВ</th>
+                <th>СЛАЙС</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Размер</td>
+                <td>Фиксированный</td>
+                <td>Динамический</td>
+              </tr>
+              <tr>
+                <td>Передача</td>
+                <td>По значению (копия)</td>
+                <td>По ссылке (указатель)</td>
+              </tr>
+              <tr>
+                <td>Где используется</td>
+                <td>Редко</td>
+                <td>Всегда</td>
+              </tr>
+              <tr>
+                <td>Нулевое значение</td>
+                <td>Все элементы 0</td>
+                <td>nil</td>
+              </tr>
+              <tr>
+                <td>Объявление</td>
+                <td>[3]int{'1,2,3'}</td>
+                <td>[]int{'1,2,3'}</td>
+              </tr>
+              <tr>
+                <td>Добавление</td>
+                <td>Нет</td>
+                <td>append()</td>
+              </tr>
+              <tr>
+                <td>Длина/емкость</td>
+                <td>Только len</td>
+                <td>len и cap</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
