@@ -1055,6 +1055,136 @@ for _, v := range s {
         </div>
       ),
     },
+    Мапы: {
+      get title() {
+        return 'Мапы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Мапа</b> — это хеш-таблица (аналог объекта/словаря). Хранит пары
+            ключ → значение.
+          </p>
+          <CodeHighlighter
+            code={`// 1. Пустая мапа (nil)
+var m1 map[string]int
+fmt.Println(m1 == nil) // true
+// m1["key"] = 1 // ОШИБКА! assignment to entry in nil map
+
+// 2. Создание через make (пустая, но готова к работе)
+m2 := make(map[string]int)
+m2["age"] = 25 // OK
+
+// 3. С литералом
+m3 := map[string]int{
+    "apple":  5,
+    "banana": 3,
+    "orange": 7,
+}
+
+// 4. Пустая мапа (не nil)
+m4 := map[string]int{}`}
+          />
+          <h2>ОСНОВНЫЕ ОПЕРАЦИИ</h2>
+          <CodeHighlighter
+            code={`m := map[string]int{
+    "apple":  5,
+    "banana": 3,
+    "orange": 7,
+}
+
+// Чтение значения
+fmt.Println(m["apple"]) // 5
+
+// Изменение значения
+m["apple"] = 10
+fmt.Println(m["apple"]) // 10
+
+// Добавление нового ключа
+m["grape"] = 8
+fmt.Println(m) // map[apple:10 banana:3 grape:8 orange:7]
+
+// Удаление ключа
+delete(m, "banana")
+fmt.Println(m) // map[apple:10 grape:8 orange:7]
+
+// Проверка существования ключа
+value, exists := m["apple"]
+if exists {
+    fmt.Println("apple существует:", value)
+} else {
+    fmt.Println("apple не найден")
+}
+
+// Короткая проверка
+if _, exists := m["orange"]; exists {
+    fmt.Println("orange есть")
+}`}
+          />
+          <h2>ПРОВЕРКА СУЩЕСТВОВАНИЯ КЛЮЧА</h2>
+          <p>
+            <span>Проблема</span>: чтение несуществующего ключа возвращает{' '}
+            <span>zero value</span>, а не ошибку.
+          </p>
+          <CodeHighlighter
+            code={`m := map[string]int{"apple": 5}
+
+// Несуществующий ключ → 0
+fmt.Println(m["banana"]) // 0
+
+// Как отличить "ключа нет" от "ключ есть, но значение 0"?
+value := m["apple"] // 5
+value2 := m["banana"] // 0 (не понятно, есть ключ или нет)`}
+          />
+          <p>
+            <span>Решение</span>: использовать второе возвращаемое значение{' '}
+            <span>ok</span>.
+          </p>
+          <CodeHighlighter
+            code={`m := map[string]int{"apple": 5}
+
+// Проверка существования
+value, ok := m["banana"]
+if ok {
+    fmt.Println("Значение:", value)
+} else {
+    fmt.Println("Ключа нет")
+}
+
+// Игнорируем значение, проверяем только наличие
+if _, ok := m["apple"]; ok {
+    fmt.Println("apple есть")
+}`}
+          />
+          <h2>ПЕРЕБОР МАП</h2>
+          <CodeHighlighter
+            code={`m := map[string]int{
+    "apple":  5,
+    "banana": 3,
+    "orange": 7,
+}
+
+// Перебор по ключам и значениям
+for key, value := range m {
+    fmt.Printf("%s: %d\\n", key, value)
+}
+
+// Только ключи
+for key := range m {
+    fmt.Println(key)
+}
+
+// Только значения
+for _, value := range m {
+    fmt.Println(value)
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
