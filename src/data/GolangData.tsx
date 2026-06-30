@@ -2905,7 +2905,7 @@ func main() {
             <b>recover</b> — функция, которая перехватывает panic и позволяет
             программе продолжить работу.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func main() {
     defer func() {
         if r := recover(); r != nil {
@@ -2918,6 +2918,100 @@ func main() {
 }
 // Вывод: Паника перехвачена: ошибка!`}
           />
+        </div>
+      ),
+    },
+    Горутины: {
+      get title() {
+        return 'Горутины';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Горутины</b> — это легковесные потоки (green threads). Они
+            позволяют выполнять функции параллельно, используя гораздо меньше
+            ресурсов, чем системные потоки.
+          </p>
+          <CodeHighlighter
+            code={`func sayHello() {
+    fmt.Println("Привет из горутины!")
+}
+
+func main() {
+    go sayHello() // Запуск горутины
+    
+    time.Sleep(time.Second) // Ждем, чтобы горутина успела выполниться
+    fmt.Println("Главная функция")
+}`}
+          />
+          <p>
+            <b>Важно</b>: Если главная функция завершится, все горутины
+            завершатся вместе с ней.
+          </p>
+          <h2>Как запустить</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Способ</th>
+                <th>Код</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>С именованной функцией</td>
+                <td>go print()</td>
+              </tr>
+              <tr>
+                <td>С анонимной</td>
+                <td>go func() {`fmt.Println("hi")`}()</td>
+              </tr>
+              <tr>
+                <td>С передачей аргумента</td>
+                <td>go func(x int) {`fmt.Println(x)`}(10)</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>Как дождаться горутин (основной паттерн)</h2>
+          <CodeHighlighter
+            code={`var wg sync.WaitGroup
+
+wg.Add(1)          // +1 горутина
+go func() {
+    defer wg.Done() // -1 при завершении
+    // работа
+}()
+wg.Wait()          // блокировка, пока счетчик не станет 0`}
+          />
+          <h2>Когда использовать</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Сценарий</th>
+                <th>Использовать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Параллельные HTTP-запросы</td>
+                <td>Горутины + WaitGroup</td>
+              </tr>
+              <tr>
+                <td>Фоновые задачи (логгирование, отправка почты)</td>
+                <td>Горутины</td>
+              </tr>
+              <tr>
+                <td>Обработка очереди задач</td>
+                <td>Пул горутин (воркеры)</td>
+              </tr>
+              <tr>
+                <td>Одновременные вычисления</td>
+                <td>Горутины</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
