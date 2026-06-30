@@ -3251,6 +3251,137 @@ default:
         </div>
       ),
     },
+    'Закрытие каналов. Аксиомы каналов': {
+      get title() {
+        return 'Закрытие каналов. Аксиомы каналов';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Закрытие</b> — это сигнал получателям, что данных больше не будет
+          </p>
+          <p>Используется:</p>
+          <ul>
+            <li>
+              Чтобы остановить <span>for range</span> по каналу
+            </li>
+            <li>Чтобы сигнализировать об окончании работы</li>
+            <li>Чтобы избежать deadlock</li>
+          </ul>
+          <h2>Чтение из закрытого канала</h2>
+          <p>
+            Закрытый канал <span>НЕ БЛОКИРУЕТСЯ</span> — чтение сразу возвращает
+            zero value.
+          </p>
+          <CodeHighlighter
+            code={`ch := make(chan int)
+close(ch)
+
+v := <-ch
+fmt.Println(v) // 0 (int zero value)`}
+          />
+          <p>
+            Чтобы отличить реальное значение от zero value — используйте второе
+            значение ok:
+          </p>
+          <CodeHighlighter
+            code={`v, ok := <-ch
+if !ok {
+    fmt.Println("Канал закрыт")
+} else {
+    fmt.Println("Получено:", v)
+}`}
+          />
+          <h2>Аксиомы каналов</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>АКСИОМА</th>
+                <th>ОПИСАНИЕ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Чтение из закрытого канала</td>
+                <td>Возвращает zero value, не блокируется</td>
+              </tr>
+              <tr>
+                <td>Чтение из закрытого канала с ok</td>
+                <td>v, ok := {'<'}-ch → ok == false</td>
+              </tr>
+              <tr>
+                <td>Отправка в закрытый канал</td>
+                <td>ПАНИКА! panic: send on closed channel</td>
+              </tr>
+              <tr>
+                <td>Повторное закрытие канала</td>
+                <td>ПАНИКА! panic: close of closed channel</td>
+              </tr>
+              <tr>
+                <td>Закрытие nil канала</td>
+                <td>ПАНИКА! panic: close of nil channel</td>
+              </tr>
+              <tr>
+                <td>Чтение из nil канала</td>
+                <td>Блокируется навсегда (deadlock)</td>
+              </tr>
+              <tr>
+                <td>Отправка в nil канал</td>
+                <td>Блокируется навсегда (deadlock)</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>Кто должен закрывать канал</h2>
+          <p>
+            <b>Правило</b>: <span>Отправитель</span> закрывает канал. Получатель
+            НЕ закрывает.
+          </p>
+          <CodeHighlighter
+            code={`func producer(ch chan int) {
+    for i := 0; i < 5; i++ {
+        ch <- i
+    }
+    close(ch) // отправитель закрывает
+}
+
+func main() {
+    ch := make(chan int)
+    go producer(ch)
+
+    for v := range ch {
+        fmt.Println(v) // 0,1,2,3,4
+    }
+    // range завершится, когда канал закроется
+}`}
+          />
+          <h2>for range по каналу</h2>
+          <p>
+            Читает данные, пока канал открыт. Как только закрыт — завершается.
+          </p>
+          <CodeHighlighter 
+            code={`func main() {
+    ch := make(chan int)
+
+    go func() {
+        for i := 0; i < 3; i++ {
+            ch <- i
+        }
+        close(ch)
+    }()
+
+    for v := range ch {
+        fmt.Println(v) // 0, 1, 2
+    }
+    fmt.Println("Канал закрыт, цикл завершён")
+}`}
+          />
+          <p><b>Важно</b>: если не закрыть канал — for range будет ждать вечно (deadlock).</p>
+        </div>
+      ),
+    },
   },
 };
 
