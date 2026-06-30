@@ -2698,6 +2698,14 @@ fmt.Println(s2) // "1010"`}
         </div>
       ),
     },
+    'Обработка ошибок': {
+      get title() {
+        return 'Обработка ошибок';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+    }
   },
 };
 
