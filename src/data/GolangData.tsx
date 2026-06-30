@@ -1559,7 +1559,7 @@ func (m MockRepo) GetUser(id int) (User, error) {
     },
     'Встраивание структур (embedding)': {
       get title() {
-        return 'Интерфейсы';
+        return 'Встраивание структур (embedding)';
       },
       get id() {
         return slugifyText(this.title);
