@@ -1747,6 +1747,436 @@ func main() {
         </div>
       ),
     },
+    'Работа с файлами': {
+      get title() {
+        return 'Работа с файлами';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>ОСНОВНЫЕ ОПЕРАЦИИ</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ОПЕРАЦИЯ</th>
+                <th>ФУНКЦИЯ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Открыть</td>
+                <td>os.Open()</td>
+                <td>Открывает файл для чтения</td>
+              </tr>
+              <tr>
+                <td>Создать/открыть</td>
+                <td>os.Create()</td>
+                <td>Создает файл (перезаписывает)</td>
+              </tr>
+              <tr>
+                <td>Открыть с опциями</td>
+                <td>os.OpenFile()</td>
+                <td>Гибкое открытие (чтение/запись/добавление)</td>
+              </tr>
+              <tr>
+                <td>Закрыть</td>
+                <td>file.Close()</td>
+                <td>Закрывает файл (обязательно!)</td>
+              </tr>
+              <tr>
+                <td>Читать</td>
+                <td>file.Read()</td>
+                <td>Читает байты</td>
+              </tr>
+              <tr>
+                <td>Записать</td>
+                <td>file.Write()</td>
+                <td>Записывает байты</td>
+              </tr>
+              <tr>
+                <td>Записать строку</td>
+                <td>file.WriteString()</td>
+                <td>Записывает строку</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>ОТКРЫТИЕ ФАЙЛА ДЛЯ ЧТЕНИЯ</h2>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // Открываем файл
+    file, err := os.Open("data.txt")
+    if err != nil {
+        fmt.Println("Ошибка открытия:", err)
+        return
+    }
+    defer file.Close() // Обязательно закрываем!
+    
+    // Читаем содержимое...
+    fmt.Println("Файл открыт успешно")
+}`}
+          />
+          <h2>ЧТЕНИЕ ФАЙЛА</h2>
+          <ol>
+            <li>
+              <h3>Чтение всего файла (простой)</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // Читаем весь файл
+    data, err := os.ReadFile("data.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Println(string(data))
+}`}
+              />
+              <ul>
+                <li>
+                  <b>Плюс</b>: Просто
+                </li>
+                <li>
+                  <b>Минус</b>: Весь файл в памяти
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h3>Чтение по байтам (буфер)</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Open("data.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    defer file.Close()
+    
+    // Буфер на 1024 байта
+    buffer := make([]byte, 1024)
+    
+    for {
+        n, err := file.Read(buffer)
+        if err != nil {
+            if err.Error() == "EOF" {
+                break // Конец файла
+            }
+            fmt.Println("Ошибка чтения:", err)
+            return
+        }
+        
+        // Выводим прочитанное (только n байт)
+        fmt.Print(string(buffer[:n]))
+    }
+}`}
+              />
+            </li>
+            <li>
+              <h3>Построчное чтение (рекомендуется)</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Open("data.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    defer file.Close()
+    
+    scanner := bufio.NewScanner(file)
+    
+    for scanner.Scan() {
+        line := scanner.Text()
+        fmt.Println(line)
+    }
+    
+    if err := scanner.Err(); err != nil {
+        fmt.Println("Ошибка сканера:", err)
+    }
+}`}
+              />
+              <ul>
+                <li>
+                  <b>Плюс</b>: Не загружает весь файл в память
+                </li>
+                <li>
+                  <b>Минус</b>: Медленнее для больших файлов
+                </li>
+              </ul>
+            </li>
+          </ol>
+          <h2>ЗАПИСЬ В ФАЙЛ</h2>
+          <ol>
+            <li>
+              <h3>Запись строки (простой)</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // Создаем файл (перезаписывает существующий)
+    file, err := os.Create("output.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    defer file.Close()
+    
+    // Записываем строку
+    _, err = file.WriteString("Hello, World!\\n")
+    if err != nil {
+        fmt.Println("Ошибка записи:", err)
+        return
+    }
+    
+    // Записываем еще
+    _, err = file.WriteString("Вторая строка\\n")
+    if err != nil {
+        fmt.Println("Ошибка записи:", err)
+        return
+    }
+    
+    fmt.Println("Файл записан")
+}`}
+              />
+            </li>
+            <li>
+              <h3>Запись байтов</h3>
+              <CodeHighlighter
+                code={`file, err := os.Create("output.bin")
+if err != nil {
+    fmt.Println("Ошибка:", err)
+    return
+}
+defer file.Close()
+
+// Записываем байты
+data := []byte{72, 101, 108, 108, 111}
+_, err = file.Write(data)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+    return
+}`}
+              />
+            </li>
+            <li>
+              <h3>Запись с форматированием</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Create("output.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    defer file.Close()
+    
+    // fmt.Fprintf - запись с форматированием
+    name := "Alice"
+    age := 25
+    
+    _, err = fmt.Fprintf(file, "Имя: %s, Возраст: %d\\n", name, age)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Println("Данные записаны")
+}`}
+              />
+            </li>
+            <li>
+              <h3>Дозапись в конец файла</h3>
+              <CodeHighlighter
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // O_APPEND - дозапись, O_CREATE - создать если нет, O_WRONLY - только запись
+    file, err := os.OpenFile("output.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    defer file.Close()
+    
+    _, err = file.WriteString("Дописываем строку\\n")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Println("Строка добавлена")
+}`}
+              />
+            </li>
+          </ol>
+          <h2>ПРОВЕРКА СУЩЕСТВОВАНИЯ ФАЙЛА</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func fileExists(filename string) bool {
+    _, err := os.Stat(filename)
+    if err == nil {
+        return true
+    }
+    if os.IsNotExist(err) {
+        return false
+    }
+    return false
+}
+
+func main() {
+    filename := "data.txt"
+    
+    if fileExists(filename) {
+        fmt.Printf("Файл %s существует\\n", filename)
+    } else {
+        fmt.Printf("Файл %s не существует\\n", filename)
+    }
+}`}
+          />
+          <h2>ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ФАЙЛЕ</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    fileInfo, err := os.Stat("data.txt")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Println("Имя:", fileInfo.Name())
+    fmt.Println("Размер:", fileInfo.Size(), "байт")
+    fmt.Println("Директория:", fileInfo.IsDir())
+    fmt.Println("Права:", fileInfo.Mode())
+    fmt.Println("Время изменения:", fileInfo.ModTime())
+}`}
+          />
+          <h2>УДАЛЕНИЕ ФАЙЛА</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    err := os.Remove("temp.txt")
+    if err != nil {
+        fmt.Println("Ошибка удаления:", err)
+        return
+    }
+    
+    fmt.Println("Файл удален")
+}`}
+          />
+          <h2>РАБОТА С ДИРЕКТОРИЯМИ</h2>
+          <ol>
+            <li>
+              <h3>Создание директории</h3>
+              <CodeHighlighter 
+                code={`// Создать одну папку
+err := os.Mkdir("mydir", 0755)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}
+
+// Создать вложенные папки
+err = os.MkdirAll("path/to/dir", 0755)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}`}
+              />
+            </li>
+            <li>
+              <h3>Чтение содержимого директории</h3>
+              <CodeHighlighter 
+                code={`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    entries, err := os.ReadDir(".")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    for _, entry := range entries {
+        if entry.IsDir() {
+            fmt.Println("[DIR]", entry.Name())
+        } else {
+            info, _ := entry.Info()
+            fmt.Printf("[FILE] %s (%d байт)\\n", entry.Name(), info.Size())
+        }
+    }
+}`}
+              />
+            </li>
+          </ol>
+        </div>
+      ),
+    },
   },
 };
 
