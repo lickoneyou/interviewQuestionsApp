@@ -3387,7 +3387,7 @@ func main() {
     },
     'sync.WaitGroup': {
       get title() {
-        return 'Закрытие каналов. Аксиомы каналов';
+        return 'sync.WaitGroup';
       },
       get id() {
         return slugifyText(this.title);
@@ -3478,6 +3478,242 @@ go func() {
               <tr>
                 <td>Главная функция должна завершиться после всех горутин</td>
                 <td>✅ Да</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
+    'context.Context': {
+      get title() {
+        return 'context.Context';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>context.Context</b> — это интерфейс, который передаёт:
+          </p>
+          <ul>
+            <li>
+              <b>Сигналы отмены</b> (cancel)
+            </li>
+            <li>
+              <b>Таймауты / дедлайны</b> (timeout/deadline)
+            </li>
+            <li>
+              <b>Значения (ключ-значение)</b> — редко, только для request-scoped
+              данных
+            </li>
+          </ul>
+          <h2>Создание контекстов</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ФУНКЦИЯ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>context.Background()</td>
+                <td>Пустой контекст (корень)</td>
+              </tr>
+              <tr>
+                <td>context.TODO()</td>
+                <td>Заглушка, когда непонятно</td>
+              </tr>
+              <tr>
+                <td>context.WithCancel(parent)</td>
+                <td>Возвращает контекст + функцию cancel</td>
+              </tr>
+              <tr>
+                <td>context.WithTimeout(parent, time)</td>
+                <td>Отмена через время</td>
+              </tr>
+              <tr>
+                <td>context.WithDeadline(parent, time)</td>
+                <td>Отмена к конкретному времени</td>
+              </tr>
+              <tr>
+                <td>context.WithValue(parent, key, val)</td>
+                <td>Добавляет значение</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>WithCancel — ручная отмена</h2>
+          <p>
+            Сигнал отмены через вызов <span>cancel()</span>.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    ctx, cancel := context.WithCancel(context.Background())
+    defer cancel() // обязательно вызвать, чтобы освободить ресурсы
+
+    go func() {
+        select {
+        case <-time.After(5 * time.Second):
+            fmt.Println("Горутина завершилась сама")
+        case <-ctx.Done():
+            fmt.Println("Горутина отменена")
+        }
+    }()
+
+    time.Sleep(2 * time.Second)
+    cancel() // отменяем горутину
+    time.Sleep(100 * time.Millisecond)
+}`}
+          />
+          <p>
+            <span>ctx.Done()</span> — возвращает канал, который закрывается при
+            отмене.
+          </p>
+          <h2>WithTimeout — таймаут</h2>
+          <p>Отмена автоматически через N секунд.</p>
+          <CodeHighlighter
+            code={`func main() {
+    // отмена через 2 секунды
+    ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+    defer cancel()
+
+    select {
+    case <-time.After(3 * time.Second):
+        fmt.Println("Операция завершилась")
+    case <-ctx.Done():
+        fmt.Println("Таймаут:", ctx.Err()) // context deadline exceeded
+    }
+}`}
+          />
+          <h2>WithDeadline — отмена к конкретному времени</h2>
+          <p>Отмена в конкретный момент времени.</p>
+          <CodeHighlighter
+            code={`func main() {
+    deadline := time.Now().Add(2 * time.Second)
+    ctx, cancel := context.WithDeadline(context.Background(), deadline)
+    defer cancel()
+
+    select {
+    case <-time.After(3 * time.Second):
+        fmt.Println("Операция завершилась")
+    case <-ctx.Done():
+        fmt.Println("Дедлайн:", ctx.Err()) // context deadline exceeded
+    }
+}`}
+          />
+          <h2>Проверка отмены</h2>
+          <CodeHighlighter
+            code={`// 1. Через канал Done()
+select {
+case <-ctx.Done():
+    fmt.Println("Отменено:", ctx.Err()) // context.Canceled
+default:
+    // продолжаем работу
+}
+
+// 2. Через метод Err()
+if ctx.Err() != nil {
+    fmt.Println("Контекст отменён:", ctx.Err())
+}`}
+          />
+          <p>
+            <b>ctx.Err()</b> возвращает:
+          </p>
+          <ul>
+            <li>
+              <b>nil</b> — если контекст ещё активен
+            </li>
+            <li>
+              <b>context.Canceled</b> — если отменён через cancel
+            </li>
+            <li>
+              <b>context.DeadlineExceeded</b> — если истёк таймаут/дедлайн
+            </li>
+          </ul>
+          <h2>Передача контекста</h2>
+          <p>Контекст передаётся явно первым параметром.</p>
+          <CodeHighlighter
+            code={`func process(ctx context.Context, data string) error {
+    // проверяем отмену
+    select {
+    case <-ctx.Done():
+        return ctx.Err()
+    default:
+        // работаем
+        fmt.Println("Обработка:", data)
+        return nil
+    }
+}
+
+func main() {
+    ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+    defer cancel()
+
+    // передаём контекст
+    err := process(ctx, "данные")
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+    }
+}`}
+          />
+          <h2>WithValue — значения в контексте</h2>
+          <p>Добавляет пару ключ-значение в контекст.</p>
+          <CodeHighlighter
+            code={`type key string
+
+const userIDKey key = "userID"
+
+func main() {
+    ctx := context.WithValue(context.Background(), userIDKey, 42)
+
+    // передаём контекст
+    process(ctx)
+}
+
+func process(ctx context.Context) {
+    // получаем значение
+    if userID, ok := ctx.Value(userIDKey).(int); ok {
+        fmt.Println("User ID:", userID)
+    }
+}`}
+          />
+          <p>Ограничения:</p>
+          <ul>
+            <li>
+              Только для <b>request-scoped</b> данных (ID запроса, пользователь)
+            </li>
+            <li>Не для передачи бизнес-данных (лучше передавать явно)</li>
+            <li>
+              Ключ должен быть кастомным типом (чтобы избежать конфликтов)
+            </li>
+          </ul>
+          <p>
+            Когда использовать <span>WithValue</span>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>✅ НУЖНО</th>
+                <th>❌ НЕ НУЖНО</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Request ID для логирования</td>
+                <td>Параметры бизнес-логики</td>
+              </tr>
+              <tr>
+                <td>User ID / токен авторизации</td>
+                <td>Данные для расчётов</td>
+              </tr>
+              <tr>
+                <td>Deadline / trace ID</td>
+                <td>Крупные структуры данных</td>
+              </tr>
+              <tr>
+                <td>Флаги для middleware</td>
+                <td>Передача значений в функции (используйте параметры)</td>
               </tr>
             </tbody>
           </table>
