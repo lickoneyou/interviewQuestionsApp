@@ -2733,7 +2733,7 @@ fmt.Println(err2) // ошибка в функции process: 404`}
           <h2>
             ПАТТЕРН: <span>if err != nil</span>
           </h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func divide(a, b float64) (float64, error) {
     if b == 0 {
         return 0, fmt.Errorf("деление на ноль")
@@ -2754,7 +2754,7 @@ func main() {
           <ol>
             <li>
               <h3>errors.Is() — проверка по значению</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`import "errors"
 
 var ErrNotFound = errors.New("not found")
@@ -2786,7 +2786,7 @@ func main() {
             </li>
             <li>
               <h3>errors.As() — проверка по типу</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`type ValidationError struct {
     Field   string
     Message string
@@ -2854,6 +2854,70 @@ func main() {
               </tr>
             </tbody>
           </table>
+        </div>
+      ),
+    },
+    'panic и recover': {
+      get title() {
+        return 'panic и recover';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>panic</b> — это состояние, когда программа не может продолжать
+            выполнение. Вызывает:
+          </p>
+          <ul>
+            <li>Остановку текущей функции</li>
+            <li>
+              Раскрутку стека (выполнение всех <span>defer</span>)
+            </li>
+            <li>Завершение программы с сообщением</li>
+          </ul>
+          <CodeHighlighter
+            code={`func main() {
+    fmt.Println("Начало")
+    panic("что-то пошло не так")
+    fmt.Println("Конец") // НЕ выполнится
+}
+// Вывод:
+// Начало
+// panic: что-то пошло не так
+// goroutine 1 [running]:
+// ...`}
+          />
+          <p>
+            Когда используется <span>panic</span>:
+          </p>
+          <ul>
+            <li>
+              Невосстановимая ошибка (например, не удалось открыть обязательный
+              конфиг)
+            </li>
+            <li>Ошибка программиста (выход за границы массива)</li>
+            <li>В тестах (для быстрого завершения)</li>
+          </ul>
+          <hr />
+          <p>
+            <b>recover</b> — функция, которая перехватывает panic и позволяет
+            программе продолжить работу.
+          </p>
+          <CodeHighlighter 
+            code={`func main() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("Паника перехвачена:", r)
+        }
+    }()
+    
+    panic("ошибка!")
+    fmt.Println("Не выполнится")
+}
+// Вывод: Паника перехвачена: ошибка!`}
+          />
         </div>
       ),
     },
