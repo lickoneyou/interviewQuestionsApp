@@ -2056,7 +2056,7 @@ func main() {
             </li>
           </ol>
           <h2>ПРОВЕРКА СУЩЕСТВОВАНИЯ ФАЙЛА</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -2086,7 +2086,7 @@ func main() {
 }`}
           />
           <h2>ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ФАЙЛЕ</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -2109,7 +2109,7 @@ func main() {
 }`}
           />
           <h2>УДАЛЕНИЕ ФАЙЛА</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -2131,7 +2131,7 @@ func main() {
           <ol>
             <li>
               <h3>Создание директории</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Создать одну папку
 err := os.Mkdir("mydir", 0755)
 if err != nil {
@@ -2147,7 +2147,7 @@ if err != nil {
             </li>
             <li>
               <h3>Чтение содержимого директории</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`package main
 
 import (
@@ -2171,6 +2171,177 @@ func main() {
         }
     }
 }`}
+              />
+            </li>
+          </ol>
+        </div>
+      ),
+    },
+    'JSON (encoding/json)': {
+      get title() {
+        return 'JSON (encoding/json)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>ОСНОВНЫЕ ОПЕРАЦИИ</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ОПЕРАЦИЯ</th>
+                <th>ФУНКЦИЯ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Структура → JSON</td>
+                <td>json.Marshal()</td>
+                <td>Преобразует в JSON (байты)</td>
+              </tr>
+              <tr>
+                <td>Структура → JSON (красивый)</td>
+                <td>json.MarshalIndent()</td>
+                <td>Преобразует с отступами</td>
+              </tr>
+              <tr>
+                <td>JSON → Структура</td>
+                <td>json.Unmarshal()</td>
+                <td>Парсит JSON в структуру</td>
+              </tr>
+              <tr>
+                <td>Потоковая запись</td>
+                <td>json.NewEncoder().Encode()</td>
+                <td>Записывает JSON в io.Writer</td>
+              </tr>
+              <tr>
+                <td>Потоковое чтение</td>
+                <td>json.NewDecoder().Decode()</td>
+                <td>Читает JSON из io.Reader</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>ТЕГИ СТРУКТУР</h2>
+          <CodeHighlighter 
+            code={`type User struct {
+    Name     string \`json:"name"\`           // Имя в JSON
+    Age      int    \`json:"age"\`            // Имя в JSON
+    Email    string \`json:"email"\`          // Имя в JSON
+    Password string \`json:"-"\`              // Скрыть поле (не выводить)
+    Active   bool   \`json:"active,omitempty"\` // Если false — не выводить
+    City     string \`json:"city,omitempty"\` // Если пусто — не выводить
+}`}
+          />
+          <h2>MARSHAL (СТРУКТУРА → JSON)</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type User struct {
+    Name     string \`json:"name"\`
+    Age      int    \`json:"age"\`
+    Email    string \`json:"email,omitempty"\`
+    Password string \`json:"-"\`           // Скрываем
+    Active   bool   \`json:"active,omitempty"\`
+}
+
+func main() {
+    user := User{
+        Name:  "Alice",
+        Age:   25,
+        Email: "alice@mail.com",
+        Active: true,
+    }
+    
+    // Маршалим в JSON
+    data, err := json.Marshal(user)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Println(string(data))
+    // {"name":"Alice","age":25,"email":"alice@mail.com","active":true}
+}`}
+          />
+          <h2>UNMARSHAL (JSON → СТРУКТУРА)</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type User struct {
+    Name  string \`json:"name"\`
+    Age   int    \`json:"age"\`
+    Email string \`json:"email,omitempty"\`
+}
+
+func main() {
+    jsonData := \`{"name":"Bob","age":30,"email":"bob@mail.com"}\`
+    
+    var user User
+    
+    // Парсим JSON
+    err := json.Unmarshal([]byte(jsonData), &user)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Printf("%+v\\n", user)
+    // {Name:Bob Age:30 Email:bob@mail.com}
+}`}
+          />
+          <h2>MAP И JSON</h2>
+          <ol>
+            <li>
+              <h3>JSON → Map</h3>
+              <CodeHighlighter 
+                code={`jsonData := \`{"name":"Alice","age":25,"city":"Moscow"}\`
+
+var result map[string]interface{}
+err := json.Unmarshal([]byte(jsonData), &result)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+    return
+}
+
+fmt.Println(result["name"]) // Alice
+fmt.Println(result["age"])  // 25
+fmt.Println(result["city"]) // Moscow
+
+// Проверка типов
+if age, ok := result["age"].(float64); ok {
+    fmt.Println("Возраст:", int(age))
+}`}
+              />
+            </li>
+            <li>
+              <h3>Map → JSON</h3>
+              <CodeHighlighter 
+                code={`data := map[string]interface{}{
+    "name": "Alice",
+    "age":  25,
+    "city": "Moscow",
+}
+
+jsonData, err := json.Marshal(data)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+    return
+}
+
+fmt.Println(string(jsonData))
+// {"age":25,"city":"Moscow","name":"Alice"}`}
               />
             </li>
           </ol>
