@@ -2224,7 +2224,7 @@ func main() {
             </tbody>
           </table>
           <h2>ТЕГИ СТРУКТУР</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`type User struct {
     Name     string \`json:"name"\`           // Имя в JSON
     Age      int    \`json:"age"\`            // Имя в JSON
@@ -2235,7 +2235,7 @@ func main() {
 }`}
           />
           <h2>MARSHAL (СТРУКТУРА → JSON)</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -2271,7 +2271,7 @@ func main() {
 }`}
           />
           <h2>UNMARSHAL (JSON → СТРУКТУРА)</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -2305,7 +2305,7 @@ func main() {
           <ol>
             <li>
               <h3>JSON → Map</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`jsonData := \`{"name":"Alice","age":25,"city":"Moscow"}\`
 
 var result map[string]interface{}
@@ -2327,7 +2327,7 @@ if age, ok := result["age"].(float64); ok {
             </li>
             <li>
               <h3>Map → JSON</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`data := map[string]interface{}{
     "name": "Alice",
     "age":  25,
@@ -2342,6 +2342,356 @@ if err != nil {
 
 fmt.Println(string(jsonData))
 // {"age":25,"city":"Moscow","name":"Alice"}`}
+              />
+            </li>
+          </ol>
+        </div>
+      ),
+    },
+    'Работа со строками': {
+      get title() {
+        return 'Работа со строками';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>ОСНОВНЫЕ ПАКЕТЫ ДЛЯ СТРОК</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ПАКЕТ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>strings</td>
+                <td>Основные операции со строками (поиск, замена, разделение)</td>
+              </tr>
+              <tr>
+                <td>strconv</td>
+                <td>Преобразование строк ↔ числа, парсинг</td>
+              </tr>
+              <tr>
+                <td>fmt</td>
+                <td>Форматирование строк (Sprintf), вывод</td>
+              </tr>
+              <tr>
+                <td>unicode</td>
+                <td>Работа с символами (буквы, цифры)</td>
+              </tr>
+              <tr>
+                <td>regexp</td>
+                <td>Регулярные выражения</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>strings — ОСНОВНЫЕ ОПЕРАЦИИ</h2>
+          <ol>
+            <li>
+              <h3>Проверка и поиск</h3>
+              <CodeHighlighter 
+                code={`package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+func main() {
+    s := "Hello, World!"
+    
+    // Содержит подстроку
+    fmt.Println(strings.Contains(s, "World"))   // true
+    fmt.Println(strings.Contains(s, "Go"))      // false
+    
+    // Начинается/заканчивается
+    fmt.Println(strings.HasPrefix(s, "Hello"))  // true
+    fmt.Println(strings.HasSuffix(s, "!"))      // true
+    
+    // Индекс подстроки
+    fmt.Println(strings.Index(s, "World"))      // 7
+    fmt.Println(strings.Index(s, "Go"))         // -1
+    
+    // Количество вхождений
+    fmt.Println(strings.Count(s, "l"))          // 3
+}`}
+              />
+            </li>
+            <li>
+              <h3>Изменение строк</h3>
+              <CodeHighlighter 
+                code={`s := "Hello, World!"
+
+// Замена
+fmt.Println(strings.Replace(s, "World", "Go", 1))   // Hello, Go!
+fmt.Println(strings.ReplaceAll(s, "l", "L"))        // HeLLo, WorLd!
+
+// Регистр
+fmt.Println(strings.ToUpper(s)) // HELLO, WORLD!
+fmt.Println(strings.ToLower(s)) // hello, world!
+fmt.Println(strings.Title(s))   // Hello, World!
+
+// Удаление пробелов
+s2 := "  Hello, World!  "
+fmt.Println(strings.TrimSpace(s2))      // Hello, World!
+fmt.Println(strings.Trim(s2, " !"))     // Hello, World
+fmt.Println(strings.TrimLeft(s2, " "))  // Hello, World!  
+fmt.Println(strings.TrimRight(s2, " ")) //   Hello, World!`}
+              />
+            </li>
+            <li>
+              <h3>Разделение и соединение</h3>
+              <CodeHighlighter 
+                code={`// Разделение (Split)
+s := "apple,banana,orange,grape"
+fruits := strings.Split(s, ",")
+fmt.Println(fruits) // [apple banana orange grape]
+
+// Разделение с ограничением
+parts := strings.SplitN(s, ",", 2)
+fmt.Println(parts) // [apple banana,orange,grape]
+
+// Соединение (Join)
+joined := strings.Join(fruits, " - ")
+fmt.Println(joined) // apple - banana - orange - grape
+
+// Разбивка по пробелам (Fields)
+s2 := "apple banana  orange   grape"
+fields := strings.Fields(s2)
+fmt.Println(fields) // [apple banana orange grape]`}
+              />
+            </li>
+            <li>
+              <h3>Повторение и сравнение</h3>
+              <CodeHighlighter 
+                code={`// Повторение
+fmt.Println(strings.Repeat("Go", 3)) // GoGoGo
+
+// Сравнение (регистрозависимое)
+fmt.Println(strings.Compare("a", "b")) // -1
+fmt.Println(strings.Compare("a", "a")) // 0
+fmt.Println(strings.Compare("b", "a")) // 1
+
+// Сравнение без учета регистра
+fmt.Println(strings.EqualFold("Go", "go")) // true
+
+// Проверка на пустоту
+s := ""
+fmt.Println(s == "")                       // true
+fmt.Println(len(s) == 0)                   // true
+fmt.Println(strings.TrimSpace(s) == "")    // true`}
+              />
+            </li>
+          </ol>
+          <h2>strconv — ПРЕОБРАЗОВАНИЕ СТРОК И ЧИСЕЛ</h2>
+          <ol>
+            <li>
+              <h3>Число → Строка</h3>
+              <CodeHighlighter 
+                code={`import "strconv"
+
+// int → string
+age := 25
+s1 := strconv.Itoa(age)
+fmt.Println(s1) // "25"
+
+// int64 → string
+var num64 int64 = 100
+s2 := strconv.FormatInt(num64, 10) // 10 = десятичная система
+fmt.Println(s2) // "100"
+
+// float64 → string
+price := 99.99
+s3 := strconv.FormatFloat(price, 'f', 2, 64)
+fmt.Println(s3) // "99.99"
+
+// bool → string
+flag := true
+s4 := strconv.FormatBool(flag)
+fmt.Println(s4) // "true"`}
+              />
+            </li>
+            <li>
+              <h3>Строка → Число</h3>
+              <CodeHighlighter 
+                code={`// string → int
+s := "42"
+num, err := strconv.Atoi(s)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}
+fmt.Println(num) // 42
+
+// string → int64
+s2 := "1234567890"
+num64, err := strconv.ParseInt(s2, 10, 64)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}
+fmt.Println(num64) // 1234567890
+
+// string → float64
+s3 := "3.14159"
+floatNum, err := strconv.ParseFloat(s3, 64)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}
+fmt.Println(floatNum) // 3.14159
+
+// string → bool
+s4 := "true"
+flag, err := strconv.ParseBool(s4)
+if err != nil {
+    fmt.Println("Ошибка:", err)
+}
+fmt.Println(flag) // true`}
+              />
+            </li>
+          </ol>
+          <h2>fmt.Sprintf — ФОРМАТИРОВАНИЕ СТРОК</h2>
+          <CodeHighlighter 
+            code={`name := "Alice"
+age := 25
+height := 1.75
+
+// Базовое форматирование
+s1 := fmt.Sprintf("Имя: %s, Возраст: %d", name, age)
+fmt.Println(s1) // Имя: Alice, Возраст: 25
+
+// С дробными числами
+s2 := fmt.Sprintf("Рост: %.2f м", height)
+fmt.Println(s2) // Рост: 1.75 м
+
+// С выравниванием
+s3 := fmt.Sprintf("|%10s|%5d|", name, age)
+fmt.Println(s3) // |     Alice|   25|
+
+// С типом переменной
+var x interface{} = 42
+s4 := fmt.Sprintf("Тип: %T, Значение: %v", x, x)
+fmt.Println(s4) // Тип: int, Значение: 42`}
+          />
+          <p>Основные форматы:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>ФОРМАТ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+                <th>ПРИМЕР</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>%s</td>
+                <td>Строка</td>
+                <td>"Hello"</td>
+              </tr>
+              <tr>
+                <td>%d</td>
+                <td>Целое число</td>
+                <td>42</td>
+              </tr>
+              <tr>
+                <td>%f</td>
+                <td>Дробное число</td>
+                <td>3.141590</td>
+              </tr>
+              <tr>
+                <td>%.2f</td>
+                <td>Дробное с 2 знаками</td>
+                <td>3.14</td>
+              </tr>
+              <tr>
+                <td>%t</td>
+                <td>Логическое</td>
+                <td>true</td>
+              </tr>
+              <tr>
+                <td>%v</td>
+                <td>Любой тип (стандартный)</td>
+                <td>42 / "Hello"</td>
+              </tr>
+              <tr>
+                <td>%T</td>
+                <td>Тип переменной</td>
+                <td>int</td>
+              </tr>
+              <tr>
+                <td>%q</td>
+                <td>Строка в кавычках</td>
+                <td>"Hello"</td>
+              </tr>
+              <tr>
+                <td>%x</td>
+                <td>HEX</td>
+                <td>2a</td>
+              </tr>
+              <tr>
+                <td>%b</td>
+                <td>Бинарное</td>
+                <td>101010</td>
+              </tr>
+              <tr>
+                <td>%p</td>
+                <td>Адрес указателя</td>
+                <td>0xc000...</td>
+              </tr>
+              <tr>
+                <td>%+v</td>
+                <td>Структура с полями</td>
+                <td>{'Name:Alice Age:25'}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>СТРОКИ КАК БАЙТЫ И РУНЫ</h2>
+          <ol>
+            <li>
+              <h3>Байты → Строка</h3>
+              <CodeHighlighter 
+                code={`// Строка → байты
+str := "Hello"
+bytes := []byte(str)
+fmt.Println(bytes) // [72 101 108 108 111]
+
+// Байты → строка
+str2 := string(bytes)
+fmt.Println(str2) // Hello`}
+              />
+            </li>
+            <li>
+              <h3>Руны → Строка</h3>
+              <CodeHighlighter 
+                code={`// Строка → руны (Unicode символы)
+str := "Привет"
+runes := []rune(str)
+fmt.Println(runes) // [1055 1088 1080 1074 1077 1090]
+
+// Руны → строка
+str2 := string(runes)
+fmt.Println(str2) // Привет`}
+              />
+            </li>
+            <li>
+              <h3>Конвертация строки в число с базой</h3>
+              <CodeHighlighter 
+                code={`// Парсинг чисел в разных системах
+hex := "FF"
+num, _ := strconv.ParseInt(hex, 16, 64)
+fmt.Println(num) // 255
+
+binary := "1010"
+num2, _ := strconv.ParseInt(binary, 2, 64)
+fmt.Println(num2) // 10
+
+// Число → строка с указанием базы
+s1 := strconv.FormatInt(255, 16)
+fmt.Println(s1) // "ff"
+
+s2 := strconv.FormatInt(10, 2)
+fmt.Println(s2) // "1010"`}
               />
             </li>
           </ol>
