@@ -2368,7 +2368,9 @@ fmt.Println(string(jsonData))
             <tbody>
               <tr>
                 <td>strings</td>
-                <td>Основные операции со строками (поиск, замена, разделение)</td>
+                <td>
+                  Основные операции со строками (поиск, замена, разделение)
+                </td>
               </tr>
               <tr>
                 <td>strconv</td>
@@ -2392,7 +2394,7 @@ fmt.Println(string(jsonData))
           <ol>
             <li>
               <h3>Проверка и поиск</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`package main
 
 import (
@@ -2422,7 +2424,7 @@ func main() {
             </li>
             <li>
               <h3>Изменение строк</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`s := "Hello, World!"
 
 // Замена
@@ -2444,7 +2446,7 @@ fmt.Println(strings.TrimRight(s2, " ")) //   Hello, World!`}
             </li>
             <li>
               <h3>Разделение и соединение</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Разделение (Split)
 s := "apple,banana,orange,grape"
 fruits := strings.Split(s, ",")
@@ -2466,7 +2468,7 @@ fmt.Println(fields) // [apple banana orange grape]`}
             </li>
             <li>
               <h3>Повторение и сравнение</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Повторение
 fmt.Println(strings.Repeat("Go", 3)) // GoGoGo
 
@@ -2490,7 +2492,7 @@ fmt.Println(strings.TrimSpace(s) == "")    // true`}
           <ol>
             <li>
               <h3>Число → Строка</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`import "strconv"
 
 // int → string
@@ -2516,7 +2518,7 @@ fmt.Println(s4) // "true"`}
             </li>
             <li>
               <h3>Строка → Число</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// string → int
 s := "42"
 num, err := strconv.Atoi(s)
@@ -2552,7 +2554,7 @@ fmt.Println(flag) // true`}
             </li>
           </ol>
           <h2>fmt.Sprintf — ФОРМАТИРОВАНИЕ СТРОК</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`name := "Alice"
 age := 25
 height := 1.75
@@ -2650,7 +2652,7 @@ fmt.Println(s4) // Тип: int, Значение: 42`}
           <ol>
             <li>
               <h3>Байты → Строка</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Строка → байты
 str := "Hello"
 bytes := []byte(str)
@@ -2663,7 +2665,7 @@ fmt.Println(str2) // Hello`}
             </li>
             <li>
               <h3>Руны → Строка</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Строка → руны (Unicode символы)
 str := "Привет"
 runes := []rune(str)
@@ -2676,7 +2678,7 @@ fmt.Println(str2) // Привет`}
             </li>
             <li>
               <h3>Конвертация строки в число с базой</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Парсинг чисел в разных системах
 hex := "FF"
 num, _ := strconv.ParseInt(hex, 16, 64)
@@ -2705,7 +2707,156 @@ fmt.Println(s2) // "1010"`}
       get id() {
         return slugifyText(this.title);
       },
+      jsx: (
+        <div>
+          <p>
+            <b>error</b> — это интерфейс:
+          </p>
+          <CodeHighlighter
+            code={`type error interface {
+    Error() string
+}`}
+          />
+          <p>
+            Любой тип, реализующий метод <span>Error() string </span>,
+            становится ошибкой.
+          </p>
+          <CodeHighlighter
+            code={`// Создание ошибки
+err := errors.New("что-то пошло не так")
+fmt.Println(err) // что-то пошло не так
+
+// Создание с форматированием
+err2 := fmt.Errorf("ошибка в функции %s: %d", "process", 404)
+fmt.Println(err2) // ошибка в функции process: 404`}
+          />
+          <h2>
+            ПАТТЕРН: <span>if err != nil</span>
+          </h2>
+          <CodeHighlighter 
+            code={`func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("деление на ноль")
     }
+    return a / b, nil
+}
+
+func main() {
+    result, err := divide(10, 0)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    fmt.Println("Результат:", result)
+}`}
+          />
+          <h2>ПРОВЕРКА ТИПА ОШИБКИ</h2>
+          <ol>
+            <li>
+              <h3>errors.Is() — проверка по значению</h3>
+              <CodeHighlighter 
+                code={`import "errors"
+
+var ErrNotFound = errors.New("not found")
+var ErrInvalid = errors.New("invalid input")
+
+func findUser(id int) error {
+    if id < 0 {
+        return ErrInvalid
+    }
+    if id == 0 {
+        return ErrNotFound
+    }
+    return nil
+}
+
+func main() {
+    err := findUser(0)
+    if err != nil {
+        if errors.Is(err, ErrNotFound) {
+            fmt.Println("Пользователь не найден")
+        } else if errors.Is(err, ErrInvalid) {
+            fmt.Println("Неверный ID")
+        } else {
+            fmt.Println("Другая ошибка:", err)
+        }
+    }
+}`}
+              />
+            </li>
+            <li>
+              <h3>errors.As() — проверка по типу</h3>
+              <CodeHighlighter 
+                code={`type ValidationError struct {
+    Field   string
+    Message string
+}
+
+func (e ValidationError) Error() string {
+    return fmt.Sprintf("ошибка валидации поля %s: %s", e.Field, e.Message)
+}
+
+func validateUser(name string) error {
+    if name == "" {
+        return ValidationError{Field: "name", Message: "не может быть пустым"}
+    }
+    return nil
+}
+
+func main() {
+    err := validateUser("")
+    if err != nil {
+        var valErr ValidationError
+        if errors.As(err, &valErr) {
+            fmt.Printf("Ошибка в поле %s: %s\\n", valErr.Field, valErr.Message)
+        } else {
+            fmt.Println("Ошибка:", err)
+        }
+    }
+}`}
+              />
+            </li>
+          </ol>
+          <h2>ОШИБКИ В СТАНДАРТНОЙ БИБЛИОТЕКЕ</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ПАКЕТ</th>
+                <th>ОШИБКА</th>
+                <th>ЧТО ОЗНАЧАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>os</td>
+                <td>os.ErrNotExist</td>
+                <td>Файл не найден</td>
+              </tr>
+              <tr>
+                <td>os</td>
+                <td>os.ErrPermission</td>
+                <td>Нет прав</td>
+              </tr>
+              <tr>
+                <td>io</td>
+                <td>io.EOF</td>
+                <td>Конец файла</td>
+              </tr>
+              <tr>
+                <td>sql</td>
+                <td>sql.ErrNoRows</td>
+                <td>Нет строк в результате</td>
+              </tr>
+              <tr>
+                <td>json</td>
+                <td>json.UnmarshalTypeError</td>
+                <td>Неверный тип при парсинге</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
