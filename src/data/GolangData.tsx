@@ -3720,6 +3720,272 @@ func process(ctx context.Context) {
         </div>
       ),
     },
+    'Состояние гонки. Атомики. Мьютексы': {
+      get title() {
+        return 'Состояние гонки. Атомики. Мьютексы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Состояние гонки</b> — когда несколько горутин одновременно
+            обращаются к одной переменной, и хотя бы одна из них{' '}
+            <span>изменяет</span> её.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    var wg sync.WaitGroup
+    counter := 0
+
+    for i := 0; i < 1000; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            counter++ // ГОНКА! несколько горутин меняют counter
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(counter) // НЕ 1000 (будет меньше, например 982)
+}`}
+          />
+          <p>
+            <b>Почему</b>: операция counter++ не атомарна:
+          </p>
+          <ol>
+            <li>Прочитать текущее значение</li>
+            <li>Увеличить на 1</li>
+            <li>Записать новое значение</li>
+          </ol>
+          <p>Между шагами может вклиниться другая горутина.</p>
+          <h2>Встроенный детектор гонок в Go:</h2>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go run -race main.go
+go test -race ./...`}
+          />
+          <h2>Решения проблемы гонки</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>МЕТОД</th>
+                <th>КОГДА ИСПОЛЬЗОВАТЬ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Атомики (sync/atomic)</td>
+                <td>Простые операции с числами (счётчики, флаги)</td>
+              </tr>
+              <tr>
+                <td>Мьютекс (sync.Mutex)</td>
+                <td>Сложные операции, структуры, несколько полей</td>
+              </tr>
+              <tr>
+                <td>RWMutex (sync.RWMutex)</td>
+                <td>Частое чтение, редкая запись</td>
+              </tr>
+              <tr>
+                <td>Каналы</td>
+                <td>Передача данных между горутинами</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>sync/atomic — Атомарные операции</h2>
+          <p>
+            <b>Атомики</b> — операции, которые выполняются за один шаг
+            (непрерываемо).
+          </p>
+          <p>
+            <b>Пакет</b>: sync/atomic
+          </p>
+          <p>Основные функции:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>ФУНКЦИЯ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AddInt64(&x, 1)</td>
+                <td>Прибавить к int64</td>
+              </tr>
+              <tr>
+                <td>AddInt32(&x, 1)</td>
+                <td>Прибавить к int32</td>
+              </tr>
+              <tr>
+                <td>LoadInt64(&x)</td>
+                <td>Прочитать int64</td>
+              </tr>
+              <tr>
+                <td>StoreInt64(&x, val)</td>
+                <td>Записать int64</td>
+              </tr>
+              <tr>
+                <td>SwapInt64(&x, val)</td>
+                <td>Обменять (вернуть старое)</td>
+              </tr>
+              <tr>
+                <td>CompareAndSwapInt64(&x, old, new)</td>
+                <td>Обменять, если равно old</td>
+              </tr>
+            </tbody>
+          </table>
+          <CodeHighlighter
+            code={`import "sync/atomic"
+
+var counter int64
+
+func main() {
+    var wg sync.WaitGroup
+
+    for i := 0; i < 1000; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            atomic.AddInt64(&counter, 1) // атомарно
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(atomic.LoadInt64(&counter)) // 1000
+}`}
+          />
+          <p>
+            <b>Когда использовать</b>: простые счётчики, флаги состояния.
+          </p>
+          <hr />
+          <h2>sync.Mutex — Взаимное исключение</h2>
+          <p>
+            <b>Мьютекс</b> — блокирует доступ к ресурсу, чтобы только одна
+            горутина могла его менять.
+          </p>
+          <p>Методы:</p>
+          <ul>
+            <li>
+              <b>Lock()</b> — захватить блокировку (если занята — ждать)
+            </li>
+            <li>
+              <b>Unlock()</b> — освободить блокировку
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`import "sync"
+
+var counter int
+var mu sync.Mutex
+
+func main() {
+    var wg sync.WaitGroup
+
+    for i := 0; i < 1000; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            mu.Lock()          // захватили блокировку
+            counter++          // безопасно
+            mu.Unlock()        // освободили
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(counter) // 1000
+}`}
+          />
+          <p>
+            <b>Важно</b>: всегда используйте <span>defer mu.Unlock()</span>,
+            чтобы освободить блокировку даже при панике.
+          </p>
+          <CodeHighlighter
+            code={`mu.Lock()
+defer mu.Unlock()
+// работа`}
+          />
+          <hr />
+          <h2>sync.RWMutex — Блокировка для чтения/записи</h2>
+          <p>
+            <b>RWMutex</b> — позволяет множественное чтение, но эксклюзивную
+            запись.
+          </p>
+          <p>Методы:</p>
+          <ul>
+            <li>
+              <span>RLock()</span> / <span>RUnlock()</span> — блокировка для
+              чтения (много горутин)
+            </li>
+            <li>
+              <span>Lock()</span> / <span>Unlock()</span> — блокировка для
+              записи (эксклюзив)
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`type SafeCounter struct {
+    mu    sync.RWMutex
+    value int
+}
+
+func (c *SafeCounter) Read() int {
+    c.mu.RLock()         // блокировка чтения (не блокирует другие чтения)
+    defer c.mu.RUnlock()
+    return c.value
+}
+
+func (c *SafeCounter) Write(val int) {
+    c.mu.Lock()          // эксклюзивная блокировка
+    defer c.mu.Unlock()
+    c.value = val
+}`}
+          />
+          <h2>Сравнение методов</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>МЕТОД</th>
+                <th>СКОРОСТЬ</th>
+                <th>БЕЗОПАСНОСТЬ</th>
+                <th>СЛОЖНОСТЬ</th>
+                <th>ПРИМЕНЕНИЕ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Атомики</td>
+                <td>⚡⚡⚡ Очень быстрый</td>
+                <td>✅ Безопасен</td>
+                <td>Простой</td>
+                <td>Счётчики, флаги</td>
+              </tr>
+              <tr>
+                <td>Mutex</td>
+                <td>⚡⚡ Средний</td>
+                <td>✅ Безопасен</td>
+                <td>Средний</td>
+                <td>Любые ресурсы</td>
+              </tr>
+              <tr>
+                <td>RWMutex</td>
+                <td>⚡ Быстрее на чтении</td>
+                <td>✅ Безопасен</td>
+                <td>Сложнее</td>
+                <td>Кэш, конфиги</td>
+              </tr>
+              <tr>
+                <td>Без синхронизации</td>
+                <td>⚡⚡⚡ Самый быстрый</td>
+                <td>❌ Гонка</td>
+                <td>Нет</td>
+                <td>Только для однопоточного кода</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
