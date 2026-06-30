@@ -1567,11 +1567,12 @@ func (m MockRepo) GetUser(id int) (User, error) {
       jsx: (
         <div>
           <p>
-            Встраивание (embedding) — это способ <span>композиции</span> структур. Вместо
-            наследования (как в ООП), Go предлагает встраивать одну структуру в
-            другую, получая доступ к её полям и методам как к своим.
+            Встраивание (embedding) — это способ <span>композиции</span>{' '}
+            структур. Вместо наследования (как в ООП), Go предлагает встраивать
+            одну структуру в другую, получая доступ к её полям и методам как к
+            своим.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`type Address struct {
     City    string
     Street  string
@@ -1597,6 +1598,150 @@ func main() {
     fmt.Println(u.City)    // Moscow (а не u.Address.City)
     fmt.Println(u.Street)  // Tverskaya
     fmt.Println(u.ZipCode) // 101000
+}`}
+          />
+        </div>
+      ),
+    },
+    'Пользовательский ввод': {
+      get title() {
+        return 'Пользовательский ввод';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>fmt.Scan()</b> - Читает значения через пробел/перевод строки.
+          </p>
+          <CodeHighlighter
+            code={`package main
+
+import "fmt"
+
+func main() {
+    var name string
+    var age int
+    
+    fmt.Print("Введите имя и возраст: ")
+    n, err := fmt.Scan(&name, &age) // Читаем 2 значения
+    
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Printf("Прочитано %d значений\\n", n)
+    fmt.Printf("Имя: %s, Возраст: %d\\n", name, age)
+}`}
+          />
+          <p>
+            <b>fmt.Scanln()</b> - Читает до перевода строки.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    var name string
+    var age int
+    
+    fmt.Print("Введите имя: ")
+    fmt.Scanln(&name) // Читает до Enter
+    
+    fmt.Print("Введите возраст: ")
+    fmt.Scanln(&age)
+    
+    fmt.Printf("Имя: %s, Возраст: %d\\n", name, age)
+}`}
+          />
+          <p>
+            <b>fmt.Scanf()</b> - Читает по шаблону (как в C).
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    var name string
+    var age int
+    
+    fmt.Print("Введите в формате: имя возраст: ")
+    _, err := fmt.Scanf("%s %d", &name, &age)
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    
+    fmt.Printf("Имя: %s, Возраст: %d\\n", name, age)
+}`}
+          />
+          <p>
+            <b>bufio.NewScanner()</b> - Лучший способ для строк с пробелами и
+            построчного ввода.
+          </p>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    // Создаем сканер для чтения из stdin
+    scanner := bufio.NewScanner(os.Stdin)
+    
+    fmt.Print("Введите текст: ")
+    scanner.Scan() // Читаем одну строку
+    text := scanner.Text() // Получаем строку
+    
+    fmt.Printf("Вы ввели: %s\\n", text)
+    
+    // Проверка на ошибку
+    if err := scanner.Err(); err != nil {
+        fmt.Println("Ошибка:", err)
+    }
+}`}
+          />
+          <p>
+            <b>bufio.NewReader()</b> - Чтение по символам, строкам, с
+            разделителями.
+          </p>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    
+    // 1. Чтение до символа новой строки
+    fmt.Print("Введите строку: ")
+    line, err := reader.ReadString('\n')
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    fmt.Printf("Вы ввели: %s", line) // line уже с \\n
+    
+    // 2. Чтение до любого разделителя
+    fmt.Print("Введите текст до запятой: ")
+    text, err := reader.ReadString(',')
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    fmt.Printf("До запятой: %s\\n", text)
+    
+    // 3. Чтение одного символа
+    fmt.Print("Нажмите любую клавишу: ")
+    char, _, err := reader.ReadRune()
+    if err != nil {
+        fmt.Println("Ошибка:", err)
+        return
+    }
+    fmt.Printf("Вы нажали: %c\\n", char)
 }`}
           />
         </div>
