@@ -1437,7 +1437,7 @@ func main() {
 }`}
           />
           <h2>СОЗДАНИЕ МОДУЛЯ</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'bash'}
             code={`# Создаем папку
 mkdir myproject
@@ -1448,6 +1448,112 @@ go mod init myproject
 
 # Файл go.mod создан`}
           />
+        </div>
+      ),
+    },
+    Интерфейсы: {
+      get title() {
+        return 'Интерфейсы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Интерфейс</b> — это контракт (набор методов). Если у структуры
+            есть все методы интерфейса — она неявно удовлетворяет этому
+            интерфейсу. В отличие от других языков, в Go не нужно явно указывать
+            implements.
+          </p>
+          <CodeHighlighter
+            code={`// Интерфейс с одним методом
+type Greeter interface {
+    Greet() string
+}
+
+// Интерфейс с несколькими методами
+type Shape interface {
+    Area() float64
+    Perimeter() float64
+}
+
+// Пустой интерфейс (любой тип)
+type Any interface{}`}
+          />
+          <h2>ЗАЧЕМ НУЖНЫ ИНТЕРФЕЙСЫ</h2>
+          <ol>
+            <li>
+              <h3>Полиморфизм (разные типы через один интерфейс)</h3>
+              <CodeHighlighter
+                code={`type Animal interface {
+    Speak() string
+}
+
+type Dog struct{}
+func (d Dog) Speak() string { return "Гав!" }
+
+type Cat struct{}
+func (c Cat) Speak() string { return "Мяу!" }
+
+func MakeSound(a Animal) {
+    fmt.Println(a.Speak())
+}
+
+func main() {
+    MakeSound(Dog{}) // Гав!
+    MakeSound(Cat{}) // Мяу!
+}`}
+              />
+            </li>
+            <li>
+              <h3>Слабая связанность (зависимости от интерфейсов)</h3>
+              <CodeHighlighter
+                code={`type Storage interface {
+    Save(data string) error
+    Load(id string) (string, error)
+}
+
+// Реализация для файлов
+type FileStorage struct {}
+func (f FileStorage) Save(data string) error { /* ... */ }
+func (f FileStorage) Load(id string) (string, error) { /* ... */ }
+
+// Реализация для БД
+type DBStorage struct {}
+func (d DBStorage) Save(data string) error { /* ... */ }
+func (d DBStorage) Load(id string) (string, error) { /* ... */ }
+
+// Сервис работает с любым Storage
+type Service struct {
+    storage Storage
+}
+
+func (s Service) Process(data string) error {
+    return s.storage.Save(data)
+}`}
+              />
+            </li>
+            <li>
+              <h3>Тестирование (моки)</h3>
+              <CodeHighlighter 
+                code={`// Интерфейс для тестирования
+type UserRepository interface {
+    GetUser(id int) (User, error)
+}
+
+// Реальная реализация
+type PostgresRepo struct {}
+func (p PostgresRepo) GetUser(id int) (User, error) { /* ... */ }
+
+// Мок для тестов
+type MockRepo struct {}
+func (m MockRepo) GetUser(id int) (User, error) {
+    return User{Name: "Mock"}, nil
+}`}
+              />
+            </li>
+          </ol>
         </div>
       ),
     },
