@@ -1536,7 +1536,7 @@ func (s Service) Process(data string) error {
             </li>
             <li>
               <h3>Тестирование (моки)</h3>
-              <CodeHighlighter 
+              <CodeHighlighter
                 code={`// Интерфейс для тестирования
 type UserRepository interface {
     GetUser(id int) (User, error)
@@ -1557,7 +1557,51 @@ func (m MockRepo) GetUser(id int) (User, error) {
         </div>
       ),
     },
+    'Встраивание структур (embedding)': {
+      get title() {
+        return 'Интерфейсы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            Встраивание (embedding) — это способ <span>композиции</span> структур. Вместо
+            наследования (как в ООП), Go предлагает встраивать одну структуру в
+            другую, получая доступ к её полям и методам как к своим.
+          </p>
+          <CodeHighlighter 
+            code={`type Address struct {
+    City    string
+    Street  string
+    ZipCode int
+}
+
+type User struct {
+    Name    string
+    Address // ← Встраивание (без имени!)
+}
+
+func main() {
+    u := User{
+        Name: "Alice",
+        Address: Address{
+            City:    "Moscow",
+            Street:  "Tverskaya",
+            ZipCode: 101000,
+        },
+    }
     
+    // Прямой доступ к полям Address
+    fmt.Println(u.City)    // Moscow (а не u.Address.City)
+    fmt.Println(u.Street)  // Tverskaya
+    fmt.Println(u.ZipCode) // 101000
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
