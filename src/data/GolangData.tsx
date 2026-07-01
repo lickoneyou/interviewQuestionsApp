@@ -6438,6 +6438,132 @@ func parseToken(tokenString string) (*Claims, error) {
         </div>
       ),
     },
+    'go mod vendor, replace': {
+      get title() {
+        return 'go mod vendor, replace';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>vendor</b> — директория, содержащая копии всех зависимостей
+            проекта.
+          </p>
+          <p>Зачем:</p>
+          <ul>
+            <li>Офлайн-сборка (без интернета)</li>
+            <li>Фиксация версий зависимостей</li>
+            <li>CI/CD без доступа к внешним репозиториям</li>
+            <li>Полный контроль над кодом зависимостей</li>
+          </ul>
+          <h2>Основные команды</h2>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# 1. Создать vendor директорию
+go mod vendor
+
+# 2. Собрать проект с использованием vendor
+go build -mod=vendor
+
+# 3. Запустить с vendor
+go run -mod=vendor main.go
+
+# 4. Протестировать с vendor
+go test -mod=vendor ./...
+
+# 5. Очистить vendor (удалить)
+rm -rf vendor/`}
+          />
+          <h2>Структура vendor</h2>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`myapp/
+├── go.mod
+├── go.sum
+├── main.go
+└── vendor/
+    ├── modules.txt          # список зависимостей
+    ├── github.com/
+    │   ├── go-chi/
+    │   │   └── chi/         # код библиотеки
+    │   └── lib/
+    │       └── pq/          # код библиотеки
+    └── golang.org/
+        └── x/
+            └── crypto/      # код библиотеки`}
+          />
+          <h2>Когда использовать vendor</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>СЦЕНАРИЙ</th>
+                <th>НУЖЕН VENDOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CI/CD без интернета</td>
+                <td>✅ Да</td>
+              </tr>
+              <tr>
+                <td>Офлайн-разработка</td>
+                <td>✅ Да</td>
+              </tr>
+              <tr>
+                <td>Фиксация версий</td>
+                <td>❌ (go.mod достаточно)</td>
+              </tr>
+              <tr>
+                <td>Быстрая сборка</td>
+                <td>❌ (без vendor быстрее)</td>
+              </tr>
+              <tr>
+                <td>Публичные проекты</td>
+                <td>❌ (не нужно)</td>
+              </tr>
+              <tr>
+                <td>Внутренние/корпоративные</td>
+                <td>✅ Да</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>go mod replace — замена зависимостей</h2>
+          <p>
+            <b>replace</b> — заменяет один модуль на другой (локальную версию,
+            форк).
+          </p>
+          <p>Синтаксис:</p>
+          <CodeHighlighter 
+            language={'markdown'}
+            code={`// go.mod
+replace github.com/old/repo => github.com/new/repo v1.2.3
+replace github.com/some/repo => ./local/path`}
+          />
+          <p>Примеры:</p>
+          <CodeHighlighter 
+            code={`module myapp
+
+go 1.21
+
+require (
+    github.com/go-chi/chi/v5 v5.0.10
+    github.com/lib/pq v1.10.9
+)
+
+// 1. Замена на форк
+replace github.com/go-chi/chi/v5 => github.com/myfork/chi/v5 v1.0.0
+
+// 2. Замена на локальную папку
+replace github.com/lib/pq => ./internal/pq
+
+// 3. Замена на другую версию
+replace github.com/some/repo => github.com/some/repo v1.2.3`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
