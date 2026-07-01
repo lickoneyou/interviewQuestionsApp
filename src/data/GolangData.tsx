@@ -4630,6 +4630,123 @@ func main() {
         </div>
       ),
     },
+    'Переменные окружения и конфигурация': {
+      get title() {
+        return 'Переменные окружения и конфигурация';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Переменные окружения (os.Getenv)</h2>
+          <CodeHighlighter
+            code={`import "os"
+
+func main() {
+    // 1. Получить переменную
+    host := os.Getenv("HOST")
+    fmt.Println(host) // вернет "" если не задана
+
+    // 2. Получить с проверкой
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080" // значение по умолчанию
+    }
+
+    // 3. Проверить существование
+    val, exists := os.LookupEnv("API_KEY")
+    if !exists {
+        fmt.Println("API_KEY не задан")
+    }
+
+    // 4. Установить переменную (в текущем процессе)
+    os.Setenv("APP_MODE", "production")
+
+    // 5. Удалить переменную
+    os.Unsetenv("TEMP_VAR")
+}`}
+          />
+          <h2>Конфигурация с Viper</h2>
+          <h3>Установка</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={'go get github.com/spf13/viper'}
+          />
+          <h3>Возможности:</h3>
+          <ul>
+            <li>Чтение из .env, .json, .yaml, .toml</li>
+            <li>Автоматическая подгрузка изменений</li>
+            <li>Переменные окружения</li>
+            <li>Значения по умолчанию</li>
+          </ul>
+          <h3>Файл config.yaml:</h3>
+          <CodeHighlighter 
+            language={'yaml'}
+            code={`host: localhost
+port: 8080
+env: development
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: secret
+  name: myapp
+
+redis:
+  host: localhost
+  port: 6379`}
+          />
+          <h3>Пример использования:</h3>
+          <CodeHighlighter 
+            code={`import "github.com/spf13/viper"
+
+func main() {
+    // 1. Инициализация Viper
+    viper.SetConfigName("config")     // имя файла (без расширения)
+    viper.SetConfigType("yaml")       // тип файла
+    viper.AddConfigPath(".")          // путь к файлу
+    viper.AddConfigPath("./config")   // дополнительные пути
+    
+    // 2. Загружаем конфиг
+    err := viper.ReadInConfig()
+    if err != nil {
+        log.Fatal("Ошибка загрузки конфига:", err)
+    }
+    
+    // 3. Читаем значения
+    host := viper.GetString("host")
+    port := viper.GetInt("port")
+    env := viper.GetString("env")
+    
+    dbHost := viper.GetString("database.host")
+    dbPort := viper.GetInt("database.port")
+    
+    // 4. В структуру
+    type Config struct {
+        Host string \`mapstructure:"host"\`
+        Port int    \`mapstructure:"port"\`
+        Env  string \`mapstructure:"env"\`
+        DB   struct {
+            Host string \`mapstructure:"host"\`
+            Port int    \`mapstructure:"port"\`
+            User string \`mapstructure:"user"\`
+            Pass string \`mapstructure:"password"\`
+            Name string \`mapstructure:"name"\`
+        } \`mapstructure:"database"\`
+    }
+    
+    var config Config
+    err = viper.Unmarshal(&config)
+    if err != nil {
+        log.Fatal("Ошибка парсинга:", err)
+    }
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
