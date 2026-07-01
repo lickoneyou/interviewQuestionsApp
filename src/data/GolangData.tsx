@@ -4973,7 +4973,7 @@ DROP TABLE IF EXISTS users;`}
             <li>Освободить ресурсы</li>
             <li>Корректно завершить транзакции</li>
           </ul>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -5023,6 +5023,512 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "OK")
 }`}
           />
+        </div>
+      ),
+    },
+    'Чистая архитектура на Go (Handler → Service → Repository)': {
+      get title() {
+        return 'Чистая архитектура на Go (Handler → Service → Repository)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Чистая архитектура</b> — разделение кода на слои с чёткими
+            границами и зависимостями.
+          </p>
+          <p>Слои (сверху вниз):</p>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`Presentation (HTTP handlers)  ← внешний мир
+     ↓
+Application (Use cases)       ← бизнес-логика
+     ↓
+Domain (Entities)             ← бизнес-сущности
+     ↓
+Infrastructure (Repository)   ← БД, внешние сервисы`}
+          />
+          <p>
+            <b>Правило зависимостей</b>: зависимости направлены внутрь (внешние
+            слои зависят от внутренних, но не наоборот).
+          </p>
+          <h2>Структура проекта</h2>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`myapp/
+├── cmd/
+│   └── server/
+│       └── main.go                # точка входа
+├── internal/
+│   ├── domain/
+│   │   └── user.go                # сущности (User)
+│   ├── repository/
+│   │   ├── user.go                # интерфейс репозитория
+│   │   └── postgres/
+│   │       └── user.go            # реализация (PostgreSQL)
+│   ├── service/
+│   │   └── user.go                # бизнес-логика
+│   ├── handler/
+│   │   └── user.go                # HTTP handlers
+│   └── config/
+│       └── config.go              # конфигурация
+└── go.mod`}
+          />
+          <h2>Domain (сущности)</h2>
+          <p>Не зависят ни от чего. Чистые бизнес-данные.</p>
+          <CodeHighlighter
+            code={`// internal/domain/user.go
+package domain
+
+import "time"
+
+type User struct {
+    ID        int       \`json:"id"\`
+    Name      string    \`json:"name"\`
+    Email     string    \`json:"email"\`
+    Age       int       \`json:"age"\`
+    CreatedAt time.Time \`json:"created_at"\`
+    UpdatedAt time.Time \`json:"updated_at"\`
+}`}
+          />
+          <h2>Repository (интерфейс)</h2>
+          <p>Определяет, как мы храним данные.</p>
+          <CodeHighlighter
+            code={`// internal/repository/user.go
+package repository
+
+import (
+    "context"
+    "myapp/internal/domain"
+)
+
+type UserRepository interface {
+    Create(ctx context.Context, user *domain.User) error
+    GetByID(ctx context.Context, id int) (*domain.User, error)
+    GetByEmail(ctx context.Context, email string) (*domain.User, error)
+    Update(ctx context.Context, user *domain.User) error
+    Delete(ctx context.Context, id int) error
+    List(ctx context.Context) ([]domain.User, error)
+}`}
+          />
+          <h2>Repository (реализация — PostgreSQL)</h2>
+          <CodeHighlighter
+            code={`// internal/repository/postgres/user.go
+package postgres
+
+import (
+    "context"
+    "database/sql"
+    "fmt"
+    "myapp/internal/domain"
+    "myapp/internal/repository"
+)
+
+type UserRepository struct {
+    db *sql.DB
+}
+
+func NewUserRepository(db *sql.DB) repository.UserRepository {
+    return &UserRepository{db: db}
+}
+
+func (r *UserRepository) Create(ctx context.Context, user *domain.User) error {
+    query := \`INSERT INTO users (name, email, age) VALUES ($1, $2, $3) RETURNING id, created_at, updated_at\`
+    err := r.db.QueryRowContext(ctx, query, user.Name, user.Email, user.Age).
+        Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
+    return err
+}
+
+func (r *UserRepository) GetByID(ctx context.Context, id int) (*domain.User, error) {
+    var user domain.User
+    query := \`SELECT id, name, email, age, created_at, updated_at FROM users WHERE id = $1\`
+    err := r.db.QueryRowContext(ctx, query, id).Scan(
+        &user.ID, &user.Name, &user.Email, &user.Age,
+        &user.CreatedAt, &user.UpdatedAt,
+    )
+    if err == sql.ErrNoRows {
+        return nil, nil
+    }
+    return &user, err
+}
+
+func (r *UserRepository) GetByEmail(ctx context.Context, email string) (*domain.User, error) {
+    var user domain.User
+    query := \`SELECT id, name, email, age, created_at, updated_at FROM users WHERE email = $1\`
+    err := r.db.QueryRowContext(ctx, query, email).Scan(
+        &user.ID, &user.Name, &user.Email, &user.Age,
+        &user.CreatedAt, &user.UpdatedAt,
+    )
+    if err == sql.ErrNoRows {
+        return nil, nil
+    }
+    return &user, err
+}
+
+func (r *UserRepository) Update(ctx context.Context, user *domain.User) error {
+    query := \`UPDATE users SET name = $1, email = $2, age = $3, updated_at = NOW() WHERE id = $4 RETURNING updated_at\`
+    return r.db.QueryRowContext(ctx, query, user.Name, user.Email, user.Age, user.ID).
+        Scan(&user.UpdatedAt)
+}
+
+func (r *UserRepository) Delete(ctx context.Context, id int) error {
+    _, err := r.db.ExecContext(ctx, \`DELETE FROM users WHERE id = $1\`, id)
+    return err
+}
+
+func (r *UserRepository) List(ctx context.Context) ([]domain.User, error) {
+    rows, err := r.db.QueryContext(ctx, \`SELECT id, name, email, age, created_at, updated_at FROM users ORDER BY id\`)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var users []domain.User
+    for rows.Next() {
+        var u domain.User
+        if err := rows.Scan(&u.ID, &u.Name, &u.Email, &u.Age, &u.CreatedAt, &u.UpdatedAt); err != nil {
+            return nil, err
+        }
+        users = append(users, u)
+    }
+    return users, rows.Err()
+}`}
+          />
+          <h2>Service (бизнес-логика)</h2>
+          <p>Содержит бизнес-правила. Зависит от репозитория (интерфейс).</p>
+          <CodeHighlighter 
+            code={`// internal/service/user.go
+package service
+
+import (
+    "context"
+    "errors"
+    "myapp/internal/domain"
+    "myapp/internal/repository"
+)
+
+var (
+    ErrUserNotFound = errors.New("пользователь не найден")
+    ErrEmailExists  = errors.New("email уже используется")
+)
+
+type UserService struct {
+    repo repository.UserRepository
+}
+
+func NewUserService(repo repository.UserRepository) *UserService {
+    return &UserService{repo: repo}
+}
+
+func (s *UserService) Create(ctx context.Context, name, email string, age int) (*domain.User, error) {
+    // 1. Валидация
+    if name == "" {
+        return nil, errors.New("имя обязательно")
+    }
+    if email == "" {
+        return nil, errors.New("email обязателен")
+    }
+    if age < 0 || age > 150 {
+        return nil, errors.New("возраст от 0 до 150")
+    }
+
+    // 2. Проверка уникальности email
+    existing, _ := s.repo.GetByEmail(ctx, email)
+    if existing != nil {
+        return nil, ErrEmailExists
+    }
+
+    // 3. Создание
+    user := &domain.User{
+        Name:  name,
+        Email: email,
+        Age:   age,
+    }
+
+    if err := s.repo.Create(ctx, user); err != nil {
+        return nil, err
+    }
+
+    return user, nil
+}
+
+func (s *UserService) GetByID(ctx context.Context, id int) (*domain.User, error) {
+    if id <= 0 {
+        return nil, errors.New("неверный ID")
+    }
+
+    user, err := s.repo.GetByID(ctx, id)
+    if err != nil {
+        return nil, err
+    }
+    if user == nil {
+        return nil, ErrUserNotFound
+    }
+    return user, nil
+}
+
+func (s *UserService) Update(ctx context.Context, id int, name, email string, age int) (*domain.User, error) {
+    // 1. Проверка существования
+    user, err := s.repo.GetByID(ctx, id)
+    if err != nil {
+        return nil, err
+    }
+    if user == nil {
+        return nil, ErrUserNotFound
+    }
+
+    // 2. Валидация
+    if name != "" {
+        user.Name = name
+    }
+    if email != "" {
+        // Проверка уникальности email
+        existing, _ := s.repo.GetByEmail(ctx, email)
+        if existing != nil && existing.ID != id {
+            return nil, ErrEmailExists
+        }
+        user.Email = email
+    }
+    if age > 0 {
+        user.Age = age
+    }
+
+    // 3. Обновление
+    if err := s.repo.Update(ctx, user); err != nil {
+        return nil, err
+    }
+
+    return user, nil
+}
+
+func (s *UserService) Delete(ctx context.Context, id int) error {
+    if id <= 0 {
+        return errors.New("неверный ID")
+    }
+
+    user, err := s.repo.GetByID(ctx, id)
+    if err != nil {
+        return err
+    }
+    if user == nil {
+        return ErrUserNotFound
+    }
+
+    return s.repo.Delete(ctx, id)
+}
+
+func (s *UserService) List(ctx context.Context) ([]domain.User, error) {
+    return s.repo.List(ctx)
+}`}
+          />
+          <h2>Handler (HTTP слой)</h2>
+          <p>Обрабатывает HTTP запросы. Зависит от сервиса.</p>
+          <CodeHighlighter 
+            code={`// internal/handler/user.go
+package handler
+
+import (
+    "encoding/json"
+    "net/http"
+    "strconv"
+    "myapp/internal/service"
+)
+
+type UserHandler struct {
+    service *service.UserService
+}
+
+func NewUserHandler(service *service.UserService) *UserHandler {
+    return &UserHandler{service: service}
+}
+
+// DTO для запросов/ответов
+type CreateUserRequest struct {
+    Name  string \`json:"name"\`
+    Email string \`json:"email"\`
+    Age   int    \`json:"age"\`
+}
+
+type UserResponse struct {
+    ID    int    \`json:"id"\`
+    Name  string \`json:"name"\`
+    Email string \`json:"email"\`
+    Age   int    \`json:"age"\`
+}
+
+func (h *UserHandler) Create(w http.ResponseWriter, r *http.Request) {
+    var req CreateUserRequest
+    if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+        http.Error(w, "Неверный JSON", http.StatusBadRequest)
+        return
+    }
+
+    user, err := h.service.Create(r.Context(), req.Name, req.Email, req.Age)
+    if err != nil {
+        if err == service.ErrEmailExists {
+            http.Error(w, err.Error(), http.StatusConflict)
+            return
+        }
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusCreated)
+    json.NewEncoder(w).Encode(UserResponse{
+        ID:    user.ID,
+        Name:  user.Name,
+        Email: user.Email,
+        Age:   user.Age,
+    })
+}
+
+func (h *UserHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+    // получаем ID из URL
+    idStr := r.URL.Path[len("/api/users/"):]
+    id, err := strconv.Atoi(idStr)
+    if err != nil {
+        http.Error(w, "Неверный ID", http.StatusBadRequest)
+        return
+    }
+
+    user, err := h.service.GetByID(r.Context(), id)
+    if err != nil {
+        if err == service.ErrUserNotFound {
+            http.Error(w, err.Error(), http.StatusNotFound)
+            return
+        }
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(UserResponse{
+        ID:    user.ID,
+        Name:  user.Name,
+        Email: user.Email,
+        Age:   user.Age,
+    })
+}
+
+func (h *UserHandler) List(w http.ResponseWriter, r *http.Request) {
+    users, err := h.service.List(r.Context())
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(users)
+}`}
+          />
+          <h2>Main (сборка)</h2>
+          <p>Собираем все вместе + DI (Dependency Injection).</p>
+          <CodeHighlighter 
+            code={`// cmd/server/main.go
+package main
+
+import (
+    "database/sql"
+    "log"
+    "net/http"
+    "os"
+    "os/signal"
+    "syscall"
+    "time"
+
+    "myapp/internal/handler"
+    "myapp/internal/repository/postgres"
+    "myapp/internal/service"
+
+    _ "github.com/lib/pq"
+)
+
+func main() {
+    // 1. Подключение к БД
+    connStr := "postgres://postgres:secret@localhost:5432/myapp?sslmode=disable"
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    if err := db.Ping(); err != nil {
+        log.Fatal(err)
+    }
+
+    // 2. DI (сборка зависимостей)
+    userRepo := postgres.NewUserRepository(db)
+    userService := service.NewUserService(userRepo)
+    userHandler := handler.NewUserHandler(userService)
+
+    // 3. Роутинг
+    http.HandleFunc("POST /api/users", userHandler.Create)
+    http.HandleFunc("GET /api/users/{id}", userHandler.GetByID)
+    http.HandleFunc("GET /api/users", userHandler.List)
+
+    // 4. Сервер
+    srv := &http.Server{
+        Addr:    ":8080",
+        Handler: http.DefaultServeMux,
+    }
+
+    // 5. Запуск
+    go func() {
+        log.Println("Сервер на :8080")
+        if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+            log.Fatal(err)
+        }
+    }()
+
+    // 6. Graceful shutdown
+    quit := make(chan os.Signal, 1)
+    signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
+    <-quit
+
+    log.Println("Завершение...")
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    if err := srv.Shutdown(ctx); err != nil {
+        log.Fatal(err)
+    }
+    log.Println("Остановлен")
+}`}
+          />
+          <h2>Преимущества чистой архитектуры</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ПРЕИМУЩЕСТВО</th>
+                <th>ОПИСАНИЕ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Тестируемость</td>
+                <td>Легко мокать репозитории</td>
+              </tr>
+              <tr>
+                <td>Гибкость</td>
+                <td>Легко менять БД (PostgreSQL → MySQL)</td>
+              </tr>
+              <tr>
+                <td>Независимость</td>
+                <td>Бизнес-логика не зависит от HTTP</td>
+              </tr>
+              <tr>
+                <td>Читаемость</td>
+                <td>Код структурирован и понятен</td>
+              </tr>
+              <tr>
+                <td>Разделение</td>
+                <td>Каждый слой отвечает за своё</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
