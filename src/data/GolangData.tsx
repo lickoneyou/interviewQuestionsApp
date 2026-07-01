@@ -4388,6 +4388,82 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
         </div>
       ),
     },
+    'Обработка запросов — чтение тела, парсинг JSON': {
+      get title() {
+        return 'Обработка запросов — чтение тела, парсинг JSON';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Чтение тела запроса (io.ReadAll)</h2>
+          <CodeHighlighter 
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    // читаем тело
+    body, err := io.ReadAll(r.Body)
+    if err != nil {
+        http.Error(w, "Ошибка чтения тела", http.StatusBadRequest)
+        return
+    }
+    defer r.Body.Close() // обязательно закрываем
+    
+    fmt.Fprintf(w, "Получено: %s", string(body))
+}`}
+          />
+          <h2>Парсинг JSON в структуру</h2>
+          <CodeHighlighter 
+            code={`type User struct {
+    ID    int    \`json:"id"\`
+    Name  string \`json:"name"\`
+    Email string \`json:"email,omitempty"\`
+}
+
+func createUser(w http.ResponseWriter, r *http.Request) {
+    body, err := io.ReadAll(r.Body)
+    if err != nil {
+        http.Error(w, "Ошибка чтения", http.StatusBadRequest)
+        return
+    }
+    defer r.Body.Close()
+
+    var user User
+    err = json.Unmarshal(body, &user)
+    if err != nil {
+        http.Error(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+        return
+    }
+
+    fmt.Printf("Создан пользователь: %+v\\n", user)
+    w.WriteHeader(http.StatusCreated)
+    json.NewEncoder(w).Encode(map[string]interface{}{
+        "status": "ok",
+        "user":   user,
+    })
+}`}
+          />
+          <h2>JSON Decoder (потоковое чтение)</h2>
+          <CodeHighlighter 
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    var user User
+    
+    // создаём декодер из тела
+    decoder := json.NewDecoder(r.Body)
+    
+    // парсим напрямую
+    err := decoder.Decode(&user)
+    if err != nil {
+        http.Error(w, "Неверный JSON", http.StatusBadRequest)
+        return
+    }
+    defer r.Body.Close()
+    
+    // работаем с user
+}`}
+          />
+        </div>
+      )
+    }
   },
 };
 
