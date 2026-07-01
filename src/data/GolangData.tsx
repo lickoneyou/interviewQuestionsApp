@@ -4543,10 +4543,10 @@ func createUser(w http.ResponseWriter, r *http.Request) {
       jsx: (
         <div>
           <p>
-            <b>Middleware</b> — функция, которая оборачивает обработчик и выполняет код
-            до и/или после него.
+            <b>Middleware</b> — функция, которая оборачивает обработчик и
+            выполняет код до и/или после него.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func middleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         // ДО обработчика
@@ -4555,6 +4555,78 @@ func createUser(w http.ResponseWriter, r *http.Request) {
     })
 }`}
           />
+        </div>
+      ),
+    },
+    Логгирование: {
+      get title() {
+        return 'Логгирование';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>log</h2>
+          <CodeHighlighter
+            code={`import "log"
+
+func main() {
+    log.Println("Сообщение")
+    log.Printf("Форматированное %s", "сообщение")
+    log.Fatal("Критическая ошибка") // выводит и завершает программу
+    log.Panic("Паника")             // выводит и вызывает panic
+}`}
+          />
+          <h2>slog — структурированное логирование</h2>
+          <CodeHighlighter
+            code={`import "log/slog"
+
+func main() {
+    // 1. Простое логирование
+    slog.Info("Сообщение", "key", "value")
+    slog.Debug("Отладка", "count", 42)
+    slog.Warn("Предупреждение")
+    slog.Error("Ошибка", "err", err)
+}`}
+          />
+          <h2>Когда использовать</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ЗАДАЧА</th>
+                <th>log</th>
+                <th>slog</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Простое сообщение</td>
+                <td>log.Println("msg")</td>
+                <td>slog.Info("msg")</td>
+              </tr>
+              <tr>
+                <td>С форматированием</td>
+                <td>log.Printf("msg %s", val)</td>
+                <td>slog.Info("msg", "key", val)</td>
+              </tr>
+              <tr>
+                <td>Уровни</td>
+                <td>Свои функции</td>
+                <td>Debug, Info, Warn, Error</td>
+              </tr>
+              <tr>
+                <td>Формат</td>
+                <td>Текст</td>
+                <td>Text или JSON</td>
+              </tr>
+              <tr>
+                <td>Запись в файл</td>
+                <td>log.SetOutput(file)</td>
+                <td>slog.New(slog.NewJSONHandler(file, nil))</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
