@@ -6260,6 +6260,184 @@ func main() {
         </div>
       ),
     },
+    'crypto — хеши, JWT': {
+      get title() {
+        return 'crypto — хеши, JWT';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Хеширование (bcrypt)</h2>
+          <p>
+            <b>bcrypt</b> — безопасное хеширование паролей (медленное,
+            устойчивое к перебору).
+          </p>
+          <p>Установка:</p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go get golang.org/x/crypto/bcrypt`}
+          />
+          <p>Хеширование пароля:</p>
+          <CodeHighlighter
+            code={`import "golang.org/x/crypto/bcrypt"
+
+func hashPassword(password string) (string, error) {
+    // cost = 10 (рекомендуется 10-12)
+    bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+    return string(bytes), err
+}`}
+          />
+          <p>Проверка пароля:</p>
+          <CodeHighlighter
+            code={`func checkPasswordHash(password, hash string) bool {
+    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+    return err == nil
+}`}
+          />
+          <h2>SHA-256 (crypto/sha256)</h2>
+          <p>
+            <b>SHA-256</b> — криптографическая хеш-функция (для контрольных
+            сумм, подписей).
+          </p>
+          <CodeHighlighter
+            code={`import "crypto/sha256"
+
+func sha256Hash(text string) string {
+    h := sha256.New()
+    h.Write([]byte(text))
+    return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+func main() {
+    text := "Hello, World!"
+    hash := sha256Hash(text)
+    fmt.Println("SHA-256:", hash)
+}`}
+          />
+          <p>SHA-256 с солью:</p>
+          <CodeHighlighter
+            code={`func sha256WithSalt(text, salt string) string {
+    h := sha256.New()
+    h.Write([]byte(text + salt))
+    return fmt.Sprintf("%x", h.Sum(nil))
+}`}
+          />
+          <h2>HMAC (crypto/hmac)</h2>
+          <p>
+            <b>HMAC</b> — хеш с секретным ключом (для подписей, авторизации).
+          </p>
+          <CodeHighlighter
+            code={`import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/hex"
+)
+
+func hmacSHA256(message, secret string) string {
+    h := hmac.New(sha256.New, []byte(secret))
+    h.Write([]byte(message))
+    return hex.EncodeToString(h.Sum(nil))
+}
+
+func verifyHMAC(message, secret, signature string) bool {
+    expected := hmacSHA256(message, secret)
+    return hmac.Equal([]byte(expected), []byte(signature))
+}`}
+          />
+          <h2>JWT (JSON Web Tokens)</h2>
+          <p>
+            <b>JWT</b> — токен для авторизации (подписанный JSON).
+          </p>
+          <p>Установка:</p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go get github.com/golang-jwt/jwt/v5`}
+          />
+          <p>JWT — базовая структура:</p>
+          <ul>
+            <li>
+              <b>Header</b>: алгоритм и тип токена
+            </li>
+            <li>
+              <b>Payload</b>: данные (claims)
+            </li>
+            <li>
+              <b>Signature</b>: подпись (HMAC или RSA)
+            </li>
+          </ul>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "fmt"
+    "time"
+    "github.com/golang-jwt/jwt/v5"
+)
+
+type Claims struct {
+    UserID int    \`json:"user_id"\`
+    Email  string \`json:"email"\`
+    jwt.RegisteredClaims
+}
+
+var jwtSecret = []byte("my-secret-key")
+
+func main() {
+    // 1. Генерация токена
+    token, err := generateToken(1, "alice@mail.com")
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println("Токен:", token)
+    
+    // 2. Парсинг токена
+    claims, err := parseToken(token)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("UserID: %d, Email: %s\\n", claims.UserID, claims.Email)
+    fmt.Println("Истек:", claims.ExpiresAt.Time)
+}
+
+func generateToken(userID int, email string) (string, error) {
+    claims := Claims{
+        UserID: userID,
+        Email:  email,
+        RegisteredClaims: jwt.RegisteredClaims{
+            ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
+            IssuedAt:  jwt.NewNumericDate(time.Now()),
+            Issuer:    "myapp",
+        },
+    }
+    
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+    return token.SignedString(jwtSecret)
+}
+
+func parseToken(tokenString string) (*Claims, error) {
+    token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+        if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+            return nil, fmt.Errorf("неверный алгоритм")
+        }
+        return jwtSecret, nil
+    })
+    
+    if err != nil {
+        return nil, err
+    }
+    
+    if claims, ok := token.Claims.(*Claims); ok && token.Valid {
+        return claims, nil
+    }
+    
+    return nil, fmt.Errorf("невалидный токен")
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
