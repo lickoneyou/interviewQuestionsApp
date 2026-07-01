@@ -5999,7 +5999,7 @@ var templates embed.FS`}
     },
     'Пакет time — таймеры, тикеры': {
       get title() {
-        return 'embed';
+        return 'Пакет time — таймеры, тикеры';
       },
       get id() {
         return slugifyText(this.title);
