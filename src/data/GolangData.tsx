@@ -5198,7 +5198,7 @@ func (r *UserRepository) List(ctx context.Context) ([]domain.User, error) {
           />
           <h2>Service (бизнес-логика)</h2>
           <p>Содержит бизнес-правила. Зависит от репозитория (интерфейс).</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// internal/service/user.go
 package service
 
@@ -5325,7 +5325,7 @@ func (s *UserService) List(ctx context.Context) ([]domain.User, error) {
           />
           <h2>Handler (HTTP слой)</h2>
           <p>Обрабатывает HTTP запросы. Зависит от сервиса.</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// internal/handler/user.go
 package handler
 
@@ -5426,7 +5426,7 @@ func (h *UserHandler) List(w http.ResponseWriter, r *http.Request) {
           />
           <h2>Main (сборка)</h2>
           <p>Собираем все вместе + DI (Dependency Injection).</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// cmd/server/main.go
 package main
 
@@ -5529,6 +5529,46 @@ func main() {
               </tr>
             </tbody>
           </table>
+        </div>
+      ),
+    },
+    'Dependency Injection': {
+      get title() {
+        return 'Dependency Injection';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Dependency Injection (DI)</b> — передача зависимостей в компонент
+            извне (через конструктор, метод или поле), а не создание внутри
+            компонента.
+          </p>
+          <p>
+            <b>Принцип</b>: компонент не создаёт свои зависимости, а получает
+            их.
+          </p>
+          <CodeHighlighter 
+            code={`// ПЛОХО (жёсткая связь)
+type UserService struct {}
+
+func (s *UserService) GetUser(id int) {
+    // создаёт зависимость внутри
+    repo := &PostgresUserRepository{}
+    repo.GetByID(id)
+}
+
+// ХОРОШО (инъекция через конструктор)
+type UserService struct {
+    repo UserRepository // интерфейс!
+}
+
+func NewUserService(repo UserRepository) *UserService {
+    return &UserService{repo: repo}
+}`}
+          />
         </div>
       ),
     },
