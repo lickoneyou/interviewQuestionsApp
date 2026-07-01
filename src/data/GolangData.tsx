@@ -6677,7 +6677,7 @@ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/insta
 golangci-lint --version`}
           />
           <p>Запуск:</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'bash'}
             code={`# Проверить весь проект
 golangci-lint run ./...
@@ -6690,6 +6690,161 @@ golangci-lint run --fix ./...
 
 # Быстрый режим (только новые ошибки)
 golangci-lint run --new ./...`}
+          />
+        </div>
+      ),
+    },
+    'Профилирование (pprof)': {
+      get title() {
+        return 'Профилирование (pprof)';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Профилирование</b> — анализ производительности программы.
+          </p>
+          <p>Что можно измерить:</p>
+          <ul>
+            <li>CPU — где программа тратит время</li>
+            <li>Memory — где выделяется память</li>
+            <li>Goroutines — количество горутин</li>
+            <li>Block — блокировки (мьютексы)</li>
+            <li>Mutex — конкуренция за мьютексы</li>
+          </ul>
+          <h2>CPU профилирование</h2>
+          <p>Сохранение профиля в файл:</p>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "os"
+    "runtime/pprof"
+)
+
+func main() {
+    // 1. Создаём файл для профиля
+    f, err := os.Create("cpu.prof")
+    if err != nil {
+        panic(err)
+    }
+    defer f.Close()
+    
+    // 2. Начинаем сбор
+    pprof.StartCPUProfile(f)
+    defer pprof.StopCPUProfile()
+    
+    // 3. Код для профилирования
+    heavyFunction()
+}`}
+          />
+          <p>Запуск:</p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go run main.go
+# создаст cpu.prof`}
+          />
+          <h2>Memory профилирование</h2>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "os"
+    "runtime/pprof"
+)
+
+func main() {
+    // 1. Создаём файл
+    f, err := os.Create("mem.prof")
+    if err != nil {
+        panic(err)
+    }
+    defer f.Close()
+    
+    // 2. Код для профилирования
+    heavyAllocation()
+    
+    // 3. Сохраняем профиль памяти
+    pprof.WriteHeapProfile(f)
+}`}
+          />
+          <p>Или через HTTP (удобнее):</p>
+          <CodeHighlighter 
+            code={`import _ "net/http/pprof"
+
+func main() {
+    go func() {
+        log.Println(http.ListenAndServe("localhost:6060", nil))
+    }()
+    
+    // ваш код
+}`}
+          />
+          <h2>HTTP pprof (самый удобный способ)</h2>
+          <p>Добавьте в код:</p>
+          <CodeHighlighter 
+            code={`import _ "net/http/pprof"
+
+func main() {
+    // 1. Запускаем pprof сервер
+    go func() {
+        log.Println(http.ListenAndServe("localhost:6060", nil))
+    }()
+    
+    // 2. Ваш код
+    heavyFunction()
+}`}
+          />
+          <p>Доступные эндпоинты:</p>
+          <CodeHighlighter 
+            language={'markdown'}
+            code={`/debug/pprof/              # главная страница
+/debug/pprof/profile       # CPU профиль (30 сек)
+/debug/pprof/heap          # память
+/debug/pprof/goroutine     # горутины
+/debug/pprof/block         # блокировки
+/debug/pprof/mutex         # мьютексы
+/debug/pprof/trace         # трассировка`}
+          />
+          <h2>Анализ профиля (интерактивный)</h2>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`# 1. CPU профиль (30 секунд)
+go tool pprof http://localhost:6060/debug/pprof/profile?seconds=30
+
+# 2. Memory профиль
+go tool pprof http://localhost:6060/debug/pprof/heap
+
+# 3. Goroutine профиль
+go tool pprof http://localhost:6060/debug/pprof/goroutine`}
+          />
+          <p>Команды внутри pprof:</p>
+          <CodeHighlighter 
+            language={'markdown'}
+            code={`top         # самые затратные функции
+top10       # топ-10
+list func   # код функции
+web         # визуализация (граф)
+pdf         # PDF граф
+svg         # SVG граф
+text        # текстовый вывод`}
+          />
+          <h2>Анализ с сохранённым файлом</h2>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`# 1. Скачиваем профиль
+curl -o cpu.prof http://localhost:6060/debug/pprof/profile?seconds=30
+
+# 2. Анализируем
+go tool pprof cpu.prof`}
+          />
+          <p>Или сразу:</p>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`go tool pprof -http=:8080 cpu.prof
+# открывается браузер с графическим интерфейсом`}
           />
         </div>
       ),
