@@ -5550,7 +5550,7 @@ func main() {
             <b>Принцип</b>: компонент не создаёт свои зависимости, а получает
             их.
           </p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// ПЛОХО (жёсткая связь)
 type UserService struct {}
 
@@ -5568,6 +5568,73 @@ type UserService struct {
 func NewUserService(repo UserRepository) *UserService {
     return &UserService{repo: repo}
 }`}
+          />
+        </div>
+      ),
+    },
+    Бенчмарки: {
+      get title() {
+        return 'Бенчмарки';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Бенчмарки</b> — измерение производительности кода: время
+            выполнения, количество операций, аллокации памяти.
+          </p>
+          <h2>Пример бенчмарка</h2>
+          <CodeHighlighter 
+            code={`// math.go
+package math
+
+func Add(a, b int) int {
+    return a + b
+}
+
+func AddSlow(a, b int) int {
+    result := 0
+    for i := 0; i < 100; i++ {
+        result += a + b
+    }
+    return result / 100
+}`}
+          />
+          <CodeHighlighter 
+            code={`// math_test.go
+package math
+
+import "testing"
+
+func BenchmarkAdd(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Add(1, 2)
+    }
+}
+
+func BenchmarkAddSlow(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        AddSlow(1, 2)
+    }
+}`}
+          />
+          <p>Запуск:</p>
+          <CodeHighlighter 
+            language={'bash'}
+            code={'go test -bench=.'}
+          />
+          <p>Вывод:</p>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`goos: linux
+goarch: amd64
+pkg: myapp/math
+BenchmarkAdd-8          1000000000               0.25 ns/op
+BenchmarkAddSlow-8       10000000               125.00 ns/op
+PASS
+ok      myapp/math      1.234s`}
           />
         </div>
       ),
