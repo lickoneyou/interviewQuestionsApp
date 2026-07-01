@@ -4940,9 +4940,88 @@ DROP TABLE IF EXISTS users;`}
             code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" force 2`}
           />
           <h3>Посмотреть версию:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'bash'}
             code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" version`}
+          />
+        </div>
+      ),
+    },
+    'Graceful shutdown': {
+      get title() {
+        return 'Graceful shutdown';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Graceful shutdown</b> — плавное завершение сервера при получении
+            сигнала (Ctrl+C, SIGTERM).
+          </p>
+          <p>Что должно произойти:</p>
+          <ul>
+            <li>Сервер перестаёт принимать новые запросы</li>
+            <li>Завершаются текущие запросы</li>
+            <li>Закрываются соединения с БД</li>
+            <li>Программа завершается</li>
+          </ul>
+          <p>Зачем:</p>
+          <ul>
+            <li>Не обрывать запросы клиентов</li>
+            <li>Освободить ресурсы</li>
+            <li>Корректно завершить транзакции</li>
+          </ul>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "net/http"
+    "os"
+    "os/signal"
+    "time"
+)
+
+func main() {
+    // 1. Создаём сервер
+    srv := &http.Server{
+        Addr:    ":8080",
+        Handler: http.HandlerFunc(handler),
+    }
+
+    // 2. Запускаем в горутине
+    go func() {
+        log.Println("Сервер запущен на :8080")
+        if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+            log.Fatal(err)
+        }
+    }()
+
+    // 3. Ждём сигнал (Ctrl+C)
+    quit := make(chan os.Signal, 1)
+    signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
+    <-quit
+    log.Println("Получен сигнал завершения")
+
+    // 4. Graceful shutdown
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer cancel()
+
+    if err := srv.Shutdown(ctx); err != nil {
+        log.Fatal("Ошибка при завершении:", err)
+    }
+
+    log.Println("Сервер остановлен")
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    time.Sleep(2 * time.Second) // имитация долгой работы
+    fmt.Fprintln(w, "OK")
+}`}
           />
         </div>
       ),
