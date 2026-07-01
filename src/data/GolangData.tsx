@@ -4398,7 +4398,7 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
       jsx: (
         <div>
           <h2>Чтение тела запроса (io.ReadAll)</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func handler(w http.ResponseWriter, r *http.Request) {
     // читаем тело
     body, err := io.ReadAll(r.Body)
@@ -4412,7 +4412,7 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 }`}
           />
           <h2>Парсинг JSON в структуру</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`type User struct {
     ID    int    \`json:"id"\`
     Name  string \`json:"name"\`
@@ -4443,7 +4443,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 }`}
           />
           <h2>JSON Decoder (потоковое чтение)</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func handler(w http.ResponseWriter, r *http.Request) {
     var user User
     
@@ -4462,8 +4462,77 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 }`}
           />
         </div>
-      )
-    }
+      ),
+    },
+    'Запись ответов — w.write, json, статусы': {
+      get title() {
+        return 'Запись ответов — w.write, json, статусы';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>w.Write — запись тела ответа</h2>
+          <CodeHighlighter
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    // простая строка
+    w.Write([]byte("Hello, World!"))
+    
+    // или через fmt.Fprintf (удобнее)
+    fmt.Fprintf(w, "Привет, %s!", "User")
+}`}
+          />
+          <h2>Установка статус-кодов</h2>
+          <CodeHighlighter
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    // 1. Статус по умолчанию — 200 OK
+    w.Write([]byte("OK"))
+
+    // 2. Явная установка
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("OK"))
+
+    // 3. Создание ресурса (201)
+    w.WriteHeader(http.StatusCreated)
+    w.Write([]byte("User created"))
+
+    // 4. Ошибка клиента (400)
+    w.WriteHeader(http.StatusBadRequest)
+    w.Write([]byte("Invalid request"))
+
+    // 5. Не найдено (404)
+    w.WriteHeader(http.StatusNotFound)
+    w.Write([]byte("Not found"))
+
+    // 6. Внутренняя ошибка (500)
+    w.WriteHeader(http.StatusInternalServerError)
+    w.Write([]byte("Internal error"))
+}`}
+          />
+          <h2>Установка заголовков</h2>
+          <CodeHighlighter 
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    // 1. Content-Type
+    w.Header().Set("Content-Type", "application/json")
+    
+    // 2. CORS
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+    
+    // 3. Кэширование
+    w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+    
+    // 4. Кастомный заголовок
+    w.Header().Set("X-Request-ID", "12345")
+    
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte("OK"))
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
