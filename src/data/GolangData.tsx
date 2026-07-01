@@ -4118,7 +4118,7 @@ once.Do(func() {
               </tr>
             </tbody>
           </table>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -4137,7 +4137,7 @@ func main() {
 }`}
           />
           <h2>Обработчики (Handlers)</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func helloHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "Hello, World!")
 }
@@ -4148,7 +4148,7 @@ func main() {
 }`}
           />
           <h2>Чтение данных из запроса</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func handler(w http.ResponseWriter, r *http.Request) {
     // 1. Параметры URL (query string)
     name := r.URL.Query().Get("name")
@@ -4171,6 +4171,220 @@ func main() {
     }
 }`}
           />
+        </div>
+      ),
+    },
+    Роутинг: {
+      get title() {
+        return 'Роутинг';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Стандартный роутинг (http.ServeMux)</h2>
+          <p>Стандартный роутер не поддерживает:</p>
+          <ul>
+            <li>Параметры в пути (/users/{'id'})</li>
+            <li>Методы HTTP (GET, POST) — только путь</li>
+            <li>Вложенные маршруты</li>
+          </ul>
+          <CodeHighlighter
+            code={`func main() {
+    mux := http.NewServeMux()
+
+    mux.HandleFunc("/", homeHandler)
+    mux.HandleFunc("/users", usersHandler)
+    mux.HandleFunc("/users/", userHandler) // /users/1, /users/2
+
+    http.ListenAndServe(":8080", mux)
+}`}
+          />
+          <p>Ограничения:</p>
+          <CodeHighlighter
+            code={`// НЕЛЬЗЯ сделать:
+// /users/{id} → нужно парсить руками
+// GET /users и POST /users на разные обработчики`}
+          />
+          <h2>Chi — самый популярный легковесный роутер</h2>
+          <h3>Установка:</h3>
+          <CodeHighlighter
+            language={`bash`}
+            code={`go get github.com/go-chi/chi/v5`}
+          />
+          <h3>Особенности:</h3>
+          <ul>
+            <li>✅ Параметры в пути</li>
+            <li>✅ Методы HTTP</li>
+            <li>✅ Middleware (встроенные)</li>
+            <li>✅ Группировка маршрутов</li>
+            <li>✅ Совместим со стандартным http.Handler</li>
+          </ul>
+          <CodeHighlighter
+            code={`package main
+
+import (
+    "fmt"
+    "net/http"
+
+    "github.com/go-chi/chi/v5"
+)
+
+func main() {
+    r := chi.NewRouter()
+
+    // 1. Простые маршруты
+    r.Get("/", homeHandler)
+    r.Get("/hello", helloHandler)
+
+    // 2. Параметры в пути
+    r.Get("/users/{id}", userHandler)
+    r.Get("/posts/{postID}/comments/{commentID}", nestedHandler)
+
+    // 3. Разные методы
+    r.Post("/users", createUserHandler)
+    r.Put("/users/{id}", updateUserHandler)
+    r.Delete("/users/{id}", deleteUserHandler)
+
+    http.ListenAndServe(":8080", r)
+}
+
+func userHandler(w http.ResponseWriter, r *http.Request) {
+    // получаем параметр
+    id := chi.URLParam(r, "id")
+    fmt.Fprintf(w, "Пользователь ID: %s", id)
+}`}
+          />
+          <h2>Сравнение роутеров</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>СВОЙСТВО</th>
+                <th>Стандартный</th>
+                <th>Chi</th>
+                <th>Gorilla/Mux</th>
+                <th>Gin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Параметры пути</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Методы HTTP</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Middleware</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Скорость</td>
+                <td>Быстрый</td>
+                <td>Очень быстрый</td>
+                <td>Быстрый</td>
+                <td>Очень быстрый</td>
+              </tr>
+              <tr>
+                <td>Размер</td>
+                <td>~0 КБ</td>
+                <td>~50 КБ</td>
+                <td>~100 КБ</td>
+                <td>~200 КБ</td>
+              </tr>
+              <tr>
+                <td>Уровень</td>
+                <td>Низкий</td>
+                <td>Средний</td>
+                <td>Средний</td>
+                <td>Высокий</td>
+              </tr>
+              <tr>
+                <td>Популярность</td>
+                <td>Всегда</td>
+                <td>Очень популярный</td>
+                <td>Популярный</td>
+                <td>Очень популярный</td>
+              </tr>
+              <tr>
+                <td>Обработка ошибок</td>
+                <td>Ручная</td>
+                <td>Встроенная</td>
+                <td>Ручная</td>
+                <td>Встроенная</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>Gorilla/Mux (альтернатива)</h2>
+          <h3>Установка:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go get github.com/gorilla/mux`}
+          />
+          <CodeHighlighter
+            code={`import "github.com/gorilla/mux"
+
+func main() {
+    r := mux.NewRouter()
+
+    // параметры
+    r.HandleFunc("/users/{id}", userHandler).Methods("GET")
+    r.HandleFunc("/users", createUserHandler).Methods("POST")
+
+    // квари (query)
+    r.HandleFunc("/search", searchHandler).Queries("q", "{query}")
+
+    http.ListenAndServe(":8080", r)
+}
+
+func userHandler(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    id := vars["id"]
+    fmt.Fprintf(w, "User ID: %s", id)
+}`}
+          />
+          <h2>Когда что использовать</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>СЦЕНАРИЙ</th>
+                <th>ВЫБОР</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Микросервис, API</td>
+                <td>Chi</td>
+              </tr>
+              <tr>
+                <td>Простой сервер (1-2 эндпоинта)</td>
+                <td>Стандартный</td>
+              </tr>
+              <tr>
+                <td>Крупный проект с вложенными маршрутами</td>
+                <td>Chi или Gin</td>
+              </tr>
+              <tr>
+                <td>Существующий проект на Gorilla</td>
+                <td>Оставить</td>
+              </tr>
+              <tr>
+                <td>Нужно быстро и популярно</td>
+                <td>Chi или Gin</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
