@@ -5924,6 +5924,79 @@ pool.Put(obj)`}
         </div>
       ),
     },
+    embed: {
+      get title() {
+        return 'embed';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>embed</b> — встраивание файлов и папок в бинарный файл программы
+            во время компиляции.
+          </p>
+          <p>Зачем:</p>
+          <ul>
+            <li>Один бинарный файл (без внешних зависимостей)</li>
+            <li>Удобный деплой</li>
+            <li>Статические файлы (HTML, CSS, JS, конфиги, миграции)</li>
+          </ul>
+          <CodeHighlighter
+            code={`import _ "embed"
+
+//go:embed file.txt
+var content string
+
+//go:embed image.png
+var image []byte
+
+//go:embed templates/*.html
+var templates embed.FS`}
+          />
+          <p>Типы:</p>
+          <ul>
+            <li>
+              <b>string</b> — для текстовых файлов
+            </li>
+            <li>
+              <b>[]byte</b> — для бинарных файлов
+            </li>
+            <li>
+              <b>embed.FS</b> — для файловой системы (папки)
+            </li>
+          </ul>
+          <h2>ГЛАВНОЕ, ЧТО НУЖНО ЗАПОМНИТЬ</h2>
+          <ul>
+            <li>
+              <b>embed</b> — встраивание файлов в бинарник
+            </li>
+            <li>
+              <b>//go:embed</b> — директива для встраивания
+            </li>
+            <li>
+              <b>string</b> — для текстовых файлов
+            </li>
+            <li>
+              <b>[]byte</b> — для бинарных файлов
+            </li>
+            <li>
+              <b>embed.FS</b> — для файловой системы (папки)
+            </li>
+            <li>
+              HTTP — <b>http.FileServer(http.FS(fs))</b>
+            </li>
+            <li>
+              Шаблоны — <b>template.ParseFS()</b>
+            </li>
+            <li>
+              Миграции — <b>goose.SetBaseFS()</b>
+            </li>
+          </ul>
+        </div>
+      ),
+    },
   },
 };
 
