@@ -4511,7 +4511,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 }`}
           />
           <h2>Установка заголовков</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func handler(w http.ResponseWriter, r *http.Request) {
     // 1. Content-Type
     w.Header().Set("Content-Type", "application/json")
@@ -4528,6 +4528,31 @@ func createUser(w http.ResponseWriter, r *http.Request) {
     
     w.WriteHeader(http.StatusOK)
     w.Write([]byte("OK"))
+}`}
+          />
+        </div>
+      ),
+    },
+    Middleware: {
+      get title() {
+        return 'Middleware';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Middleware</b> — функция, которая оборачивает обработчик и выполняет код
+            до и/или после него.
+          </p>
+          <CodeHighlighter 
+            code={`func middleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // ДО обработчика
+        next.ServeHTTP(w, r) // вызов обработчика
+        // ПОСЛЕ обработчика
+    })
 }`}
           />
         </div>
