@@ -5997,6 +5997,132 @@ var templates embed.FS`}
         </div>
       ),
     },
+    'Пакет time — таймеры, тикеры': {
+      get title() {
+        return 'embed';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>time.After(d)</b> — возвращает канал, который получит сигнал
+            через d времени.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    fmt.Println("Начало")
+    
+    // ждём 2 секунды
+    <-time.After(2 * time.Second)
+    
+    fmt.Println("Прошло 2 секунды")
+}`}
+          />
+          <hr />
+          <p>
+            <b>time.Tick(d)</b> — возвращает канал, который получает сигнал
+            каждые d времени.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    ticker := time.Tick(1 * time.Second)
+    
+    for i := 0; i < 5; i++ {
+        <-ticker
+        fmt.Println("Тик", i+1)
+    }
+}`}
+          />
+          <hr />
+          <p>
+            <b>time.NewTicker(d)</b> — создаёт тикер, который можно остановить.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    // 1. Создаём тикер
+    ticker := time.NewTicker(1 * time.Second)
+    defer ticker.Stop() // важно остановить!
+    
+    // 2. Используем
+    for i := 0; i < 5; i++ {
+        <-ticker.C
+        fmt.Println("Тик", i+1)
+    }
+}`}
+          />
+          <hr />
+          <p>
+            <b>time.NewTimer(d)</b> — одноразовый таймер (можно остановить).
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    // 1. Создаём таймер
+    timer := time.NewTimer(2 * time.Second)
+    
+    // 2. Ждём
+    <-timer.C
+    fmt.Println("Прошло 2 секунды")
+}`}
+          />
+          <hr />
+          <p>
+            <b>time.Sleep(d)</b> — блокирует текущую горутину на d времени.
+          </p>
+          <CodeHighlighter
+            code={`func main() {
+    fmt.Println("Начало")
+    time.Sleep(2 * time.Second)
+    fmt.Println("Конец")
+}`}
+          />
+          <h2>Сравнение методов</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>МЕТОД</th>
+                <th>БЛОКИРУЕТ</th>
+                <th>УПРАВЛЯЕМЫЙ</th>
+                <th>ПОВТОРЯЮЩИЙСЯ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>time.Sleep()</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>time.After()</td>
+                <td>❌ (канал)</td>
+                <td>❌</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>time.Tick()</td>
+                <td>❌ (канал)</td>
+                <td>❌</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>time.NewTimer()</td>
+                <td>❌ (канал)</td>
+                <td>✅</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>time.NewTicker()</td>
+                <td>❌ (канал)</td>
+                <td>✅</td>
+                <td>✅</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
