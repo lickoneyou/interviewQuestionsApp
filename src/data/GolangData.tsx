@@ -4078,6 +4078,102 @@ once.Do(func() {
         </div>
       ),
     },
+    'HTTP-СЕРВЕР': {
+      get title() {
+        return 'HTTP-СЕРВЕР';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Основные компоненты</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>КОМПОНЕНТ</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>http.HandleFunc(pattern, handler)</td>
+                <td>Регистрирует обработчик для пути</td>
+              </tr>
+              <tr>
+                <td>http.Handle(pattern, handler)</td>
+                <td>Регистрирует обработчик (реализующий http.Handler)</td>
+              </tr>
+              <tr>
+                <td>http.ListenAndServe(addr, handler)</td>
+                <td>Запускает сервер</td>
+              </tr>
+              <tr>
+                <td>http.ListenAndServeTLS(addr, cert, key, handler)</td>
+                <td>Запускает HTTPS</td>
+              </tr>
+              <tr>
+                <td>http.Handler</td>
+                <td>Интерфейс с методом ServeHTTP(w, r)</td>
+              </tr>
+            </tbody>
+          </table>
+          <CodeHighlighter 
+            code={`package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    // регистрируем обработчик
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "Привет, мир!")
+    })
+
+    // запускаем сервер
+    http.ListenAndServe(":8080", nil)
+}`}
+          />
+          <h2>Обработчики (Handlers)</h2>
+          <CodeHighlighter 
+            code={`func helloHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "Hello, World!")
+}
+
+func main() {
+    http.HandleFunc("/hello", helloHandler)
+    http.ListenAndServe(":8080", nil)
+}`}
+          />
+          <h2>Чтение данных из запроса</h2>
+          <CodeHighlighter 
+            code={`func handler(w http.ResponseWriter, r *http.Request) {
+    // 1. Параметры URL (query string)
+    name := r.URL.Query().Get("name")
+    fmt.Fprintf(w, "Привет, %s!\\n", name)
+
+    // 2. Метод запроса
+    fmt.Fprintf(w, "Метод: %s\\n", r.Method)
+
+    // 3. Путь
+    fmt.Fprintf(w, "Путь: %s\\n", r.URL.Path)
+
+    // 4. Заголовки
+    fmt.Fprintf(w, "User-Agent: %s\\n", r.Header.Get("User-Agent"))
+
+    // 5. Тело запроса (POST)
+    if r.Method == "POST" {
+        body, _ := io.ReadAll(r.Body)
+        defer r.Body.Close()
+        fmt.Fprintf(w, "Тело: %s\\n", string(body))
+    }
+}`}
+          />
+        </div>
+      ),
+    },
   },
 };
 
