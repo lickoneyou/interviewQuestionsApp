@@ -6535,14 +6535,14 @@ rm -rf vendor/`}
             форк).
           </p>
           <p>Синтаксис:</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'markdown'}
             code={`// go.mod
 replace github.com/old/repo => github.com/new/repo v1.2.3
 replace github.com/some/repo => ./local/path`}
           />
           <p>Примеры:</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`module myapp
 
 go 1.21
@@ -6560,6 +6560,136 @@ replace github.com/lib/pq => ./internal/pq
 
 // 3. Замена на другую версию
 replace github.com/some/repo => github.com/some/repo v1.2.3`}
+          />
+        </div>
+      ),
+    },
+    'golangci-lint, go fmt, go vet': {
+      get title() {
+        return 'golangci-lint, go fmt, go vet';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>go fmt — форматирование кода</h2>
+          <p>
+            <b>go fmt</b> — автоматически форматирует код по стандартам Go.
+          </p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Форматировать все файлы в текущей директории
+go fmt ./...
+
+# Форматировать конкретный файл
+go fmt main.go
+
+# Форматировать пакет
+go fmt ./internal/...`}
+          />
+          <p>
+            Что делает <span>go fmt</span>:
+          </p>
+          <ul>
+            <li>Выравнивание отступов (табы)</li>
+            <li>Удаление лишних пробелов</li>
+            <li>Сортировка импортов</li>
+            <li>Правильное размещение скобок</li>
+          </ul>
+          <p>Пример до:</p>
+          <CodeHighlighter
+            code={`package main
+import "fmt"
+func main(){fmt.Println("Hello")}`}
+          />
+          <p>После go fmt:</p>
+          <CodeHighlighter
+            code={`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello")
+}`}
+          />
+          <h2>go vet — статический анализ</h2>
+          <p>
+            <b>go vet</b> — проверяет код на потенциальные ошибки.
+          </p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Проверить весь проект
+go vet ./...
+
+# Проверить конкретный пакет
+go vet ./internal/...
+
+# С подробным выводом
+go vet -v ./...`}
+          />
+          <p>
+            Что проверяет <span>go vet</span>:
+          </p>
+          <ul>
+            <li>Неиспользуемые переменные</li>
+            <li>
+              Неправильное форматирование в <span>Printf</span>
+            </li>
+            <li>
+              Неправильное использование <span>defer</span>
+            </li>
+            <li>
+              Неправильное сравнение (например, <span>if err == nil</span>)
+            </li>
+            <li>
+              Потенциальные гонки данных (с <span>-race</span>)
+            </li>
+          </ul>
+          <p>Примеры ошибок:</p>
+          <CodeHighlighter
+            code={`// 1. Неиспользуемая переменная
+func main() {
+    x := 10 // go vet: x declared but not used
+}
+
+// 2. Неправильный формат
+fmt.Printf("%s", 42) // go vet: arg 42 for printf verb %s of wrong type
+
+// 3. Неправильное использование defer
+defer f.Close() // OK
+defer f.Close // go vet: call of Close is not deferred`}
+          />
+          <h2>golangci-lint — полный линтер</h2>
+          <p>
+            <b>golangci-lint</b> — агрегатор линтеров (50+ проверок).
+          </p>
+          <p>Установка:</p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# MacOS
+brew install golangci-lint
+
+# Linux
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.55.0
+
+# Проверка установки
+golangci-lint --version`}
+          />
+          <p>Запуск:</p>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`# Проверить весь проект
+golangci-lint run ./...
+
+# Проверить конкретный файл
+golangci-lint run main.go
+
+# С исправлением (автофикс)
+golangci-lint run --fix ./...
+
+# Быстрый режим (только новые ошибки)
+golangci-lint run --new ./...`}
           />
         </div>
       ),
