@@ -4797,7 +4797,7 @@ db, err := sql.Open("mysql", connStr)`}
           />
           <h2>CRUD операции</h2>
           <h3>Структура:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`type User struct {
     ID    int
     Name  string
@@ -4806,7 +4806,7 @@ db, err := sql.Open("mysql", connStr)`}
 }`}
           />
           <h3>CREATE (INSERT):</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func createUser(db *sql.DB, user User) (int, error) {
     query := \`INSERT INTO users (name, email, age) VALUES ($1, $2, $3) RETURNING id\`
     var id int
@@ -4815,7 +4815,7 @@ db, err := sql.Open("mysql", connStr)`}
 }`}
           />
           <h3>READ (SELECT):</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func getUser(db *sql.DB, id int) (User, error) {
     var user User
     query := \`SELECT id, name, email, age FROM users WHERE id = $1\`
@@ -4824,7 +4824,7 @@ db, err := sql.Open("mysql", connStr)`}
 }`}
           />
           <h3>READ (все строки):</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func getUsers(db *sql.DB) ([]User, error) {
     rows, err := db.Query(\`SELECT id, name, email, age FROM users\`)
     if err != nil {
@@ -4845,7 +4845,7 @@ db, err := sql.Open("mysql", connStr)`}
 }`}
           />
           <h3>UPDATE:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func updateUser(db *sql.DB, user User) error {
     query := \`UPDATE users SET name = $1, email = $2, age = $3 WHERE id = $4\`
     _, err := db.Exec(query, user.Name, user.Email, user.Age, user.ID)
@@ -4853,11 +4853,96 @@ db, err := sql.Open("mysql", connStr)`}
 }`}
           />
           <h3>DELETE:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`func deleteUser(db *sql.DB, id int) error {
     _, err := db.Exec(\`DELETE FROM users WHERE id = $1\`, id)
     return err
 }`}
+          />
+        </div>
+      ),
+    },
+    'Миграции схем': {
+      get title() {
+        return 'Миграции схем';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Миграции</b> — это управление изменениями схемы БД через код
+            (SQL-файлы).
+          </p>
+          <h2>Установка migrate</h2>
+          <CodeHighlighter
+            language={'bash'}
+            code={'go get -u github.com/golang-migrate/migrate/v4'}
+          />
+          <h2>Создание миграций</h2>
+          <CodeHighlighter
+            language={'bash'}
+            code={`# Создать файлы миграции
+migrate create -ext sql -dir migrations -seq init_schema`}
+          />
+          <p>Создаст два файла:</p>
+          <CodeHighlighter
+            language={'bash'}
+            code={`migrations/
+├── 000001_init_schema.up.sql      # вперёд
+└── 000001_init_schema.down.sql    # откат`}
+          />
+          <h3>000001_init_schema.up.sql:</h3>
+          <CodeHighlighter
+            language={'sql'}
+            code={`CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    age INT,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    title VARCHAR(200) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT NOW()
+);`}
+          />
+          <h3>000001_init_schema.down.sql:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;`}
+          />
+          <h2>Применение миграций</h2>
+          <h3>Применить все миграции (up):</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" up`}
+          />
+          <h3>Откатить последнюю (down 1):</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" down 1`}
+          />
+          <h3>Откатить все:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" down`}
+          />
+          <h3>Принудительно установить версию:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" force 2`}
+          />
+          <h3>Посмотреть версию:</h3>
+          <CodeHighlighter 
+            language={'bash'}
+            code={`migrate -path migrations -database "postgresql://user:pass@localhost:5432/dbname?sslmode=disable" version`}
           />
         </div>
       ),
