@@ -5792,7 +5792,7 @@ func process(x int) int {
               <b>sync.WaitGroup</b> — ожидание завершения
             </li>
           </ul>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`package main
 
 import (
@@ -5844,6 +5844,83 @@ func main() {
     }
 }`}
           />
+        </div>
+      ),
+    },
+    'sync.Pool': {
+      get title() {
+        return 'sync.Pool';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>sync.Pool</b> — хранилище временных объектов для
+            переиспользования.
+          </p>
+          <p>Зачем:</p>
+          <ul>
+            <li>Снижает нагрузку на сборщик мусора (GC)</li>
+            <li>Уменьшает количество аллокаций памяти</li>
+            <li>Ускоряет программу</li>
+          </ul>
+          <p>Когда использовать:</p>
+          <ul>
+            <li>Часто создаёте много объектов</li>
+            <li>Объекты большие (например, буферы, структуры)</li>
+            <li>Объекты временные (используются и освобождаются)</li>
+          </ul>
+          <CodeHighlighter
+            code={`var pool = sync.Pool{
+    New: func() interface{} {
+        return &MyStruct{}
+    },
+}
+
+// Получить объект из пула
+obj := pool.Get().(*MyStruct)
+
+// Использовать
+obj.Field = "value"
+
+// Вернуть обратно в пул
+pool.Put(obj)`}
+          />
+          <h2>Важные правила</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ПРАВИЛО</th>
+                <th>ОПИСАНИЕ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Очищайте объекты</td>
+                <td>Перед возвратом в пул сбросьте поля</td>
+              </tr>
+              <tr>
+                <td>Не храните ссылки</td>
+                <td>Не сохраняйте объекты из пула</td>
+              </tr>
+              <tr>
+                <td>Не предполагайте сохранность</td>
+                <td>Объект может быть удалён GC</td>
+              </tr>
+              <tr>
+                <td>Используйте New</td>
+                <td>Инициализация при создании</td>
+              </tr>
+              <tr>
+                <td>Defer Put</td>
+                <td>
+                  Возвращайте через <span>defer</span> для безопасности
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
