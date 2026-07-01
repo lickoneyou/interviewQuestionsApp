@@ -6123,6 +6123,143 @@ var templates embed.FS`}
         </div>
       ),
     },
+    'Пакет net/url — парсинг URL': {
+      get title() {
+        return 'Пакет net/url — парсинг URL';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>net/url</b> — пакет для парсинга, построения и работы с URL.
+          </p>
+          <p>Используется для:</p>
+          <ul>
+            <li>Парсинга URL из строк</li>
+            <li>Получения параметров запроса (query)</li>
+            <li>Сборки URL</li>
+            <li>Получения пути, хоста, порта</li>
+          </ul>
+          <h2>Парсинг URL</h2>
+          <CodeHighlighter
+            code={`import "net/url"
+
+func main() {
+    rawURL := "https://user:pass@example.com:8080/path/to/page?key=value&id=123#section"
+    
+    u, err := url.Parse(rawURL)
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    fmt.Println("Схема:", u.Scheme)          // https
+    fmt.Println("Хост:", u.Host)             // example.com:8080
+    fmt.Println("Хост (без порта):", u.Hostname()) // example.com
+    fmt.Println("Порт:", u.Port())           // 8080
+    fmt.Println("Путь:", u.Path)             // /path/to/page
+    fmt.Println("Query:", u.RawQuery)        // key=value&id=123
+    fmt.Println("Фрагмент:", u.Fragment)     // section
+    fmt.Println("Пользователь:", u.User)     // user:pass
+    fmt.Println("Username:", u.User.Username()) // user
+    pass, _ := u.User.Password()
+    fmt.Println("Password:", pass)           // pass
+}`}
+          />
+          <h2>Парсинг Query-параметров</h2>
+          <CodeHighlighter
+            code={`func main() {
+    rawURL := "https://example.com/search?name=Alice&age=25&active=true"
+    
+    u, _ := url.Parse(rawURL)
+    
+    // 1. Получаем query параметры
+    query := u.Query()
+    
+    // 2. Читаем параметры
+    name := query.Get("name")      // "Alice"
+    age := query.Get("age")        // "25"
+    active := query.Get("active")  // "true"
+    
+    // 3. Все значения параметра
+    values := query["name"]        // []string{"Alice"}
+    
+    fmt.Printf("Name: %s, Age: %s, Active: %s\\n", name, age, active)
+}`}
+          />
+          <h2>Сборка URL</h2>
+          <CodeHighlighter
+            code={`func main() {
+    // 1. Создаём структуру URL
+    u := &url.URL{
+        Scheme:   "https",
+        Host:     "example.com:8080",
+        Path:     "/api/users",
+        RawQuery: "limit=10&offset=0",
+        Fragment: "top",
+    }
+    
+    fmt.Println(u.String()) // https://example.com:8080/api/users?limit=10&offset=0#top
+}`}
+          />
+          <table>
+            <thead>
+              <tr>
+                <th>ЗАДАЧА</th>
+                <th>КОД</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Парсить URL</td>
+                <td>u, err := url.Parse("https://...")</td>
+              </tr>
+              <tr>
+                <td>Получить хост</td>
+                <td>u.Hostname()</td>
+              </tr>
+              <tr>
+                <td>Получить порт</td>
+                <td>u.Port()</td>
+              </tr>
+              <tr>
+                <td>Получить путь</td>
+                <td>u.Path</td>
+              </tr>
+              <tr>
+                <td>Получить query строку</td>
+                <td>u.RawQuery</td>
+              </tr>
+              <tr>
+                <td>Получить query параметры</td>
+                <td>u.Query()</td>
+              </tr>
+              <tr>
+                <td>Прочитать параметр</td>
+                <td>u.Query().Get("key")</td>
+              </tr>
+              <tr>
+                <td>Установить параметр</td>
+                <td>query.Set("key", "value"); u.RawQuery = query.Encode()</td>
+              </tr>
+              <tr>
+                <td>Собрать URL</td>
+                <td>u.String()</td>
+              </tr>
+              <tr>
+                <td>Экранировать</td>
+                <td>url.QueryEscape("text")</td>
+              </tr>
+              <tr>
+                <td>Декодировать</td>
+                <td>url.QueryUnescape("text%20")</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
+    },
   },
 };
 
