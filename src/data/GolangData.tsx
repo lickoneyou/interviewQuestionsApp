@@ -4681,7 +4681,7 @@ func main() {
             <li>Значения по умолчанию</li>
           </ul>
           <h3>Файл config.yaml:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'yaml'}
             code={`host: localhost
 port: 8080
@@ -4699,7 +4699,7 @@ redis:
   port: 6379`}
           />
           <h3>Пример использования:</h3>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`import "github.com/spf13/viper"
 
 func main() {
@@ -4742,6 +4742,121 @@ func main() {
     if err != nil {
         log.Fatal("Ошибка парсинга:", err)
     }
+}`}
+          />
+        </div>
+      ),
+    },
+    'Работа с БД — database/sql + драйвер': {
+      get title() {
+        return 'Работа с БД — database/sql + драйвер';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <h2>Установка драйвера</h2>
+          <h3>PostgreSQL:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go get github.com/lib/pq`}
+          />
+          <h3>MySQL:</h3>
+          <CodeHighlighter
+            language={'bash'}
+            code={`go get github.com/go-sql-driver/mysql`}
+          />
+          <hr />
+          <h2>Подключение к БД</h2>
+          <h3>PostgreSQL:</h3>
+          <CodeHighlighter
+            code={`import (
+    "database/sql"
+    _ "github.com/lib/pq"
+)
+
+func main() {
+    connStr := "host=localhost port=5432 user=postgres password=secret dbname=myapp sslmode=disable"
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+    
+    // проверка подключения
+    if err := db.Ping(); err != nil {
+        log.Fatal(err)
+    }
+}`}
+          />
+          <h3>MySQL:</h3>
+          <CodeHighlighter
+            code={`connStr := "user:password@tcp(localhost:3306)/dbname?parseTime=true"
+db, err := sql.Open("mysql", connStr)`}
+          />
+          <h2>CRUD операции</h2>
+          <h3>Структура:</h3>
+          <CodeHighlighter 
+            code={`type User struct {
+    ID    int
+    Name  string
+    Email string
+    Age   int
+}`}
+          />
+          <h3>CREATE (INSERT):</h3>
+          <CodeHighlighter 
+            code={`func createUser(db *sql.DB, user User) (int, error) {
+    query := \`INSERT INTO users (name, email, age) VALUES ($1, $2, $3) RETURNING id\`
+    var id int
+    err := db.QueryRow(query, user.Name, user.Email, user.Age).Scan(&id)
+    return id, err
+}`}
+          />
+          <h3>READ (SELECT):</h3>
+          <CodeHighlighter 
+            code={`func getUser(db *sql.DB, id int) (User, error) {
+    var user User
+    query := \`SELECT id, name, email, age FROM users WHERE id = $1\`
+    err := db.QueryRow(query, id).Scan(&user.ID, &user.Name, &user.Email, &user.Age)
+    return user, err
+}`}
+          />
+          <h3>READ (все строки):</h3>
+          <CodeHighlighter 
+            code={`func getUsers(db *sql.DB) ([]User, error) {
+    rows, err := db.Query(\`SELECT id, name, email, age FROM users\`)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+    
+    var users []User
+    for rows.Next() {
+        var u User
+        err := rows.Scan(&u.ID, &u.Name, &u.Email, &u.Age)
+        if err != nil {
+            return nil, err
+        }
+        users = append(users, u)
+    }
+    return users, rows.Err()
+}`}
+          />
+          <h3>UPDATE:</h3>
+          <CodeHighlighter 
+            code={`func updateUser(db *sql.DB, user User) error {
+    query := \`UPDATE users SET name = $1, email = $2, age = $3 WHERE id = $4\`
+    _, err := db.Exec(query, user.Name, user.Email, user.Age, user.ID)
+    return err
+}`}
+          />
+          <h3>DELETE:</h3>
+          <CodeHighlighter 
+            code={`func deleteUser(db *sql.DB, id int) error {
+    _, err := db.Exec(\`DELETE FROM users WHERE id = $1\`, id)
+    return err
 }`}
           />
         </div>
