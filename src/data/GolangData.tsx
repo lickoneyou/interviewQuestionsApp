@@ -5586,7 +5586,7 @@ func NewUserService(repo UserRepository) *UserService {
             выполнения, количество операций, аллокации памяти.
           </p>
           <h2>Пример бенчмарка</h2>
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// math.go
 package math
 
@@ -5602,7 +5602,7 @@ func AddSlow(a, b int) int {
     return result / 100
 }`}
           />
-          <CodeHighlighter 
+          <CodeHighlighter
             code={`// math_test.go
 package math
 
@@ -5621,12 +5621,9 @@ func BenchmarkAddSlow(b *testing.B) {
 }`}
           />
           <p>Запуск:</p>
-          <CodeHighlighter 
-            language={'bash'}
-            code={'go test -bench=.'}
-          />
+          <CodeHighlighter language={'bash'} code={'go test -bench=.'} />
           <p>Вывод:</p>
-          <CodeHighlighter 
+          <CodeHighlighter
             language={'bash'}
             code={`goos: linux
 goarch: amd64
@@ -5636,6 +5633,119 @@ BenchmarkAddSlow-8       10000000               125.00 ns/op
 PASS
 ok      myapp/math      1.234s`}
           />
+        </div>
+      ),
+    },
+    'Fan-Out и Fan-In': {
+      get title() {
+        return 'Fan-Out и Fan-In';
+      },
+      get id() {
+        return slugifyText(this.title);
+      },
+      jsx: (
+        <div>
+          <p>
+            <b>Fan-Out</b> — разделение работы между несколькими горутинами
+            (один вход → много обработчиков).
+          </p>
+          <p>
+            <b>Fan-In</b> — сбор результатов от нескольких горутин в один канал
+            (много обработчиков → один выход).
+          </p>
+          <CodeHighlighter
+            language={'markdown'}
+            code={`Fan-Out:     [1 канал] → [воркер 1] → [результат]
+                         [воркер 2] → [результат]
+                         [воркер 3] → [результат]
+
+Fan-In:      [воркер 1] → [общий канал]
+              [воркер 2] → [общий канал]
+              [воркер 3] → [общий канал]`}
+          />
+          <h2>Базовый Fan-Out</h2>
+          <p>Разделяем задачи между несколькими воркерами.</p>
+          <CodeHighlighter
+            code={`func fanOut(jobs <-chan int, numWorkers int) []<-chan int {
+    channels := make([]<-chan int, numWorkers)
+    
+    for i := 0; i < numWorkers; i++ {
+        ch := make(chan int)
+        channels[i] = ch
+        
+        go func() {
+            for job := range jobs {
+                ch <- process(job) // каждая горутина обрабатывает
+            }
+            close(ch)
+        }()
+    }
+    
+    return channels
+}
+
+func process(x int) int {
+    return x * 2
+}`}
+          />
+          <h2>Базовый Fan-In</h2>
+          <p>Собираем результаты от нескольких каналов в один.</p>
+          <CodeHighlighter
+            code={`func fanIn(channels ...<-chan int) <-chan int {
+    out := make(chan int)
+    var wg sync.WaitGroup
+    
+    // запускаем горутину для каждого канала
+    for _, ch := range channels {
+        wg.Add(1)
+        go func(c <-chan int) {
+            defer wg.Done()
+            for v := range c {
+                out <- v // пересылаем в общий канал
+            }
+        }(ch)
+    }
+    
+    // закрываем канал, когда все горутины закончат
+    go func() {
+        wg.Wait()
+        close(out)
+    }()
+    
+    return out
+}`}
+          />
+          <table>
+            <thead>
+              <tr>
+                <th>ПАТТЕРН</th>
+                <th>ЧТО ДЕЛАЕТ</th>
+                <th>КОГДА ИСПОЛЬЗОВАТЬ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fan-Out</td>
+                <td>Один канал → много горутин</td>
+                <td>Параллельная обработка</td>
+              </tr>
+              <tr>
+                <td>Fan-In</td>
+                <td>Много каналов → один канал</td>
+                <td>Сбор результатов</td>
+              </tr>
+              <tr>
+                <td>Pipeline</td>
+                <td>Последовательные этапы</td>
+                <td>Пошаговая обработка</td>
+              </tr>
+              <tr>
+                <td>Pipeline + Fan-Out</td>
+                <td>Параллельный этап в pipeline</td>
+                <td>Когда один этап медленный</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
